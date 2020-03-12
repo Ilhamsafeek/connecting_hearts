@@ -59,7 +59,7 @@ flutter:
   - assets/calendar_blue.png
   - assets/add_money_passbook.png
   - assets/book.png
-  - assets/real.jpg
+  - assets/real.png
   - assets/gstbanner.png
   - assets/logo.png
   - assets/powered_by.png
@@ -75,6 +75,28 @@ flutter:
   - assets/placeholder_inapp_merchants.png
   - assets/home.png
   - assets/right-arrow.png
+  - assets/zamzam.png
+  - assets/help.png
+  - assets/sadaka.png
+  - assets/sanitation.png
+  - assets/health.png
+  - assets/empowerment.png
+  - assets/marriage.png
+  - assets/shelter.png
+  - assets/education.png
+  - assets/relife.png
+  - assets/success-stories.png
+  - assets/events.png
+  - assets/contact.png
+  - assets/download.png
+  - assets/videos.png
+  - assets/report.png
+  - assets/calculator.png
+  - assets/receipt.png
+  - assets/profilebackground.png
+  - assets/donations.png
+  - assets/language.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

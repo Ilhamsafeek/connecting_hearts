@@ -20,17 +20,88 @@ class _PaytmState extends State<Paytm> {
     return Scaffold(
         appBar: _appBar(),
         body: _bodyItem(),
+        drawer: _drawer(),
         backgroundColor: Colors.grey[200],
         bottomNavigationBar: _bottemTab());
+  }
+
+
+  Widget _drawer(){
+   return new Drawer(
+  // Add a ListView to the drawer. This ensures the user can scroll
+  // through the options in the drawer if there isn't enough vertical
+  // space to fit everything.
+  child: ListView(
+    // Important: Remove any padding from the ListView.
+    padding: EdgeInsets.zero,
+    children: <Widget>[
+      DrawerHeader(
+        child:UserAccountsDrawerHeader(
+          decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 0),
+    ),
+  accountName: Text("Ilham Safeek"),
+  accountEmail: Text("ilhamsafeek@yahoo.com"),
+  currentAccountPicture: CircleAvatar(
+    backgroundColor:Colors.white,
+    child: Text(
+      "I",
+      style: TextStyle(fontSize: 40.0),
+    ),
+  ),
+),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+                  image: AssetImage("assets/profilebackground.png"),
+                     fit: BoxFit.cover)
+              ),
+        
+      ),
+      ListTile(
+        leading: Icon(Icons.person),
+        title: Text('Profile'),
+        onTap: () {
+          // Update the state of the app.
+          // ...
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.favorite),
+        title: Text('Whish List'),
+        onTap: () {
+          // Update the state of the app.
+          // ...
+        },
+      ),
+           ListTile(
+        leading: Icon(Icons.settings),
+        title: Text('Settings'),
+        onTap: () {
+          // Update the state of the app.
+          // ...
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.settings, color: Colors.white,),
+        title: Text('Logout'),
+        onTap: () {
+          // Update the state of the app.
+          // ...
+        },
+      ),
+    ],
+  ),
+);
+
   }
 
   Widget _appBar() {
     return new AppBar(
       title: Row(
         children: <Widget>[
-          Icon(Icons.dehaze),
+          
           Padding(
-            padding: const EdgeInsets.only(left: 28),
+            padding: const EdgeInsets.only(left: 5),
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
@@ -84,33 +155,6 @@ class _PaytmState extends State<Paytm> {
               )),
           new BottomNavigationBarItem(
               icon: Image.asset(
-                "assets/shopping-bagg.png",
-                width: 24.0,
-                height: 24.0,
-              ),
-              title: Text(
-                'Mall',
-              )),
-          new BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/qr-code.png",
-                width: 24.0,
-                height: 24.0,
-              ),
-              title: Text(
-                'Scan',
-              )),
-          new BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/bank.png",
-                width: 24.0,
-                height: 24.0,
-              ),
-              title: Text(
-                'Bank',
-              )),
-          new BottomNavigationBarItem(
-              icon: Image.asset(
                 "assets/delivery.png",
                 width: 24.0,
                 height: 24.0,
@@ -118,6 +162,35 @@ class _PaytmState extends State<Paytm> {
               title: Text(
                 'Inbox',
               )),
+          new BottomNavigationBarItem(
+              icon: Image.asset(
+                "assets/contact.png",
+                width: 24.0,
+                height: 24.0,
+              ),
+              title: Text(
+                'Contact',
+              )),    
+          new BottomNavigationBarItem(
+              icon: Image.asset(
+                "assets/videos.png",
+                width: 24.0,
+                height: 24.0,
+              ),
+              title: Text(
+                'Video',
+              )),
+          
+          new BottomNavigationBarItem(
+              icon: Image.asset(
+                "assets/download.png",
+                width: 24.0,
+                height: 24.0,
+              ),
+              title: Text(
+                'downloads',
+              )),
+         
         ]);
   }
 
@@ -190,8 +263,8 @@ class _PaytmState extends State<Paytm> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Icon(Icons.highlight),
-                  Text('Get Rs.1000 Cashback on Auto/Taxi rides !'),
+                  Icon(Icons.flash_on, color: Colors.orange,),
+                  Text('School with a Smile 2020 happens today !'),
                   Image.asset(
                     "assets/right-arrow.png",
                     height: 13,
@@ -241,38 +314,34 @@ class _PaytmState extends State<Paytm> {
 
   List<GridModel> _getGridItemList() {
     List<GridModel> list = new List<GridModel>();
-    list.add(new GridModel("assets/smartphone.png", "Mobile\nprepaid", null));
-    list.add(new GridModel("assets/airplane.png", "Flights", null));
-    list.add(new GridModel("assets/access.png", "Movie Tickets", null));
-    list.add(new GridModel("assets/hand.png", "Events", null));
-    list.add(new GridModel(
-        "assets/phone-charge.png", "Mobile        Postpaid", null));
-    list.add(new GridModel("assets/console.png", "Games", null));
-    list.add(new GridModel("assets/gold.png", "Gold", null));
-    list.add(new GridModel("assets/iocl_tip.png", "Electricity", null));
-    list.add(new GridModel("assets/train_help.png", "Train Tickets", null));
+    list.add(new GridModel("assets/zamzam.png", "ZZF\nprojects", null));
+    list.add(new GridModel("assets/help.png", "Help\na Needy", null));
+    list.add(new GridModel("assets/sadaka.png", "Sadaka", null));
+    list.add(new GridModel("assets/sanitation.png", "Sanitation", null));
+    list.add(new GridModel("assets/health.png", "Health", null));
+    list.add(new GridModel("assets/empowerment.png", "Empowerment", null));
+    list.add(new GridModel("assets/marriage.png", "Marriage", null));
+    list.add(new GridModel("assets/shelter.png", "Shelter", null));
+    list.add(new GridModel("assets/education.png", "Education", null));
+    list.add(new GridModel("assets/relife.png", "Relief", null));
+    list.add(new GridModel("assets/success-stories.png", "Success\nStories", null));
     list.add(
-      new GridModel("assets/shopping-bag.png", "Shopping", null),
-    );
-    list.add(new GridModel("assets/satellite-dish.png", "DTH", null));
-    list.add(
-        new GridModel("assets/placeholder_inapp_merchants.png", "More", null));
+        new GridModel("assets/events.png", "Events", null));
     return list;
   }
 
   List<GridModel> _getGridList() {
     List<GridModel> list = new List<GridModel>();
-    list.add(new GridModel("assets/send_money.png", "Pay", Colors.white));
-    list.add(new GridModel("assets/money_transfer.png", "UPI", Colors.white));
-    list.add(new GridModel(
-        "assets/ic_passbook_header.png", "Passbook", Colors.white));
-    list.add(new GridModel(
-        "assets/calendar_blue.png", "Paytm\nPostpaid", Colors.white));
-    list.add(new GridModel(
-        "assets/add_money_passbook.png", "Add Money", Colors.white));
-    list.add(new GridModel("assets/book.png", "Link Account", Colors.white));
-    list.add(new GridModel("assets/ic_passbook_header.png", "Link Account", Colors.white));
-    list.add(new GridModel("assets/book.png", "Link Account", Colors.white));
+    list.add(new GridModel("assets/add_money_passbook.png", "New Donation", Colors.white));
+    list.add(new GridModel("assets/book.png", "My Appeals", Colors.white));
+    list.add(new GridModel("assets/receipt.png", "My Receipt", Colors.white));
+    list.add(new GridModel("assets/calculator.png", "Calculate Zakath", Colors.white));
+
+    list.add(new GridModel("assets/report.png", "Reports", Colors.white));
+    list.add(new GridModel("assets/donations.png", "My donations", Colors.white));
+    list.add(new GridModel("assets/ic_passbook_header.png", "Subscriptions", Colors.white));
+        list.add(new GridModel("assets/language.png", "Language", Colors.white));
+
 
     return list;
   }
@@ -280,10 +349,10 @@ class _PaytmState extends State<Paytm> {
   List<ImageSliderModel> _getImageSliderList() {
     List<ImageSliderModel> list = new List();
 
-    list.add(new ImageSliderModel("assets/real.jpg"));
-    list.add(new ImageSliderModel("assets/real.jpg"));
-    list.add(new ImageSliderModel("assets/real.jpg"));
-    list.add(new ImageSliderModel("assets/real.jpg"));
+    list.add(new ImageSliderModel("assets/real.png"));
+    list.add(new ImageSliderModel("assets/real.png"));
+    list.add(new ImageSliderModel("assets/real.png"));
+    list.add(new ImageSliderModel("assets/real.png"));
 
     return list;
   }
