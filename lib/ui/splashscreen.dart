@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_paytm_ui/constant/Constant.dart';
+import 'package:zamzam/constant/Constant.dart';
 
 
 class SplashScreen extends StatefulWidget {

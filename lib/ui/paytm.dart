@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_paytm_ui/model/Gridmodel.dart';
-import 'package:flutter_paytm_ui/model/ImageSliderModel.dart';
+import 'package:zamzam/model/Gridmodel.dart';
+import 'package:zamzam/model/ImageSliderModel.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class Paytm extends StatefulWidget {
@@ -200,7 +200,7 @@ class _PaytmState extends State<Paytm> {
         children: <Widget>[
           Container(
               width: double.maxFinite,
-              color: Colors.blue[800],
+              color: Color.fromRGBO(104, 45, 127, 1),
               child: Container(
                 child: CarouselSlider(reverse: false,
                   aspectRatio: 5,
@@ -239,7 +239,7 @@ class _PaytmState extends State<Paytm> {
           ),
 
 
-          Container( color: Colors.blue[800],
+          Container( color:Color.fromRGBO(104, 45, 127, 1),
             child: new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(2, (int index) {

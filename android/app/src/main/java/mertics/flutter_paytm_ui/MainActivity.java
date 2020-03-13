@@ -1,4 +1,4 @@
-package aeologic.flutter_paytm_ui;
+package mertics.zamzam;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
