@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:zamzam/model/Gridmodel.dart';
 import 'package:zamzam/model/ImageSliderModel.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:zamzam/signin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:zamzam/services/services.dart';
+
 
 class Paytm extends StatefulWidget {
   @override
@@ -14,6 +18,34 @@ class Paytm extends StatefulWidget {
 class _PaytmState extends State<Paytm> {
   int _currentIndex = 0;
   int _currentIndexUp = 0;
+
+ ApiListener mApiListener;
+  List<Data> offerResult;
+
+  String userId;
+
+  @override
+  void initState() {
+    currentUser().then((value) {
+      if (value != null) {
+        setState(() {
+          this.userId = value.phoneNumber;
+        });
+      }
+    });
+
+    super.initState();
+
+    WebServices(this.mApiListener).getData().then((result) {
+      if (result != null) {
+        setState(() {
+          offerResult =
+              result.where((el) => el.contact == this.userId).toList();
+        });
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,73 +58,80 @@ class _PaytmState extends State<Paytm> {
   }
 
 
+  Future<FirebaseUser> currentUser() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return user;
+  }
+
+
+
   Widget _drawer(){
    return new Drawer(
-  // Add a ListView to the drawer. This ensures the user can scroll
-  // through the options in the drawer if there isn't enough vertical
-  // space to fit everything.
-  child: ListView(
-    // Important: Remove any padding from the ListView.
-    padding: EdgeInsets.zero,
-    children: <Widget>[
-      DrawerHeader(
-        child:UserAccountsDrawerHeader(
-          decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0),
-    ),
-  accountName: Text("Ilham Safeek"),
-  accountEmail: Text("ilhamsafeek@yahoo.com"),
-  currentAccountPicture: CircleAvatar(
-    backgroundColor:Colors.white,
-    child: Text(
-      "I",
-      style: TextStyle(fontSize: 40.0),
-    ),
-  ),
-),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-                  image: AssetImage("assets/profilebackground.png"),
-                     fit: BoxFit.cover)
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text('Ilham Safeek'),
+              accountEmail: Text('${this.userId}'),
+              currentAccountPicture: CircleAvatar(
+                child: Text("i"),
               ),
-        
-      ),
-      ListTile(
-        leading: Icon(Icons.person),
-        title: Text('Profile'),
-        onTap: () {
-          // Update the state of the app.
-          // ...
-        },
-      ),
-      ListTile(
-        leading: Icon(Icons.favorite),
-        title: Text('Whish List'),
-        onTap: () {
-          // Update the state of the app.
-          // ...
-        },
-      ),
-           ListTile(
-        leading: Icon(Icons.settings),
-        title: Text('Settings'),
-        onTap: () {
-          // Update the state of the app.
-          // ...
-        },
-      ),
-      ListTile(
-        leading: Icon(Icons.settings, color: Colors.white,),
-        title: Text('Logout'),
-        onTap: () {
-          // Update the state of the app.
-          // ...
-        },
-      ),
-    ],
-  ),
-);
-
+            ),
+            ListTile(
+              title: Text('Beneficiaries'),
+              onTap: () {
+                // Navigator.pop(context);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Beneficiaries()),
+                // );
+              },
+            ),
+            ListTile(
+              title: Text('Transaction History'),
+              onTap: () {
+                // Navigator.pop(context);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => History()),
+                // );
+              },
+            ),
+            new Expanded(
+              child: new Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 4,
+                        child: FlatButton(
+                          onPressed: () async {
+                            await FirebaseAuth.instance
+                                .signOut()
+                                .then((action) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Signin()));
+                            });
+                          },
+                          child: Text('Sign out',
+                              style: TextStyle(
+                                  fontFamily: "Exo2",
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text('v1.0'),
+                      )
+                    ],
+                  )),
+            ),
+          ],
+        ));
   }
 
   Widget _appBar() {
