@@ -9,18 +9,11 @@ class WebServices {
 
   WebServices(this.mApiListener);
 
-  Future<List<Data>> getData() async {
-    var user = await http.get("https://www.hashnative.com/alloffers");
-    var jsonData = json.decode(user.body);
-
-    List<Data> datas = [];
-
-    for (var d in jsonData) {
-      Data data = Data(d["id"], d["name"], d["location"], d["offer_item"],
-          d["offer_price"], d["logo"], d["contact"], d["radius"]);
-      datas.add(data);
-    }
-    return datas;
+  Future<dynamic> getData() async {
+    var response = await http.get("https://www.chadmin.online/users/allusers");
+    var jsonServerData = json.decode(response.body);
+    
+    return jsonServerData;
   }
 
   Future<String> updateAmount(
@@ -41,10 +34,10 @@ class WebServices {
     return response.body;
   }
 
-  createAccount(String contact) async {
-    var url = 'https://www.hashnative.com/createaccount';
+  Future createAccount(String contact) async {
+    var url = 'https://www.chadmin.online/users/createaccount';
     var response = await http.post(url,
-        body: {'name': 'ilham', 'contact': '$contact', 'offer_price': '50'});
+        body: {'name': 'ilham', 'phone': '$contact', 'role_id': '2'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
@@ -86,32 +79,14 @@ class WebServices {
     return response.body;
   }
 
-Future<String> deleteBeneficiary(String mobile, String addedBy) async {
+  Future<String> deleteBeneficiary(String mobile, String addedBy) async {
     var url = 'https://www.hashnative.com/deleteBeneficiary';
-    var response = await http.post(url,
-        body: {'added_by': '$addedBy', 'mobile': '$mobile'});
+    var response = await http
+        .post(url, body: {'added_by': '$addedBy', 'mobile': '$mobile'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response.body;
   }
-
-
-
-}
-
-  
-class Data {
-  final String id;
-  final String name;
-  final String location;
-  final String offerItem;
-  final String offerPrice;
-  final String logo;
-  final String contact;
-  final String radius;
-
-  Data(this.id, this.name, this.location, this.offerItem, this.offerPrice,
-      this.logo, this.contact, this.radius);
 }
 
 class HistoryData {

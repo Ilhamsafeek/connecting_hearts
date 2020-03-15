@@ -8,7 +8,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:zamzam/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
-
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class Paytm extends StatefulWidget {
   @override
@@ -19,8 +19,7 @@ class _PaytmState extends State<Paytm> {
   int _currentIndex = 0;
   int _currentIndexUp = 0;
 
- ApiListener mApiListener;
-  List<Data> offerResult;
+  ApiListener mApiListener;
 
   String userId;
 
@@ -35,130 +34,190 @@ class _PaytmState extends State<Paytm> {
     });
 
     super.initState();
-
-    WebServices(this.mApiListener).getData().then((result) {
-      if (result != null) {
-        setState(() {
-          offerResult =
-              result.where((el) => el.contact == this.userId).toList();
-        });
-      }
-    });
   }
 
+  Future<String> _calculation = Future<String>.delayed(
+    Duration(seconds: 2),
+    () => 'Data Loaded',
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _appBar(),
-        body: _bodyItem(),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                // offerResult != null
+                //     ? balaneCard(offerResult[0])
+                //     : Text('Fetching data..'),
+                // _sendMoneySectionWidget()
+                FutureBuilder<dynamic>(
+                  future: WebServices(this.mApiListener)
+                      .getData(), // a previously-obtained Future<String> or null
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    List<Widget> children;
+
+                    if (snapshot.hasData) {
+                      children = <Widget>[
+                        Icon(
+                          Icons.check_circle_outline,
+                          color: Colors.green,
+                          size: 60,
+                        ),
+                        for (var item in snapshot.data)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            //${snapshot.data}
+                            //result.where((el) => el.phone == this.userId).toList();
+                            child: Text('${item['username']}:${item['phone']}'),
+                          )
+                      ];
+                    } else if (snapshot.hasError) {
+                      children = <Widget>[
+                        Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 60,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text('Error: ${snapshot.error}'),
+                        )
+                      ];
+                    } else {
+                      children = <Widget>[
+                        SizedBox(
+                          child: CircularProgressIndicator(),
+                          width: 60,
+                          height: 60,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text('Awaiting result...'),
+                        )
+                      ];
+                    }
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: children,
+                      ),
+                    );
+                  },
+                ),
+                FlatButton(
+                    onPressed: () {
+                      WebServices(this.mApiListener)
+                          .createAccount('+94538469674');
+                    },
+                    child: Text('Inser User'))
+              ],
+            ),
+          ),
+        ), //_bodyItem(),
         drawer: _drawer(),
         backgroundColor: Colors.grey[200],
         bottomNavigationBar: _bottemTab());
   }
-
 
   Future<FirebaseUser> currentUser() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return user;
   }
 
-
-
-  Widget _drawer(){
-   return new Drawer(
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text('Ilham Safeek'),
-              accountEmail: Text('${this.userId}'),
-              currentAccountPicture: CircleAvatar(
-                child: Text("i"),
-              ),
-            ),
-            ListTile(
-              title: Text('Beneficiaries'),
-              onTap: () {
-                // Navigator.pop(context);
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Beneficiaries()),
-                // );
-              },
-            ),
-            ListTile(
-              title: Text('Transaction History'),
-              onTap: () {
-                // Navigator.pop(context);
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => History()),
-                // );
-              },
-            ),
-            new Expanded(
-              child: new Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: FlatButton(
-                          onPressed: () async {
-                            await FirebaseAuth.instance
-                                .signOut()
-                                .then((action) {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          Signin()));
-                            });
-                          },
-                          child: Text('Sign out',
-                              style: TextStyle(
-                                  fontFamily: "Exo2",
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text('v1.0'),
-                      )
-                    ],
-                  )),
-            ),
-          ],
-        ));
+  Widget _drawer() {
+    return new Drawer(
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        UserAccountsDrawerHeader(
+          accountName: Text('Ilham Safeek'),
+          accountEmail: Text('${this.userId}'),
+          currentAccountPicture: CircleAvatar(
+            child: Text("i"),
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text('Beneficiaries'),
+          onTap: () {
+            // Navigator.pop(context);
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => Beneficiaries()),
+            // );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.verified_user),
+          title: Text('Transaction History'),
+          onTap: () {
+            // Navigator.pop(context);
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => History()),
+            // );
+          },
+        ),
+        new Expanded(
+          child: new Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 4,
+                    child: FlatButton(
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut().then((action) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => Signin()));
+                        });
+                      },
+                      child: Text('Sign out',
+                          style: TextStyle(
+                              fontFamily: "Exo2",
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Text('v1.0'),
+                  )
+                ],
+              )),
+        ),
+      ],
+    ));
   }
 
   Widget _appBar() {
     return new AppBar(
       title: Row(
         children: <Widget>[
-          
           Padding(
             padding: const EdgeInsets.only(left: 5),
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
               height: 40,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width / 1.35,
+              width: MediaQuery.of(context).size.width / 1.35,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
-                    child: Icon(Icons.search,color: Colors.blue,),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.blue,
+                    ),
                   ),
-
-
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
                     child: Image.asset(
@@ -209,7 +268,7 @@ class _PaytmState extends State<Paytm> {
               ),
               title: Text(
                 'Contact',
-              )),    
+              )),
           new BottomNavigationBarItem(
               icon: Image.asset(
                 "assets/videos.png",
@@ -219,7 +278,6 @@ class _PaytmState extends State<Paytm> {
               title: Text(
                 'Video',
               )),
-          
           new BottomNavigationBarItem(
               icon: Image.asset(
                 "assets/download.png",
@@ -229,9 +287,55 @@ class _PaytmState extends State<Paytm> {
               title: Text(
                 'downloads',
               )),
-         
         ]);
   }
+
+  // Card balaneCard(Data data) {
+  //   FlutterMoneyFormatter formattedAmount =
+  //       FlutterMoneyFormatter(amount: double.parse('${data.roleId}'));
+  //   return Card(
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(10.0),
+  //     ),
+  //     color: Color.fromRGBO(255, 128, 0, 1.0),
+  //     elevation: 10,
+  //     child: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: <Widget>[
+  //         ListTile(
+  //           leading: Icon(Icons.album, size: 70),
+  //           title: Text('Balance', style: TextStyle(color: Colors.white)),
+  //           subtitle: Text('LKR ${formattedAmount.output.nonSymbol}',
+  //               style: TextStyle(
+  //                   fontFamily: "Exo2",
+  //                   color: Colors.white,
+  //                   fontSize: 22,
+  //                   fontWeight: FontWeight.bold)),
+  //         ),
+  //         ButtonTheme.bar(
+  //           child: ButtonBar(
+  //             children: <Widget>[
+  //               FlatButton(
+  //                 child:
+  //                     const Text('Send', style: TextStyle(color: Colors.white)),
+  //                 onPressed: () {
+  //                   //sendModalBottomSheet(context);
+  //                 },
+  //               ),
+  //               FlatButton(
+  //                 child: const Text('Recieve',
+  //                     style: TextStyle(color: Colors.white)),
+  //                 onPressed: () {
+  //                   // _showDialog();
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _bodyItem() {
     return SingleChildScrollView(
@@ -241,7 +345,8 @@ class _PaytmState extends State<Paytm> {
               width: double.maxFinite,
               color: Color.fromRGBO(104, 45, 127, 1),
               child: Container(
-                child: CarouselSlider(reverse: false,
+                child: CarouselSlider(
+                  reverse: false,
                   aspectRatio: 5,
                   viewportFraction: 1.0,
                   initialPage: 0,
@@ -253,8 +358,7 @@ class _PaytmState extends State<Paytm> {
                       print(_currentIndexUp);
                     });
                   },
-                  items: List<GridView>.generate(
-                      (2), (int index) {
+                  items: List<GridView>.generate((2), (int index) {
                     return GridView.count(
                       crossAxisCount: 4,
                       children: List<GridItemTop>.generate((4), (int index) {
@@ -275,15 +379,14 @@ class _PaytmState extends State<Paytm> {
 //                return GridList(_getGridList()[index]);
 //              },
 //            ),
-          ),
-
-
-          Container( color:Color.fromRGBO(104, 45, 127, 1),
+              ),
+          Container(
+            color: Color.fromRGBO(104, 45, 127, 1),
             child: new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(2, (int index) {
-                  return dots(_currentIndexUp, index);
-                }),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(2, (int index) {
+                return dots(_currentIndexUp, index);
+              }),
             ),
           ),
           Padding(
@@ -295,14 +398,14 @@ class _PaytmState extends State<Paytm> {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
               height: 40,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Icon(Icons.flash_on, color: Colors.orange,),
+                  Icon(
+                    Icons.flash_on,
+                    color: Colors.orange,
+                  ),
                   Text('School with a Smile 2020 happens today !'),
                   Image.asset(
                     "assets/right-arrow.png",
@@ -327,7 +430,6 @@ class _PaytmState extends State<Paytm> {
             child: Container(
               color: Colors.white,
               child: CarouselSlider(
-
                 aspectRatio: 2,
                 viewportFraction: 1.0,
                 initialPage: 0,
@@ -363,24 +465,27 @@ class _PaytmState extends State<Paytm> {
     list.add(new GridModel("assets/shelter.png", "Shelter", null));
     list.add(new GridModel("assets/education.png", "Education", null));
     list.add(new GridModel("assets/relife.png", "Relief", null));
-    list.add(new GridModel("assets/success-stories.png", "Success\nStories", null));
     list.add(
-        new GridModel("assets/events.png", "Events", null));
+        new GridModel("assets/success-stories.png", "Success\nStories", null));
+    list.add(new GridModel("assets/events.png", "Events", null));
     return list;
   }
 
   List<GridModel> _getGridList() {
     List<GridModel> list = new List<GridModel>();
-    list.add(new GridModel("assets/add_money_passbook.png", "New Donation", Colors.white));
+    list.add(new GridModel(
+        "assets/add_money_passbook.png", "New Donation", Colors.white));
     list.add(new GridModel("assets/book.png", "My Appeals", Colors.white));
     list.add(new GridModel("assets/receipt.png", "My Receipt", Colors.white));
-    list.add(new GridModel("assets/calculator.png", "Calculate Zakath", Colors.white));
+    list.add(new GridModel(
+        "assets/calculator.png", "Calculate Zakath", Colors.white));
 
     list.add(new GridModel("assets/report.png", "Reports", Colors.white));
-    list.add(new GridModel("assets/donations.png", "My donations", Colors.white));
-    list.add(new GridModel("assets/ic_passbook_header.png", "Subscriptions", Colors.white));
-        list.add(new GridModel("assets/language.png", "Language", Colors.white));
-
+    list.add(
+        new GridModel("assets/donations.png", "My donations", Colors.white));
+    list.add(new GridModel(
+        "assets/ic_passbook_header.png", "Subscriptions", Colors.white));
+    list.add(new GridModel("assets/language.png", "Language", Colors.white));
 
     return list;
   }
@@ -430,24 +535,16 @@ class _PaytmState extends State<Paytm> {
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
-              color: dotColor(index)
-          ));
+              color: dotColor(index)));
     }
   }
-
 
   Widget imageSliderItem(ImageSliderModel i) {
     return Container(
         padding: EdgeInsets.only(left: 8, right: 8),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.asset(
@@ -458,11 +555,8 @@ class _PaytmState extends State<Paytm> {
   }
 
   Color dotColor(int index) {
-    return _currentIndexUp == index
-        ? Colors.white
-        : Colors.grey;
+    return _currentIndexUp == index ? Colors.white : Colors.grey;
   }
-
 }
 
 class GridItem extends StatelessWidget {
@@ -513,7 +607,6 @@ class GridItemTop extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(1 / 2),
       child: Container(
-
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -530,7 +623,10 @@ class GridItemTop extends StatelessWidget {
                 child: Text(
                   gridModel.title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12, color: Colors.white,),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],
@@ -540,6 +636,3 @@ class GridItemTop extends StatelessWidget {
     );
   }
 }
-
-
-
