@@ -10,7 +10,7 @@ class WebServices {
   WebServices(this.mApiListener);
 
   Future<dynamic> getData() async {
-    var response = await http.get("https://www.chadmin.online/users/allusers");
+    var response = await http.get("https://www.chadmin.online/api/projects");
     var jsonServerData = json.decode(response.body);
     
     return jsonServerData;
@@ -35,7 +35,7 @@ class WebServices {
   }
 
   Future createAccount(String contact) async {
-    var url = 'https://www.chadmin.online/users/createaccount';
+    var url = 'https://www.chadmin.online/api/createaccount';
     var response = await http.post(url,
         body: {'name': 'ilham', 'phone': '$contact', 'role_id': '2'});
     print('Response status: ${response.statusCode}');

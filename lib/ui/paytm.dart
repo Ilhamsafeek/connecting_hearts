@@ -9,6 +9,7 @@ import 'package:zamzam/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:zamzam/ui/project.dart';
 
 class Paytm extends StatefulWidget {
   @override
@@ -53,72 +54,18 @@ class _PaytmState extends State<Paytm> {
                 //     ? balaneCard(offerResult[0])
                 //     : Text('Fetching data..'),
                 // _sendMoneySectionWidget()
-                FutureBuilder<dynamic>(
-                  future: WebServices(this.mApiListener)
-                      .getData(), // a previously-obtained Future<String> or null
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    List<Widget> children;
 
-                    if (snapshot.hasData) {
-                      children = <Widget>[
-                        Icon(
-                          Icons.check_circle_outline,
-                          color: Colors.green,
-                          size: 60,
-                        ),
-                        for (var item in snapshot.data)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            //${snapshot.data}
-                            //result.where((el) => el.phone == this.userId).toList();
-                            child: Text('${item['username']}:${item['phone']}'),
-                          )
-                      ];
-                    } else if (snapshot.hasError) {
-                      children = <Widget>[
-                        Icon(
-                          Icons.error_outline,
-                          color: Colors.red,
-                          size: 60,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16),
-                          child: Text('Error: ${snapshot.error}'),
-                        )
-                      ];
-                    } else {
-                      children = <Widget>[
-                        SizedBox(
-                          child: CircularProgressIndicator(),
-                          width: 60,
-                          height: 60,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 16),
-                          child: Text('Awaiting result...'),
-                        )
-                      ];
-                    }
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: children,
-                      ),
-                    );
-                  },
-                ),
-                FlatButton(
-                    onPressed: () {
-                      WebServices(this.mApiListener)
-                          .createAccount('+94538469674');
-                    },
-                    child: Text('Inser User'))
+                // FlatButton(
+                //     onPressed: () {
+                //       WebServices(this.mApiListener)
+                //           .createAccount('+94538469674');
+                //     },
+                //     child: Text('Inser User'))
+                _bodyItem()
               ],
             ),
           ),
-        ), //_bodyItem(),
+        ),
         drawer: _drawer(),
         backgroundColor: Colors.grey[200],
         bottomNavigationBar: _bottemTab());
@@ -135,15 +82,16 @@ class _PaytmState extends State<Paytm> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         UserAccountsDrawerHeader(
-          accountName: Text('Ilham Safeek'),
+          accountName: Text('Pilot Profile'),
           accountEmail: Text('${this.userId}'),
           currentAccountPicture: CircleAvatar(
             child: Text("i"),
+            backgroundColor: Colors.grey,
           ),
         ),
         ListTile(
           leading: Icon(Icons.person),
-          title: Text('Beneficiaries'),
+          title: Text('Profile'),
           onTap: () {
             // Navigator.pop(context);
             // Navigator.push(
@@ -161,6 +109,17 @@ class _PaytmState extends State<Paytm> {
             //   context,
             //   MaterialPageRoute(builder: (context) => History()),
             // );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.bookmark),
+          title: Text('My Appeals'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Project()),
+            );
           },
         ),
         new Expanded(
@@ -182,7 +141,7 @@ class _PaytmState extends State<Paytm> {
                       child: Text('Sign out',
                           style: TextStyle(
                               fontFamily: "Exo2",
-                              color: Colors.blue,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -215,14 +174,14 @@ class _PaytmState extends State<Paytm> {
                     padding: const EdgeInsets.only(left: 20),
                     child: Icon(
                       Icons.search,
-                      color: Colors.blue,
+                      color: Colors.grey,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
                     child: Image.asset(
                       "assets/uanotif_nomessage.png",
-                      color: Colors.blue,
+                      color: Colors.grey,
                       width: 20,
                       height: 20,
                     ),
@@ -411,7 +370,7 @@ class _PaytmState extends State<Paytm> {
                     "assets/right-arrow.png",
                     height: 13,
                     width: 13,
-                    color: Colors.black,
+                    color: Colors.grey,
                   ),
                 ],
               ),
@@ -421,9 +380,10 @@ class _PaytmState extends State<Paytm> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             crossAxisCount: 4,
-            children: List<GridItem>.generate(12, (int index) {
-              return GridItem(_getGridItemList()[index]);
-            }),
+            children: List<GridItem>.generate(12,(int index) {
+                return GridItem(_getGridItemList()[index]);
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 1, bottom: 5),
