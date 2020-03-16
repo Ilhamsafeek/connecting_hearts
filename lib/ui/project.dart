@@ -4,6 +4,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/project_detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 class Project extends StatefulWidget {
   @override
   _ProjectPageState createState() => _ProjectPageState();
@@ -28,12 +29,10 @@ class _ProjectPageState extends State<Project> {
           backgroundColor: Color.fromRGBO(104, 45, 127, 1),
         ),
         body: Center(
-        child: new RefreshIndicator(
+            child: new RefreshIndicator(
           child: SingleChildScrollView(child: Container(child: buildData())),
           onRefresh: _handleRefresh,
-        )
-        )
-        );
+        )));
   }
 
   Widget buildData() {
@@ -63,9 +62,9 @@ class _ProjectPageState extends State<Project> {
           children = <Widget>[
             SizedBox(
               child: SpinKitPulse(
-            color: Colors.grey,
-            size: 120.0,
-          ),
+                color: Colors.grey,
+                size: 120.0,
+              ),
               width: 50,
               height: 50,
             ),
@@ -89,6 +88,8 @@ class _ProjectPageState extends State<Project> {
   Card projectCard(dynamic data) {
     FlutterMoneyFormatter formattedAmount =
         FlutterMoneyFormatter(amount: double.parse('${data['amount']}'));
+ FlutterMoneyFormatter formattedCollected =
+        FlutterMoneyFormatter(amount: double.parse('${data['collected']}'));
 
     return Card(
       child: Column(
@@ -123,24 +124,24 @@ class _ProjectPageState extends State<Project> {
           ),
           ListTile(
             trailing: Column(children: <Widget>[
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                      fontFamily: "Exo2",
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0),
-                  children: [
-                    WidgetSpan(
-                      child: Text('Rs.'),
-                    ),
-                    TextSpan(text: '${formattedAmount.output.withoutFractionDigits}'),
-                  ],
-                  
+              Text(
+                '${formattedAmount.output.withoutFractionDigits}',
+                style: TextStyle(
+                    fontFamily: "Exo2",
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0),
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              Text(
+                '${formattedCollected.output.withoutFractionDigits}',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 14,
                 ),
               ),
-            
-             Icon(Icons.straighten)
             ]),
           ),
           Container(

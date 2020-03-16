@@ -51,82 +51,130 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           SliverFillRemaining(
             child: new Center(
               child: Column(children: <Widget>[
-                ListTile(
-                  title: Text('${widget.projectData['details']}'),
-                ),
+                _detailSection(),
                 Container(
                   color: Colors.black,
                   width: double.infinity,
                   height: 0.1,
                 ),
+                _buildBottomBar(context),
               ]),
             ),
           )
         ]));
   }
 
-  Card projectCard(dynamic data) {
-    FlutterMoneyFormatter formattedAmount =
-        FlutterMoneyFormatter(amount: double.parse('${data['amount']}'));
-
-    return Card(
+  Widget _detailSection() {
+    FlutterMoneyFormatter formattedAmount = FlutterMoneyFormatter(
+        amount: double.parse('${widget.projectData['amount']}'));
+ FlutterMoneyFormatter formattedCollected = FlutterMoneyFormatter(
+        amount: double.parse('${widget.projectData['collected']}'));
+    return Expanded(
+        child: Padding(
+      padding: const EdgeInsets.all(
+        24,
+      ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.album),
-            title: Text('${data['category']}'),
-            subtitle: Text('Family of ${data['children']} Members'),
-            trailing: FlatButton.icon(
-                onPressed: null,
-                icon: Icon(
-                  Icons.star_border,
-                  color: Colors.orange,
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: Text(
+                "${widget.projectData['date']}",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
                 ),
-                label: Text('${data['rating']}',
-                    style: TextStyle(fontWeight: FontWeight.bold))),
-          ),
-          ListTile(
-            leading: FlatButton.icon(
-                onPressed: null,
-                icon: Icon(
-                  Icons.location_on,
-                  size: 14.0,
+              )),
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 18,
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              Text(
+                "${formattedCollected.output.withoutFractionDigits}",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 14,
                 ),
-                label: Text(
-                  '${data['city']},${data['district']}',
-                  style: TextStyle(color: Colors.blue),
-                )),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Icon(
+                Icons.star_border,
+                color: Colors.red,
+                size: 18,
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              Text(
+                "${widget.projectData['rating']}",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
           ),
-          ListTile(
-            trailing: FlatButton.icon(
-                onPressed: null,
-                icon: Text('Rs.'),
-                label: Text('${formattedAmount.output.nonSymbol}',
-                    style: TextStyle(
-                        fontFamily: "Exo2",
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0))),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+            ),
+            child: Text(
+              "\Rs." + "${formattedAmount.output.withoutFractionDigits}",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-          Container(
-            color: Colors.black,
-            width: double.infinity,
-            height: 0.1,
+          Text(
+            "${widget.projectData['details']}",
+            style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
+          )
+        ],
+      ),
+    ));
+  }
+
+   Widget _buildBottomBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12,),
+              child: Icon(Icons.favorite_border, color: Theme.of(context).accentColor,),
+            ),
           ),
-          Container(
-              child: ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                InkWell(
-                  child: Text("view more"),
-                  onTap: null,
-                )
-              ]))
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16,),
+              child: RaisedButton(onPressed: () {},
+                padding: EdgeInsets.all(16,),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8,))),
+                color: Color.fromRGBO(54, 74, 105, 1),
+                child: Text("Donate now", style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                ),),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
+
 
   Future<Null> _handleRefresh() async {
     await new Future.delayed(new Duration(seconds: 2));
