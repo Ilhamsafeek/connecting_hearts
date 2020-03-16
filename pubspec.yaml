@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_money_formatter: ^0.8.3
+  progress_indicators: "^0.1.4"
   flutter_verification_code_input:
       git:
         url: git://github.com/tinylife-io/flutter_verification_code_input.git
@@ -105,6 +106,8 @@ flutter:
   - assets/profilebackground.png
   - assets/donations.png
   - assets/language.png
+  - assets/background.png
+  - assets/child.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

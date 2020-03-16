@@ -85,7 +85,11 @@ class _PaytmState extends State<Paytm> {
           accountName: Text('Pilot Profile'),
           accountEmail: Text('${this.userId}'),
           currentAccountPicture: CircleAvatar(
-            child: Text("i"),
+            child: Icon(
+              Icons.person,
+              size: 35.0,
+              color: Colors.black45,
+            ),
             backgroundColor: Colors.grey,
           ),
         ),
@@ -114,15 +118,15 @@ class _PaytmState extends State<Paytm> {
         ListTile(
           leading: Icon(Icons.bookmark),
           title: Text('My Appeals'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Project()),
-            );
-          },
+          onTap: null,
         ),
-        new Expanded(
+        ListTile(
+          leading: Icon(Icons.settings),
+          title: Text('Settings'),
+          onTap: null,
+        ),
+        Container(),
+        Expanded(
           child: new Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -202,99 +206,47 @@ class _PaytmState extends State<Paytm> {
         type: BottomNavigationBarType.fixed,
         items: [
           new BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/home.png",
-                width: 24.0,
-                height: 24.0,
+              icon: Icon(
+                Icons.home,
+                size: 27.0,
               ),
               title: Text(
                 'Home',
               )),
           new BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/delivery.png",
-                width: 24.0,
-                height: 24.0,
+              icon: Icon(
+                Icons.message,
+                size: 27.0,
               ),
               title: Text(
                 'Inbox',
               )),
           new BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/contact.png",
-                width: 24.0,
-                height: 24.0,
+              icon: Icon(
+                Icons.call,
+                size: 27.0,
               ),
               title: Text(
                 'Contact',
               )),
           new BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/videos.png",
-                width: 24.0,
-                height: 24.0,
+              icon: Icon(
+                Icons.play_circle_filled,
+                size: 27.0,
               ),
               title: Text(
                 'Video',
               )),
           new BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/download.png",
-                width: 24.0,
-                height: 24.0,
+              icon: Icon(
+                Icons.file_download,
+                size: 27.0,
               ),
               title: Text(
                 'downloads',
               )),
         ]);
   }
-
-  // Card balaneCard(Data data) {
-  //   FlutterMoneyFormatter formattedAmount =
-  //       FlutterMoneyFormatter(amount: double.parse('${data.roleId}'));
-  //   return Card(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(10.0),
-  //     ),
-  //     color: Color.fromRGBO(255, 128, 0, 1.0),
-  //     elevation: 10,
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: <Widget>[
-  //         ListTile(
-  //           leading: Icon(Icons.album, size: 70),
-  //           title: Text('Balance', style: TextStyle(color: Colors.white)),
-  //           subtitle: Text('LKR ${formattedAmount.output.nonSymbol}',
-  //               style: TextStyle(
-  //                   fontFamily: "Exo2",
-  //                   color: Colors.white,
-  //                   fontSize: 22,
-  //                   fontWeight: FontWeight.bold)),
-  //         ),
-  //         ButtonTheme.bar(
-  //           child: ButtonBar(
-  //             children: <Widget>[
-  //               FlatButton(
-  //                 child:
-  //                     const Text('Send', style: TextStyle(color: Colors.white)),
-  //                 onPressed: () {
-  //                   //sendModalBottomSheet(context);
-  //                 },
-  //               ),
-  //               FlatButton(
-  //                 child: const Text('Recieve',
-  //                     style: TextStyle(color: Colors.white)),
-  //                 onPressed: () {
-  //                   // _showDialog();
-  //                 },
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _bodyItem() {
     return SingleChildScrollView(
@@ -377,16 +329,38 @@ class _PaytmState extends State<Paytm> {
             ),
           ),
           GridView.count(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            children: List<GridItem>.generate(
-              12,
-              (int index) {
-                return GridItem(_getGridItemList()[index]);
-              },
-            ),
-          ),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              children: <Widget>[
+                InkWell(
+                    child: GridItem(
+                        GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Project()),
+                      );
+                    }),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+              ]
+
+              // List<GridItem>.generate(12,(int index) {
+              //       return GridItem(_getGridItemList()[index]);
+              //     },
+              //   ),
+
+              ),
           Padding(
             padding: const EdgeInsets.only(top: 1, bottom: 5),
             child: Container(

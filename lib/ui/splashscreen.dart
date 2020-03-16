@@ -17,7 +17,7 @@ class SplashScreenState extends State<SplashScreen>
   Animation<double> animation;
 
   startTime() async {
-    var _duration = new Duration(seconds: 3);
+    var _duration = new Duration(seconds: 1);
     return new Timer(_duration, navigationPage);
   }
 
@@ -39,7 +39,7 @@ class SplashScreenState extends State<SplashScreen>
     super.initState();
     animationController = new AnimationController(
       vsync: this,
-      duration: new Duration(seconds: 2),
+      duration: new Duration(milliseconds: 800),
     );
     animation =
         new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
