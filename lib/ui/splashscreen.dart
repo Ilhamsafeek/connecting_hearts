@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/constant/Constant.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -22,7 +22,16 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed(PAY_TM);
+    FirebaseAuth.instance.currentUser().then((user) {
+     
+     print(user);
+
+      if (user != null) {
+        Navigator.of(context).pushReplacementNamed(PAY_TM);
+      } else {
+        Navigator.of(context).pushReplacementNamed(SIGN_IN);
+      }
+    });
   }
 
   @override

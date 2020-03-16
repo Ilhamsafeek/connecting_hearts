@@ -1,3 +1,4 @@
 String SPLASH_SCREEN='/SplashScreen',
-PAY_TM='/Paytm';
+PAY_TM='/Paytm',
+SIGN_IN='/Signin';
 

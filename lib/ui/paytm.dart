@@ -380,7 +380,9 @@ class _PaytmState extends State<Paytm> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             crossAxisCount: 4,
-            children: List<GridItem>.generate(12,(int index) {
+            children: List<GridItem>.generate(
+              12,
+              (int index) {
                 return GridItem(_getGridItemList()[index]);
               },
             ),

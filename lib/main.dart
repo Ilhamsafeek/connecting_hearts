@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: <String, WidgetBuilder>{
         SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
-        PAY_TM: (BuildContext context) =>Signin(),
+        PAY_TM: (BuildContext context) =>Paytm(),
+        SIGN_IN: (BuildContext context) =>Signin(),
       },
     );
   }
