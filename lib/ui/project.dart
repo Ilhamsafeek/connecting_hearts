@@ -125,7 +125,7 @@ class _ProjectPageState extends State<Project> {
           ListTile(
             trailing: Column(children: <Widget>[
               Text(
-                '${formattedAmount.output.withoutFractionDigits}',
+               'Rs.'+ '${formattedAmount.output.withoutFractionDigits}',
                 style: TextStyle(
                     fontFamily: "Exo2",
                     color: Colors.black,

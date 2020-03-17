@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/ui/paytm.dart';
 import 'package:zamzam/ui/splashscreen.dart';
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: MyTabs(),
       theme: new ThemeData(primaryColor: Color.fromRGBO(104, 45, 127, 1),
       ),
       routes: <String, WidgetBuilder>{
