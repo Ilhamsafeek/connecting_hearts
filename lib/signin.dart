@@ -5,9 +5,9 @@ import 'package:country_pickers/country.dart';
 import 'package:flutter_verification_code_input/flutter_verification_code_input.dart';
 import 'package:zamzam/services/webservices.dart';
 import 'package:zamzam/services/apilistener.dart';
-import 'package:zamzam/ui/paytm.dart';
-import 'package:zamzam/main.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:zamzam/Tabs.dart';
+
 
 class Signin extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _SigninPageState extends State<Signin> {
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         Navigator.of(context).pop();
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) => Paytm()));
+            MaterialPageRoute(builder: (BuildContext context) => MyTabs()));
       }).catchError((e) {
         print(e);
       });
@@ -106,7 +106,7 @@ class _SigninPageState extends State<Signin> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            Paytm()));
+                                            MyTabs()));
                               } else {
                                 Navigator.of(context).pop();
                                 signIn();
@@ -136,7 +136,7 @@ class _SigninPageState extends State<Signin> {
         WebServices(this.mApiListener).createAccount('${this.countryCode} ${this.phoneNo}');
         Navigator.of(context).pop();
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) => Paytm()));
+            MaterialPageRoute(builder: (BuildContext context) => MyTabs()));
       }).catchError((e) {
         print(e);
       });

@@ -75,8 +75,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               text: "Home",
             ),
             new Tab(
-              icon: new Icon(Icons.whatshot),
-              text: "Trending",
+              icon: new Icon(Icons.streetview),
+              text: "Charity",
             ),
             new Tab(
               icon: new Icon(Icons.subscriptions),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
-import 'package:youtube_player/youtube_player.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -19,7 +18,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   ApiListener mApiListener;
-   VideoPlayerController _videoController;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
