@@ -4,6 +4,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/project_detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Project extends StatefulWidget {
   @override
@@ -88,9 +89,20 @@ class _ProjectPageState extends State<Project> {
   Card projectCard(dynamic data) {
     FlutterMoneyFormatter formattedAmount =
         FlutterMoneyFormatter(amount: double.parse('${data['amount']}'));
- FlutterMoneyFormatter formattedCollected =
+    FlutterMoneyFormatter formattedCollected =
         FlutterMoneyFormatter(amount: double.parse('${data['collected']}'));
+    double completedPercent = 100 *
+        double.parse('${data['collected']}') /
+        double.parse('${data['amount']}');
+    Color completedColor = Colors.orange;
+    Color percentColor = Colors.black;
+    if (completedPercent >= 100) {
+      completedPercent = 100.0;
+      completedColor = Colors.green[900];
+      percentColor = Colors.white;
+    }
 
+    double percent = completedPercent / 100;
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -123,26 +135,28 @@ class _ProjectPageState extends State<Project> {
                 )),
           ),
           ListTile(
-            trailing: Column(children: <Widget>[
-              Text(
-               'Rs.'+ '${formattedAmount.output.withoutFractionDigits}',
+            title: new LinearPercentIndicator(
+              animation: true,
+              lineHeight: 14.0,
+              animationDuration: 2000,
+              width: 140.0,
+              percent: percent,
+              center: Text(
+                "${double.parse(completedPercent.toStringAsFixed(2))}%",
+                style: new TextStyle(fontSize: 12.0, color: percentColor),
+              ),
+              trailing: Text(
+                'Rs.' + '${formattedAmount.output.withoutFractionDigits}',
                 style: TextStyle(
                     fontFamily: "Exo2",
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0),
               ),
-              SizedBox(
-                width: 2,
-              ),
-              Text(
-                '${formattedCollected.output.withoutFractionDigits}',
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 14,
-                ),
-              ),
-            ]),
+              linearStrokeCap: LinearStrokeCap.roundAll,
+              backgroundColor: Colors.grey,
+              progressColor: completedColor,
+            ),
           ),
           Container(
             color: Colors.black,

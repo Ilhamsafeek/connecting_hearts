@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:youtube_player/youtube_player.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   ApiListener mApiListener;
-
+   VideoPlayerController _videoController;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +58,16 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   width: double.infinity,
                   height: 0.1,
                 ),
+                YoutubePlayer(
+                  context: context,
+                  source: "https://www.youtube.com/watch?v=R9C5KMJKluE",
+                  quality: YoutubeQuality.HD,
+                  // callbackController is (optional).
+                  // use it to control player on your own.
+                  callbackController: (controller) {
+                    _videoController = controller;
+                  },
+                ),
                 _buildBottomBar(context),
               ]),
             ),
@@ -67,7 +78,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   Widget _detailSection() {
     FlutterMoneyFormatter formattedAmount = FlutterMoneyFormatter(
         amount: double.parse('${widget.projectData['amount']}'));
- FlutterMoneyFormatter formattedCollected = FlutterMoneyFormatter(
+    FlutterMoneyFormatter formattedCollected = FlutterMoneyFormatter(
         amount: double.parse('${widget.projectData['collected']}'));
     return Expanded(
         child: Padding(
@@ -144,7 +155,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     ));
   }
 
-   Widget _buildBottomBar(BuildContext context) {
+  Widget _buildBottomBar(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -152,21 +163,37 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         children: <Widget>[
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(12,),
-              child: Icon(Icons.favorite_border, color: Theme.of(context).accentColor,),
+              padding: const EdgeInsets.all(
+                12,
+              ),
+              child: Icon(
+                Icons.favorite_border,
+                color: Theme.of(context).accentColor,
+              ),
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16,),
-              child: RaisedButton(onPressed: () {},
-                padding: EdgeInsets.all(16,),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8,))),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: RaisedButton(
+                onPressed: () {},
+                padding: EdgeInsets.all(
+                  16,
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(
+                  8,
+                ))),
                 color: Color.fromRGBO(54, 74, 105, 1),
-                child: Text("Donate now", style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),),
+                child: Text(
+                  "Donate now",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),
@@ -174,7 +201,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
       ),
     );
   }
-
 
   Future<Null> _handleRefresh() async {
     await new Future.delayed(new Duration(seconds: 2));
