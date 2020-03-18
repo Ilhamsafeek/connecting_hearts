@@ -164,19 +164,18 @@ class _ProjectPageState extends State<Project> {
             height: 0.1,
           ),
           Container(
-              child: ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                InkWell(
-                    child: Text("view more"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProjectDetail(data)),
-                      );
-                    }),
-              ]))
+              child: RawMaterialButton(
+            constraints: BoxConstraints(),
+            padding: EdgeInsets.all(
+                5.0), // optional, in order to add additional space around text if needed
+            child: Text('view more'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProjectDetail(data)),
+              );
+            },
+          ))
         ],
       ),
     );

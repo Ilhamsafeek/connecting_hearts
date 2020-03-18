@@ -26,16 +26,15 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         backgroundColor: Colors.grey[200],
         body: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
+            
             expandedHeight: 200.0,
+            
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('${widget.projectData['category']}'),
               background:
-                  // Image.network(
-                  //   'assets/real.png',
-                  //   fit: BoxFit.cover,
-                  // ),
+               
                   Image.asset(
                 "assets/child.png",
                 fit: BoxFit.cover,
@@ -50,6 +49,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ],
           ),
           SliverFillRemaining(
+            
             child: new Center(
               child: Column(children: <Widget>[
                 _detailSection(),
@@ -58,17 +58,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   width: double.infinity,
                   height: 0.1,
                 ),
-                YoutubePlayer(
-                  context: context,
-                  source: "https://www.youtube.com/watch?v=R9C5KMJKluE",
-                  quality: YoutubeQuality.HD,
-                  // callbackController is (optional).
-                  // use it to control player on your own.
-                  callbackController: (controller) {
-                    _videoController = controller;
-                  },
-                ),
-                _buildBottomBar(context),
+               
+                // _buildBottomBar(),
               ]),
             ),
           )
@@ -138,6 +129,17 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             padding: const EdgeInsets.symmetric(
               vertical: 20,
             ),
+            child: Column(
+              children: <Widget> [
+                Chip( label: Text('${widget.projectData['category']}')),
+                 Chip( label: Text('test label'))
+              ]
+            )
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+            ),
             child: Text(
               "\Rs." + "${formattedAmount.output.withoutFractionDigits}",
               style: TextStyle(
@@ -155,9 +157,9 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     ));
   }
 
-  Widget _buildBottomBar(BuildContext context) {
+  Widget _buildBottomBar() {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
