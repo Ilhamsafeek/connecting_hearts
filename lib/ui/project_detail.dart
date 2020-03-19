@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -18,23 +19,26 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   ApiListener mApiListener;
-  
+  static String videoId= YoutubePlayer.convertUrlToId("https://www.youtube.com/watch?v=mqVFPLa6yAY");
+  YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: videoId,
+    flags: YoutubePlayerFlags(
+      autoPlay: false,
+      mute: false,
+    ),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         body: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
-            
             expandedHeight: 200.0,
-            
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('${widget.projectData['category']}'),
-              background:
-               
-                  Image.asset(
+              background: Image.asset(
                 "assets/child.png",
                 fit: BoxFit.cover,
               ),
@@ -48,7 +52,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ],
           ),
           SliverFillRemaining(
-            
             child: new Center(
               child: Column(children: <Widget>[
                 _detailSection(),
@@ -57,7 +60,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   width: double.infinity,
                   height: 0.1,
                 ),
-               
+
                 // _buildBottomBar(),
               ]),
             ),
@@ -125,16 +128,13 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            child: Column(
-              children: <Widget> [
-                Chip( label: Text('${widget.projectData['category']}')),
-                 Chip( label: Text('test label'))
-              ]
-            )
-          ),
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+              ),
+              child: Column(children: <Widget>[
+                Chip(label: Text('${widget.projectData['category']}')),
+                Chip(label: Text('test label'))
+              ])),
           Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
@@ -150,7 +150,11 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           Text(
             "${widget.projectData['details']}",
             style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
-          )
+          ),
+          YoutubePlayer(
+            controller: _controller,
+            showVideoProgressIndicator: true,
+          ),
         ],
       ),
     ));

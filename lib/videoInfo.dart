@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoFeed extends StatefulWidget {
   VideoFeed({Key key}) : super(key: key);
@@ -8,6 +9,16 @@ class VideoFeed extends StatefulWidget {
 }
 
 class _VideoFeedState extends State<VideoFeed> {
+  static String videoId = YoutubePlayer.convertUrlToId(
+      "https://www.youtube.com/watch?v=mqVFPLa6yAY");
+  YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: videoId,
+    flags: YoutubePlayerFlags(
+      autoPlay: false,
+      mute: false,
+    ),
+  );
+
   List<Map> data = [
     {
       'url': 'https://www.youtube.com/watch?v=3R6KnQLvZNI',
@@ -65,9 +76,15 @@ class _VideoFeedState extends State<VideoFeed> {
           child: Column(
             children: <Widget>[
               AspectRatio(
-                child: Image(
-                  image: NetworkImage(data[index]['thumbnail']),
-                  centerSlice: Rect.largest,
+                child: YoutubePlayer(
+                  controller: YoutubePlayerController(
+                    initialVideoId: videoId,
+                    flags: YoutubePlayerFlags(
+                      autoPlay: false,
+                      mute: false,
+                    ),
+                  ),
+                  showVideoProgressIndicator: true,
                 ),
                 aspectRatio: 16 / 9,
               ),
@@ -79,10 +96,11 @@ class _VideoFeedState extends State<VideoFeed> {
                   data[index]['title'],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text(data[index]['creator']+" . "+data[index]['date'],
-                    style: TextStyle(
-                      color: Colors.grey,
-                    )),
+                subtitle:
+                    Text(data[index]['creator'] + " . " + data[index]['date'],
+                        style: TextStyle(
+                          color: Colors.grey,
+                        )),
                 trailing: Icon(Icons.more_vert),
               ),
             ],
