@@ -27,7 +27,7 @@ class SplashScreenState extends State<SplashScreen>
      print(user);
 
       if (user != null) {
-        Navigator.of(context).pushReplacementNamed(PAY_TM);
+        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       } else {
         Navigator.of(context).pushReplacementNamed(SIGN_IN);
       }

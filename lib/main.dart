@@ -12,13 +12,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyTabs(),
+      home: SplashScreen(),
       theme: new ThemeData(primaryColor: Color.fromRGBO(104, 45, 127, 1),
       ),
       routes: <String, WidgetBuilder>{
         SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
         PAY_TM: (BuildContext context) =>Paytm(),
         SIGN_IN: (BuildContext context) =>Signin(),
+        HOME_PAGE: (BuildContext context) =>MyTabs(),
       },
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:country_pickers/country.dart';
 import 'package:flutter_verification_code_input/flutter_verification_code_input.dart';
+import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/services/webservices.dart';
 import 'package:zamzam/services/apilistener.dart';
 import 'package:country_pickers/country_pickers.dart';
@@ -38,9 +39,7 @@ class _SigninPageState extends State<Signin> {
         (AuthCredential credential) {
       print('verified');
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-        Navigator.of(context).pop();
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) => MyTabs()));
+        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
         print(e);
       });
@@ -101,12 +100,7 @@ class _SigninPageState extends State<Signin> {
                           onPressed: () {
                             FirebaseAuth.instance.currentUser().then((user) {
                               if (user != null) {
-                                Navigator.of(context).pop();
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            MyTabs()));
+                                Navigator.of(context).pushReplacementNamed(HOME_PAGE);
                               } else {
                                 Navigator.of(context).pop();
                                 signIn();
@@ -134,9 +128,7 @@ class _SigninPageState extends State<Signin> {
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         
         WebServices(this.mApiListener).createAccount('${this.countryCode} ${this.phoneNo}');
-        Navigator.of(context).pop();
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) => MyTabs()));
+        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
         print(e);
       });

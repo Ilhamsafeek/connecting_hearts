@@ -84,7 +84,6 @@ class _ProjectPageState extends State<Project> {
         );
       },
     );
- 
   }
 
   Card projectCard(dynamic data) {
