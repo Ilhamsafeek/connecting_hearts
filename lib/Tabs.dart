@@ -7,6 +7,7 @@ import 'package:zamzam/ui/screens/screen4.dart';
 import 'package:zamzam/ui/screens/screen5.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 
 // Main code for all the tabs
@@ -19,6 +20,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   static final homePageKey = GlobalKey<MyTabsState>();
   TabController tabcontroller;
   String userId;
+  FirebaseMessaging messaging = FirebaseMessaging();
 
   @override
   void initState() {
@@ -31,6 +33,27 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     });
     super.initState();
     tabcontroller = new TabController(vsync: this, length: 5);
+
+    messaging.configure(
+      onLaunch: (Map<String,dynamic> event) async{
+        print("onLaunch $event");
+      },
+      onMessage: (Map<String,dynamic> event) async{
+         print("onMessage $event");
+      },
+      onResume: (Map<String,dynamic> event) async{
+         print("onResume $event");
+      },
+    );
+    // messaging.subscribeToTopic('all');
+    messaging.requestNotificationPermissions(IosNotificationSettings(
+      sound: true,
+      badge: true,
+      alert: true
+    ) );
+    messaging.getToken().then((token){
+      print("your token is : $token");
+    });
   }
 
   @override

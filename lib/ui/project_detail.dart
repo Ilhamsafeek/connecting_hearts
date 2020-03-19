@@ -16,6 +16,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   @override
   void initState() {
     super.initState();
+    
   }
 
   ApiListener mApiListener;
@@ -54,7 +55,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   height: 0.1,
                 ),
 
-                // _buildBottomBar(),
+                _buildBottomBar(),
               ]),
             ),
           )

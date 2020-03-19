@@ -36,6 +36,7 @@ dependencies:
   flutter_swiper : ^1.1.6
   cupertino_icons: ^0.1.2
   firebase_auth:
+  firebase_messaging: ^6.0.12
   http:
   
 dev_dependencies:

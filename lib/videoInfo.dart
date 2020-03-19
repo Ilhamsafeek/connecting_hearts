@@ -67,6 +67,7 @@ class _VideoFeedState extends State<VideoFeed> {
         body: Center(
             child: new RefreshIndicator(
           child: SingleChildScrollView(child: Container(child: videoCadge())),
+          color: Colors.black,
           onRefresh: _handleRefresh,
         )));
   }
@@ -92,7 +93,6 @@ class _VideoFeedState extends State<VideoFeed> {
                         flags: YoutubePlayerFlags(
                           autoPlay: false,
                           mute: false,
-                          controlsVisibleAtStart: false,
                         ),
                       ),
                     ),
