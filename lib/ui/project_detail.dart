@@ -19,14 +19,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   ApiListener mApiListener;
-  static String videoId= YoutubePlayer.convertUrlToId("https://www.youtube.com/watch?v=mqVFPLa6yAY");
-  YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: videoId,
-    flags: YoutubePlayerFlags(
-      autoPlay: false,
-      mute: false,
-    ),
-  );
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,10 +144,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             "${widget.projectData['details']}",
             style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
           ),
-          YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-          ),
+         
         ],
       ),
     ));

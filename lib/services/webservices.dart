@@ -42,6 +42,14 @@ class WebServices {
     print('Response body: ${response.body}');
   }
 
+  Future<dynamic> getSermonData() async {
+    var response = await http.get("https://chadmin.online/api/allsermons");
+    var jsonServerData = json.decode(response.body);
+    
+    return jsonServerData;
+  }
+
+
   Future<List<HistoryData>> getHistoryData() async {
     var user = await http.get('https://www.hashnative.com/gethistory');
     var jsonData = json.decode(user.body);
