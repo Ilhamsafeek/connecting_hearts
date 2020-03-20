@@ -96,7 +96,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               controller: tabcontroller,
               indicatorColor: Colors.black,
               unselectedLabelColor: Colors.grey,
-              labelColor: Colors.redAccent[700],
+              labelColor: Color.fromRGBO(54, 74, 105, 1),  //Colors.redAccent[700],
               labelStyle: TextStyle(fontSize: 11.0),
               tabs: <Tab>[
             new Tab(
@@ -108,16 +108,16 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               text: "Charity",
             ),
             new Tab(
-              icon: new Icon(Icons.subscriptions),
-              text: "Subscriptions",
+              icon: new Icon(Icons.card_travel),
+              text: "Jobs",
             ),
             new Tab(
               icon: new Icon(Icons.inbox),
               text: "Inbox",
             ),
             new Tab(
-              icon: new Icon(Icons.folder),
-              text: "Library",
+              icon: new Icon(Icons.call),
+              text: "Contact",
             ),
           ])),
       body: new TabBarView(controller: tabcontroller, children: <Widget>[

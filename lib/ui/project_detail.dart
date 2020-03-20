@@ -16,11 +16,10 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   ApiListener mApiListener;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,10 +53,10 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   width: double.infinity,
                   height: 0.1,
                 ),
-
                 _buildBottomBar(),
               ]),
             ),
+            hasScrollBody: true,
           )
         ]));
   }
@@ -122,13 +121,25 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20,
-              ),
-              child: Column(children: <Widget>[
-                Chip(label: Text('${widget.projectData['category']}')),
-                Chip(label: Text('test label'))
-              ])),
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Chip(label: Text('${widget.projectData['category']}')),
+                    Chip(label: Text('test label')),
+                    Chip(label: Text('test label')),
+                    Chip(label: Text('test label'))
+
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
@@ -145,7 +156,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             "${widget.projectData['details']}",
             style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
           ),
-         
         ],
       ),
     ));

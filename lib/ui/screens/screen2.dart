@@ -219,6 +219,7 @@ class _TrendingState extends State<Trending> {
                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
               ]
 
               // List<GridItem>.generate(12,(int index) {

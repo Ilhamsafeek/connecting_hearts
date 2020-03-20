@@ -10,6 +10,6 @@ class Subscriptioins extends StatefulWidget {
 class _SubscriptioinsState extends State<Subscriptioins> {
   @override
   Widget build(BuildContext context) {
-    return null;
+    return Scaffold();
   }
 }
