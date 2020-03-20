@@ -3,17 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:zamzam/ui/payment.dart';
 
-class ProjectDetail extends StatefulWidget {
+class Payment extends StatefulWidget {
   @override
-  _ProjectDetailPageState createState() => _ProjectDetailPageState();
+  _PaymentPageState createState() => _PaymentPageState();
 
   final dynamic projectData;
-  ProjectDetail(this.projectData, {Key key}) : super(key: key);
+  Payment(this.projectData, {Key key}) : super(key: key);
 }
 
-class _ProjectDetailPageState extends State<ProjectDetail> {
+class _PaymentPageState extends State<Payment> {
   @override
   void initState() {
     super.initState();
@@ -31,19 +30,10 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('${widget.projectData['category']}'),
-              background: Image.asset(
-                "assets/child.png",
-                fit: BoxFit.cover,
-              ),
+              title: Text('Payment'),
+             
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.share),
-                tooltip: 'Share this appeal',
-                onPressed: () {/* ... */},
-              ),
-            ],
+           
           ),
           SliverFillRemaining(
             child: new Center(
@@ -54,7 +44,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   width: double.infinity,
                   height: 0.1,
                 ),
-                _buildBottomBar(),
+               
               ]),
             ),
             hasScrollBody: true,
@@ -162,58 +152,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     ));
   }
 
-  Widget _buildBottomBar() {
-    return Padding(
-      padding: const EdgeInsets.all(5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(
-                12,
-              ),
-              child: Icon(
-                Icons.favorite_border,
-                color: Theme.of(context).accentColor,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Payment(widget.projectData)),
-              );
-                },
-                padding: EdgeInsets.all(
-                  16,
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(
-                  8,
-                ))),
-                color: Color.fromRGBO(54, 74, 105, 1),
-                child: Text(
-                  "Donate now",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Future<Null> _handleRefresh() async {
     await new Future.delayed(new Duration(seconds: 2));
 
@@ -221,5 +159,4 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
 
     return null;
   }
-
 }
