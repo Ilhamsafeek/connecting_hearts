@@ -8,6 +8,7 @@ import 'package:zamzam/ui/screens/screen5.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:zamzam/services/services.dart';
 
 
 // Main code for all the tabs
@@ -21,6 +22,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   TabController tabcontroller;
   String userId;
   FirebaseMessaging messaging = FirebaseMessaging();
+   ApiListener mApiListener;
 
   @override
   void initState() {
@@ -35,24 +37,28 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     tabcontroller = new TabController(vsync: this, length: 5);
 
     messaging.configure(
-      onLaunch: (Map<String,dynamic> event) async{
+      onLaunch: (Map<String, dynamic> event) async {
         print("onLaunch $event");
       },
-      onMessage: (Map<String,dynamic> event) async{
-         print("onMessage $event");
+      onMessage: (Map<String, dynamic> event) async {
+        print("onMessage $event");
       },
-      onResume: (Map<String,dynamic> event) async{
-         print("onResume $event");
+      onResume: (Map<String, dynamic> event) async {
+        print("onResume $event");
       },
     );
     // messaging.subscribeToTopic('all');
-    messaging.requestNotificationPermissions(IosNotificationSettings(
-      sound: true,
-      badge: true,
-      alert: true
-    ) );
-    messaging.getToken().then((token){
+    messaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    messaging.getToken().then((token) {
       print("your token is : $token");
+    });
+
+    messaging.onTokenRefresh.listen((token) {
+      WebServices(this.mApiListener).updateUser(this.userId,token);
+
+       print("your token is chnged to : $token");
+      
     });
   }
 
@@ -126,7 +132,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     );
   }
 
-  
   Widget _drawer() {
     return new Drawer(
         child: Column(
@@ -211,10 +216,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     ));
   }
 
-  
   Future<FirebaseUser> currentUser() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return user;
   }
-
 }

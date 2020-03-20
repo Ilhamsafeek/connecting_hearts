@@ -16,17 +16,14 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<String> updateAmount(
-      String amount, String sender, String receiver) async {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-    var url = 'https://www.hashnative.com/updateoffers';
+  Future<String> updateUser(String userId, String appToken) async {
+    // DateTime now = DateTime.now();
+    // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+    var url = 'https://www.chadmin.online/api/updateaccount';
     var response = await http.post(url, body: {
-      'sender': '$sender',
-      'receiver': '$receiver',
-      'offer_price': '$amount',
-      'time': '$formattedDate',
-      'type': 'transfer'
+      'app_token': '$appToken',
+      'phone': '$userId',
+     
     });
 
     print(response.statusCode);
