@@ -47,6 +47,12 @@ class WebServices {
   }
 
 
+  Future<dynamic> getCategoryData() async {
+    var response = await http.get("https://www.chadmin.online/api/allprojectcategories");
+    var jsonServerData = json.decode(response.body);
+    
+    return jsonServerData;
+  }
   Future<List<HistoryData>> getHistoryData() async {
     var user = await http.get('https://www.hashnative.com/gethistory');
     var jsonData = json.decode(user.body);

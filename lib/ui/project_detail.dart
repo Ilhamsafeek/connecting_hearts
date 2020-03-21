@@ -48,6 +48,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           SliverFillRemaining(
             child: new Center(
               child: Column(children: <Widget>[
+                
                 _detailSection(),
                 Container(
                   color: Colors.black,
@@ -145,6 +146,16 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             padding: const EdgeInsets.symmetric(
               vertical: 20,
             ),
+            child: Text('${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}', style: TextStyle(color:Colors.blue),),
+            ),
+          Text(
+            "${widget.projectData['details']}",
+            style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+            ),
             child: Text(
               "\Rs." + "${formattedAmount.output.withoutFractionDigits}",
               style: TextStyle(
@@ -153,10 +164,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
             ),
           ),
-          Text(
-            "${widget.projectData['details']}",
-            style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
-          ),
+         
+        
         ],
       ),
     ));

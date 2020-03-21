@@ -73,9 +73,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     return new Scaffold(
       key: homePageKey,
       appBar: new AppBar(
-        title: Image(
-          image: AssetImage("images/appbarlogo.png"),
-        ),
+        
         actions: <Widget>[
           // IconButton(
           //   onPressed: () {},

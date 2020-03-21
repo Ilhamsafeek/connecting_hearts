@@ -8,7 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/project.dart';
-import 'package:zamzam/videoInfo.dart';
+import 'package:zamzam/services/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Trending extends StatefulWidget {
   Trending({Key key}) : super(key: key);
@@ -18,12 +19,12 @@ class Trending extends StatefulWidget {
 
 class _TrendingState extends State<Trending> {
   @override
-   ApiListener mApiListener;
+  ApiListener mApiListener;
 
   String userId;
- int _currentIndex = 0;
+  int _currentIndex = 0;
   int _currentIndexUp = 0;
- @override
+  @override
   void initState() {
     currentUser().then((value) {
       if (value != null) {
@@ -36,38 +37,20 @@ class _TrendingState extends State<Trending> {
     super.initState();
   }
 
-
-  
   Widget build(BuildContext context) {
-        return Scaffold(
-        // appBar: _appBar(),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                // offerResult != null
-                //     ? balaneCard(offerResult[0])
-                //     : Text('Fetching data..'),
-                // _sendMoneySectionWidget()
-
-                // FlatButton(
-                //     onPressed: () {
-                //       WebServices(this.mApiListener)
-                //           .createAccount('+94538469674');
-                //     },
-                //     child: Text('Inser User'))
-                _bodyItem()
-              ],
-            ),
+    return Scaffold(
+      // appBar: _appBar(),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[_bodyItem()],
           ),
         ),
-       
-        backgroundColor: Colors.grey[200],
-        );
-  
-  
-  }
+      ),
 
+      backgroundColor: Colors.grey[200],
+    );
+  }
 
   Future<FirebaseUser> currentUser() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -194,40 +177,75 @@ class _TrendingState extends State<Trending> {
               ),
             ),
           ),
-          GridView.count(
+          FutureBuilder<dynamic>(
+            future: WebServices(this.mApiListener).getCategoryData(), // a previously-obtained Future<String> or null
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              List<Widget> children;
+
+              if (snapshot.hasData) {
+
+                children = <Widget>[
+                  GridView.count(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               crossAxisCount: 4,
               children: <Widget>[
-                InkWell(
+                for (var item in snapshot.data)
+                    InkWell(
                     child: GridItem(
-                        GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
+                        GridModel("assets/zamzam.png", "${item['category']}", null)),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Project()),
                       );
                     }),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
               ]
 
-              // List<GridItem>.generate(12,(int index) {
-              //       return GridItem(_getGridItemList()[index]);
-              //     },
-              //   ),
-
+             
               ),
+         
+                  
+                ];
+              } else if (snapshot.hasError) {
+                children = <Widget>[
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                        'something Went Wrong !'), //Error: ${snapshot.error}
+                  )
+                ];
+              } else {
+                children = <Widget>[
+                  SizedBox(
+                    child: SpinKitPulse(
+                      color: Colors.grey,
+                      size: 120.0,
+                    ),
+                    width: 50,
+                    height: 50,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Text(''),
+                  )
+                ];
+              }
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: children,
+                ),
+              );
+            },
+          ),
+          
           Padding(
             padding: const EdgeInsets.only(top: 1, bottom: 5),
             child: Container(
@@ -439,4 +457,3 @@ class GridItemTop extends StatelessWidget {
     );
   }
 }
-
