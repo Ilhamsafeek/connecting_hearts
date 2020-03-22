@@ -53,6 +53,14 @@ class WebServices {
     return jsonServerData;
   }
 
+  Future<dynamic> getNotificationData() async {
+    var response =
+        await http.get("https://chadmin.online/api/allnotifications");
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData;
+  }
+
   Future<List<HistoryData>> getHistoryData() async {
     var user = await http.get('https://www.hashnative.com/gethistory');
     var jsonData = json.decode(user.body);

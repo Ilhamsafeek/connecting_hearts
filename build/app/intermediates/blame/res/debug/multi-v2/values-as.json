@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\connecting_hearts\\Original\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-as\\values-as.xml",
+            "outputFile": "D:\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-as\\values-as.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-play-services-basement-17.0.0.aar\\452e8dd5c024fb075fda167c36871eac\\res\\values-as\\values.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\connecting_hearts\\Original\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fa\\values-fa.xml",
+            "outputFile": "D:\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fa\\values-fa.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-firebase-messaging-20.0.1.aar\\349bc288681c3dee3eaf4c6482d57c2c\\res\\values-fa\\values.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\connecting_hearts\\Original\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-et\\values-et.xml",
+            "outputFile": "D:\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-et\\values-et.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\3b80727b88d9d93ca073b6684d8ca841\\res\\values-et\\values-et.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\connecting_hearts\\Original\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ro\\values-ro.xml",
+            "outputFile": "D:\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ro\\values-ro.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-17.1.0.aar\\7824be45883711fdabf5f69d003de941\\res\\values-ro\\values.xml",
