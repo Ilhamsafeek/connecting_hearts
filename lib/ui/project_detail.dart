@@ -45,21 +45,56 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
             ],
           ),
-          SliverFillRemaining(
-            child: new Center(
-              child: Column(children: <Widget>[
+        
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return Container(
                 
-                _detailSection(),
-                Container(
-                  color: Colors.black,
-                  width: double.infinity,
-                  height: 0.1,
-                ),
-                _buildBottomBar(),
-              ]),
-            ),
-            hasScrollBody: true,
-          )
+                alignment: Alignment.center,              
+                child: _detailSection(),
+              );
+            },
+            childCount: 1,
+          ),
+        ),
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return Container(
+                alignment: Alignment.center,
+                color: Colors.teal[100 * (index % 9)],
+                child: Text('grid item $index'),
+              );
+            },
+            childCount: 30,
+          ),
+      
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 15,
+            crossAxisSpacing: 15,
+            childAspectRatio: 2.0,
+          ),
+        ),
+       
+          // SliverFillRemaining(
+          //   child: new Center(
+          //     child: Column(children: <Widget>[
+                
+          //       _detailSection(),
+          //       Container(
+          //         color: Colors.black,
+          //         width: double.infinity,
+          //         height: 0.1,
+          //       ),
+          //       _buildBottomBar(),
+          //     ]),
+          //   ),
+          //   hasScrollBody: true,
+          // )
+       
+       
         ]));
   }
 
@@ -132,9 +167,30 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 Row(
                   children: <Widget>[
                     Chip(label: Text('${widget.projectData['category']}')),
-                    Chip(label: Text('test label')),
-                    Chip(label: Text('test label')),
-                    Chip(label: Text('test label'))
+                     RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Payment(widget.projectData)),
+              );
+                },
+                padding: EdgeInsets.all(
+                  16,
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(
+                  8,
+                ))),
+                color: Color.fromRGBO(54, 74, 105, 1),
+                child: Text(
+                  "Donate now",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+           
 
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +249,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
-              child: RaisedButton(
+              child:
+               RaisedButton(
                 onPressed: () {
                   Navigator.push(
                 context,
@@ -216,6 +273,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   ),
                 ),
               ),
+           
             ),
           ),
         ],

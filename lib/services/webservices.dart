@@ -12,7 +12,7 @@ class WebServices {
   Future<dynamic> getData() async {
     var response = await http.get("https://www.chadmin.online/api/projects");
     var jsonServerData = json.decode(response.body);
-    
+
     return jsonServerData;
   }
 
@@ -23,7 +23,6 @@ class WebServices {
     var response = await http.post(url, body: {
       'app_token': '$appToken',
       'phone': '$userId',
-     
     });
 
     print(response.statusCode);
@@ -42,17 +41,18 @@ class WebServices {
   Future<dynamic> getSermonData() async {
     var response = await http.get("https://chadmin.online/api/allsermons");
     var jsonServerData = json.decode(response.body);
-    
+
     return jsonServerData;
   }
-
 
   Future<dynamic> getCategoryData() async {
-    var response = await http.get("https://www.chadmin.online/api/allprojectcategories");
+    var response =
+        await http.get("https://www.chadmin.online/api/allprojectcategories");
     var jsonServerData = json.decode(response.body);
-    
+
     return jsonServerData;
   }
+
   Future<List<HistoryData>> getHistoryData() async {
     var user = await http.get('https://www.hashnative.com/gethistory');
     var jsonData = json.decode(user.body);
@@ -97,6 +97,13 @@ class WebServices {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response.body;
+  }
+
+  Future<dynamic> getStripeResponse() async {
+    var response = await http.get("https://www.chadmin.online/api/projects");
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData;
   }
 }
 

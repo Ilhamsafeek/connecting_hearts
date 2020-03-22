@@ -178,34 +178,30 @@ class _TrendingState extends State<Trending> {
             ),
           ),
           FutureBuilder<dynamic>(
-            future: WebServices(this.mApiListener).getCategoryData(), // a previously-obtained Future<String> or null
+            future: WebServices(this.mApiListener)
+                .getCategoryData(), // a previously-obtained Future<String> or null
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               List<Widget> children;
 
               if (snapshot.hasData) {
-
                 children = <Widget>[
                   GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 4,
-              children: <Widget>[
-                for (var item in snapshot.data)
-                    InkWell(
-                    child: GridItem(
-                        GridModel("assets/zamzam.png", "${item['category']}", null)),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Project()),
-                      );
-                    }),
-              ]
-
-             
-              ),
-         
-                  
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: 4,
+                      children: <Widget>[
+                        for (var item in snapshot.data)
+                          InkWell(
+                              child: GridItem(GridModel("assets/zamzam.png",
+                                  "${item['category']}", null)),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Project()),
+                                );
+                              }),
+                      ]),
                 ];
               } else if (snapshot.hasError) {
                 children = <Widget>[
@@ -245,7 +241,6 @@ class _TrendingState extends State<Trending> {
               );
             },
           ),
-          
           Padding(
             padding: const EdgeInsets.only(top: 1, bottom: 5),
             child: Container(
