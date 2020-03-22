@@ -333,15 +333,7 @@ class _PaytmState extends State<Paytm> {
               physics: NeverScrollableScrollPhysics(),
               crossAxisCount: 4,
               children: <Widget>[
-                InkWell(
-                    child: GridItem(
-                        GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Project()),
-                      );
-                    }),
+                
                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),
                 GridItem(GridModel("assets/zamzam.png", "ZZF\nprojects", null)),

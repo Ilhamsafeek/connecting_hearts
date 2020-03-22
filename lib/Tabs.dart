@@ -42,6 +42,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       },
       onMessage: (Map<String, dynamic> event) async {
         print("onMessage $event");
+        Navigator.of(context).pushNamed(event['screen']);
       },
       onResume: (Map<String, dynamic> event) async {
         print("onResume $event");

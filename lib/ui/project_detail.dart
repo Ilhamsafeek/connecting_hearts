@@ -9,7 +9,8 @@ class ProjectDetail extends StatefulWidget {
   @override
   _ProjectDetailPageState createState() => _ProjectDetailPageState();
 
-  final dynamic projectData;
+   final dynamic projectData;
+  
   ProjectDetail(this.projectData, {Key key}) : super(key: key);
 }
 

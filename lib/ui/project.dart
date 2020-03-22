@@ -8,6 +8,10 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class Project extends StatefulWidget {
   @override
+  
+   final dynamic category;
+  
+  Project(this.category, {Key key}) : super(key: key);
   _ProjectPageState createState() => _ProjectPageState();
 }
 
@@ -44,8 +48,10 @@ class _ProjectPageState extends State<Project> {
         List<Widget> children;
 
         if (snapshot.hasData) {
+            var data = snapshot.data.where((el) => el['category'] ==this. widget.category).toList();
+
           children = <Widget>[
-            for (var item in snapshot.data) projectCard(item),
+            for (var item in data) projectCard(item),
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[

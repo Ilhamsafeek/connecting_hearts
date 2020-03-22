@@ -184,6 +184,7 @@ class _TrendingState extends State<Trending> {
               List<Widget> children;
 
               if (snapshot.hasData) {
+                
                 children = <Widget>[
                   GridView.count(
                       shrinkWrap: true,
@@ -198,7 +199,7 @@ class _TrendingState extends State<Trending> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Project()),
+                                      builder: (context) => Project(item['category'])),
                                 );
                               }),
                       ]),

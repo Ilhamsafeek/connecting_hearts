@@ -54,7 +54,8 @@ class _MessagesState extends State<Messages> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+child :Column(
       children: <Widget>[
         RefreshIndicator(
           child: SingleChildScrollView(
@@ -66,21 +67,23 @@ class _MessagesState extends State<Messages> {
                 List<Widget> children;
 
                 if (snapshot.hasData) {
-                  children = <Widget>[
-                    for (var item in snapshot.data)
-                      Column(
-                        children: <Widget>[
-                          ListTile(
-                            leading: CircleAvatar(),
-                            title: Text(item['message']),
-                            subtitle: Text(item['time']),
-                          ),
-                          Divider(
-                            height: 0,
-                          ),
-                        ],
-                      ),
-                  ];
+                
+                    children = <Widget>[
+                      for (var item in snapshot.data)
+                        Column(
+                          children: <Widget>[
+                            ListTile(
+                              leading: CircleAvatar(child: Icon(Icons.videocam),),
+                              title: Text(item['message']),
+                              subtitle: Text(item['time']),
+                            ),
+                            Divider(
+                              height: 0,
+                            ),
+                          ],
+                        ),
+                    ];
+                 
                 } else if (snapshot.hasError) {
                   children = <Widget>[
                     Icon(
@@ -123,7 +126,10 @@ class _MessagesState extends State<Messages> {
           onRefresh: _handleRefresh,
         )
       ],
+    )
+  
     );
+    
   }
 
   Future<Null> _handleRefresh() async {
