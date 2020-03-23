@@ -34,20 +34,8 @@ class _PaymentPageState extends State<Payment> {
             ),
            
           ),
-          SliverFillRemaining(
-            child: new Center(
-              child: Column(children: <Widget>[
-                _detailSection(),
-                Container(
-                  color: Colors.black,
-                  width: double.infinity,
-                  height: 0.1,
-                ),
-               
-              ]),
-            ),
-            hasScrollBody: true,
-          )
+         
+        
         ]));
   }
 

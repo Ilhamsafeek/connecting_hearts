@@ -10,7 +10,7 @@ import 'package:zamzam/signin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/search.dart';
-
+import 'package:zamzam/payment/main.dart';
 
 
 // Main code for all the tabs
@@ -189,9 +189,15 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           onTap: null,
         ),
         ListTile(
-          leading: Icon(Icons.settings),
-          title: Text('Settings'),
-          onTap: null,
+          leading: Icon(Icons.payment),
+          title: Text('Payment'),
+          onTap:  () {
+            
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StripePayment()),
+            );
+          },
         ),
         Container(),
         Expanded(

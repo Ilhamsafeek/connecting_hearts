@@ -22,6 +22,12 @@
 @import firebase_messaging;
 #endif
 
+#if __has_include(<flutter_country_picker/FlutterCountryPickerPlugin.h>)
+#import <flutter_country_picker/FlutterCountryPickerPlugin.h>
+#else
+@import flutter_country_picker;
+#endif
+
 #if __has_include(<flutter_money_formatter/FlutterMoneyFormatterPlugin.h>)
 #import <flutter_money_formatter/FlutterMoneyFormatterPlugin.h>
 #else
@@ -58,6 +64,7 @@
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
+  [FlutterCountryPickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterCountryPickerPlugin"]];
   [FlutterMoneyFormatterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterMoneyFormatterPlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
   [FLTVideoPlayerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTVideoPlayerPlugin"]];

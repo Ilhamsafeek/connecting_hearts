@@ -32,7 +32,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('${widget.projectData['category']}'),
+              title: Text('${widget.projectData['appeal_id']}'),
               background: Image.asset(
                 "assets/child.png",
                 fit: BoxFit.cover,
@@ -63,17 +63,15 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               (context, index) {
                 return Container(
                   alignment: Alignment.center,
-                  color: Colors.teal[100 * (index % 9)],
-                  child: Text('grid item $index'),
+                  
+                  child: _buildBottomBar(),
                 );
               },
-              childCount: 30,
+              childCount: 1,
             ),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 15,
-              crossAxisSpacing: 15,
-              childAspectRatio: 2.0,
+              crossAxisCount: 1,
+             
             ),
           ),
 
@@ -164,33 +162,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 Row(
                   children: <Widget>[
                     Chip(label: Text('${widget.projectData['category']}')),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                      pageBuilder: (context, anim1, anim2) => Payment(widget.projectData),
-                      transitionsBuilder: (context, anim1, anim2, child) =>
-                          FadeTransition(opacity: anim1, child: child),
-                      transitionDuration: Duration(milliseconds: 100),
-                    ));
-                      },
-                      padding: EdgeInsets.all(
-                        16,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(
-                        8,
-                      ))),
-                      color: Color.fromRGBO(54, 74, 105, 1),
-                      child: Text(
-                        "Donate now",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                   
+                 
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
@@ -249,34 +222,36 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
+              child: 
+              
+              RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
                       pageBuilder: (context, anim1, anim2) => Payment(widget.projectData),
                       transitionsBuilder: (context, anim1, anim2, child) =>
                           FadeTransition(opacity: anim1, child: child),
-                      transitionDuration: Duration(seconds: 1),
+                      transitionDuration: Duration(milliseconds: 100),
                     ));
-                    
-                },
-                padding: EdgeInsets.all(
-                  16,
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(
-                  8,
-                ))),
-                color: Color.fromRGBO(54, 74, 105, 1),
-                child: Text(
-                  "Donate now",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+                      },
+                      padding: EdgeInsets.all(
+                        16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(
+                        8,
+                      ))),
+                      color: Color.fromRGBO(54, 74, 105, 1),
+                      child: Text(
+                        "Donate now",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                 
             ),
           ),
         ],
