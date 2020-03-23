@@ -9,8 +9,8 @@ class ProjectDetail extends StatefulWidget {
   @override
   _ProjectDetailPageState createState() => _ProjectDetailPageState();
 
-   final dynamic projectData;
-  
+  final dynamic projectData;
+
   ProjectDetail(this.projectData, {Key key}) : super(key: key);
 }
 
@@ -46,43 +46,41 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
             ],
           ),
-        
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return Container(
-                
-                alignment: Alignment.center,              
-                child: _detailSection(),
-              );
-            },
-            childCount: 1,
+
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: _detailSection(),
+                );
+              },
+              childCount: 1,
+            ),
           ),
-        ),
-        SliverGrid(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return Container(
-                alignment: Alignment.center,
-                color: Colors.teal[100 * (index % 9)],
-                child: Text('grid item $index'),
-              );
-            },
-            childCount: 30,
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Container(
+                  alignment: Alignment.center,
+                  color: Colors.teal[100 * (index % 9)],
+                  child: Text('grid item $index'),
+                );
+              },
+              childCount: 30,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 15,
+              crossAxisSpacing: 15,
+              childAspectRatio: 2.0,
+            ),
           ),
-      
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 15,
-            crossAxisSpacing: 15,
-            childAspectRatio: 2.0,
-          ),
-        ),
-       
+
           // SliverFillRemaining(
           //   child: new Center(
           //     child: Column(children: <Widget>[
-                
+
           //       _detailSection(),
           //       Container(
           //         color: Colors.black,
@@ -94,8 +92,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           //   ),
           //   hasScrollBody: true,
           // )
-       
-       
         ]));
   }
 
@@ -168,31 +164,33 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 Row(
                   children: <Widget>[
                     Chip(label: Text('${widget.projectData['category']}')),
-                     RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Payment(widget.projectData)),
-              );
-                },
-                padding: EdgeInsets.all(
-                  16,
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(
-                  8,
-                ))),
-                color: Color.fromRGBO(54, 74, 105, 1),
-                child: Text(
-                  "Donate now",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-           
-
+                    RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                      pageBuilder: (context, anim1, anim2) => Payment(widget.projectData),
+                      transitionsBuilder: (context, anim1, anim2, child) =>
+                          FadeTransition(opacity: anim1, child: child),
+                      transitionDuration: Duration(milliseconds: 100),
+                    ));
+                      },
+                      padding: EdgeInsets.all(
+                        16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(
+                        8,
+                      ))),
+                      color: Color.fromRGBO(54, 74, 105, 1),
+                      child: Text(
+                        "Donate now",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
@@ -203,8 +201,11 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             padding: const EdgeInsets.symmetric(
               vertical: 20,
             ),
-            child: Text('${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}', style: TextStyle(color:Colors.blue),),
+            child: Text(
+              '${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}',
+              style: TextStyle(color: Colors.blue),
             ),
+          ),
           Text(
             "${widget.projectData['details']}",
             style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
@@ -221,8 +222,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
             ),
           ),
-         
-        
         ],
       ),
     ));
@@ -250,13 +249,17 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
-              child:
-               RaisedButton(
+              child: RaisedButton(
                 onPressed: () {
                   Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Payment(widget.projectData)),
-              );
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, anim1, anim2) => Payment(widget.projectData),
+                      transitionsBuilder: (context, anim1, anim2, child) =>
+                          FadeTransition(opacity: anim1, child: child),
+                      transitionDuration: Duration(seconds: 1),
+                    ));
+                    
                 },
                 padding: EdgeInsets.all(
                   16,
@@ -274,7 +277,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   ),
                 ),
               ),
-           
             ),
           ),
         ],
@@ -289,5 +291,4 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
 
     return null;
   }
-
 }

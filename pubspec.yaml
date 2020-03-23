@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   firebase_auth:
   firebase_messaging: ^6.0.12
+  shared_preferences: ^0.5.6+3
   http:
   
 dev_dependencies:
@@ -109,6 +110,10 @@ flutter:
   - assets/language.png
   - assets/background.png
   - assets/child.png
+  - assets/slider_1.png
+  - assets/slider_2.png
+  - assets/slider_3.png
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

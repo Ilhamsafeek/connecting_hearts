@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Payment extends StatefulWidget {
   @override

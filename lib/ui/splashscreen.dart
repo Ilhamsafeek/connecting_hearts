@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:zamzam/ui/onboarding_page.dart';
 class SplashScreen extends StatefulWidget {
   @override
   SplashScreenState createState() => new SplashScreenState();
@@ -18,20 +18,7 @@ class SplashScreenState extends State<SplashScreen>
 
   startTime() async {
     var _duration = new Duration(seconds: 1);
-    return new Timer(_duration, navigationPage);
-  }
-
-  void navigationPage() {
-    FirebaseAuth.instance.currentUser().then((user) {
-     
-     print(user);
-
-      if (user != null) {
-        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
-      } else {
-        Navigator.of(context).pushReplacementNamed(SIGN_IN);
-      }
-    });
+    return new Timer(_duration, navigateFromSplash);
   }
 
   @override
@@ -51,6 +38,19 @@ class SplashScreenState extends State<SplashScreen>
       _visible = !_visible;
     });
     startTime();
+  }
+
+
+Future navigateFromSplash() async {
+   FirebaseAuth.instance.currentUser().then((user) {
+        print(user);
+
+        if (user != null) {
+          Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+        } else {
+          Navigator.of(context).pushReplacementNamed(SIGN_IN);
+        }
+      });
   }
 
   @override
@@ -87,4 +87,6 @@ class SplashScreenState extends State<SplashScreen>
       ),
     );
   }
+
+  
 }

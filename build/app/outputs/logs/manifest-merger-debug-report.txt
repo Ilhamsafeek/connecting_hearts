@@ -15,6 +15,9 @@ MERGED from [:wakelock] D:\zamzam\build\wakelock\intermediates\merged_manifests\
 MERGED from [:flutter_money_formatter] D:\zamzam\build\flutter_money_formatter\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-20:12
 MERGED from [:video_player_web] D:\zamzam\build\video_player_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
+MERGED from [:shared_preferences] D:\zamzam\build\shared_preferences\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
+MERGED from [:shared_preferences_web] D:\zamzam\build\shared_preferences_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
+MERGED from [:shared_preferences_macos] D:\zamzam\build\shared_preferences_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\2547f6ad737966f13583e09d66c636ab\AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.firebase:firebase-auth:19.2.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\firebase-auth-19.2.0.aar\bc670c4388c8546a9f1f5cd66c17cc6f\AndroidManifest.xml:17:1-42:12
 MERGED from [com.google.firebase:firebase-messaging:20.0.1] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\jetified-firebase-messaging-20.0.1.aar\349bc288681c3dee3eaf4c6482d57c2c\AndroidManifest.xml:17:1-37:12
@@ -163,6 +166,12 @@ MERGED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediat
 MERGED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:video_player_web] D:\zamzam\build\video_player_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:video_player_web] D:\zamzam\build\video_player_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] D:\zamzam\build\shared_preferences\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] D:\zamzam\build\shared_preferences\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_web] D:\zamzam\build\shared_preferences_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_web] D:\zamzam\build\shared_preferences_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_macos] D:\zamzam\build\shared_preferences_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_macos] D:\zamzam\build\shared_preferences_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\2547f6ad737966f13583e09d66c636ab\AndroidManifest.xml:20:5-43
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\2547f6ad737966f13583e09d66c636ab\AndroidManifest.xml:20:5-43
 MERGED from [com.google.firebase:firebase-auth:19.2.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\firebase-auth-19.2.0.aar\bc670c4388c8546a9f1f5cd66c17cc6f\AndroidManifest.xml:21:5-44

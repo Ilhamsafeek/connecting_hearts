@@ -9,6 +9,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:zamzam/services/services.dart';
+import 'package:zamzam/ui/search.dart';
+
 
 
 // Main code for all the tabs
@@ -83,7 +85,15 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           // ),
           IconButton(
             onPressed: () {
-               
+                
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+          pageBuilder: (context, anim1, anim2) => Search(),
+          transitionsBuilder: (context, anim1, anim2, child) => FadeTransition(opacity: anim1, child: child),
+          transitionDuration: Duration(milliseconds: 100),
+        ),
+            );
             },
             icon: Icon(Icons.search),
           ),
