@@ -165,6 +165,7 @@ class _ProjectPageState extends State<Project> {
               progressColor: completedColor,
             ),
           ),
+        
           Container(
             color: Colors.black,
             width: double.infinity,

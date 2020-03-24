@@ -72,11 +72,11 @@ class _CardWidget extends State<CardWidget> {
   }
 
   var _cardController = new MaskedTextController(mask: '0000 0000 0000 0000');
+  var _cardDateController = new MaskedTextController(mask: '00 / 00');
 
-  var labelStyle = TextStyle(
-      color: Colors.black54, fontSize: 20, fontWeight: FontWeight.bold);
+  var labelStyle = TextStyle(color: Colors.black54, fontSize: 20);
   var textStyle =
-      TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
+      TextStyle(color: Colors.black, fontSize: 20,);
   var enabledBorder =
       UnderlineInputBorder(borderSide: BorderSide(color: Colors.black45));
   var focusedBorder = UnderlineInputBorder(
@@ -108,7 +108,8 @@ class _CardWidget extends State<CardWidget> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.grey[100]),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), color: Colors.grey[100]),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -139,75 +140,27 @@ class _CardWidget extends State<CardWidget> {
                 children: <Widget>[
                   Text(
                     "Valid\nThru".toUpperCase(),
-                    style: TextStyle(fontSize: 11, color: Colors.black54),
+                    style: TextStyle(fontSize: 11, color: Colors.black45),
                   ),
                   Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.black))),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<int>(
-                          value: _month,
-                          hint: Text(
-                            "MM",
-                            style: labelStyle,
-                          ),
-                          style: textStyle,
-                          items: months.map((KeyValue value) {
-                            return DropdownMenuItem<int>(
-                              value: value.value,
-                              child: Text(
-                                value.key,
-                                style: textStyle,
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (int val) {
-                            setState(() {
-                              _month = val;
-                            });
-                            _setMonth(val);
-                          },
-                        ),
-                      ),
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: TextField(
+                      onChanged: (val) {
+                        // _setMonth(val);
+                      },
+                      style: textStyle,
+                      controller: _cardDateController,
+                      inputFormatters: [LengthLimitingTextInputFormatter(7)],
+                       keyboardType: TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      decoration: InputDecoration(
+                          labelText: "MM/YY",
+                          labelStyle: labelStyle,
+                          enabledBorder: enabledBorder,
+                          focusedBorder: focusedBorder),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(0),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(color: Colors.black38))),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<int>(
-                          value: _year,
-                          hint: Text(
-                            "YY",
-                            style: labelStyle,
-                          ),
-                          style: textStyle,
-                          items: years.map((int value) {
-                            return DropdownMenuItem<int>(
-                              value: value,
-                              child: Text(
-                                "$value",
-                                style: textStyle,
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (int val) {
-                            setState(() {
-                              _year = val;
-                            });
-
-                            _setYear(val);
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
+                  )),
                   Flexible(
                       child: Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -215,15 +168,19 @@ class _CardWidget extends State<CardWidget> {
                       onChanged: (val) {
                         _setCVV(val);
                       },
+                      style: textStyle,
                       controller: _cvvController,
                       inputFormatters: [LengthLimitingTextInputFormatter(3)],
                       obscureText: true,
-                      style: textStyle,
                       keyboardType: TextInputType.numberWithOptions(
                           signed: false, decimal: false),
                       decoration: InputDecoration(
-                          hintText: "CVV",
-                          hintStyle: labelStyle,
+                          labelText: "CVC",
+                          suffixIcon: Icon(
+                            FontAwesomeIcons.creditCard,
+                            color: Colors.black45,
+                          ),
+                          labelStyle: labelStyle,
                           enabledBorder: enabledBorder,
                           focusedBorder: focusedBorder),
                     ),
@@ -231,7 +188,6 @@ class _CardWidget extends State<CardWidget> {
                 ],
               ),
             ),
-          
           ],
         ),
       ),

@@ -113,6 +113,51 @@ class WebServices {
 
     return jsonServerData;
   }
+
+//Payment
+
+  Future<dynamic> createStripeToken() async {
+    var url = 'https://api.stripe.com/v1/tokens';
+    var response = await http.post(
+      url,
+      body: {
+        'card[number]': '4242424242424242',
+        'card[exp_month]': '12',
+        'card[exp_year]': '2020',
+        'card[cvc]': '123',
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+    var jsonServerData = json.decode(response.body);
+    print(jsonServerData['id']);
+    return jsonServerData;
+  }
+
+  Future<dynamic> stripeCharges(String token) async {
+    var url = 'https://api.stripe.com/v1/charges';
+    var response = await http.post(
+      url,
+      body: {
+        'amount': '10000',
+        'currency': 'lkr',
+        'description': 'charged for project WI201',
+        'source': '$token',
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+
+    var jsonServerData = json.decode(response.body);
+    
+    return jsonServerData;
+  }
 }
 
 class HistoryData {

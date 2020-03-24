@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/payment/card_layout.dart';
-import 'package:zamzam/payment/flutter_stripe.dart';
+import 'package:zamzam/services/services.dart';
 
 class StripePayment extends StatefulWidget {
   StripePayment({Key key, this.title}) : super(key: key);
@@ -12,6 +12,8 @@ class StripePayment extends StatefulWidget {
 
 class _StripePaymentState extends State<StripePayment> {
   bool _cardValid;
+    ApiListener mApiListener;
+
   CardController _cardController = CardController();
 
   bool _requestToken = false;
@@ -21,44 +23,13 @@ class _StripePaymentState extends State<StripePayment> {
     setState(() {
       _requestToken = true;
     });
-    StripeCard card = StripeCard(
-        cardNumber: _cardController.cardNumber,
-        expiryMonth: _cardController.expiryMonth,
-        expiryYear: _cardController.expiryYear,
-        cvc: _cardController.cvv);
-    bool valid = await Stripe.validateCard(card);
-    setState(() {
-      _cardValid = valid;
-    });
-
-    if (valid) {
-      _createToken(card);
-    } else {
-      setState(() {
-        _requestToken = false;
-      });
-    }
-  }
-
-  _createToken(StripeCard card) {
-    Stripe().createToken(card, (token) {
-      print("TOKEN SUCCESS: $token");
-      setState(() {
-        _requestToken = false;
-        _token = token["id"];
-      });
-    }, (error) {
-      print("TOKEN ERROR: $error");
-      setState(() {
-        _requestToken = false;
-        _token = "$error";
-      });
-    });
+   
+   
   }
 
   @override
   void initState() {
-    Stripe.init("pk_test_GrhIK2WeZUY20twbYC15xNXD");
+    
     super.initState();
   }
 
@@ -80,7 +51,9 @@ class _StripePaymentState extends State<StripePayment> {
                 child: Text('Save Card'),
                 elevation: 7.0,
                 textColor: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  print(WebServices(this.mApiListener).createStripeToken().toString());
+                },
               ),
             ),
             Center(
@@ -88,7 +61,7 @@ class _StripePaymentState extends State<StripePayment> {
                   ? Text("Card is not valid!")
                   : _requestToken
                       ? CircularProgressIndicator()
-                      : Text(_token != null ? _token : "Create token!"),
+                      : Text(_token != null ? _token : ""),
             )
           ],
         ),

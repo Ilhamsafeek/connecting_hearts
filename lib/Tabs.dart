@@ -10,8 +10,7 @@ import 'package:zamzam/signin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/search.dart';
-import 'package:zamzam/payment/main.dart';
-
+import 'package:zamzam/ui/payment.dart';
 
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
@@ -24,7 +23,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   TabController tabcontroller;
   String userId;
   FirebaseMessaging messaging = FirebaseMessaging();
-   ApiListener mApiListener;
+  ApiListener mApiListener;
 
   @override
   void initState() {
@@ -58,12 +57,10 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     });
 
     messaging.onTokenRefresh.listen((token) {
-      WebServices(this.mApiListener).updateUser(this.userId,token);
+      WebServices(this.mApiListener).updateUser(this.userId, token);
 
-       print("your token is chnged to : $token");
-      
+      print("your token is chnged to : $token");
     });
-    
   }
 
   @override
@@ -77,7 +74,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     return new Scaffold(
       key: homePageKey,
       appBar: new AppBar(
-        
         actions: <Widget>[
           // IconButton(
           //   onPressed: () {},
@@ -85,15 +81,15 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           // ),
           IconButton(
             onPressed: () {
-                
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-          pageBuilder: (context, anim1, anim2) => Search(),
-          transitionsBuilder: (context, anim1, anim2, child) => FadeTransition(opacity: anim1, child: child),
-          transitionDuration: Duration(milliseconds: 100),
-        ),
-            );
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, anim1, anim2) => Search(),
+                  transitionsBuilder: (context, anim1, anim2, child) =>
+                      FadeTransition(opacity: anim1, child: child),
+                  transitionDuration: Duration(milliseconds: 100),
+                ),
+              );
             },
             icon: Icon(Icons.search),
           ),
@@ -108,7 +104,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               controller: tabcontroller,
               indicatorColor: Colors.black,
               unselectedLabelColor: Colors.grey,
-              labelColor: Color.fromRGBO(54, 74, 105, 1),  //Colors.redAccent[700],
+              labelColor:
+                  Color.fromRGBO(54, 74, 105, 1), //Colors.redAccent[700],
               labelStyle: TextStyle(fontSize: 11.0),
               tabs: <Tab>[
             new Tab(
@@ -191,15 +188,16 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         ListTile(
           leading: Icon(Icons.payment),
           title: Text('Payment'),
-          onTap:  () {
-            
+          onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => StripePayment()),
+              MaterialPageRoute(builder: (context) => Payment()),
             );
           },
         ),
-        Container(),
+        Divider(
+          height: 0,
+        ),
         Expanded(
           child: new Align(
               alignment: Alignment.bottomCenter,

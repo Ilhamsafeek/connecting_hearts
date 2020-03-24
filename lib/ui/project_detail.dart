@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:zamzam/ui/payment.dart';
+import 'package:zamzam/ui/payment_result.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -18,6 +20,14 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   @override
   void initState() {
     super.initState();
+  }
+
+  String selectedMethod;
+  selectsku(method) {
+    print(method);
+    setState(() {
+      selectedMethod = method;
+    });
   }
 
   ApiListener mApiListener;
@@ -63,7 +73,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               (context, index) {
                 return Container(
                   alignment: Alignment.center,
-                  
                   child: _buildBottomBar(),
                 );
               },
@@ -71,7 +80,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
-             
             ),
           ),
 
@@ -94,10 +102,33 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   Widget _detailSection() {
+    var paymentTypeExtension= "";
+    var months = '${widget.projectData['months']}';
+    if(widget.projectData['type']=='recursive'){
+      paymentTypeExtension = 'in $months months';
+    }else{
+
+    }
+    
     FlutterMoneyFormatter formattedAmount = FlutterMoneyFormatter(
         amount: double.parse('${widget.projectData['amount']}'));
     FlutterMoneyFormatter formattedCollected = FlutterMoneyFormatter(
         amount: double.parse('${widget.projectData['collected']}'));
+  
+    double completedPercent = 100 *
+        double.parse('${widget.projectData['collected']}') /
+        double.parse('${widget.projectData['amount']}');
+    Color completedColor = Colors.orange;
+    Color percentColor = Colors.black;
+    if (completedPercent >= 100) {
+      completedPercent = 100.0;
+      completedColor = Colors.green[900];
+      percentColor = Colors.white;
+    }
+
+    double percent = completedPercent / 100;
+  
+  
     return Expanded(
         child: Padding(
       padding: const EdgeInsets.all(
@@ -162,8 +193,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 Row(
                   children: <Widget>[
                     Chip(label: Text('${widget.projectData['category']}')),
-                   
-                 
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
@@ -183,15 +212,40 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             "${widget.projectData['details']}",
             style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
           ),
+          ListTile(
+            title: new LinearPercentIndicator(
+              animation: true,
+              lineHeight: 14.0,
+              animationDuration: 2000,
+              width: 140.0,
+              percent: percent,
+              center: Text(
+                "${double.parse(completedPercent.toStringAsFixed(2))}%",
+                style: new TextStyle(fontSize: 12.0, color: percentColor),
+              ),
+              trailing: Text(
+                'Rs.' + '${formattedAmount.output.withoutFractionDigits}',
+                style: TextStyle(
+                    fontFamily: "Exo2",
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0),
+              ),
+              linearStrokeCap: LinearStrokeCap.roundAll,
+              backgroundColor: Colors.grey,
+              progressColor: completedColor,
+            ),
+          ),
+        
           Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
             ),
             child: Text(
-              "\Rs." + "${formattedAmount.output.withoutFractionDigits}",
+              "This appeal requires: " +
+                  "${widget.projectData['type']} payment $paymentTypeExtension",
               style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
           ),
@@ -222,36 +276,34 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
-              child: 
-              
-              RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                      pageBuilder: (context, anim1, anim2) => Payment(widget.projectData),
-                      transitionsBuilder: (context, anim1, anim2, child) =>
-                          FadeTransition(opacity: anim1, child: child),
-                      transitionDuration: Duration(milliseconds: 100),
-                    ));
-                      },
-                      padding: EdgeInsets.all(
-                        16,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(
-                        8,
-                      ))),
-                      color: Color.fromRGBO(54, 74, 105, 1),
-                      child: Text(
-                        "Donate now",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                 
+              child: RaisedButton(
+                onPressed: () {
+                  // Navigator.push(
+                  //     context,
+                  //     PageRouteBuilder(
+                  //       pageBuilder: (context, anim1, anim2) => Payment(),
+                  //       transitionsBuilder: (context, anim1, anim2, child) =>
+                  //           FadeTransition(opacity: anim1, child: child),
+                  //       transitionDuration: Duration(milliseconds: 100),
+                  //     ));
+                  payModalBottomSheet(context);
+                },
+                padding: EdgeInsets.all(
+                  16,
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(
+                  8,
+                ))),
+                color: Color.fromRGBO(54, 74, 105, 1),
+                child: Text(
+                  "Donate now",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -265,5 +317,70 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     setState(() {});
 
     return null;
+  }
+
+  Future<bool> payModalBottomSheet(context) {
+    return showModalBottomSheet(
+        enableDrag: true,
+        context: context,
+        isScrollControlled: true,
+        isDismissible: false,
+        builder: (BuildContext bc) {
+          return Container(
+            child: new Wrap(
+              children: <Widget>[
+                ListTile(title: Text('Choose a payment method')),
+                RadioListTile(
+                  activeColor: Colors.black,
+                  value: 'sku_Gt6Fd6L4tzklsI',
+                  groupValue: selectedMethod,
+                  onChanged: selectsku,
+                  title: ListTile(
+                    leading: Icon(FontAwesomeIcons.ccVisa),
+                    title: Text('****1112'),
+                  ),
+                ),
+                ListTile(
+                    title: TextFormField(
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
+                      decoration: InputDecoration(
+                        hintText: 'Amount',
+                        labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20.0),
+                      ),
+                    ),
+                    onTap: () => {}),
+                ListTile(
+                    title: Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: RaisedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PaymentResult()),
+                              );
+                            },
+                            child: Text("Send"),
+                            color: Colors.green[800],
+                            textColor: Colors.white,
+                          )),
+                        ],
+                      ),
+                    ),
+                    onTap: () => {}),
+              ],
+            ),
+          );
+        });
   }
 }
