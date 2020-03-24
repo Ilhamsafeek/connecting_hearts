@@ -114,8 +114,10 @@ class WebServices {
     return jsonServerData;
   }
 
-//Payment
-
+//Stripe Payment
+  //Sources :
+  //1. https://medium.com/devmins/stripe-implementation-payment-gateway-integration-postman-collection-ded68a115667
+  //2.  https://medium.com/devmins/stripe-implementation-part-ii-payment-gateway-integration-postman-collection-7d37efee096d
   Future<dynamic> createStripeToken() async {
     var url = 'https://api.stripe.com/v1/tokens';
     var response = await http.post(
@@ -137,6 +139,27 @@ class WebServices {
     return jsonServerData;
   }
 
+  Future<dynamic> saveCustomer(String token) async {
+    //it will return customer id aswell
+    var url = 'https://api.stripe.com/v1/customers';
+    var response = await http.post(
+      url,
+      body: {
+        'description': 'customer for connecting hearts',
+        'source': '$token',
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+    var jsonServerData = json.decode(response.body);
+    print(jsonServerData['id']);
+    return jsonServerData;
+  }
+
+  // charge directly with token
   Future<dynamic> stripeCharges(String token) async {
     var url = 'https://api.stripe.com/v1/charges';
     var response = await http.post(
@@ -155,9 +178,69 @@ class WebServices {
     // print(response.body) ;
 
     var jsonServerData = json.decode(response.body);
-    
+
     return jsonServerData;
   }
+
+  Future<dynamic> addCardTokenToCustomer(String customer, String token) async {
+    var url = 'https://api.stripe.com/v1/customers/$customer/sources';
+    var response = await http.post(
+      url,
+      body: {
+        'source': '$token',
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData;
+  }
+
+  Future<dynamic> getCustomerData(String customer) async {
+    var url = 'https://api.stripe.com/v1/customers/$customer';
+    var response = await http.post(
+      url,
+      body: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData;
+  }
+
+  Future<dynamic> chargeByCustomerAndCardID(String customer, String card) async {
+    var url = 'https://api.stripe.com/v1/charges';
+    var response = await http.post(
+      url,
+      body: {
+        'amount': '10000',
+        'currency': 'lkr',
+        'description': 'charged for project WI201',
+        'customer': '$customer',
+        'source': '$card',
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData;
+  }
+
 }
 
 class HistoryData {
