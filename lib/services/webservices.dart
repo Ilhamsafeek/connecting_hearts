@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:zamzam/services/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:zamzam/Tabs.dart';
 
 class WebServices {
   ApiListener mApiListener;
 
   WebServices(this.mApiListener);
+
 
   Future<dynamic> getData() async {
     var response = await http.get("https://www.chadmin.online/api/projects");
@@ -147,6 +149,7 @@ class WebServices {
       body: {
         'description': 'customer for connecting hearts',
         'source': '$token',
+        'phone': '$token',
       },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -206,6 +209,25 @@ class WebServices {
     var response = await http.post(
       url,
       body: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData;
+  }
+
+  Future<dynamic> getCustomerDataByMobile(String phone) async {
+    var url = 'https://api.stripe.com/v1/customers';
+    var response = await http.post(
+      url,
+      body: {
+        'phone': '$phone',   
+      },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
