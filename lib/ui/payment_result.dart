@@ -108,6 +108,7 @@ class _PaymentResultState extends State<PaymentResult> {
                 size: 120,
               ),
             Text(data['status']),
+            Icon(Icons.receipt,)
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[

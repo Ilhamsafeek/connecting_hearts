@@ -75,7 +75,7 @@ child :Column(
                             ListTile(
                               leading: CircleAvatar(child: Icon(Icons.videocam),),
                               title: Text(item['message']),
-                              subtitle: Text(item['time'], style: TextStyle(fontSize: 10),),
+                              subtitle: Text(item['time'], style: TextStyle(fontSize: 12),),
                               onTap: (){
 
                               },

@@ -14,7 +14,6 @@ class _HomeState extends State<Home> {
   final flutubePlayer = null;
   ApiListener mApiListener;
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +51,8 @@ class _HomeState extends State<Home> {
                           disableDragSeek: false,
                         ),
                       ),
-                     
+                      thumbnailUrl: YoutubePlayer.getThumbnail(
+                          videoId: YoutubePlayer.convertUrlToId(item['url'])),
                     ),
                     aspectRatio: 16 / 9,
                   ),

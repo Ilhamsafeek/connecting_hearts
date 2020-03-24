@@ -4,7 +4,6 @@ import 'package:zamzam/services/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zamzam/payment/main.dart';
 
-
 class Payment extends StatefulWidget {
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -29,8 +28,30 @@ class _PaymentPageState extends State<Payment> {
         body: SingleChildScrollView(
           child: Container(
             child: Column(children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: ListTile(
+                  title: Image.asset(
+                    "assets/add_payment_method.png",
+                    width: 120,
+                    height: 120,
+                  ),
+                ),
+              ),
               ListTile(
-                leading: Icon(FontAwesomeIcons.ccVisa, color: Colors.indigo[900],),
+                  title: Text(
+                'Make your donations easy by adding payment method now',
+                style: TextStyle(color: Colors.black45, fontSize: 14),
+                textAlign: TextAlign.center,
+              )),
+              Divider(
+                height: 0,
+              ),
+              ListTile(
+                leading: Icon(
+                  FontAwesomeIcons.ccVisa,
+                  color: Colors.indigo[900],
+                ),
                 title: Text('****1112'),
               ),
               ListTile(
@@ -41,8 +62,7 @@ class _PaymentPageState extends State<Payment> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => StripePayment()),
+                    MaterialPageRoute(builder: (context) => StripePayment()),
                   );
                 },
               ),

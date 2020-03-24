@@ -74,9 +74,9 @@ class _CardWidget extends State<CardWidget> {
   var _cardController = new MaskedTextController(mask: '0000 0000 0000 0000');
   var _cardDateController = new MaskedTextController(mask: '00 / 00');
 
-  var labelStyle = TextStyle(color: Colors.black54, fontSize: 20);
+  var labelStyle = TextStyle(color: Colors.black54, fontSize: 18);
   var textStyle =
-      TextStyle(color: Colors.black, fontSize: 20,);
+      TextStyle(color: Colors.black, fontSize: 18,);
   var enabledBorder =
       UnderlineInputBorder(borderSide: BorderSide(color: Colors.black45));
   var focusedBorder = UnderlineInputBorder(
