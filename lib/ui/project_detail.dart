@@ -68,6 +68,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               childCount: 1,
             ),
           ),
+         
           SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -330,16 +331,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             child: new Wrap(
               children: <Widget>[
                 ListTile(title: Text('Choose a payment method')),
-                RadioListTile(
-                  activeColor: Colors.black,
-                  value: 'sku_Gt6Fd6L4tzklsI',
-                  groupValue: selectedMethod,
-                  onChanged: selectsku,
-                  title: ListTile(
-                    leading: Icon(FontAwesomeIcons.ccVisa),
-                    title: Text('****1112'),
-                  ),
-                ),
+               
+                paymentMethods(),
                 ListTile(
                     title: TextFormField(
                       keyboardType: TextInputType.number,
@@ -367,7 +360,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PaymentResult()),
+                                    builder: (context) => PaymentResult(selectedMethod)),
                               );
                             },
                             child: Text("Send"),
@@ -383,4 +376,64 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           );
         });
   }
+
+  Widget paymentMethods(){
+    
+    return FutureBuilder<dynamic>(
+      future: WebServices(this.mApiListener).getCustomerDataByMobile(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          var data;
+          if (snapshot.data.length != 0) {
+            data = snapshot.data[0]['sources']['data'];
+          }
+          children = <Widget>[
+            for (var item in data)
+              
+               RadioListTile(
+                  activeColor: Colors.black,
+                  value: '${item['id']}',
+                  groupValue: selectedMethod,
+                  onChanged: selectsku,
+                  title: ListTile(
+                     leading: Icon(
+                  FontAwesomeIcons.ccVisa,
+                  color: Colors.indigo[700],
+                ),
+                    title: Text('****${item['last4']}'),
+                  ),
+               )
+                // ),
+          ];
+        } else if (snapshot.hasError) {
+          children = <Widget>[
+            Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 60,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Text('something Went Wrong !'), //Error: ${snapshot.error}
+            )
+          ];
+        } else {
+          children = <Widget>[
+            const Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: SizedBox(child: CircularProgressIndicator()),
+            ),
+          ];
+        }
+        return Center(
+          child: Column(children: children),
+        );
+      },
+    );
+ 
+  }
+
+
+
 }

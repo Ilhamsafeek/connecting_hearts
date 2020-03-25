@@ -34,8 +34,8 @@ class _InboxState extends State<Inbox> {
         ),
         body: TabBarView(
           children: [
-            Messages(),
             Notifications(),
+            Messages(),
           ],
         ),
       ),
@@ -43,19 +43,19 @@ class _InboxState extends State<Inbox> {
   }
 }
 
-class Messages extends StatefulWidget {
-  Messages({Key key}) : super(key: key);
+class Notifications extends StatefulWidget {
+  Notifications({Key key}) : super(key: key);
 
-  _MessagesState createState() => _MessagesState();
+  _NotificationsState createState() => _NotificationsState();
 }
 
-class _MessagesState extends State<Messages> {
+class _NotificationsState extends State<Notifications> {
   ApiListener mApiListener;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-child :Column(
+        child: Column(
       children: <Widget>[
         RefreshIndicator(
           child: SingleChildScrollView(
@@ -67,26 +67,27 @@ child :Column(
                 List<Widget> children;
 
                 if (snapshot.hasData) {
-                
-                    children = <Widget>[
-                      for (var item in snapshot.data)
-                        Column(
-                          children: <Widget>[
-                            ListTile(
-                              leading: CircleAvatar(child: Icon(Icons.videocam),),
-                              title: Text(item['message']),
-                              subtitle: Text(item['time'], style: TextStyle(fontSize: 12),),
-                              onTap: (){
-
-                              },
+                  children = <Widget>[
+                    for (var item in snapshot.data)
+                      Column(
+                        children: <Widget>[
+                          ListTile(
+                            leading: CircleAvatar(
+                              child: Icon(Icons.videocam),
                             ),
-                            Divider(
-                              height: 0,
+                            title: Text(item['message']),
+                            subtitle: Text(
+                              item['time'],
+                              style: TextStyle(fontSize: 12),
                             ),
-                          ],
-                        ),
-                    ];
-                 
+                            onTap: () {},
+                          ),
+                          Divider(
+                            height: 0,
+                          ),
+                        ],
+                      ),
+                  ];
                 } else if (snapshot.hasError) {
                   children = <Widget>[
                     Icon(
@@ -129,10 +130,7 @@ child :Column(
           onRefresh: _handleRefresh,
         )
       ],
-    )
-  
-    );
-    
+    ));
   }
 
   Future<Null> _handleRefresh() async {
@@ -144,15 +142,29 @@ child :Column(
   }
 }
 
-class Notifications extends StatefulWidget {
-  Notifications({Key key}) : super(key: key);
+class Messages extends StatefulWidget {
+  Messages({Key key}) : super(key: key);
 
-  _NotificationsState createState() => _NotificationsState();
+  _MessagesState createState() => _MessagesState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _MessagesState extends State<Messages> {
+  ApiListener mApiListener;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+        child: RaisedButton(
+      onPressed: () {
+       WebServices(this.mApiListener).isAlreadyCustomer().then((result) {
+      if (result != null) {
+        setState(() {
+         print(result);
+        });
+      }
+    });
+      },
+      child: Text('Save Card'),
+    ));
   }
 }

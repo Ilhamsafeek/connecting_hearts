@@ -4,12 +4,12 @@ import 'package:zamzam/services/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:zamzam/Tabs.dart';
+import 'package:zamzam/constant/Constant.dart';
 
 class WebServices {
   ApiListener mApiListener;
 
   WebServices(this.mApiListener);
-
 
   Future<dynamic> getData() async {
     var response = await http.get("https://www.chadmin.online/api/projects");
@@ -18,13 +18,13 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<String> updateUser(String userId, String appToken) async {
+  Future<String> updateUser(String appToken) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
     var url = 'https://www.chadmin.online/api/updateaccount';
     var response = await http.post(url, body: {
       'app_token': '$appToken',
-      'phone': '$userId',
+      'phone': '$CURRENT_USER',
     });
 
     print(response.statusCode);
@@ -63,52 +63,6 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<List<HistoryData>> getHistoryData() async {
-    var user = await http.get('https://www.hashnative.com/gethistory');
-    var jsonData = json.decode(user.body);
-    print(user.body);
-    List<HistoryData> datas = [];
-
-    for (var d in jsonData) {
-      HistoryData data = HistoryData(d["id"], d["type"], d["sender"],
-          d["receiver"], d["time"], d["amount"]);
-      datas.add(data);
-    }
-    return datas;
-  }
-
-  Future<List<BeneficiariesData>> getBeneficiaries() async {
-    var user = await http.get("https://www.hashnative.com/getbeneficiaries");
-    var jsonData = json.decode(user.body);
-
-    List<BeneficiariesData> datas = [];
-
-    for (var d in jsonData) {
-      BeneficiariesData data =
-          BeneficiariesData(d["id"], d["name"], d["added_by"], d["mobile"]);
-      datas.add(data);
-    }
-    return datas;
-  }
-
-  Future<String> addBeneficiary(String mobile, String addedBy) async {
-    var url = 'https://www.hashnative.com/addbeneficiary';
-    var response = await http.post(url,
-        body: {'added_by': '$addedBy', 'mobile': '$mobile', 'name': 'safeek'});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    return response.body;
-  }
-
-  Future<String> deleteBeneficiary(String mobile, String addedBy) async {
-    var url = 'https://www.hashnative.com/deleteBeneficiary';
-    var response = await http
-        .post(url, body: {'added_by': '$addedBy', 'mobile': '$mobile'});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    return response.body;
-  }
-
   Future<dynamic> getStripeResponse() async {
     var response = await http.get("https://www.chadmin.online/api/projects");
     var jsonServerData = json.decode(response.body);
@@ -120,15 +74,16 @@ class WebServices {
   //Sources :
   //1. https://medium.com/devmins/stripe-implementation-payment-gateway-integration-postman-collection-ded68a115667
   //2.  https://medium.com/devmins/stripe-implementation-part-ii-payment-gateway-integration-postman-collection-7d37efee096d
-  Future<dynamic> createStripeToken() async {
+  Future<dynamic> createStripeToken(
+      cardNumber, expiryMonth, expiryYear, cvc) async {
     var url = 'https://api.stripe.com/v1/tokens';
     var response = await http.post(
       url,
       body: {
-        'card[number]': '4242424242424242',
-        'card[exp_month]': '12',
-        'card[exp_year]': '2020',
-        'card[cvc]': '123',
+        'card[number]': '$cardNumber',
+        'card[exp_month]': '$expiryMonth',
+        'card[exp_year]': '$expiryYear',
+        'card[cvc]': '$cvc',
       },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -141,6 +96,7 @@ class WebServices {
     return jsonServerData;
   }
 
+  //create customer by adding card token
   Future<dynamic> saveCustomer(String token) async {
     //it will return customer id aswell
     var url = 'https://api.stripe.com/v1/customers';
@@ -149,7 +105,28 @@ class WebServices {
       body: {
         'description': 'customer for connecting hearts',
         'source': '$token',
-        'phone': '$token',
+        'phone': '$CURRENT_USER',
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    // print(response.body) ;
+    var jsonServerData = json.decode(response.body);
+    print(jsonServerData['id']);
+    return jsonServerData;
+  }
+
+  //create customer with mobile number
+  Future<dynamic> createCustomer() async {
+    //it will return customer id aswell
+    var url = 'https://api.stripe.com/v1/customers';
+    var response = await http.post(
+      url,
+      body: {
+        'description': 'customer for connecting hearts',
+        'phone': '$CURRENT_USER',
       },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -170,7 +147,7 @@ class WebServices {
       body: {
         'amount': '10000',
         'currency': 'lkr',
-        'description': 'charged for project WI201',
+        'description': 'donation for project WI201',
         'source': '$token',
       },
       headers: {
@@ -178,7 +155,7 @@ class WebServices {
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
       },
     );
-    // print(response.body) ;
+     print(response.body) ;
 
     var jsonServerData = json.decode(response.body);
 
@@ -206,9 +183,8 @@ class WebServices {
 
   Future<dynamic> getCustomerData(String customer) async {
     var url = 'https://api.stripe.com/v1/customers/$customer';
-    var response = await http.post(
+    var response = await http.get(
       url,
-      body: {},
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
@@ -221,33 +197,39 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<dynamic> getCustomerDataByMobile(String phone) async {
+  Future<dynamic> getCustomerDataByMobile() async {
     var url = 'https://api.stripe.com/v1/customers';
-    var response = await http.post(
+    var response = await http.get(
       url,
-      body: {
-        'phone': '$phone',   
-      },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
       },
     );
-    // print(response.body) ;
-
     var jsonServerData = json.decode(response.body);
+    // print(jsonServerData['data']);
 
-    return jsonServerData;
+    return jsonServerData['data']
+        .where((el) => el['phone'] == CURRENT_USER)
+        .toList();
   }
 
-  Future<dynamic> chargeByCustomerAndCardID(String customer, String card) async {
+  Future<dynamic> chargeByCustomerAndCardID(String card) async {
+
+    var customer;
+    await getCustomerDataByMobile().then((value) {
+      customer = value[0]['id'].toString();
+      print("customer is $customer");
+      
+    });
     var url = 'https://api.stripe.com/v1/charges';
+    
     var response = await http.post(
       url,
       body: {
         'amount': '10000',
         'currency': 'lkr',
-        'description': 'charged for project WI201',
+        'description': 'donation for project WI201',
         'customer': '$customer',
         'source': '$card',
       },
@@ -256,32 +238,94 @@ class WebServices {
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
       },
     );
-    // print(response.body) ;
 
     var jsonServerData = json.decode(response.body);
-
+    print("customer is $customer");
+    print(jsonServerData);
     return jsonServerData;
   }
 
-}
+  Future<bool> isAlreadyCustomer() async {
+    var url = 'https://api.stripe.com/v1/customers';
+    var response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
 
-class HistoryData {
-  final String id;
-  final String amount;
-  final String type;
-  final String sender;
-  final String receiver;
-  final String time;
+    var jsonServerData = json.decode(response.body);
 
-  HistoryData(
-      this.id, this.type, this.sender, this.receiver, this.time, this.amount);
-}
+    if (jsonServerData['data'].length != 0) {
+      if (jsonServerData['data']
+              .where((el) => el['phone'] == CURRENT_USER)
+              .toList()[0]
+              .length !=
+          0) {
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
 
-class BeneficiariesData {
-  final String id;
-  final String addedBy;
-  final String name;
-  final String mobile;
+  Future<bool> isCardExist(customer, cardId) async {
+    var url = 'https://api.stripe.com/v1/customers/$customer/sources/$cardId';
 
-  BeneficiariesData(this.id, this.name, this.addedBy, this.mobile);
+    var response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+
+    var jsonServerData = json.decode(response.body);
+
+    if (jsonServerData != null) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> saveCard(cardNumber, expiryMonth, expiryYear, cvc) async {
+    var token;
+    await createStripeToken(cardNumber, expiryMonth, expiryYear, cvc)
+        .then((value) {
+      token = value['id'];
+      print(token);
+    });
+    var customer;
+
+    if (await isAlreadyCustomer()) {
+      //Yes
+      await getCustomerDataByMobile().then((value) {
+        if (value.length != 0) {
+          customer = value[0]['id'];
+        }
+      });
+      if (await isCardExist(customer, token)) {
+        print("Card Added Already");
+        return false;
+      } else {
+        await addCardTokenToCustomer(customer, token).then((value) {
+          print("Card Added Succesfully");
+
+          return true;
+        });
+      }
+    } else {
+      //No
+      await saveCustomer(token).then((value) {
+        print("Customer registered and Card Added Successfully");
+        return true;
+      });
+    }
+    return false;
+  }
+
+  Future<bool> isCardValid() async {
+    return true;
+  }
 }

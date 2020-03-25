@@ -11,6 +11,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/search.dart';
 import 'package:zamzam/ui/payment.dart';
+import 'package:zamzam/constant/Constant.dart';
+
 
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
@@ -21,19 +23,12 @@ class MyTabs extends StatefulWidget {
 class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   static final homePageKey = GlobalKey<MyTabsState>();
   TabController tabcontroller;
-  String userId;
   FirebaseMessaging messaging = FirebaseMessaging();
   ApiListener mApiListener;
 
   @override
   void initState() {
-    currentUser().then((value) {
-      if (value != null) {
-        setState(() {
-          this.userId = value.phoneNumber;
-        });
-      }
-    });
+    
     super.initState();
     tabcontroller = new TabController(vsync: this, length: 5);
 
@@ -57,7 +52,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     });
 
     messaging.onTokenRefresh.listen((token) {
-      WebServices(this.mApiListener).updateUser(this.userId, token);
+      WebServices(this.mApiListener).updateUser(token);
 
       print("your token is chnged to : $token");
     });
@@ -148,7 +143,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       children: <Widget>[
         UserAccountsDrawerHeader(
           accountName: Text('Pilot Profile'),
-          accountEmail: Text('${this.userId}'),
+          accountEmail: Text('$CURRENT_USER'),
           currentAccountPicture: CircleAvatar(
             child: Icon(
               Icons.person,
@@ -171,7 +166,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         ),
         ListTile(
           leading: Icon(Icons.verified_user),
-          title: Text('Transaction History'),
+          title: Text('My contribution'),
           onTap: () {
             // Navigator.pop(context);
             // Navigator.push(

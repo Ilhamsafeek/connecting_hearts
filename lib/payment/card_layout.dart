@@ -147,7 +147,8 @@ class _CardWidget extends State<CardWidget> {
                     padding: const EdgeInsets.only(left: 10),
                     child: TextField(
                       onChanged: (val) {
-                        // _setMonth(val);
+                        _setMonth(int.parse(val.split(" / ")[0]));
+                        _setYear(int.parse(val.split(" / ")[1]));
                       },
                       style: textStyle,
                       controller: _cardDateController,

@@ -5,7 +5,6 @@ INJECTED from D:\zamzam\android\app\src\main\AndroidManifest.xml:1:1-33:12
 INJECTED from D:\zamzam\android\app\src\main\AndroidManifest.xml:1:1-33:12
 INJECTED from D:\zamzam\android\app\src\main\AndroidManifest.xml:1:1-33:12
 MERGED from D:\zamzam\android\app\src\main\AndroidManifest.xml:1:1-33:12
-MERGED from [:flutter_country_picker] D:\zamzam\build\flutter_country_picker\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [:video_player] D:\zamzam\build\video_player\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [:webview_media] D:\zamzam\build\webview_media\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [:firebase_auth] D:\zamzam\build\firebase_auth\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-15:12
@@ -167,8 +166,6 @@ uses-sdk
 INJECTED from D:\zamzam\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\zamzam\android\app\src\main\AndroidManifest.xml
 INJECTED from D:\zamzam\android\app\src\main\AndroidManifest.xml
-MERGED from [:flutter_country_picker] D:\zamzam\build\flutter_country_picker\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
-MERGED from [:flutter_country_picker] D:\zamzam\build\flutter_country_picker\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:video_player] D:\zamzam\build\video_player\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:video_player] D:\zamzam\build\video_player\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:webview_media] D:\zamzam\build\webview_media\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44

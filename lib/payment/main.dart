@@ -12,24 +12,40 @@ class StripePayment extends StatefulWidget {
 
 class _StripePaymentState extends State<StripePayment> {
   bool _cardValid;
-    ApiListener mApiListener;
+  bool _isCardSaved =false;
+  bool _cardMessageReceived = false;
+  ApiListener mApiListener;
 
   CardController _cardController = CardController();
 
   bool _requestToken = false;
-  String _token;
 
   Future<void> _validate() async {
     setState(() {
       _requestToken = true;
     });
-   
-   
+
+    bool valid = await WebServices(this.mApiListener).isCardValid();
+    setState(() {
+      _cardValid = valid;
+    });
+
+    if (valid) {
+      _isCardSaved = await WebServices(this.mApiListener).saveCard(
+          _cardController.cardNumber,
+          _cardController.expiryMonth,
+          _cardController.expiryYear,
+          _cardController.cvv);
+      
+    } else {
+      setState(() {
+        _requestToken = false;
+      });
+    }
   }
 
   @override
   void initState() {
-    
     super.initState();
   }
 
@@ -52,17 +68,32 @@ class _StripePaymentState extends State<StripePayment> {
                 elevation: 7.0,
                 textColor: Colors.white,
                 onPressed: () {
-                  print(WebServices(this.mApiListener).createStripeToken().toString());
+                  // if (_cardMessageReceived) {
+                  //   _validate().then((value) {
+                  //     Text(_cardMessage);
+                  //   });
+                  // } else {
+                  //   CircularProgressIndicator();
+                  // }
+                _validate();
+
+                Center(
+              child: !(_isCardSaved ?? true)
+                  ? CircularProgressIndicator()
+                  : Text('Card Saved Successfully !'),
+                    
+            );
                 },
               ),
             ),
-            Center(
-              child: !(_cardValid ?? true)
-                  ? Text("Card is not valid!")
-                  : _requestToken
-                      ? CircularProgressIndicator()
-                      : Text(_token != null ? _token : ""),
-            )
+
+            // Center(
+            //   child: !(_cardValid ?? true)
+            //       ? Text("Card is not valid!")
+            //       : _requestToken
+            //           ? CircularProgressIndicator()
+            //           : Text(_token != null ? _token : ""),
+            // )
           ],
         ),
       ),

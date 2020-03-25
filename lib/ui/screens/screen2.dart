@@ -21,18 +21,11 @@ class _TrendingState extends State<Trending> {
   @override
   ApiListener mApiListener;
 
-  String userId;
   int _currentIndex = 0;
   int _currentIndexUp = 0;
   @override
   void initState() {
-    currentUser().then((value) {
-      if (value != null) {
-        setState(() {
-          this.userId = value.phoneNumber;
-        });
-      }
-    });
+    
 
     super.initState();
   }
