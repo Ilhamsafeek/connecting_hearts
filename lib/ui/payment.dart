@@ -23,10 +23,11 @@ class _PaymentPageState extends State<Payment> {
   }
 
   ApiListener mApiListener;
-
+final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(title: Text('Payment')),
       body: Container(
@@ -51,13 +52,7 @@ class _PaymentPageState extends State<Payment> {
             height: 0,
           ),
           _getAllCards(),
-          // ListTile(
-          //   leading: Icon(
-          //     FontAwesomeIcons.ccVisa,
-          //     color: Colors.indigo[900],
-          //   ),
-          //   title: Text('****1112'),
-          // ),
+         
           ListTile(
             title: Text(
               'Add Debit or Credit card',
@@ -76,9 +71,8 @@ class _PaymentPageState extends State<Payment> {
   }
 
   Widget _getAllCards() {
-    return 
-    
-    FutureBuilder<dynamic>(
+ 
+    return FutureBuilder<dynamic>(
       future: WebServices(this.mApiListener).getCustomerDataByMobile(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         List<Widget> children;
@@ -95,7 +89,9 @@ class _PaymentPageState extends State<Payment> {
                   color: Colors.indigo[700],
                 ),
                 title: Text("****${item['last4']}"),
-                onTap: () {},
+                onTap: () {
+                  cardModalBottomSheet(context, item);
+                },
               )
           ];
         } else if (snapshot.hasError) {
@@ -123,7 +119,115 @@ class _PaymentPageState extends State<Payment> {
         );
       },
     );
- 
+  }
+
+  bool isDeletePresed = false;
+
+  Future<bool> cardModalBottomSheet(context, data) {
+    return showModalBottomSheet(
+        enableDrag: true,
+        context: context,
+        isScrollControlled: true,
+        isDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              child: new Wrap(
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: ListTile(
+                        enabled: true,
+                        title: Text('Card Details'),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            setState(() {
+                              isDeletePresed = true;
+                            });
+                          },
+                        ),
+                      )),
+                  Divider(
+                    height: 0,
+                  ),
+                  ListTile(
+                    leading: Text(
+                      'Card number',
+                      style: TextStyle(color: Colors.black45),
+                    ),
+                    title: Text("**** **** **** ${data['last4']}"),
+                  ),
+                  ListTile(
+                    leading: Text(
+                      'Expiry date',
+                      style: TextStyle(color: Colors.black45),
+                    ),
+                    title: Text("${data['exp_month']}/${data['exp_year']}"),
+                  ),
+                  Divider(
+                    height: 0,
+                  ),
+                  if (isDeletePresed)
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Column(children: <Widget>[
+                        ListTile(
+                            title: Text(
+                                'Do you really want to delete the payment method?')),
+                        Padding(padding: EdgeInsets.all(15)),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: RaisedButton(
+                                child: Text('No'),
+                                onPressed: () {
+                                  setState(() {
+                                    isDeletePresed = false;
+                                  });
+                                },
+                              ),
+                            ),
+                            Expanded(
+                                child: RaisedButton(
+                              onPressed: () async {
+                                 Navigator.of(context).pop();
+                                 _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                      content: Text("Deleting.."),
+                                    ));
+                                await WebServices(this.mApiListener)
+                                    .deleteCard(data['id'])
+                                    .then((value) {
+                                  if (value == true) {
+                                   _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                      content: Text("Succesfully deleted."),
+                                    ));
+                                   
+                                    setState(() {
+                                      isDeletePresed = false;
+                                    });
+                                  }else{
+                                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                      content: Text("Something went wrong!"),
+                                    ));
+                                  }
+                                });
+                              },
+                              child: Text("Yes"),
+                              color: Colors.black,
+                              textColor: Colors.white,
+                            )),
+                          ],
+                        )
+                      ]),
+                    )
+                ],
+              ),
+            );
+          });
+        });
   }
 
   Future<Null> _handleRefresh() async {

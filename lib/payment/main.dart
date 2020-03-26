@@ -12,19 +12,14 @@ class StripePayment extends StatefulWidget {
 
 class _StripePaymentState extends State<StripePayment> {
   bool _cardValid;
-  bool _isCardSaved =false;
+  bool _isCardSaved = false;
   bool _cardMessageReceived = false;
   ApiListener mApiListener;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   CardController _cardController = CardController();
 
-  bool _requestToken = false;
-
-  Future<void> _validate() async {
-    setState(() {
-      _requestToken = true;
-    });
-
+  Future<bool> _validate() async {
     bool valid = await WebServices(this.mApiListener).isCardValid();
     setState(() {
       _cardValid = valid;
@@ -36,11 +31,9 @@ class _StripePaymentState extends State<StripePayment> {
           _cardController.expiryMonth,
           _cardController.expiryYear,
           _cardController.cvv);
-      
+      return _isCardSaved;
     } else {
-      setState(() {
-        _requestToken = false;
-      });
+      return false;
     }
   }
 
@@ -52,6 +45,7 @@ class _StripePaymentState extends State<StripePayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Add card"),
       ),
@@ -68,21 +62,31 @@ class _StripePaymentState extends State<StripePayment> {
                 elevation: 7.0,
                 textColor: Colors.white,
                 onPressed: () {
-                  // if (_cardMessageReceived) {
-                  //   _validate().then((value) {
-                  //     Text(_cardMessage);
-                  //   });
-                  // } else {
-                  //   CircularProgressIndicator();
-                  // }
-                _validate();
-               
-                Center(
-              child: (_isCardSaved ?? true)
-                  ? CircularProgressIndicator()
-                  : Text('Card Saved Successfully !'),
-                    
-            );
+                  _validate().then((value) {
+                    if (value != null) {
+                      if (value) {
+                        _scaffoldKey.currentState.showSnackBar(SnackBar(
+                          content: Text("Card added succesfully."),
+                        ));
+                        Navigator.of(context).pop();
+                      } else {
+                        _scaffoldKey.currentState.showSnackBar(SnackBar(
+                          content:
+                              Text("Something went wrong. please try again"),
+                        ));
+                      }
+                    } else {
+                      _scaffoldKey.currentState.showSnackBar(SnackBar(
+                        content: Text("Adding card.."),
+                      ));
+                    }
+                  });
+
+                  Center(
+                    child: (_isCardSaved ?? true)
+                        ? CircularProgressIndicator()
+                        : Text('Card Saved Successfully !'),
+                  );
                 },
               ),
             ),
@@ -97,15 +101,6 @@ class _StripePaymentState extends State<StripePayment> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          
-        },
-        tooltip: 'validate',
-        child: Icon(Icons.credit_card),
-      ),
     );
   }
-
-  
 }

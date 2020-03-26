@@ -257,7 +257,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-       
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -265,14 +264,13 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
               child: RaisedButton(
                 onPressed: () {
-                 
                   payModalBottomSheet(context);
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(
                   8,
                 ))),
-                color: Colors.orange[400],
+                color: Colors.orange[700],
                 child: Padding(
                   padding: EdgeInsets.all(
                     16,
@@ -316,7 +314,9 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         context: context,
         isScrollControlled: true,
         isDismissible: false,
-        builder: (BuildContext bc) {
+         builder: (context) {
+      return StatefulBuilder(
+       builder: (BuildContext context, StateSetter setState) {
           return Container(
             child: new Wrap(
               children: <Widget>[
@@ -371,7 +371,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                             color: Colors.green[800],
                             textColor: Colors.white,
                           )),
-                        
                         ],
                       ),
                     ),
@@ -379,7 +378,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ],
             ),
           );
-        });
+    });});
   }
 
   Widget paymentMethods() {

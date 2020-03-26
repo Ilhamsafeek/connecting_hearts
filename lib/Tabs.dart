@@ -12,6 +12,8 @@ import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
+import 'package:zamzam/ui/profile.dart';
+
 
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
@@ -158,11 +160,11 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           leading: Icon(Icons.person),
           title: Text('Profile'),
           onTap: () {
-            // Navigator.pop(context);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => Beneficiaries()),
-            // );
+            
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
           },
         ),
         ListTile(

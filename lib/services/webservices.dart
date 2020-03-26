@@ -76,6 +76,7 @@ class WebServices {
   //2.  https://medium.com/devmins/stripe-implementation-part-ii-payment-gateway-integration-postman-collection-7d37efee096d
   Future<dynamic> createStripeToken(
       cardNumber, expiryMonth, expiryYear, cvc) async {
+        print("Exp month: $expiryMonth");
     var url = 'https://api.stripe.com/v1/tokens';
     var response = await http.post(
       url,
@@ -92,7 +93,6 @@ class WebServices {
     );
     // print(response.body) ;
     var jsonServerData = json.decode(response.body);
-    print(jsonServerData['id']);
     return jsonServerData;
   }
 
@@ -162,12 +162,12 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<dynamic> addCardTokenToCustomer(String customer, String token) async {
+  Future<dynamic> addCardTokenToCustomer(String customer, String card) async {
     var url = 'https://api.stripe.com/v1/customers/$customer/sources';
     var response = await http.post(
       url,
       body: {
-        'source': '$token',
+        'source': '$card',
       },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -177,7 +177,7 @@ class WebServices {
     // print(response.body) ;
 
     var jsonServerData = json.decode(response.body);
-
+    print("addCardTokenToCustomer-> $jsonServerData");
     return jsonServerData;
   }
 
@@ -282,19 +282,23 @@ class WebServices {
     );
 
     var jsonServerData = json.decode(response.body);
-
-    if (jsonServerData != null) {
+    print("isCardExist-> $jsonServerData");
+    if (jsonServerData['id']!=null) {
       return true;
     }
     return false;
   }
 
   Future<bool> saveCard(cardNumber, expiryMonth, expiryYear, cvc) async {
+    
     var token;
+    var card;
+    
     await createStripeToken(cardNumber, expiryMonth, expiryYear, cvc)
         .then((value) {
       token = value['id'];
-      print(token);
+      card = value['card']['id'];
+      
     });
     var customer;
 
@@ -305,7 +309,7 @@ class WebServices {
           customer = value[0]['id'];
         }
       });
-      if (await isCardExist(customer, token)) {
+      if (await isCardExist(customer, card)) {
         print("Card Added Already");
         return false;
       } else {
@@ -317,13 +321,36 @@ class WebServices {
       }
     } else {
       //No
-      await saveCustomer(token).then((value) {
+      await saveCustomer(card).then((value) {
         print("Customer registered and Card Added Successfully");
         return true;
       });
     }
     return false;
   }
+
+  Future<bool> deleteCard(String card) async {
+    var customer;
+    await getCustomerDataByMobile().then((value) {
+      customer = value[0]['id'].toString();
+      print("customer is $customer");
+      
+    });
+
+    var url = 'https://api.stripe.com/v1/customers/$customer/sources/$card';
+    var response = await http.delete(
+      url,
+     
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
+    var jsonServerData = json.decode(response.body);
+    print(jsonServerData['deleted']);
+    return jsonServerData['deleted'];
+  }
+
 
   Future<bool> isCardValid() async {
     return true;

@@ -171,8 +171,7 @@ class _TrendingState extends State<Trending> {
             ),
           ),
           FutureBuilder<dynamic>(
-            future: WebServices(this.mApiListener)
-                .getCategoryData(), // a previously-obtained Future<String> or null
+            future: WebServices(this.mApiListener).getCategoryData(), // a previously-obtained Future<String> or null
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               List<Widget> children;
 
@@ -261,24 +260,6 @@ class _TrendingState extends State<Trending> {
         ],
       ),
     );
-  }
-
-  List<GridModel> _getGridItemList() {
-    List<GridModel> list = new List<GridModel>();
-    list.add(new GridModel("assets/zamzam.png", "ZZF\nprojects", null));
-    list.add(new GridModel("assets/help.png", "Help\na Needy", null));
-    list.add(new GridModel("assets/sadaka.png", "Sadaka", null));
-    list.add(new GridModel("assets/sanitation.png", "Sanitation", null));
-    list.add(new GridModel("assets/health.png", "Health", null));
-    list.add(new GridModel("assets/empowerment.png", "Empowerment", null));
-    list.add(new GridModel("assets/marriage.png", "Marriage", null));
-    list.add(new GridModel("assets/shelter.png", "Shelter", null));
-    list.add(new GridModel("assets/education.png", "Education", null));
-    list.add(new GridModel("assets/relife.png", "Relief", null));
-    list.add(
-        new GridModel("assets/success-stories.png", "Success\nStories", null));
-    list.add(new GridModel("assets/events.png", "Events", null));
-    return list;
   }
 
   List<GridModel> _getGridList() {

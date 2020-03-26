@@ -25,7 +25,7 @@ List myList;
         body: Center(
             child: new RefreshIndicator(
           child: SingleChildScrollView(child: Container(
-            // child: videoCadge()
+            child: videoCadge()
             )),
           color: Colors.black,
           onRefresh: _handleRefresh,
