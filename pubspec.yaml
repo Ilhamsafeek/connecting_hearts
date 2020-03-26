@@ -40,6 +40,8 @@ dependencies:
   http:
   font_awesome_flutter: ^8.4.0
   flutter_masked_text: ^0.7.0
+  link: ^1.0.0
+  url_launcher: ^5.4.2
   
 dev_dependencies:
   flutter_test:
@@ -66,7 +68,13 @@ flutter:
   - assets/real.png
   - assets/logo.png
   - assets/powered_by.png
- 
+  - assets/book.png
+  - assets/report.png
+  - assets/donations.png
+  - assets/ic_passbook_header.png
+
+
+
   - assets/zamzam.png
   - assets/help.png
   - assets/sadaka.png

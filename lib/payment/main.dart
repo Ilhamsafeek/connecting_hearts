@@ -76,9 +76,9 @@ class _StripePaymentState extends State<StripePayment> {
                   //   CircularProgressIndicator();
                   // }
                 _validate();
-
+               
                 Center(
-              child: !(_isCardSaved ?? true)
+              child: (_isCardSaved ?? true)
                   ? CircularProgressIndicator()
                   : Text('Card Saved Successfully !'),
                     
@@ -98,10 +98,14 @@ class _StripePaymentState extends State<StripePayment> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _validate,
+        onPressed: (){
+          
+        },
         tooltip: 'validate',
         child: Icon(Icons.credit_card),
       ),
     );
   }
+
+  
 }

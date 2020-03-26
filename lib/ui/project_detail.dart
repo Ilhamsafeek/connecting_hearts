@@ -68,7 +68,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               childCount: 1,
             ),
           ),
-         
+
           SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -103,19 +103,17 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   Widget _detailSection() {
-    var paymentTypeExtension= "";
+    var paymentTypeExtension = "";
     var months = '${widget.projectData['months']}';
-    if(widget.projectData['type']=='recursive'){
+    if (widget.projectData['type'] == 'recursive') {
       paymentTypeExtension = 'in $months months';
-    }else{
+    } else {}
 
-    }
-    
     FlutterMoneyFormatter formattedAmount = FlutterMoneyFormatter(
         amount: double.parse('${widget.projectData['amount']}'));
     FlutterMoneyFormatter formattedCollected = FlutterMoneyFormatter(
         amount: double.parse('${widget.projectData['collected']}'));
-  
+
     double completedPercent = 100 *
         double.parse('${widget.projectData['collected']}') /
         double.parse('${widget.projectData['amount']}');
@@ -128,8 +126,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     }
 
     double percent = completedPercent / 100;
-  
-  
+
     return Expanded(
         child: Padding(
       padding: const EdgeInsets.all(
@@ -237,7 +234,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               progressColor: completedColor,
             ),
           ),
-        
           Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
@@ -261,17 +257,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(
-                12,
-              ),
-              child: Icon(
-                Icons.favorite_border,
-                color: Theme.of(context).accentColor,
-              ),
-            ),
-          ),
+       
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -279,29 +265,33 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
               child: RaisedButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     PageRouteBuilder(
-                  //       pageBuilder: (context, anim1, anim2) => Payment(),
-                  //       transitionsBuilder: (context, anim1, anim2, child) =>
-                  //           FadeTransition(opacity: anim1, child: child),
-                  //       transitionDuration: Duration(milliseconds: 100),
-                  //     ));
+                 
                   payModalBottomSheet(context);
                 },
-                padding: EdgeInsets.all(
-                  16,
-                ),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(
                   8,
                 ))),
-                color: Color.fromRGBO(54, 74, 105, 1),
-                child: Text(
-                  "Donate now",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
+                color: Colors.orange[400],
+                child: Padding(
+                  padding: EdgeInsets.all(
+                    16,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Donate Now',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -322,7 +312,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
 
   Future<bool> payModalBottomSheet(context) {
     return showModalBottomSheet(
-        enableDrag: true,
+        enableDrag: false,
         context: context,
         isScrollControlled: true,
         isDismissible: false,
@@ -330,8 +320,21 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           return Container(
             child: new Wrap(
               children: <Widget>[
-                ListTile(title: Text('Choose a payment method')),
-               
+                Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: ListTile(
+                      title: Text('Choose a payment method'),
+                      trailing: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    )),
+                Divider(
+                  height: 0,
+                ),
                 paymentMethods(),
                 ListTile(
                     title: TextFormField(
@@ -360,13 +363,15 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PaymentResult(selectedMethod)),
+                                    builder: (context) =>
+                                        PaymentResult(selectedMethod)),
                               );
                             },
                             child: Text("Send"),
                             color: Colors.green[800],
                             textColor: Colors.white,
                           )),
+                        
                         ],
                       ),
                     ),
@@ -377,8 +382,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         });
   }
 
-  Widget paymentMethods(){
-    
+  Widget paymentMethods() {
     return FutureBuilder<dynamic>(
       future: WebServices(this.mApiListener).getCustomerDataByMobile(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -390,21 +394,20 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           }
           children = <Widget>[
             for (var item in data)
-              
-               RadioListTile(
-                  activeColor: Colors.black,
-                  value: '${item['id']}',
-                  groupValue: selectedMethod,
-                  onChanged: selectsku,
-                  title: ListTile(
-                     leading: Icon(
-                  FontAwesomeIcons.ccVisa,
-                  color: Colors.indigo[700],
-                ),
-                    title: Text('****${item['last4']}'),
+              RadioListTile(
+                activeColor: Colors.black,
+                value: '${item['id']}',
+                groupValue: selectedMethod,
+                onChanged: selectsku,
+                title: ListTile(
+                  leading: Icon(
+                    FontAwesomeIcons.ccVisa,
+                    color: Colors.indigo[700],
                   ),
-               )
-                // ),
+                  title: Text('****${item['last4']}'),
+                ),
+              )
+            // ),
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[
@@ -431,9 +434,5 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         );
       },
     );
- 
   }
-
-
-
 }

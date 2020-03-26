@@ -17,7 +17,10 @@ MERGED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediat
 MERGED from [:video_player_web] D:\zamzam\build\video_player_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences] D:\zamzam\build\shared_preferences\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences_web] D:\zamzam\build\shared_preferences_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-14:12
 MERGED from [:shared_preferences_macos] D:\zamzam\build\shared_preferences_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher_macos] D:\zamzam\build\url_launcher_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher_web] D:\zamzam\build\url_launcher_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\2547f6ad737966f13583e09d66c636ab\AndroidManifest.xml:17:1-22:12
 MERGED from [com.stripe:stripe-android:8.3.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\jetified-stripe-android-8.3.0.aar\aa89393cdf90a493ffb3908217582ee5\AndroidManifest.xml:2:1-27:12
 MERGED from [com.google.android.material:material:1.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\d5cb1358736bcfd4f9c07177312f287d\AndroidManifest.xml:17:1-24:12
@@ -94,6 +97,8 @@ MERGED from [:firebase_core] D:\zamzam\build\firebase_core\intermediates\merged_
 MERGED from [:firebase_core] D:\zamzam\build\firebase_core\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-18:19
 MERGED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-18:19
+MERGED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-12:19
+MERGED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-12:19
 MERGED from [com.stripe:stripe-android:8.3.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\jetified-stripe-android-8.3.0.aar\aa89393cdf90a493ffb3908217582ee5\AndroidManifest.xml:11:5-25:19
 MERGED from [com.stripe:stripe-android:8.3.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\jetified-stripe-android-8.3.0.aar\aa89393cdf90a493ffb3908217582ee5\AndroidManifest.xml:11:5-25:19
 MERGED from [com.google.android.material:material:1.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\d5cb1358736bcfd4f9c07177312f287d\AndroidManifest.xml:22:5-20
@@ -190,8 +195,14 @@ MERGED from [:shared_preferences] D:\zamzam\build\shared_preferences\intermediat
 MERGED from [:shared_preferences] D:\zamzam\build\shared_preferences\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_web] D:\zamzam\build\shared_preferences_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_web] D:\zamzam\build\shared_preferences_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_macos] D:\zamzam\build\shared_preferences_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_macos] D:\zamzam\build\shared_preferences_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_macos] D:\zamzam\build\url_launcher_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_macos] D:\zamzam\build\url_launcher_macos\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_web] D:\zamzam\build\url_launcher_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_web] D:\zamzam\build\url_launcher_web\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:5:5-44
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\2547f6ad737966f13583e09d66c636ab\AndroidManifest.xml:20:5-43
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\2547f6ad737966f13583e09d66c636ab\AndroidManifest.xml:20:5-43
 MERGED from [com.stripe:stripe-android:8.3.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\jetified-stripe-android-8.3.0.aar\aa89393cdf90a493ffb3908217582ee5\AndroidManifest.xml:7:5-9:41
@@ -356,6 +367,14 @@ ADDED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediate
 		ADDED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:16:17-82
 	android:name
 		ADDED from [:firebase_messaging] D:\zamzam\build\firebase_messaging\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:15:17-127
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:8:9-11:74
+	android:exported
+		ADDED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:10:13-37
+	android:theme
+		ADDED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:11:13-71
+	android:name
+		ADDED from [:url_launcher] D:\zamzam\build\url_launcher\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:9:13-74
 activity#com.stripe.android.view.AddSourceActivity
 ADDED from [com.stripe:stripe-android:8.3.0] C:\Users\Ilham Safeek\.gradle\caches\transforms-1\files-1.1\jetified-stripe-android-8.3.0.aar\aa89393cdf90a493ffb3908217582ee5\AndroidManifest.xml:12:9-16:20
 	android:windowSoftInputMode

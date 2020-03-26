@@ -80,6 +80,10 @@
         </service>
 
         <activity
+            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
             android:name="com.stripe.android.view.AddSourceActivity"
             android:theme="@style/StripeDefaultTheme"
             android:windowSoftInputMode="stateVisible" >

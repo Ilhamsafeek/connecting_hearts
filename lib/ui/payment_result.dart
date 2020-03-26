@@ -4,6 +4,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zamzam/payment/main.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentResult extends StatefulWidget {
   @override
@@ -85,17 +86,51 @@ class _PaymentResultState extends State<PaymentResult> {
 
         if (snapshot.hasData) {
           var data = snapshot.data;
-        
+
           children = <Widget>[
             Icon(
               Icons.check_circle,
               color: Colors.green,
               size: 120,
             ),
-            Text(data['status']),
-            Icon(
-              Icons.receipt,
-            )
+             Padding(
+                padding: const EdgeInsets.all(16),
+            child:  Text(data['status'],style: TextStyle(fontSize: 19.0)),
+             ),
+             Padding(
+                padding: const EdgeInsets.all(16),
+            child:Text('Receipt for your donation'),
+             ),
+            Divider(height: 0,),
+            Padding(
+                padding: const EdgeInsets.all(16),
+                child: Center(
+                  child: Text("${data['created']}",
+                        style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                )),
+             Divider(height: 0,),
+            Padding(
+                padding: const EdgeInsets.all(16),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.receipt,
+                  ),
+                  title: FlatButton(
+                    onPressed: () {
+                      _launchURL(data['receipt_url']);
+                    },
+                    child: Text('view stripe receipt',
+                        style: TextStyle(fontSize: 15.0, color: Colors.blue),),
+                  ),
+                )),
+            RaisedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Done"),
+              color: Colors.orange[400],
+              textColor: Colors.white,
+            ),
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[
@@ -130,5 +165,13 @@ class _PaymentResultState extends State<PaymentResult> {
         );
       },
     );
+  }
+
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

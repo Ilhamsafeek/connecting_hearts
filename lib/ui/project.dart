@@ -114,6 +114,10 @@ class _ProjectPageState extends State<Project> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Image.network(
+            'assets/child.png',
+            fit: BoxFit.cover,
+          ),
           ListTile(
             leading: Icon(Icons.album),
             title: Text('${data['category']}'),

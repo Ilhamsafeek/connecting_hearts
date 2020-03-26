@@ -14,13 +14,19 @@ class _HomeState extends State<Home> {
   final flutubePlayer = null;
   ApiListener mApiListener;
 
+List myList;
+  ScrollController _scrollController = ScrollController();
+  int _currentMax = 3;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         body: Center(
             child: new RefreshIndicator(
-          child: SingleChildScrollView(child: Container(child: videoCadge())),
+          child: SingleChildScrollView(child: Container(
+            // child: videoCadge()
+            )),
           color: Colors.black,
           onRefresh: _handleRefresh,
         )));
@@ -36,6 +42,7 @@ class _HomeState extends State<Home> {
         if (snapshot.hasData) {
           children = <Widget>[
             for (var item in snapshot.data)
+            
               Container(
                   child: Column(
                 children: <Widget>[
@@ -72,6 +79,7 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ))
+         
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[

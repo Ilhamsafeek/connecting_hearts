@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/ui/payment.dart';
-import 'package:zamzam/ui/paytm.dart';
 import 'package:zamzam/ui/project.dart';
 import 'package:zamzam/ui/splashscreen.dart';
 import 'package:zamzam/signin.dart';
@@ -40,7 +39,6 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         "onboard": (BuildContext context) => OnBoardingPage(),
         SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
-        PAY_TM: (BuildContext context) => Paytm(),
         SIGN_IN: (BuildContext context) => Signin(),
         HOME_PAGE: (BuildContext context) => MyTabs(),
       },

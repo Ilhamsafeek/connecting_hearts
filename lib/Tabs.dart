@@ -9,10 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:zamzam/services/services.dart';
-import 'package:zamzam/ui/search.dart';
 import 'package:zamzam/ui/payment.dart';
+import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
-
 
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
@@ -28,7 +27,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    
     super.initState();
     tabcontroller = new TabController(vsync: this, length: 5);
 
@@ -76,20 +74,23 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           // ),
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, anim1, anim2) => Search(),
-                  transitionsBuilder: (context, anim1, anim2, child) =>
-                      FadeTransition(opacity: anim1, child: child),
-                  transitionDuration: Duration(milliseconds: 100),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   PageRouteBuilder(
+              //     pageBuilder: (context, anim1, anim2) => Search(),
+              //     transitionsBuilder: (context, anim1, anim2, child) =>
+              //         FadeTransition(opacity: anim1, child: child),
+              //     transitionDuration: Duration(milliseconds: 100),
+              //   ),
+              // );
+              showSearch(context: context, delegate: DataSearch());
             },
             icon: Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             icon: Icon(Icons.person),
           ),
         ],
@@ -100,7 +101,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               indicatorColor: Colors.black,
               unselectedLabelColor: Colors.grey,
               labelColor:
-                  Color.fromRGBO(54, 74, 105, 1), //Colors.redAccent[700],
+                  Colors.red, //Colors.redAccent[700],
               labelStyle: TextStyle(fontSize: 11.0),
               tabs: <Tab>[
             new Tab(
@@ -168,11 +169,10 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           leading: Icon(Icons.verified_user),
           title: Text('My contribution'),
           onTap: () {
-            // Navigator.pop(context);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => History()),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyContribution()),
+            );
           },
         ),
         ListTile(
@@ -230,5 +230,80 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   Future<FirebaseUser> currentUser() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return user;
+  }
+}
+
+class DataSearch extends SearchDelegate<String> {
+  final cities = [
+    "Trincomalee",
+    "Colombo",
+    "Galle",
+    "Matara",
+    "Anuradhapura",
+    "Gampaha",
+    "Puttalam"
+  ];
+  final recents = ["Trincomalee", "Colombo", "Galle"];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // Actions for app bar
+    return [
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          })
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // Leading icon on the left side of app bar
+    return IconButton(
+        icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // show some result based on the selection
+    return Center(
+   child: Container(
+      height: 100,
+      width: 100,
+         child: Card(color: Colors.orange,child: Center(child: Text(query)),)
+
+    ));
+  }
+
+  Widget buildSuggestions(BuildContext context) {
+    // Show when someone searches for something
+    final suggestionList = query.isEmpty
+        ? recents
+        : cities;
+
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        onTap: (){
+          showResults(context);
+        },
+        leading: Icon(Icons.location_city),
+        title: RichText(text: TextSpan(
+          text: suggestionList[index].substring(0, query.length),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          children: [
+            TextSpan(
+              text: suggestionList[index].substring(query.length),
+              style: TextStyle( color: Colors.grey)
+            )
+          ]
+        )),
+      ),
+      itemCount: suggestionList.length,
+    );
   }
 }

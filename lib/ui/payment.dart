@@ -43,7 +43,7 @@ class _PaymentPageState extends State<Payment> {
           ),
           ListTile(
               title: Text(
-            'Make your donations easy by adding payment method now',
+            'Make your donations simply by adding payment method now',
             style: TextStyle(color: Colors.black45, fontSize: 14),
             textAlign: TextAlign.center,
           )),
