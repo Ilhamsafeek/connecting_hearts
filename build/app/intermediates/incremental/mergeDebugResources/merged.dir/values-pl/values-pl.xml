@@ -27,6 +27,70 @@
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Udostępnij dla"</string>
     <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Udostępnij przez: <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
     <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Zwiń"</string>
+    <string name="bt_add_card">Dodaj kartę</string>
+    <string name="bt_cancel">Anuluj</string>
+    <string name="bt_card_details">Dane karty</string>
+    <string name="bt_card_not_accepted">Karta nie została zaakceptowana</string>
+    <string name="bt_card_number_invalid">Numer karty jest nieprawidłowy</string>
+    <string name="bt_card_number_required">Wymagane jest podanie numeru karty</string>
+    <string name="bt_cardholder_name_required">Wymagane jest podanie imienia i nazwiska posiadacza karty</string>
+    <string name="bt_cid">Kod CID</string>
+    <string name="bt_confirm">Potwierdź</string>
+    <string name="bt_confirm_enrollment">Potwierdź rejestrację</string>
+    <string name="bt_country_code_invalid">Kod kraju jest nieprawidłowy</string>
+    <string name="bt_country_code_required">Wymagane jest podanie kodu kraju</string>
+    <string name="bt_cvc">Kod CVC</string>
+    <string name="bt_cvn">Kod CVN</string>
+    <string name="bt_cvv">Kod CVC</string>
+    <string name="bt_cvv_invalid">Wartość %s jest nieprawidłowa.</string>
+    <string name="bt_cvv_required">Wartość %s jest obowiązkowa.</string>
+    <string name="bt_delete">Usuń</string>
+    <string name="bt_delete_confirmation_description">Nie będzie już możliwe użycie tego źródła finansowania płatności w tej aplikacji.</string>
+    <string name="bt_delete_confirmation_title">Usunąć źródło finansowania płatności?</string>
+    <string name="bt_descriptor_amex">Amex</string>
+    <string name="bt_descriptor_diners">Diners</string>
+    <string name="bt_descriptor_discover">Discover</string>
+    <string name="bt_descriptor_google_pay">Google Pay</string>
+    <string name="bt_descriptor_hiper">Hiper</string>
+    <string name="bt_descriptor_hipercard">Hipercard</string>
+    <string name="bt_descriptor_jcb">JCB</string>
+    <string name="bt_descriptor_maestro">Maestro</string>
+    <string name="bt_descriptor_mastercard">MasterCard</string>
+    <string name="bt_descriptor_pay_with_venmo">Venmo</string>
+    <string name="bt_descriptor_paypal">PayPal</string>
+    <string name="bt_descriptor_unionpay">UnionPay</string>
+    <string name="bt_descriptor_unknown">Karta kredytowa lub debetowa</string>
+    <string name="bt_descriptor_visa">Visa</string>
+    <string name="bt_done">Gotowe</string>
+    <string name="bt_edit">Edytuj</string>
+    <string name="bt_expiration_invalid">Data ważności jest nieprawidłowa</string>
+    <string name="bt_expiration_required">Podaj datę ważności</string>
+    <string name="bt_form_hint_card_number">Numer karty</string>
+    <string name="bt_form_hint_cardholder_name">Imię i nazwisko posiadacza karty</string>
+    <string name="bt_form_hint_country_code">Kod kraju</string>
+    <string name="bt_form_hint_cvv">@string/bt_cvv</string>
+    <string name="bt_form_hint_expiration">Data ważności</string>
+    <string name="bt_form_hint_mobile_number">Numer telefonu kom.</string>
+    <string name="bt_form_hint_postal_code">Kod pocztowy</string>
+    <string name="bt_mobile_number_invalid">Numer telefonu komórkowego jest nieprawidłowy</string>
+    <string name="bt_mobile_number_required">Wymagane jest podanie numeru telefonu komórkowego</string>
+    <string name="bt_month">Miesiąc</string>
+    <string name="bt_next">Dalej</string>
+    <string name="bt_other">Inne</string>
+    <string name="bt_postal_code_invalid">Kod pocztowy jest nieprawidłowy</string>
+    <string name="bt_postal_code_required">Kod pocztowy jest wymagany</string>
+    <string name="bt_recent">Ostatnie</string>
+    <string name="bt_scan_with_card_io">Zeskanuj przy użyciu card.io</string>
+    <string name="bt_select_payment_method">Wybierz formę płatności</string>
+    <string name="bt_sms_code">Kod z wiadomości SMS</string>
+    <string name="bt_sms_code_required">Wymagane jest podanie kodu z wiadomości SMS</string>
+    <string name="bt_sms_code_sent_to">Wpisz kod z wiadomości SMS wysłanej pod numer %s</string>
+    <string name="bt_unionpay_mobile_number_explanation">W przypadku tej karty może być wymagane dokonanie rejestracji. W razie potrzeby wiadomość SMS z kodem zostanie wysłana na ten numer.</string>
+    <string name="bt_unionpay_sms_code_invalid">Kod z wiadomości SMS jest nieprawidłowy</string>
+    <string name="bt_use_a_different_phone_number">Podaj inny numer telefonu</string>
+    <string name="bt_vault_manager_delete_failure">Nie udało się teraz usunąć Twojego źródła finansowania płatności. Spróbuj ponownie później.</string>
+    <string name="bt_vault_manager_title">Edytuj zapisane</string>
+    <string name="bt_year">Rok</string>
     <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Włącz"</string>
     <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"Aplikacja <ns1:g id="APP_NAME">%1$s</ns1:g> nie będzie działać, jeśli nie włączysz Usług Google Play."</string>
     <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Włącz Usługi Google Play"</string>
@@ -48,4 +112,5 @@
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Inne"</string>
     <string msgid="146198913615257606" name="search_menu_title">"Szukaj"</string>
     <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="363496807345461806" name="wallet_buy_button_place_holder">"Kup to z Google"</string>
 </resources>

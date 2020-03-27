@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2" xmlns:ns2="http://schemas.android.com/tools">
+<resources xmlns:ns1="http://schemas.android.com/tools" xmlns:ns2="urn:oasis:names:tc:xliff:document:1.2">
     <attr format="reference" name="bottomAppBarStyle"/>
     <attr format="reference" name="bottomNavigationStyle"/>
     <attr format="reference" name="bottomSheetDialogTheme"/>
     <attr format="reference" name="bottomSheetStyle"/>
+    <attr format="color" name="bt_expiration_date_dialog_divider"/>
+    <attr format="color" name="bt_expiration_date_dialog_label"/>
+    <attr format="color" name="bt_expiration_date_scrollbar_thumb_vertical"/>
+    <attr format="color" name="bt_expiration_date_scrollbar_track_vertical"/>
+    <attr format="color" name="bt_expiration_date_sheet_background"/>
     <attr format="reference" name="cardViewStyle"/>
     <attr format="reference" name="chipGroupStyle"/>
     <attr format="reference" name="chipStandaloneStyle"/>
@@ -60,6 +65,33 @@
     <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
     <color name="bright_foreground_material_dark">@android:color/white</color>
     <color name="bright_foreground_material_light">@android:color/black</color>
+    <color name="bt_base_background">#FAFAFA</color>
+    <color name="bt_black">#001129</color>
+    <color name="bt_black_12">#1e000000</color>
+    <color name="bt_black_38">#61000000</color>
+    <color name="bt_black_54">#8a000000</color>
+    <color name="bt_black_87">#de000000</color>
+    <color name="bt_blue">#009bde</color>
+    <color name="bt_blue_pressed">#008BC7</color>
+    <color name="bt_border_color">#99999A</color>
+    <color name="bt_button_disabled_color">#99999A</color>
+    <color name="bt_color_highlight">#9F9EA1</color>
+    <color name="bt_color_primary">#3E3C42</color>
+    <color name="bt_color_primary_dark">#363439</color>
+    <color name="bt_error_red">#DD5555</color>
+    <color name="bt_expiration_date_sheet_background_dark">#20272b</color>
+    <color name="bt_expiration_date_sheet_background_light">#eceff0</color>
+    <color name="bt_light_gray">#6d6d6d</color>
+    <color name="bt_paypal_monogram_button_background">#009CDE</color>
+    <color name="bt_paypal_monogram_button_background_pressed">#008AC5</color>
+    <color name="bt_text_blue">#199DDC</color>
+    <color name="bt_very_light_gray">#E2E2E3</color>
+    <color name="bt_white">#ffffff</color>
+    <color name="bt_white_12">#1effffff</color>
+    <color name="bt_white_38">#61ffffff</color>
+    <color name="bt_white_54">#8affffff</color>
+    <color name="bt_white_87">#deffffff</color>
+    <color name="bt_white_pressed">#F2F2F2</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
     <color name="cardview_dark_background">#FF424242</color>
@@ -145,6 +177,17 @@
     <color name="toolbar_color_default">#ff3f51b5</color>
     <color name="tooltip_background_dark">#e6616161</color>
     <color name="tooltip_background_light">#e6FFFFFF</color>
+    <color name="wallet_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="wallet_bright_foreground_holo_dark">#fff3f3f3</color>
+    <color name="wallet_bright_foreground_holo_light">#ff000000</color>
+    <color name="wallet_dim_foreground_disabled_holo_dark">#80bebebe</color>
+    <color name="wallet_dim_foreground_holo_dark">#bebebe</color>
+    <color name="wallet_highlighted_text_holo_dark">#6633b5e5</color>
+    <color name="wallet_highlighted_text_holo_light">#6633b5e5</color>
+    <color name="wallet_hint_foreground_holo_dark">#808080</color>
+    <color name="wallet_hint_foreground_holo_light">#808080</color>
+    <color name="wallet_holo_blue_light">#ff33b5e5</color>
+    <color name="wallet_link_text_light">#0000ee</color>
     <declare-styleable name="ActionBar">
         <!-- The type of navigation to use. -->
         <attr name="navigationMode">
@@ -1068,6 +1111,25 @@
             <flag name="all" value="0x77"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="CustomWalletTheme"><attr name="windowTransitionStyle">
+<enum name="slide" value="1"/>
+
+<enum name="none" value="2"/>
+
+</attr>
+<attr name="toolbarTextColorStyle">
+<enum name="light" value="1"/>
+
+<enum name="dark" value="2"/>
+
+</attr>
+<attr name="customThemeStyle">
+<enum name="material" value="1"/>
+
+<enum name="googleMaterial2" value="2"/>
+
+</attr>
+</declare-styleable>
     <declare-styleable name="DesignTheme"><attr name="bottomSheetDialogTheme"/><attr name="bottomSheetStyle"/></declare-styleable>
     <declare-styleable name="DrawerArrowToggle">
         <!-- The drawing color for the bars -->
@@ -1277,6 +1339,63 @@
 <attr format="float" name="imageAspectRatio"/>
 
 <attr format="boolean" name="circleCrop"/>
+</declare-styleable>
+    <declare-styleable name="MapAttrs"><attr name="mapType">
+<enum name="none" value="0"/>
+
+<enum name="normal" value="1"/>
+
+<enum name="satellite" value="2"/>
+
+<enum name="terrain" value="3"/>
+
+<enum name="hybrid" value="4"/>
+
+</attr>
+
+<attr format="float" name="cameraBearing"/>
+
+<attr format="float" name="cameraTargetLat"/>
+
+<attr format="float" name="cameraTargetLng"/>
+
+<attr format="float" name="cameraTilt"/>
+
+<attr format="float" name="cameraZoom"/>
+
+<attr format="boolean" name="liteMode"/>
+
+<attr format="boolean" name="uiCompass"/>
+
+<attr format="boolean" name="uiRotateGestures"/>
+
+<attr format="boolean" name="uiScrollGestures"/>
+
+<attr format="boolean" name="uiTiltGestures"/>
+
+<attr format="boolean" name="uiZoomControls"/>
+
+<attr format="boolean" name="uiZoomGestures"/>
+
+<attr format="boolean" name="useViewLifecycle"/>
+
+<attr format="boolean" name="zOrderOnTop"/>
+
+<attr format="boolean" name="uiMapToolbar"/>
+
+<attr format="boolean" name="ambientEnabled"/>
+
+<attr format="float" name="cameraMinZoomPreference"/>
+
+<attr format="float" name="cameraMaxZoomPreference"/>
+
+<attr format="float" name="latLngBoundsSouthWestLatitude"/>
+
+<attr format="float" name="latLngBoundsSouthWestLongitude"/>
+
+<attr format="float" name="latLngBoundsNorthEastLatitude"/>
+
+<attr format="float" name="latLngBoundsNorthEastLongitude"/>
 </declare-styleable>
     <declare-styleable name="MaterialButton"><attr name="android:insetLeft"/><attr name="android:insetRight"/><attr name="android:insetTop"/><attr name="android:insetBottom"/><attr name="backgroundTint"/><attr name="backgroundTintMode"/><attr format="reference" name="icon"/><attr format="dimension" name="iconSize"/><attr format="dimension" name="iconPadding"/><attr name="iconGravity">
       
@@ -1863,6 +1982,110 @@
         <attr name="android:inflatedId"/>
         <attr name="android:id"/>
     </declare-styleable>
+    <declare-styleable name="WalletFragmentOptions"><attr name="appTheme">
+<enum name="holo_dark" value="0"/>
+
+<enum name="holo_light" value="1"/>
+
+</attr>
+<attr name="environment">
+<enum name="production" value="1"/>
+
+<enum name="test" value="3"/>
+
+<enum name="sandbox" value="0"/>
+
+<enum name="strict_sandbox" value="2"/>
+
+</attr>
+
+<attr format="reference" name="fragmentStyle"/>
+<attr name="fragmentMode">
+<enum name="buyButton" value="1"/>
+
+<enum name="selectionDetails" value="2"/>
+
+</attr>
+</declare-styleable>
+    <declare-styleable name="WalletFragmentStyle"><attr format="dimension" name="buyButtonHeight">
+<enum name="match_parent" value="-1"/>
+
+<enum name="wrap_content" value="-2"/>
+
+</attr>
+<attr format="dimension" name="buyButtonWidth">
+<enum name="match_parent" value="-1"/>
+
+<enum name="wrap_content" value="-2"/>
+
+</attr>
+<attr name="buyButtonText">
+<enum name="buy_with" value="5"/>
+
+<enum name="logo_only" value="6"/>
+
+<enum name="donate_with" value="7"/>
+
+<enum name="buy_with_google" value="1"/>
+
+<enum name="buy_now" value="2"/>
+
+<enum name="book_now" value="3"/>
+
+<enum name="donate_with_google" value="4"/>
+
+</attr>
+<attr name="buyButtonAppearance">
+<enum name="google_wallet_classic" value="1"/>
+
+<enum name="google_wallet_grayscale" value="2"/>
+
+<enum name="google_wallet_monochrome" value="3"/>
+
+<enum name="android_pay_dark" value="4"/>
+
+<enum name="android_pay_light" value="5"/>
+
+<enum name="android_pay_light_with_border" value="6"/>
+
+<enum name="classic" value="1"/>
+
+<enum name="grayscale" value="2"/>
+
+<enum name="monochrome" value="3"/>
+
+</attr>
+
+<attr format="reference" name="maskedWalletDetailsTextAppearance"/>
+
+<attr format="reference" name="maskedWalletDetailsHeaderTextAppearance"/>
+
+<attr format="color|reference" name="maskedWalletDetailsBackground"/>
+
+<attr format="reference" name="maskedWalletDetailsButtonTextAppearance"/>
+
+<attr format="color|reference" name="maskedWalletDetailsButtonBackground"/>
+
+<attr format="color" name="maskedWalletDetailsLogoTextColor"/>
+<attr name="maskedWalletDetailsLogoImageType">
+<enum name="google_wallet_classic" value="1"/>
+
+<enum name="google_wallet_monochrome" value="2"/>
+
+<enum name="android_pay" value="3"/>
+
+<enum name="classic" value="1"/>
+
+<enum name="monochrome" value="2"/>
+
+</attr>
+</declare-styleable>
+    <declare-styleable name="bt_AnimatedButtonAttributes">
+        <attr format="string" name="bt_buttonText"/>
+    </declare-styleable>
+    <declare-styleable name="bt_PaymentButtonAttributes">
+        <attr format="string" name="tokenizationKey" ns1:ignore="ResourceName"/>
+    </declare-styleable>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_content_inset_with_nav">72dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
@@ -1947,6 +2170,46 @@
     <dimen name="android_pay_button_layout_margin">24dp</dimen>
     <dimen name="android_pay_button_separation">8dp</dimen>
     <dimen name="android_pay_confirmation_margin">8dp</dimen>
+    <dimen name="bt_add_payment_method_view_radius">5dp</dimen>
+    <dimen name="bt_choose_existing_payment_label_padding_top">16dp</dimen>
+    <dimen name="bt_choose_new_payment_label_padding_top">24dp</dimen>
+    <dimen name="bt_default_item_height">50dp</dimen>
+    <dimen name="bt_default_small_text_size">11sp</dimen>
+    <dimen name="bt_default_text_size">16sp</dimen>
+    <dimen name="bt_edit_text_icon_padding">24dp</dimen>
+    <dimen name="bt_expiration_date_item_selected_background_radius">2dp</dimen>
+    <dimen name="bt_expiration_date_item_text_size">16sp</dimen>
+    <dimen name="bt_expiration_date_sheet_height">260dp</dimen>
+    <dimen name="bt_expiration_date_sheet_label_padding_bottom">8dp</dimen>
+    <dimen name="bt_expiration_date_sheet_label_padding_top">8dp</dimen>
+    <dimen name="bt_expiration_date_sheet_left_right_margin">8dp</dimen>
+    <dimen name="bt_expiration_date_sheet_top_bottom_margin">8dp</dimen>
+    <dimen name="bt_form_appswitch_button_size">40dp</dimen>
+    <dimen name="bt_form_field_padding">12dp</dimen>
+    <dimen name="bt_form_padding">16dp</dimen>
+    <dimen name="bt_full_width" ns1:ignore="ReferenceType">@integer/bt_match_parent</dimen>
+    <dimen name="bt_header_container_height">66dp</dimen>
+    <dimen name="bt_input_text_size">16sp</dimen>
+    <dimen name="bt_margin">8dp</dimen>
+    <dimen name="bt_mobile_number_explanation_padding">53dp</dimen>
+    <dimen name="bt_no_edit_text_icon_padding">49dp</dimen>
+    <dimen name="bt_payment_label_padding_bottom">12dp</dimen>
+    <dimen name="bt_payment_method_border_width">1dp</dimen>
+    <dimen name="bt_payment_method_button_divider_height">30dp</dimen>
+    <dimen name="bt_payment_method_button_divider_width">1dp</dimen>
+    <dimen name="bt_payment_method_button_height">50dp</dimen>
+    <dimen name="bt_payment_method_button_type_padding">16dp</dimen>
+    <dimen name="bt_payment_method_card_height">82dp</dimen>
+    <dimen name="bt_payment_method_card_margin">16dp</dimen>
+    <dimen name="bt_payment_method_card_width">132dp</dimen>
+    <dimen name="bt_payment_method_description_padding">8dp</dimen>
+    <dimen name="bt_payment_method_item_padding">18dp</dimen>
+    <dimen name="bt_progress_bar_diameter">28dp</dimen>
+    <dimen name="bt_vault_manager_delete_icon_margin">16dp</dimen>
+    <dimen name="bt_vault_manager_list_item_margin">14dp</dimen>
+    <dimen name="bt_vault_manager_list_item_text_margin">5dp</dimen>
+    <dimen name="bt_vault_manager_text_size">14sp</dimen>
+    <dimen name="bt_vault_manager_title_padding_top">24dp</dimen>
     <dimen name="card_cvc_initial_margin">1000dp</dimen>
     <dimen name="card_expiry_initial_margin">200dp</dimen>
     <dimen name="card_icon_multiline_padding">8dp</dimen>
@@ -2188,6 +2451,7 @@
     <integer name="abc_config_activityShortDur">150</integer>
     <integer name="app_bar_elevation_anim_duration">150</integer>
     <integer name="bottom_sheet_slide_duration">150</integer>
+    <integer name="bt_match_parent">-1</integer>
     <integer name="cancel_button_image_alpha">127</integer>
     <integer name="config_tooltipAnimTime">150</integer>
     <integer name="date_length">5</integer>
@@ -2239,7 +2503,7 @@
     <string name="abc_searchview_description_submit">Submit query</string>
     <string name="abc_searchview_description_voice">Voice search</string>
     <string name="abc_shareactionprovider_share_with">Share with</string>
-    <string name="abc_shareactionprovider_share_with_application">Share with <ns1:g example="Mail" id="application_name">%s</ns1:g></string>
+    <string name="abc_shareactionprovider_share_with_application">Share with <ns2:g example="Mail" id="application_name">%s</ns2:g></string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="acc_label_card_number">Card number</string>
     <string name="acc_label_card_number_node">%s, Card number</string>
@@ -2296,23 +2560,87 @@
     <string name="amex_short">Amex</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="bottom_sheet_behavior" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
+    <string name="bt_add_card">Add card</string>
+    <string name="bt_cancel">@android:string/cancel</string>
+    <string name="bt_card_details">Card Details</string>
+    <string name="bt_card_not_accepted">Card not accepted</string>
+    <string name="bt_card_number_invalid">Card number is invalid</string>
+    <string name="bt_card_number_required">Card number is required</string>
+    <string name="bt_cardholder_name_required">Cardholder name is required</string>
+    <string name="bt_cid">CID</string>
+    <string name="bt_confirm">Confirm</string>
+    <string name="bt_confirm_enrollment">Confirm Enrollment</string>
+    <string name="bt_country_code_invalid">Country code is invalid</string>
+    <string name="bt_country_code_required">Country code is required</string>
+    <string name="bt_cvc">CVC</string>
+    <string name="bt_cvn">CVN</string>
+    <string name="bt_cvv">CVV</string>
+    <string name="bt_cvv_invalid">%s is invalid</string>
+    <string name="bt_cvv_required">%s is required</string>
+    <string name="bt_delete">Delete</string>
+    <string name="bt_delete_confirmation_description">You will no longer be able to use this payment method in this app.</string>
+    <string name="bt_delete_confirmation_title">Delete payment method?</string>
+    <string name="bt_descriptor_amex">Amex</string>
+    <string name="bt_descriptor_diners">Diners</string>
+    <string name="bt_descriptor_discover">Discover</string>
+    <string name="bt_descriptor_google_pay">Google Pay</string>
+    <string name="bt_descriptor_hiper">Hiper</string>
+    <string name="bt_descriptor_hipercard">Hipercard</string>
+    <string name="bt_descriptor_jcb">JCB</string>
+    <string name="bt_descriptor_maestro">Maestro</string>
+    <string name="bt_descriptor_mastercard">MasterCard</string>
+    <string name="bt_descriptor_pay_with_venmo">Venmo</string>
+    <string name="bt_descriptor_paypal">PayPal</string>
+    <string name="bt_descriptor_unionpay">UnionPay</string>
+    <string name="bt_descriptor_unknown">Credit or Debit Card</string>
+    <string name="bt_descriptor_visa">Visa</string>
+    <string name="bt_done">Done</string>
+    <string name="bt_edit">Edit</string>
+    <string name="bt_expiration_invalid">Expiration date is invalid</string>
+    <string name="bt_expiration_required">Expiration date is required</string>
+    <string name="bt_form_hint_card_number">Card Number</string>
+    <string name="bt_form_hint_cardholder_name">Cardholder Name</string>
+    <string name="bt_form_hint_country_code">Country Code</string>
+    <string name="bt_form_hint_cvv">@string/bt_cvv</string>
+    <string name="bt_form_hint_expiration">Expiration Date</string>
+    <string name="bt_form_hint_mobile_number">Mobile Number</string>
+    <string name="bt_form_hint_postal_code">Postal Code</string>
+    <string name="bt_mobile_number_invalid">Mobile number is invalid</string>
+    <string name="bt_mobile_number_required">Mobile number is required</string>
+    <string name="bt_month">Month</string>
+    <string name="bt_next">Next</string>
+    <string name="bt_other">Other</string>
+    <string name="bt_postal_code_invalid">Postal code is invalid</string>
+    <string name="bt_postal_code_required">Postal code is required</string>
+    <string name="bt_recent">Recent</string>
+    <string name="bt_scan_with_card_io">Scan with card.io</string>
+    <string name="bt_select_payment_method">Select Payment Method</string>
+    <string name="bt_sms_code">SMS Code</string>
+    <string name="bt_sms_code_required">SMS code is required</string>
+    <string name="bt_sms_code_sent_to">Enter the SMS code sent to %s</string>
+    <string name="bt_unionpay_mobile_number_explanation">Enrollment may be required for this card. An SMS code will be sent to this number if required.</string>
+    <string name="bt_unionpay_sms_code_invalid">SMS code is invalid</string>
+    <string name="bt_use_a_different_phone_number">Use a different phone number</string>
+    <string name="bt_vault_manager_delete_failure">We couldn\'t delete your payment method right now, try again later</string>
+    <string name="bt_vault_manager_title">Edit Saved</string>
+    <string name="bt_year">Year</string>
     <string name="card_number_hint">1234 1234 1234 1234</string>
     <string name="character_counter_content_description">Character limit exceeded %1$d of %2$d</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
     <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable</string>
-    <string msgid="227660514972886228" name="common_google_play_services_enable_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t work unless you enable Google Play services.</string>
+    <string msgid="227660514972886228" name="common_google_play_services_enable_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t work unless you enable Google Play services.</string>
     <string msgid="5122002158466380389" name="common_google_play_services_enable_title">Enable Google Play services</string>
     <string msgid="7153882981874058840" name="common_google_play_services_install_button">Install</string>
-    <string name="common_google_play_services_install_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run without Google Play services, which are missing from your device.</string>
+    <string name="common_google_play_services_install_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run without Google Play services, which are missing from your device.</string>
     <string msgid="7215213145546190223" name="common_google_play_services_install_title">Get Google Play services</string>
     <string name="common_google_play_services_notification_channel_name">Google Play services availability</string>
     <string name="common_google_play_services_notification_ticker">Google Play services error</string>
-    <string name="common_google_play_services_unknown_issue"><ns1:g id="app_name">%1$s</ns1:g> is having trouble with Google Play services. Please try again.</string>
-    <string name="common_google_play_services_unsupported_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run without Google Play services, which are not supported by your device.</string>
+    <string name="common_google_play_services_unknown_issue"><ns2:g id="app_name">%1$s</ns2:g> is having trouble with Google Play services. Please try again.</string>
+    <string name="common_google_play_services_unsupported_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run without Google Play services, which are not supported by your device.</string>
     <string msgid="6556509956452265614" name="common_google_play_services_update_button">Update</string>
-    <string msgid="9053896323427875356" name="common_google_play_services_update_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run unless you update Google Play services.</string>
+    <string msgid="9053896323427875356" name="common_google_play_services_update_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run unless you update Google Play services.</string>
     <string msgid="6006316683626838685" name="common_google_play_services_update_title">Update Google Play services</string>
-    <string name="common_google_play_services_updating_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run without Google Play services, which are currently updating.</string>
+    <string name="common_google_play_services_updating_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run without Google Play services, which are currently updating.</string>
     <string name="common_google_play_services_wear_update_text">New version of Google Play services needed. It will update itself shortly.</string>
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
@@ -2358,6 +2686,7 @@
     <string name="title_payment_method">Payment Method</string>
     <string name="title_select_shipping_method">Select Shipping Method</string>
     <string name="valid_digits">0123456789</string>
+    <string name="wallet_buy_button_place_holder">Buy with Google</string>
     <string name="zip_helper">12345</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
@@ -2779,8 +3108,8 @@
 
     <!-- Dialog themes -->
     <item name="alertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
-    <item name="android:datePickerDialogTheme" ns2:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
-    <item name="android:timePickerDialogTheme" ns2:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+    <item name="android:datePickerDialogTheme" ns1:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+    <item name="android:timePickerDialogTheme" ns1:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
   </style>
     <style name="Base.V14.Theme.MaterialComponents.Bridge" parent="Platform.MaterialComponents">
     <item name="colorSecondary">?attr/colorPrimary</item>
@@ -2875,8 +3204,8 @@
 
     <!-- Dialog themes -->
     <item name="alertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
-    <item name="android:datePickerDialogTheme" ns2:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
-    <item name="android:timePickerDialogTheme" ns2:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+    <item name="android:datePickerDialogTheme" ns1:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+    <item name="android:timePickerDialogTheme" ns1:ignore="NewApi">@style/ThemeOverlay.MaterialComponents.Dialog</item>
   </style>
     <style name="Base.V14.Theme.MaterialComponents.Light.Bridge" parent="Platform.MaterialComponents.Light">
     <item name="colorSecondary">?attr/colorPrimary</item>
@@ -3728,7 +4057,7 @@
     <item name="android:focusable">true</item>
     <item name="android:clickable">true</item>
     <item name="android:checkable">false</item>
-    <item name="android:stateListAnimator" ns2:ignore="NewApi">
+    <item name="android:stateListAnimator" ns1:ignore="NewApi">
       @animator/mtrl_chip_state_list_anim
     </item>
 
@@ -3766,8 +4095,8 @@
     <item name="chipEndPadding">6dp</item>
   </style>
     <style name="Base.Widget.MaterialComponents.TextInputEditText" parent="Widget.AppCompat.EditText">
-    <item name="android:paddingStart" ns2:ignore="NewApi">12dp</item>
-    <item name="android:paddingEnd" ns2:ignore="NewApi">12dp</item>
+    <item name="android:paddingStart" ns1:ignore="NewApi">12dp</item>
+    <item name="android:paddingEnd" ns1:ignore="NewApi">12dp</item>
     <item name="android:paddingLeft">12dp</item>
     <item name="android:paddingRight">12dp</item>
     <item name="android:paddingTop">16dp</item>
@@ -4341,6 +4670,38 @@
     <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense
     </item>
   </style>
+    <style name="WalletFragmentDefaultButtonTextAppearance">
+<item name="android:textColorLink">@color/wallet_link_text_light</item>
+<item name="android:textColorHint">@color/wallet_hint_foreground_holo_light</item>
+<item name="android:textStyle">normal</item>
+<item name="android:textSize">18sp</item>
+<item name="android:textColorHighlight">@color/wallet_highlighted_text_holo_light</item>
+<item name="android:textColor">@color/wallet_primary_text_holo_light</item>
+</style>
+    <style name="WalletFragmentDefaultDetailsHeaderTextAppearance" parent="WalletFragmentDefaultDetailsTextAppearance">
+<item name="android:textStyle">bold</item>
+</style>
+    <style name="WalletFragmentDefaultDetailsTextAppearance">
+<item name="android:textColorLink">@color/wallet_holo_blue_light</item>
+<item name="android:textColorHint">@color/wallet_hint_foreground_holo_dark</item>
+<item name="android:textStyle">normal</item>
+<item name="android:textSize">14sp</item>
+<item name="android:textColorHighlight">@color/wallet_highlighted_text_holo_dark</item>
+<item name="android:textColor">@color/wallet_secondary_text_holo_dark</item>
+</style>
+    <style name="WalletFragmentDefaultStyle">
+<item name="maskedWalletDetailsLogoImageType">android_pay</item>
+<item name="maskedWalletDetailsLogoTextColor">@color/wallet_bright_foreground_holo_dark</item>
+<item name="buyButtonText">buy_with</item>
+<item name="maskedWalletDetailsTextAppearance">@style/WalletFragmentDefaultDetailsTextAppearance</item>
+<item name="buyButtonAppearance">android_pay_dark</item>
+<item name="maskedWalletDetailsButtonTextAppearance">@style/WalletFragmentDefaultButtonTextAppearance</item>
+<item name="maskedWalletDetailsButtonBackground">@android:drawable/btn_default</item>
+<item name="buyButtonWidth">match_parent</item>
+<item name="maskedWalletDetailsHeaderTextAppearance">@style/WalletFragmentDefaultDetailsHeaderTextAppearance</item>
+<item name="buyButtonHeight">48dp</item>
+<item name="maskedWalletDetailsBackground">@color/wallet_bright_foreground_holo_light</item>
+</style>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
     </style>
     <style name="Widget.AppCompat.ActionBar.Solid" parent="Base.Widget.AppCompat.ActionBar.Solid">
@@ -4439,11 +4800,11 @@
     <style name="Widget.Compat.NotificationActionText" parent=""/>
     <style name="Widget.Design.AppBarLayout" parent="android:Widget">
     <item name="android:background">?attr/colorPrimary</item>
-    <item name="android:stateListAnimator" ns2:ignore="NewApi">
+    <item name="android:stateListAnimator" ns1:ignore="NewApi">
       @animator/design_appbar_state_list_animator
     </item>
-    <item name="android:keyboardNavigationCluster" ns2:ignore="NewApi">true</item>
-    <item name="android:touchscreenBlocksFocus" ns2:ignore="NewApi">true</item>
+    <item name="android:keyboardNavigationCluster" ns1:ignore="NewApi">true</item>
+    <item name="android:touchscreenBlocksFocus" ns1:ignore="NewApi">true</item>
   </style>
     <style name="Widget.Design.BottomNavigationView" parent="">
     <item name="elevation">@dimen/design_bottom_navigation_elevation</item>
@@ -4454,7 +4815,7 @@
   </style>
     <style name="Widget.Design.BottomSheet.Modal" parent="android:Widget">
     <item name="android:background">?android:attr/colorBackground</item>
-    <item name="android:elevation" ns2:ignore="NewApi">
+    <item name="android:elevation" ns1:ignore="NewApi">
       @dimen/design_bottom_sheet_modal_elevation
     </item>
     <item name="behavior_peekHeight">auto</item>
@@ -4556,7 +4917,7 @@
     <item name="android:insetRight">0dp</item>
     <item name="android:insetTop">@dimen/mtrl_btn_inset</item>
     <item name="android:insetBottom">@dimen/mtrl_btn_inset</item>
-    <item name="android:stateListAnimator" ns2:ignore="NewApi">@animator/mtrl_btn_state_list_anim</item>
+    <item name="android:stateListAnimator" ns1:ignore="NewApi">@animator/mtrl_btn_state_list_anim</item>
     <item name="cornerRadius">@dimen/mtrl_btn_corner_radius</item>
     <item name="iconPadding">@dimen/mtrl_btn_icon_padding</item>
     <item name="iconTint">@color/mtrl_btn_text_color_selector</item>
@@ -4594,7 +4955,7 @@
     <!-- Icon text button has the same padding as a regular text button -->
   </style>
     <style name="Widget.MaterialComponents.Button.UnelevatedButton">
-    <item name="android:stateListAnimator" ns2:ignore="NewApi">@animator/mtrl_btn_unelevated_state_list_anim</item>
+    <item name="android:stateListAnimator" ns1:ignore="NewApi">@animator/mtrl_btn_unelevated_state_list_anim</item>
   </style>
     <style name="Widget.MaterialComponents.Button.UnelevatedButton.Icon">
     <item name="android:paddingLeft">@dimen/mtrl_btn_icon_btn_padding_left</item>
@@ -4713,5 +5074,183 @@
   </style>
     <style name="Widget.Support.CoordinatorLayout" parent="android:Widget">
         <item name="statusBarBackground">#000000</item>
+    </style>
+    <style name="bt_action_bar_theme" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/bt_color_primary</item>
+        <item name="android:titleTextStyle">@style/bt_action_bar_title_theme</item>
+    </style>
+    <style name="bt_action_bar_title_theme" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/bt_white</item>
+    </style>
+    <style name="bt_activity_slide_animation">
+        <item name="android:windowEnterAnimation">@anim/bt_slide_in_up</item>
+        <item name="android:windowExitAnimation">@anim/bt_slide_out_down</item>
+    </style>
+    <style name="bt_add_card_activity_theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/bt_color_primary</item>
+        <item name="colorPrimaryDark">@color/bt_color_primary_dark</item>
+        <item name="colorAccent">@color/bt_blue</item>
+        <item name="titleTextColor">@color/bt_white</item>
+        <item name="colorError">@color/bt_error_red</item>
+    </style>
+    <style name="bt_base_textview">
+        <item name="android:textSize">@dimen/bt_input_text_size</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+    <style name="bt_base_textview_bold">
+        <item name="android:textSize">@dimen/bt_default_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="bt_card_form_field" parent="bt_base_textview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:paddingTop">@dimen/bt_margin</item>
+        <item name="android:textColorHint">@color/bt_light_gray</item>
+        <item name="android:textCursorDrawable" ns1:ignore="NewApi">@null</item>
+    </style>
+    <style name="bt_card_form_icon">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">top|center_horizontal</item>
+        <item name="android:paddingTop">50dp</item>
+        <item name="android:paddingBottom">@dimen/bt_margin</item>
+    </style>
+    <style name="bt_choose_payment_label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginStart" ns1:ignore="NewApi">20dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/bt_black_54</item>
+    </style>
+    <style name="bt_drop_in_activity_theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/bt_black_54</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus" ns1:targetApi="kitkat">true</item>
+        <item name="android:windowAnimationStyle">@style/bt_fade_activity_animation</item>
+        <item name="colorPrimary">@color/bt_color_primary</item>
+        <item name="colorPrimaryDark">@color/bt_color_primary_dark</item>
+        <item name="colorAccent">@color/bt_blue</item>
+    </style>
+    <style name="bt_edit_button" parent="Theme.AppCompat.Light">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="colorControlHighlight">@color/bt_color_highlight</item>
+        <item name="android:textSize">16sp</item>
+        <item name="colorAccent">@color/bt_text_blue</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <style name="bt_expiration_date_dialog_dark" parent="bt_expiration_date_dialog_sheet">
+        <item name="bt_expiration_date_sheet_background">@color/bt_expiration_date_sheet_background_dark</item>
+        <item name="bt_expiration_date_dialog_label">@color/bt_white_54</item>
+        <item name="bt_expiration_date_dialog_divider">@color/bt_white_12</item>
+        <item name="bt_expiration_date_scrollbar_thumb_vertical">@color/bt_white_54</item>
+        <item name="bt_expiration_date_scrollbar_track_vertical">@color/bt_white_12</item>
+    </style>
+    <style name="bt_expiration_date_dialog_grid_view">
+        <item name="android:layout_marginLeft">@dimen/bt_expiration_date_sheet_left_right_margin</item>
+        <item name="android:layout_marginStart" ns1:targetApi="jelly_bean_mr1">@dimen/bt_expiration_date_sheet_left_right_margin</item>
+        <item name="android:layout_marginRight">@dimen/bt_expiration_date_sheet_left_right_margin</item>
+        <item name="android:layout_marginEnd" ns1:targetApi="jelly_bean_mr1">@dimen/bt_expiration_date_sheet_left_right_margin</item>
+        <item name="android:layout_marginBottom">@dimen/bt_expiration_date_sheet_top_bottom_margin</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:choiceMode">singleChoice</item>
+        <item name="android:numColumns">auto_fit</item>
+        <item name="android:columnWidth">72dp</item>
+    </style>
+    <style name="bt_expiration_date_dialog_label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingTop">@dimen/bt_expiration_date_sheet_label_padding_top</item>
+        <item name="android:paddingBottom">@dimen/bt_expiration_date_sheet_label_padding_bottom</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/bt_expiration_date_dialog_label</item>
+    </style>
+    <style name="bt_expiration_date_dialog_light" parent="bt_expiration_date_dialog_sheet">
+        <item name="bt_expiration_date_sheet_background">@color/bt_expiration_date_sheet_background_light</item>
+        <item name="bt_expiration_date_dialog_label">@color/bt_black_54</item>
+        <item name="bt_expiration_date_dialog_divider">@color/bt_black_12</item>
+        <item name="bt_expiration_date_scrollbar_thumb_vertical">@color/bt_black_54</item>
+        <item name="bt_expiration_date_scrollbar_track_vertical">@color/bt_black_12</item>
+    </style>
+    <style name="bt_expiration_date_dialog_sheet" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowAnimationStyle">@style/bt_expiration_date_dialog_sheet_animation</item>
+    </style>
+    <style name="bt_expiration_date_dialog_sheet_animation">
+        <item name="android:windowEnterAnimation">@anim/bt_expiration_date_dialog_open</item>
+        <item name="android:windowExitAnimation">@anim/bt_expiration_date_dialog_close</item>
+    </style>
+    <style name="bt_expiration_date_dialog_year_grid_view" parent="bt_expiration_date_dialog_grid_view">
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingEnd" ns1:targetApi="jelly_bean_mr1">8dp</item>
+        <item name="android:paddingStart" ns1:targetApi="jelly_bean_mr1">0dp</item>
+        <item name="android:scrollbarSize">3dp</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+    </style>
+    <style name="bt_fade_activity_animation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    <style name="bt_field_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
+    </style>
+    <style name="bt_no_activity_animation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    <style name="bt_text_input_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:accessibilityLiveRegion" ns1:targetApi="kitkat">polite</item>
+    </style>
+    <style name="bt_three_d_secure_theme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/bt_action_bar_theme</item>
+    </style>
+    <style name="bt_toolbar_theme" parent="bt_add_card_activity_theme">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="colorControlNormal">@color/bt_white</item>
+    </style>
+    <style name="bt_transparent_activity" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus" ns1:targetApi="kitkat">true</item>
+        <item name="android:windowAnimationStyle">@style/bt_no_activity_animation</item>
+    </style>
+    <style name="bt_vault_manager_activity_theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus" ns1:targetApi="kitkat">true</item>
+        <item name="android:windowAnimationStyle">@style/bt_activity_slide_animation</item>
+        <item name="colorPrimary">@color/bt_color_primary</item>
+        <item name="colorPrimaryDark">@color/bt_color_primary_dark</item>
+        <item name="colorAccent">@color/bt_blue</item>
+    </style>
+    <style name="bt_vaulted_payment_method_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/bt_black_87</item>
     </style>
 </resources>

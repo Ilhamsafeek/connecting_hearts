@@ -79,6 +79,70 @@
     <string name="address_state_required">Bitte geben Sie Ihren Bundesland ein</string>
     <string name="address_zip_invalid">Ihre Postleitzahl ist ungültig.</string>
     <string name="address_zip_postal_invalid">Ihre Postleitzahl ist ungültig</string>
+    <string name="bt_add_card">Kreditkarte hinzufügen</string>
+    <string name="bt_cancel">Abbrechen</string>
+    <string name="bt_card_details">Kreditkartendaten</string>
+    <string name="bt_card_not_accepted">Karte nicht akzeptiert</string>
+    <string name="bt_card_number_invalid">Kartennummer ist ungültig</string>
+    <string name="bt_card_number_required">Geben Sie die Kartennummer ein.</string>
+    <string name="bt_cardholder_name_required">Der Name des Karteninhabers ist erforderlich.</string>
+    <string name="bt_cid">CID</string>
+    <string name="bt_confirm">Bestätigen</string>
+    <string name="bt_confirm_enrollment">Registrierung bestätigen</string>
+    <string name="bt_country_code_invalid">Ländervorwahl ist ungültig</string>
+    <string name="bt_country_code_required">Ländervorwahl ist erforderlich</string>
+    <string name="bt_cvc">Kartenprüfnummer</string>
+    <string name="bt_cvn">CVN</string>
+    <string name="bt_cvv">Prüfnr.</string>
+    <string name="bt_cvv_invalid">%s ist ungültig</string>
+    <string name="bt_cvv_required">%s ist erforderlich</string>
+    <string name="bt_delete">Löschen</string>
+    <string name="bt_delete_confirmation_description">Sie können diese Zahlungsquelle in dieser App nicht mehr verwenden.</string>
+    <string name="bt_delete_confirmation_title">Zahlungsquelle löschen?</string>
+    <string name="bt_descriptor_amex">Amex</string>
+    <string name="bt_descriptor_diners">Diners</string>
+    <string name="bt_descriptor_discover">Discover</string>
+    <string name="bt_descriptor_google_pay">Google Pay</string>
+    <string name="bt_descriptor_hiper">Hiper</string>
+    <string name="bt_descriptor_hipercard">Hipercard</string>
+    <string name="bt_descriptor_jcb">JCB</string>
+    <string name="bt_descriptor_maestro">Maestro</string>
+    <string name="bt_descriptor_mastercard">MasterCard</string>
+    <string name="bt_descriptor_pay_with_venmo">Venmo</string>
+    <string name="bt_descriptor_paypal">PayPal</string>
+    <string name="bt_descriptor_unionpay">UnionPay</string>
+    <string name="bt_descriptor_unknown">Kreditkarte</string>
+    <string name="bt_descriptor_visa">Visa</string>
+    <string name="bt_done">Fertig</string>
+    <string name="bt_edit">Bearbeiten</string>
+    <string name="bt_expiration_invalid">Ablaufdatum ist ungültig</string>
+    <string name="bt_expiration_required">Geben Sie das Ablaufdatum ein.</string>
+    <string name="bt_form_hint_card_number">Kartennummer</string>
+    <string name="bt_form_hint_cardholder_name">Name des Karteninhabers</string>
+    <string name="bt_form_hint_country_code">Ländervorwahl</string>
+    <string name="bt_form_hint_cvv">@string/bt_cvv</string>
+    <string name="bt_form_hint_expiration">Gültig bis</string>
+    <string name="bt_form_hint_mobile_number">Handynummer</string>
+    <string name="bt_form_hint_postal_code">PLZ</string>
+    <string name="bt_mobile_number_invalid">Handynummer ist ungültig</string>
+    <string name="bt_mobile_number_required">Handynummer ist erforderlich</string>
+    <string name="bt_month">Monat</string>
+    <string name="bt_next">Weiter</string>
+    <string name="bt_other">Sonstige</string>
+    <string name="bt_postal_code_invalid">PLZ ist ungültig</string>
+    <string name="bt_postal_code_required">Geben Sie eine PLZ ein.</string>
+    <string name="bt_recent">Zuletzt verwendet</string>
+    <string name="bt_scan_with_card_io">Mit card.io einlesen</string>
+    <string name="bt_select_payment_method">Zahlungsquelle auswählen</string>
+    <string name="bt_sms_code">SMS Code</string>
+    <string name="bt_sms_code_required">SMS Code ist erforderlich</string>
+    <string name="bt_sms_code_sent_to">Geben Sie den SMS Code ein, der an %s gesendet wurde</string>
+    <string name="bt_unionpay_mobile_number_explanation">Bei dieser Karte ist ggf. eine Registrierung erforderlich. Bei Bedarf wird ein SMS Code an diese Nummer gesendet.</string>
+    <string name="bt_unionpay_sms_code_invalid">SMS Code ist ungültig</string>
+    <string name="bt_use_a_different_phone_number">Andere Nummer verwenden</string>
+    <string name="bt_vault_manager_delete_failure">Wir konnten Ihre Zahlungsquelle nicht löschen, versuchen Sie es später erneut.</string>
+    <string name="bt_vault_manager_title">Bearbeiten gespeichert</string>
+    <string name="bt_year">Jahr</string>
     <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Aktivieren"</string>
     <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> funktioniert erst nach der Aktivierung der Google Play-Dienste."</string>
     <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Google Play-Dienste aktivieren"</string>
@@ -116,4 +180,5 @@
     <string name="title_add_an_address">Adresse hinzufügen</string>
     <string name="title_payment_method">Zahlungsmethode</string>
     <string name="title_select_shipping_method">Versandmethode auswählen</string>
+    <string msgid="363496807345461806" name="wallet_buy_button_place_holder">"Über Google kaufen"</string>
 </resources>

@@ -38,6 +38,23 @@
                     }
                 },
                 {
+                    "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-play-services-wallet-16.0.1.aar\\b269aa90ce4290b5c574e0e340d2acaa\\res\\values-gl\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "200",
+                        "endColumns": "102",
+                        "endOffsets": "302"
+                    },
+                    "to": {
+                        "startLines": "50",
+                        "startColumns": "4",
+                        "startOffsets": "5896",
+                        "endColumns": "106",
+                        "endOffsets": "5998"
+                    }
+                },
+                {
                     "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-firebase-messaging-20.0.1.aar\\349bc288681c3dee3eaf4c6482d57c2c\\res\\values-gl\\values.xml",
                     "from": {
                         "startLines": "4",

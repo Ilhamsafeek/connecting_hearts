@@ -4,6 +4,23 @@
             "outputFile": "D:\\zamzam\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-km\\values-km.xml",
             "map": [
                 {
+                    "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-play-services-wallet-16.0.1.aar\\b269aa90ce4290b5c574e0e340d2acaa\\res\\values-km\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "200",
+                        "endColumns": "101",
+                        "endOffsets": "301"
+                    },
+                    "to": {
+                        "startLines": "50",
+                        "startColumns": "4",
+                        "startOffsets": "5787",
+                        "endColumns": "105",
+                        "endOffsets": "5888"
+                    }
+                },
+                {
                     "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-17.1.0.aar\\7824be45883711fdabf5f69d003de941\\res\\values-km\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",

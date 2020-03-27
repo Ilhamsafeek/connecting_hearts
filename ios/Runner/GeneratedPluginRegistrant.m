@@ -4,6 +4,12 @@
 
 #import "GeneratedPluginRegistrant.h"
 
+#if __has_include(<braintree_payment/BraintreePaymentPlugin.h>)
+#import <braintree_payment/BraintreePaymentPlugin.h>
+#else
+@import braintree_payment;
+#endif
+
 #if __has_include(<firebase_auth/FLTFirebaseAuthPlugin.h>)
 #import <firebase_auth/FLTFirebaseAuthPlugin.h>
 #else
@@ -61,6 +67,7 @@
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
+  [BraintreePaymentPlugin registerWithRegistrar:[registry registrarForPlugin:@"BraintreePaymentPlugin"]];
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];

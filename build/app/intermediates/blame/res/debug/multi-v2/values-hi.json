@@ -21,6 +21,23 @@
                     }
                 },
                 {
+                    "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-play-services-wallet-16.0.1.aar\\b269aa90ce4290b5c574e0e340d2acaa\\res\\values-hi\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "200",
+                        "endColumns": "100",
+                        "endOffsets": "300"
+                    },
+                    "to": {
+                        "startLines": "50",
+                        "startColumns": "4",
+                        "startOffsets": "5816",
+                        "endColumns": "104",
+                        "endOffsets": "5916"
+                    }
+                },
+                {
                     "source": "C:\\Users\\Ilham Safeek\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\3b80727b88d9d93ca073b6684d8ca841\\res\\values-hi\\values-hi.xml",
                     "from": {
                         "startLines": "2",

@@ -27,6 +27,70 @@
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Открыть доступ"</string>
     <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"Открыть доступ приложению \"<ns1:g id="APPLICATION_NAME">%s</ns1:g>\""</string>
     <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Свернуть"</string>
+    <string name="bt_add_card">Добавить карту</string>
+    <string name="bt_cancel">Отмена</string>
+    <string name="bt_card_details">Данные карты</string>
+    <string name="bt_card_not_accepted">Карта не принимается</string>
+    <string name="bt_card_number_invalid">Номер карты недействителен</string>
+    <string name="bt_card_number_required">Номер карты обязателен</string>
+    <string name="bt_cardholder_name_required">Необходимо указать имя владельца карты</string>
+    <string name="bt_cid">Код безопасности</string>
+    <string name="bt_confirm">Подтвердить</string>
+    <string name="bt_confirm_enrollment">Подтвердите участие</string>
+    <string name="bt_country_code_invalid">Код страны недействит</string>
+    <string name="bt_country_code_required">Код страны обязателен</string>
+    <string name="bt_cvc">CVC-код</string>
+    <string name="bt_cvn">Код безопасности</string>
+    <string name="bt_cvv">CVV-код</string>
+    <string name="bt_cvv_invalid">Недействительно: %s</string>
+    <string name="bt_cvv_required">Обязательно: %s</string>
+    <string name="bt_delete">Удалить</string>
+    <string name="bt_delete_confirmation_description">Вы больше не сможете использовать этот способ оплаты в данном приложении.</string>
+    <string name="bt_delete_confirmation_title">Удалить способ оплаты?</string>
+    <string name="bt_descriptor_amex">Amex</string>
+    <string name="bt_descriptor_diners">Diners</string>
+    <string name="bt_descriptor_discover">Discover</string>
+    <string name="bt_descriptor_google_pay">Google Pay</string>
+    <string name="bt_descriptor_hiper">Hiper</string>
+    <string name="bt_descriptor_hipercard">Hipercard</string>
+    <string name="bt_descriptor_jcb">JCB</string>
+    <string name="bt_descriptor_maestro">Maestro</string>
+    <string name="bt_descriptor_mastercard">MasterCard</string>
+    <string name="bt_descriptor_pay_with_venmo">Venmo</string>
+    <string name="bt_descriptor_paypal">PayPal</string>
+    <string name="bt_descriptor_unionpay">UnionPay</string>
+    <string name="bt_descriptor_unknown">Банковская карта</string>
+    <string name="bt_descriptor_visa">Visa</string>
+    <string name="bt_done">Готово</string>
+    <string name="bt_edit">Изменить</string>
+    <string name="bt_expiration_invalid">Срок действия недействителен</string>
+    <string name="bt_expiration_required">Срок действия обязателен</string>
+    <string name="bt_form_hint_card_number">Номер карты</string>
+    <string name="bt_form_hint_cardholder_name">Имя и фамилия владельца</string>
+    <string name="bt_form_hint_country_code">Код страны</string>
+    <string name="bt_form_hint_cvv">@string/bt_cvv</string>
+    <string name="bt_form_hint_expiration">Срок действия</string>
+    <string name="bt_form_hint_mobile_number">Мобильный </string>
+    <string name="bt_form_hint_postal_code">Индекс</string>
+    <string name="bt_mobile_number_invalid">Номер мобильного недейств</string>
+    <string name="bt_mobile_number_required">Номер мобильного обязателен</string>
+    <string name="bt_month">Месяц</string>
+    <string name="bt_next">След</string>
+    <string name="bt_other">Другое</string>
+    <string name="bt_postal_code_invalid">Индекс недействит</string>
+    <string name="bt_postal_code_required">Индекс обязателен</string>
+    <string name="bt_recent">Недавние</string>
+    <string name="bt_scan_with_card_io">Сканировать с помощью card.io</string>
+    <string name="bt_select_payment_method">Выбрать источник средств</string>
+    <string name="bt_sms_code">SMS-код</string>
+    <string name="bt_sms_code_required">SMS-код обязателен</string>
+    <string name="bt_sms_code_sent_to">Введите SMS-код, отправленный на %s</string>
+    <string name="bt_unionpay_mobile_number_explanation">Для этой карты может потребоваться подтверждение участия. При необходимости на этот номер будет отправлен SMS-код.</string>
+    <string name="bt_unionpay_sms_code_invalid">SMS-код недействит</string>
+    <string name="bt_use_a_different_phone_number">Использовать другой номер телефона</string>
+    <string name="bt_vault_manager_delete_failure">Нам не удалось удалить ваш способ оплаты, повторите попытку позже.</string>
+    <string name="bt_vault_manager_title">Редактировать сохраненное</string>
+    <string name="bt_year">Год</string>
     <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Включить"</string>
     <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"Для работы приложения \"<ns1:g id="APP_NAME">%1$s</ns1:g>\" требуется включить сервисы Google Play."</string>
     <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Включите сервисы Google Play"</string>
@@ -48,4 +112,5 @@
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Другое"</string>
     <string msgid="146198913615257606" name="search_menu_title">"Поиск"</string>
     <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">">999"</string>
+    <string msgid="363496807345461806" name="wallet_buy_button_place_holder">"Купить через Google"</string>
 </resources>

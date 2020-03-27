@@ -79,6 +79,70 @@
     <string name="address_state_required">Geef je staat op</string>
     <string name="address_zip_invalid">Je postcode is ongeldig.</string>
     <string name="address_zip_postal_invalid">Je postcode is ongeldig</string>
+    <string name="bt_add_card">Creditcard toevoegen</string>
+    <string name="bt_cancel">Annuleren</string>
+    <string name="bt_card_details">Kaartgegevens</string>
+    <string name="bt_card_not_accepted">Kaart niet geaccepteerd</string>
+    <string name="bt_card_number_invalid">Kaartnummer is ongeldig</string>
+    <string name="bt_card_number_required">Kaartnummer is verplicht</string>
+    <string name="bt_cardholder_name_required">Naam kaarthouder is verplicht</string>
+    <string name="bt_cid">CID</string>
+    <string name="bt_confirm">Bevestigen</string>
+    <string name="bt_confirm_enrollment">Aanmelding bevestigen</string>
+    <string name="bt_country_code_invalid">Landcode is ongeldig</string>
+    <string name="bt_country_code_required">Landcode is verplicht</string>
+    <string name="bt_cvc">CVC</string>
+    <string name="bt_cvn">CVN</string>
+    <string name="bt_cvv">CVV</string>
+    <string name="bt_cvv_invalid">%s is ongeldig</string>
+    <string name="bt_cvv_required">%s is vereist</string>
+    <string name="bt_delete">Verwijderen</string>
+    <string name="bt_delete_confirmation_description">U kunt deze betaalmethode niet meer gebruiken in deze app.</string>
+    <string name="bt_delete_confirmation_title">Betaalmethode verwijderen?</string>
+    <string name="bt_descriptor_amex">Amex</string>
+    <string name="bt_descriptor_diners">Diners</string>
+    <string name="bt_descriptor_discover">Discover</string>
+    <string name="bt_descriptor_google_pay">Google Pay</string>
+    <string name="bt_descriptor_hiper">Hiper</string>
+    <string name="bt_descriptor_hipercard">Hipercard</string>
+    <string name="bt_descriptor_jcb">JCB</string>
+    <string name="bt_descriptor_maestro">Maestro</string>
+    <string name="bt_descriptor_mastercard">MasterCard</string>
+    <string name="bt_descriptor_pay_with_venmo">Venmo</string>
+    <string name="bt_descriptor_paypal">PayPal</string>
+    <string name="bt_descriptor_unionpay">UnionPay</string>
+    <string name="bt_descriptor_unknown">Creditcard</string>
+    <string name="bt_descriptor_visa">Visa</string>
+    <string name="bt_done">Gereed</string>
+    <string name="bt_edit">Bewerken</string>
+    <string name="bt_expiration_invalid">Vervaldatum is ongeldig</string>
+    <string name="bt_expiration_required">Vervaldatum is verplicht</string>
+    <string name="bt_form_hint_card_number">Creditcardnummer</string>
+    <string name="bt_form_hint_cardholder_name">Naam kaarthouder</string>
+    <string name="bt_form_hint_country_code">Landcode</string>
+    <string name="bt_form_hint_cvv">@string/bt_cvv</string>
+    <string name="bt_form_hint_expiration">VervaldatumB</string>
+    <string name="bt_form_hint_mobile_number">Mobiel nummer</string>
+    <string name="bt_form_hint_postal_code">Postcode</string>
+    <string name="bt_mobile_number_invalid">Mobiel nummer is ongeldig</string>
+    <string name="bt_mobile_number_required">Mobiel nummer is verplicht</string>
+    <string name="bt_month">Maand</string>
+    <string name="bt_next">Volgende</string>
+    <string name="bt_other">Overige</string>
+    <string name="bt_postal_code_invalid">Postcode is ongeldig</string>
+    <string name="bt_postal_code_required">Postcode is verplicht</string>
+    <string name="bt_recent">Recent</string>
+    <string name="bt_scan_with_card_io">Met card.io scannen</string>
+    <string name="bt_select_payment_method">Betaalmethode selecteren</string>
+    <string name="bt_sms_code">SMS-code</string>
+    <string name="bt_sms_code_required">Sms-code is verplicht</string>
+    <string name="bt_sms_code_sent_to">Voer de sms-code in die naar %s is gestuurd</string>
+    <string name="bt_unionpay_mobile_number_explanation">Aanmelding kan vereist zijn voor deze kaart. Indien nodig wordt er een sms-code verzonden naar dit nummer.</string>
+    <string name="bt_unionpay_sms_code_invalid">Sms-code is ongeldig</string>
+    <string name="bt_use_a_different_phone_number">Ander telefoonnummer gebruiken</string>
+    <string name="bt_vault_manager_delete_failure">We kunnen uw betaalmethode op dit moment niet verwijderen. Probeer het later opnieuw.</string>
+    <string name="bt_vault_manager_title">Bewerking opgeslagen</string>
+    <string name="bt_year">Jaar</string>
     <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Inschakelen"</string>
     <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> werkt niet, tenzij je Google Play-services inschakelt."</string>
     <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Google Play-services inschakelen"</string>
@@ -116,4 +180,5 @@
     <string name="title_add_an_address">Voeg een adres toe</string>
     <string name="title_payment_method">Betalingsmethode</string>
     <string name="title_select_shipping_method">Selecteer een verzendmethode</string>
+    <string msgid="363496807345461806" name="wallet_buy_button_place_holder">"Kopen met Google"</string>
 </resources>

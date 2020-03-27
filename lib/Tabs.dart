@@ -13,6 +13,8 @@ import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/ui/profile.dart';
+import 'package:zamzam/payment/brain_tree.dart';
+
 
 
 // Main code for all the tabs
@@ -180,7 +182,12 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         ListTile(
           leading: Icon(Icons.bookmark),
           title: Text('My Appeals'),
-          onTap: null,
+          onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Pay()),
+            );
+          },
         ),
         ListTile(
           leading: Icon(Icons.payment),
