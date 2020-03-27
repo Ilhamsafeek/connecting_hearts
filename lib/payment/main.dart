@@ -11,35 +11,68 @@ class StripePayment extends StatefulWidget {
 }
 
 class _StripePaymentState extends State<StripePayment> {
-  bool _cardValid;
-  bool _isCardSaved = false;
-  bool _cardMessageReceived = false;
+  dynamic _cardValid;
+  dynamic _isCardSaved;
   ApiListener mApiListener;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   CardController _cardController = CardController();
 
-  Future<bool> _validate() async {
-    bool valid = await WebServices(this.mApiListener).isCardValid();
+  Future<void> _validate() async {
+    dynamic valid = await WebServices(this.mApiListener).isCardValid(
+        _cardController.cardNumber,
+        _cardController.expiryMonth,
+        _cardController.expiryYear,
+        _cardController.cvv);
     setState(() {
       _cardValid = valid;
     });
-
-    if (valid) {
-      _isCardSaved = await WebServices(this.mApiListener).saveCard(
-          _cardController.cardNumber,
-          _cardController.expiryMonth,
-          _cardController.expiryYear,
-          _cardController.cvv);
-      return _isCardSaved;
+    if (_cardValid == true) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("Adding your card.."),
+      ));
+      _saveCard();
     } else {
-      return false;
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(_cardValid),
+      ));
     }
+    return _cardValid;
+  }
+
+  Future<dynamic> _saveCard() async {
+    await WebServices(this.mApiListener)
+        .saveCard(_cardController.cardNumber, _cardController.expiryMonth,
+            _cardController.expiryYear, _cardController.cvv)
+        .then((saved) {
+          print("Saved Status $saved");
+      setState(() {
+        _isCardSaved = saved;
+      });
+
+      if (_isCardSaved == true) {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text("Your Card added succesfully."),
+        ));
+        Navigator.of(context).pop();
+      } else if (_isCardSaved == false) {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text("Oops! Something went wrong. please try again"),
+        ));
+      } else {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text("This card is added already."),
+        ));
+      }
+    });
+
+    return _isCardSaved;
   }
 
   @override
   void initState() {
     super.initState();
+    
   }
 
   @override
@@ -57,47 +90,12 @@ class _StripePaymentState extends State<StripePayment> {
             ),
             Center(
               child: RaisedButton(
-                color: Colors.black,
-                child: Text('Save Card'),
-                elevation: 7.0,
-                textColor: Colors.white,
-                onPressed: () {
-                  _validate().then((value) {
-                    if (value != null) {
-                      if (value) {
-                        _scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text("Card added succesfully."),
-                        ));
-                        Navigator.of(context).pop();
-                      } else {
-                        _scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content:
-                              Text("Something went wrong. please try again"),
-                        ));
-                      }
-                    } else {
-                      _scaffoldKey.currentState.showSnackBar(SnackBar(
-                        content: Text("Adding card.."),
-                      ));
-                    }
-                  });
-
-                  Center(
-                    child: (_isCardSaved ?? true)
-                        ? CircularProgressIndicator()
-                        : Text('Card Saved Successfully !'),
-                  );
-                },
-              ),
+                  color: Colors.black,
+                  child: Text('Save Card'),
+                  elevation: 7.0,
+                  textColor: Colors.white,
+                  onPressed: _validate),
             ),
-
-            // Center(
-            //   child: !(_cardValid ?? true)
-            //       ? Text("Card is not valid!")
-            //       : _requestToken
-            //           ? CircularProgressIndicator()
-            //           : Text(_token != null ? _token : ""),
-            // )
           ],
         ),
       ),

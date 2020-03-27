@@ -76,7 +76,7 @@ class WebServices {
   //2.  https://medium.com/devmins/stripe-implementation-part-ii-payment-gateway-integration-postman-collection-7d37efee096d
   Future<dynamic> createStripeToken(
       cardNumber, expiryMonth, expiryYear, cvc) async {
-        print("Exp month: $expiryMonth");
+    print("Exp month: $expiryMonth");
     var url = 'https://api.stripe.com/v1/tokens';
     var response = await http.post(
       url,
@@ -155,7 +155,7 @@ class WebServices {
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
       },
     );
-     print(response.body) ;
+    print(response.body);
 
     var jsonServerData = json.decode(response.body);
 
@@ -215,15 +215,13 @@ class WebServices {
   }
 
   Future<dynamic> chargeByCustomerAndCardID(String card) async {
-
     var customer;
     await getCustomerDataByMobile().then((value) {
       customer = value[0]['id'].toString();
       print("customer is $customer");
-      
     });
     var url = 'https://api.stripe.com/v1/charges';
-    
+
     var response = await http.post(
       url,
       body: {
@@ -270,8 +268,9 @@ class WebServices {
     return false;
   }
 
-  Future<bool> isCardExist(customer, cardId) async {
-    var url = 'https://api.stripe.com/v1/customers/$customer/sources/$cardId';
+  Future<bool> isCardExist(customer, last4) async {
+    var url =
+        'https://api.stripe.com/v1/customers/$customer/sources?object=card';
 
     var response = await http.get(
       url,
@@ -282,23 +281,24 @@ class WebServices {
     );
 
     var jsonServerData = json.decode(response.body);
-    print("isCardExist-> $jsonServerData");
-    if (jsonServerData['id']!=null) {
-      return true;
+
+    for (var val in jsonServerData['data']) {
+      if (val['last4'] == last4) return true;
     }
+
     return false;
   }
 
-  Future<bool> saveCard(cardNumber, expiryMonth, expiryYear, cvc) async {
-    
+  Future<dynamic> saveCard(cardNumber, expiryMonth, expiryYear, cvc) async {
     var token;
     var card;
-    
+    var last4;
+    dynamic result;
     await createStripeToken(cardNumber, expiryMonth, expiryYear, cvc)
         .then((value) {
       token = value['id'];
       card = value['card']['id'];
-      
+      last4 = value['card']['last4'];
     });
     var customer;
 
@@ -309,24 +309,24 @@ class WebServices {
           customer = value[0]['id'];
         }
       });
-      if (await isCardExist(customer, card)) {
+      if (await isCardExist(customer, last4)) {
         print("Card Added Already");
-        return false;
+        result = "Card Added Already";
       } else {
         await addCardTokenToCustomer(customer, token).then((value) {
           print("Card Added Succesfully");
 
-          return true;
+          result = true;
         });
       }
     } else {
       //No
       await saveCustomer(card).then((value) {
         print("Customer registered and Card Added Successfully");
-        return true;
+        result = true;
       });
     }
-    return false;
+    return result;
   }
 
   Future<bool> deleteCard(String card) async {
@@ -334,13 +334,11 @@ class WebServices {
     await getCustomerDataByMobile().then((value) {
       customer = value[0]['id'].toString();
       print("customer is $customer");
-      
     });
 
     var url = 'https://api.stripe.com/v1/customers/$customer/sources/$card';
     var response = await http.delete(
       url,
-     
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
@@ -351,8 +349,30 @@ class WebServices {
     return jsonServerData['deleted'];
   }
 
+  Future<dynamic> isCardValid(cardNumber, expiryMonth, expiryYear, cvc) async {
+    //creating card token will help to validate
+    print("Exp month: $expiryMonth");
+    var url = 'https://api.stripe.com/v1/tokens';
+    var response = await http.post(
+      url,
+      body: {
+        'card[number]': '$cardNumber',
+        'card[exp_month]': '$expiryMonth',
+        'card[exp_year]': '$expiryYear',
+        'card[cvc]': '$cvc',
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
+      },
+    );
 
-  Future<bool> isCardValid() async {
-    return true;
+    var jsonServerData = json.decode(response.body);
+    if (jsonServerData['id'] != null) {
+      print('card is valid');
+      return true;
+    }
+   return jsonServerData['error']['message'];
+    
   }
 }
