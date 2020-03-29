@@ -14,6 +14,7 @@ import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/ui/profile.dart';
 import 'package:zamzam/payment/brain_tree.dart';
+import 'package:zamzam/ui/zakat_calculator.dart';
 
 
 
@@ -36,7 +37,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
 
     messaging.configure(
       onLaunch: (Map<String, dynamic> event) async {
-        print("onLaunch $event");
+        print("onLaunch ------>>>>>> $event");
       },
       onMessage: (Map<String, dynamic> event) async {
         print("onMessage $event");
@@ -66,6 +67,12 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     tabcontroller.dispose();
   }
 
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -93,7 +100,10 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           ),
           IconButton(
             onPressed: () {
-              
+                  Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ZakatCalculator()),
+            );
             },
             icon: Icon(Icons.person),
           ),
@@ -202,6 +212,16 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         Divider(
           height: 0,
         ),
+         ListTile(
+          leading: Icon(Icons.info),
+          title: Text('About'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Payment()),
+            );
+          },
+        ),
         Expanded(
           child: new Align(
               alignment: Alignment.bottomCenter,
@@ -257,13 +277,13 @@ class DataSearch extends SearchDelegate<String> {
   @override
   List<Widget> buildActions(BuildContext context) {
     // Actions for app bar
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
+    // return [
+    //   IconButton(
+    //       icon: Icon(Icons.clear),
+    //       onPressed: () {
+    //         query = "";
+    //       })
+    // ];
   }
 
   @override

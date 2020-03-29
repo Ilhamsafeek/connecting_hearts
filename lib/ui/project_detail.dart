@@ -23,6 +23,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   String selectedMethod;
+  dynamic paymentAmount;
   selectsku(method) {
     print(method);
     setState(() {
@@ -56,7 +57,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
             ],
           ),
-
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -68,7 +68,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               childCount: 1,
             ),
           ),
-
           SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -83,22 +82,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               crossAxisCount: 1,
             ),
           ),
-
-          // SliverFillRemaining(
-          //   child: new Center(
-          //     child: Column(children: <Widget>[
-
-          //       _detailSection(),
-          //       Container(
-          //         color: Colors.black,
-          //         width: double.infinity,
-          //         height: 0.1,
-          //       ),
-          //       _buildBottomBar(),
-          //     ]),
-          //   ),
-          //   hasScrollBody: true,
-          // )
         ]));
   }
 
@@ -117,138 +100,226 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     double completedPercent = 100 *
         double.parse('${widget.projectData['collected']}') /
         double.parse('${widget.projectData['amount']}');
-    Color completedColor = Colors.orange;
-    Color percentColor = Colors.black;
+    Color completedColor = Colors.blue;
+    Color percentColor = Colors.white;
     if (completedPercent >= 100) {
       completedPercent = 100.0;
-      completedColor = Colors.green[900];
-      percentColor = Colors.white;
+      completedColor = Colors.orange;
     }
 
     double percent = completedPercent / 100;
 
-    return Expanded(
-        child: Padding(
-      padding: const EdgeInsets.all(
-        24,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(
+            24,
+          ),
+          child: Column(
             children: <Widget>[
-              Expanded(
-                  child: Text(
-                "${widget.projectData['date']}",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RichText(
+                      text: new TextSpan(
+                        style: new TextStyle(
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          new TextSpan(
+                              text: 'Posted: ',
+                              style:
+                                  new TextStyle(fontWeight: FontWeight.w600)),
+                          new TextSpan(text: '${widget.projectData['date']}'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 18,
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Text(
+                    "${formattedCollected.output.withoutFractionDigits}",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Icon(
+                    Icons.stars,
+                    color: Colors.orange,
+                    size: 18,
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Text(
+                    "${widget.projectData['rating']}",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.start,
+              ),
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 0,
                 ),
-              )),
-              Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 18,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Categories: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Chip(label: Text('${widget.projectData['category']}')),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(
-                width: 2,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        RichText(
+                          text: new TextSpan(
+                            style: new TextStyle(
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              new TextSpan(
+                                  text: 'Address: ',
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.w600)),
+                              new TextSpan(
+                                  text:
+                                      '${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+            
+            ],
+          ),
+        ),
+        Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
               Text(
-                "${formattedCollected.output.withoutFractionDigits}",
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 14,
+                "description",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Divider(height: 0),
+              ListTile(
+                title: Text(
+                  "${widget.projectData['details']}",
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 14, wordSpacing: 5),
+                ),
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
+          ),
+          child: Column(
+            children: <Widget>[
+            
+              RichText(
+                text: new TextSpan(
+                  style: new TextStyle(
+                    color: Colors.black,
+                  ),
+                  children: <TextSpan>[
+                    new TextSpan(
+                        text: 'Rs.',
+                        style: new TextStyle(fontWeight: FontWeight.w600)),
+                    new TextSpan(
+                        text:
+                            '${formattedAmount.output.withoutFractionDigits}', style: TextStyle(fontSize: 32)),
+                  ],
                 ),
               ),
-              SizedBox(
-                width: 8,
-              ),
-              Icon(
-                Icons.star_border,
-                color: Colors.red,
-                size: 18,
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              Text(
-                "${widget.projectData['rating']}",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
+              new LinearPercentIndicator(
+                alignment: MainAxisAlignment.center,
+                animation: true,
+                lineHeight: 14.0,
+                animationDuration: 2000,
+                width: 140.0,
+                percent: percent,
+                center: Text(
+                  "${double.parse(completedPercent.toStringAsFixed(2))}%",
+                  style: new TextStyle(fontSize: 12.0, color: percentColor),
                 ),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                backgroundColor: Colors.grey,
+                progressColor: completedColor,
               ),
             ],
-            mainAxisAlignment: MainAxisAlignment.center,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Chip(label: Text('${widget.projectData['category']}')),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
+        ),
+       
+        Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 5,
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            child: Text(
-              '${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}',
-              style: TextStyle(color: Colors.blue),
-            ),
-          ),
-          Text(
-            "${widget.projectData['details']}",
-            style: TextStyle(color: Colors.black, fontSize: 14, wordSpacing: 5),
-          ),
-          ListTile(
-            title: new LinearPercentIndicator(
-              animation: true,
-              lineHeight: 14.0,
-              animationDuration: 2000,
-              width: 140.0,
-              percent: percent,
-              center: Text(
-                "${double.parse(completedPercent.toStringAsFixed(2))}%",
-                style: new TextStyle(fontSize: 12.0, color: percentColor),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        RichText(
+                          text: new TextSpan(
+                            style: new TextStyle(
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              new TextSpan(
+                                  text: 'This appeal requires: ',
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.w600)),
+                              new TextSpan(
+                                  text:
+                                      '${widget.projectData['type']} payment $paymentTypeExtension'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              trailing: Text(
-                'Rs.' + '${formattedAmount.output.withoutFractionDigits}',
-                style: TextStyle(
-                    fontFamily: "Exo2",
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0),
-              ),
-              linearStrokeCap: LinearStrokeCap.roundAll,
-              backgroundColor: Colors.grey,
-              progressColor: completedColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            child: Text(
-              "This appeal requires: " +
-                  "${widget.projectData['type']} payment $paymentTypeExtension",
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ));
+            
+      
+      ],
+    );
   }
 
   Widget _buildBottomBar() {
@@ -314,71 +385,81 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         context: context,
         isScrollControlled: true,
         isDismissible: false,
-         builder: (context) {
-      return StatefulBuilder(
-       builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            child: new Wrap(
-              children: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: ListTile(
-                      title: Text('Choose a payment method'),
-                      trailing: IconButton(
-                        icon: Icon(Icons.clear),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    )),
-                Divider(
-                  height: 0,
-                ),
-                paymentMethods(),
-                ListTile(
-                    title: TextFormField(
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black),
-                      decoration: InputDecoration(
-                        hintText: 'Amount',
-                        labelStyle: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0),
-                      ),
-                    ),
-                    onTap: () => {}),
-                ListTile(
-                    title: Padding(
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              child: new Wrap(
+                children: <Widget>[
+                  Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                              child: RaisedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PaymentResult(selectedMethod)),
-                              );
-                            },
-                            child: Text("Send"),
-                            color: Colors.green[800],
-                            textColor: Colors.white,
-                          )),
-                        ],
+                      child: ListTile(
+                        title: Text('Choose a payment method'),
+                        trailing: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      )),
+                  Divider(
+                    height: 0,
+                  ),
+                  paymentMethods(),
+                  ListTile(
+                      title: TextFormField(
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                        decoration: InputDecoration(
+                          hintText: 'Amount',
+                          labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20.0),
+                        ),
+                        onChanged: (value) {
+                          this.paymentAmount = value;
+                        },
                       ),
-                    ),
-                    onTap: () => {}),
-              ],
-            ),
-          );
-    });});
+                      onTap: () => {}),
+                  ListTile(
+                      title: Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                                child: RaisedButton(
+                              onPressed: () {
+                                if (this.paymentAmount != null &&
+                                    this.paymentAmount != 0 &&
+                                    this.selectedMethod != null) {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PaymentResult(
+                                            selectedMethod,
+                                            widget.projectData,
+                                            paymentAmount)),
+                                  );
+                                }
+                              },
+                              child: Text("Proceed Donation"),
+                              color: Colors.teal,
+                              textColor: Colors.white,
+                            )),
+                          ],
+                        ),
+                      ),
+                      onTap: () => {}),
+                ],
+              ),
+            );
+          });
+        });
   }
 
   Widget paymentMethods() {

@@ -133,6 +133,7 @@ class _TrendingState extends State<Trending> {
 //              },
 //            ),
               ),
+         
           Container(
             color: Color.fromRGBO(104, 45, 127, 1),
             child: new Row(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:country_pickers/country.dart';
@@ -8,8 +7,6 @@ import 'package:zamzam/services/webservices.dart';
 import 'package:zamzam/services/apilistener.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:zamzam/Tabs.dart';
-
-
 
 class Signin extends StatefulWidget {
   @override
@@ -24,6 +21,7 @@ class _SigninPageState extends State<Signin> {
   String countryCode = '+94';
   String smsCode;
   String verificationId;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrive = (String verId) {
@@ -46,7 +44,10 @@ class _SigninPageState extends State<Signin> {
       });
     };
     final PhoneVerificationFailed veriFailed = (AuthException exception) {
-      print('${exception.message}');
+      print('From here: ${exception.message}');
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("${exception.message}"),
+      ));
     };
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: "${this.countryCode} ${this.phoneNo}",
@@ -68,7 +69,7 @@ class _SigninPageState extends State<Signin> {
               centerTitle: true,
               title: Text("Mobile verification",
                   style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
-              backgroundColor: Colors.black,
+              
             ),
             body: Padding(
               padding: EdgeInsets.all(16.0),
@@ -101,7 +102,8 @@ class _SigninPageState extends State<Signin> {
                           onPressed: () {
                             FirebaseAuth.instance.currentUser().then((user) {
                               if (user != null) {
-                                Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+                                Navigator.of(context)
+                                    .pushReplacementNamed(HOME_PAGE);
                               } else {
                                 Navigator.of(context).pop();
                                 signIn();
@@ -127,8 +129,8 @@ class _SigninPageState extends State<Signin> {
 
     await FirebaseAuth.instance.signOut().then((action) {
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-        
-        WebServices(this.mApiListener).createAccount('${this.countryCode} ${this.phoneNo}');
+        WebServices(this.mApiListener)
+            .createAccount('${this.countryCode} ${this.phoneNo}');
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
         print(e);
@@ -139,11 +141,12 @@ class _SigninPageState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           centerTitle: true,
           title: Text("Mobile verification",
               style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
-          backgroundColor: Colors.black,
+          
         ),
         body: Padding(
           padding: EdgeInsets.all(16.0),
@@ -180,9 +183,9 @@ class _SigninPageState extends State<Signin> {
                           },
                         ),
                       ),
-                    
                     ],
                   ),
+                 
                   SizedBox(height: 15.0),
                   RaisedButton(
                     onPressed: verifyPhone,

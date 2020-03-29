@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'package:zamzam/ui/zakat_calculator.dart';
 class Inbox extends StatefulWidget {
   Inbox({Key key}) : super(key: key);
 
@@ -156,13 +156,8 @@ class _MessagesState extends State<Messages> {
     return Container(
         child: RaisedButton(
       onPressed: () {
-       WebServices(this.mApiListener).isAlreadyCustomer().then((result) {
-      if (result != null) {
-        setState(() {
-         print(result);
-        });
-      }
-    });
+      
+      
       },
       child: Text('Save Card'),
     ));

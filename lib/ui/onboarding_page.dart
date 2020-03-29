@@ -186,19 +186,19 @@ class Slider {
 final sliderArrayList = [
   Slider(
       sliderImageUrl: 'assets/slider_2.png',
-      sliderHeading: "Easy Exchange!",
+      sliderHeading: "Get notified with recent activities.",
       sliderSubHeading:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultricies, erat vitae porta consequat."),
+          "Keep in touch with us by notifications on recent sermon updates, events organized"),
   Slider(
       sliderImageUrl: 'assets/slider_3.png',
-      sliderHeading: "Easy to Use!",
+      sliderHeading: "Find needy people",
       sliderSubHeading:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultricies, erat vitae porta consequat."),
+          "You may not aware of how people are needy. This is the platform for you"),
   Slider(
-      sliderImageUrl: 'assets/slider_2.png',
-      sliderHeading: "Connect with Others",
+      sliderImageUrl: 'assets/slider_1.png',
+      sliderHeading: "Support them",
       sliderSubHeading:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultricies, erat vitae porta consequat."),
+          "We connect needy people and donors and make a network"),
 ];
 
 class SlideDots extends StatelessWidget {

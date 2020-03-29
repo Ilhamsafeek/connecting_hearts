@@ -70,6 +70,34 @@ class WebServices {
     return jsonServerData;
   }
 
+  // Payment records
+
+  Future<dynamic> createPayment(amount, projectData) async {
+    print('Calling API createPayment --------->>>>>>>');
+
+    var url = 'https://www.chadmin.online/api/createpayment';
+    var response = await http.post(url, body: {
+      'user_id': CURRENT_USER,
+      'amount': '$amount',
+      'project_id': projectData['appeal_id'],
+      'receipt_no': '123',
+      'method': 'card'
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    return response.statusCode;
+  }
+
+  
+  Future<dynamic> getPaymentData() async {
+   var url = 'https://www.chadmin.online/api/getpayment';
+    var response = await http.post(url, body: {
+      'user_id': CURRENT_USER,     
+    });
+    var jsonServerData = json.decode(response.body);
+    return jsonServerData;
+  }
+
 //Stripe Payment
   //Sources :
   //1. https://medium.com/devmins/stripe-implementation-payment-gateway-integration-postman-collection-ded68a115667
@@ -214,7 +242,7 @@ class WebServices {
         .toList();
   }
 
-  Future<dynamic> chargeByCustomerAndCardID(String card) async {
+  Future<dynamic> chargeByCustomerAndCardID(String card, paymentAmount, project) async {
     var customer;
     await getCustomerDataByMobile().then((value) {
       customer = value[0]['id'].toString();
@@ -225,9 +253,9 @@ class WebServices {
     var response = await http.post(
       url,
       body: {
-        'amount': '10000',
+        'amount': '$paymentAmount',
         'currency': 'lkr',
-        'description': 'donation for project WI201',
+        'description': 'Donation for project $project',
         'customer': '$customer',
         'source': '$card',
       },
@@ -372,7 +400,6 @@ class WebServices {
       print('card is valid');
       return true;
     }
-   return jsonServerData['error']['message'];
-    
+    return jsonServerData['error']['message'];
   }
 }

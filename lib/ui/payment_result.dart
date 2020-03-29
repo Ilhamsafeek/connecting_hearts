@@ -11,7 +11,9 @@ class PaymentResult extends StatefulWidget {
   _PaymentResultState createState() => _PaymentResultState();
 
   final String cardId;
-  PaymentResult(this.cardId, {Key key}) : super(key: key);
+  final dynamic projectData;
+  final dynamic paymentAmount;
+  PaymentResult(this.cardId,this.projectData,this.paymentAmount, {Key key}) : super(key: key);
 }
 
 class _PaymentResultState extends State<PaymentResult> {
@@ -80,47 +82,59 @@ class _PaymentResultState extends State<PaymentResult> {
 
   Widget doCharging(String card) {
     return FutureBuilder<dynamic>(
-      future: WebServices(this.mApiListener).chargeByCustomerAndCardID(card),
+      future: WebServices(this.mApiListener).chargeByCustomerAndCardID(card,widget.paymentAmount,widget.projectData['appeal_id']),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         List<Widget> children;
-
+       
         if (snapshot.hasData) {
           var data = snapshot.data;
+                WebServices(this.mApiListener).createPayment(widget.paymentAmount,widget.projectData).then((value){
+              print(value);
+              if(value!=null){
 
+              }
+          });
           children = <Widget>[
             Icon(
               Icons.check_circle,
               color: Colors.green,
               size: 120,
             ),
-             Padding(
-                padding: const EdgeInsets.all(16),
-            child:  Text(data['status'],style: TextStyle(fontSize: 19.0)),
-             ),
-             Padding(
-                padding: const EdgeInsets.all(16),
-            child:Text('Receipt for your donation'),
-             ),
-            Divider(height: 0,),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(data['status'], style: TextStyle(fontSize: 19.0)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text('Receipt for your donation'),
+            ),
+            Divider(
+              height: 0,
+            ),
             Padding(
                 padding: const EdgeInsets.all(16),
                 child: Center(
                   child: Text("${data['created']}",
-                        style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontSize: 22.0, fontWeight: FontWeight.bold)),
                 )),
-             Divider(height: 0,),
+            Divider(
+              height: 0,
+            ),
             Padding(
                 padding: const EdgeInsets.all(16),
                 child: ListTile(
-                  leading: Icon(
-                    Icons.receipt,
-                  ),
-                  title: FlatButton(
+                  title: FlatButton.icon(
+                    icon: Icon(
+                      Icons.receipt,
+                    ),
                     onPressed: () {
                       _launchURL(data['receipt_url']);
                     },
-                    child: Text('view stripe receipt',
-                        style: TextStyle(fontSize: 15.0, color: Colors.blue),),
+                    label: Text(
+                      'view stripe receipt',
+                      style: TextStyle(fontSize: 15.0, color: Colors.blue),
+                    ),
                   ),
                 )),
             RaisedButton(
@@ -132,6 +146,8 @@ class _PaymentResultState extends State<PaymentResult> {
               textColor: Colors.white,
             ),
           ];
+       
+       
         } else if (snapshot.hasError) {
           children = <Widget>[
             Icon(

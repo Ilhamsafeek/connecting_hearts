@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/ui/single_video.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -22,14 +23,52 @@ List myList;
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        body: Center(
+        body: 
+        
+         CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              expandedHeight: 10,
+             backgroundColor: Colors.white,  
+            floating: true,
+            pinned: false,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text('Test'),
+              background: Image.asset(
+                "assets/child.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.share),
+                tooltip: 'Share this appeal',
+                onPressed: () {/* ... */},
+              ),
+            ],
+            ),
+            
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: Center(
             child: new RefreshIndicator(
           child: SingleChildScrollView(child: Container(
             child: videoCadge()
             )),
           color: Colors.black,
           onRefresh: _handleRefresh,
-        )));
+        ))
+                );
+              },
+              childCount: 1,
+            ),
+          ),
+
+          ],
+        ));
   }
 
   Widget videoCadge() {
@@ -46,23 +85,20 @@ List myList;
               Container(
                   child: Column(
                 children: <Widget>[
-                  AspectRatio(
-                    child: YoutubePlayer(
-                      controller: YoutubePlayerController(
-                        initialVideoId:
-                            YoutubePlayer.convertUrlToId(item['url']),
-                        flags: YoutubePlayerFlags(
-                          autoPlay: false,
-                          mute: false,
-                          hideThumbnail: false,
-                          disableDragSeek: false,
-                        ),
-                      ),
-                      thumbnailUrl: YoutubePlayer.getThumbnail(
-                          videoId: YoutubePlayer.convertUrlToId(item['url'])),
-                    ),
-                    aspectRatio: 16 / 9,
-                  ),
+                  InkWell(
+          onTap: () {
+             Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Play(item)),
+            );
+          },
+                child: AspectRatio(
+                child: Image(
+                  image: NetworkImage(YoutubePlayer.getThumbnail(videoId: YoutubePlayer.convertUrlToId(item['url']))),
+                  centerSlice: Rect.largest,
+                ),
+                aspectRatio: 16 / 10,
+              ),),
                   ListTile(
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(item['profile_url']),

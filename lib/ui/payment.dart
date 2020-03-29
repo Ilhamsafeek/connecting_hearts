@@ -48,6 +48,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
             style: TextStyle(color: Colors.black45, fontSize: 14),
             textAlign: TextAlign.center,
           )),
+          
           Divider(
             height: 0,
           ),

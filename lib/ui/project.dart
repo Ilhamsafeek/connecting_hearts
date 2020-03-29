@@ -8,9 +8,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class Project extends StatefulWidget {
   @override
-  
-   final dynamic category;
-  
+  final dynamic category;
+
   Project(this.category, {Key key}) : super(key: key);
   _ProjectPageState createState() => _ProjectPageState();
 }
@@ -48,7 +47,9 @@ class _ProjectPageState extends State<Project> {
         List<Widget> children;
 
         if (snapshot.hasData) {
-            var data = snapshot.data.where((el) => el['category'] ==this. widget.category).toList();
+          var data = snapshot.data
+              .where((el) => el['category'] == this.widget.category)
+              .toList();
 
           children = <Widget>[
             for (var item in data) projectCard(item),
@@ -88,7 +89,6 @@ class _ProjectPageState extends State<Project> {
             children: children,
           ),
         );
-     
       },
     );
   }
@@ -101,12 +101,11 @@ class _ProjectPageState extends State<Project> {
     double completedPercent = 100 *
         double.parse('${data['collected']}') /
         double.parse('${data['amount']}');
-    Color completedColor = Colors.orange;
-    Color percentColor = Colors.black;
+    Color completedColor = Colors.blue;
+    Color percentColor = Colors.white;
     if (completedPercent >= 100) {
       completedPercent = 100.0;
-      completedColor = Colors.green[900];
-      percentColor = Colors.white;
+      completedColor = Colors.orange;
     }
 
     double percent = completedPercent / 100;
@@ -114,43 +113,59 @@ class _ProjectPageState extends State<Project> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Image.network(
-            'assets/child.png',
-            fit: BoxFit.cover,
-          ),
-          ListTile(
-            leading: Icon(Icons.album),
-            title: Text('${data['category']}'),
-            subtitle: Text('Family of ${data['children']} Members'),
-            trailing: FlatButton.icon(
-                onPressed: null,
-                icon: Icon(
-                  Icons.star_border,
-                  color: Colors.orange,
-                ),
-                label: Text('${data['rating']}',
+          Stack(children: <Widget>[
+            ClipRRect(
+              // borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+              child: Image.asset('assets/child.png'),
+            ),
+            Center(
+                child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    '${data['category']}',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16.0))),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.all(0),
-            leading: FlatButton.icon(
-                onPressed: null,
-                icon: Icon(
-                  Icons.location_on,
-                  size: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text('Family of ${data['children']} Members',
+                      style: TextStyle(color: Colors.white)),
+                  trailing:  FlatButton.icon(
+                      onPressed: null,
+                      icon: Icon(
+                        Icons.stars,
+                    color: Colors.orange,
+                      ),
+                      label: Text('${data['rating']}',
+                          style:
+                              TextStyle(fontSize: 20.0, color: Colors.white))),
                 ),
-                label: Text(
-                  '${data['city']}, ${data['district']}',
-                  style: TextStyle(color: Colors.blue),
-                )),
-          ),
+               
+                ListTile(
+                  contentPadding: EdgeInsets.only(top: 95),
+                  leading: FlatButton.icon(
+                      onPressed: null,
+                      icon: Icon(
+                        Icons.location_on,
+                        color: Colors.white,
+                        size: 14.0,
+                      ),
+                      label: Text(
+                        '${data['city']}, ${data['district']}',
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ),
+              
+              ],
+            )),
+          ]),
           ListTile(
             title: new LinearPercentIndicator(
               animation: true,
               lineHeight: 14.0,
               animationDuration: 2000,
-              width: 140.0,
+              width: 150.0,
               percent: percent,
               center: Text(
                 "${double.parse(completedPercent.toStringAsFixed(2))}%",
@@ -169,25 +184,46 @@ class _ProjectPageState extends State<Project> {
               progressColor: completedColor,
             ),
           ),
-        
           Container(
             color: Colors.black,
             width: double.infinity,
             height: 0.1,
           ),
           Container(
-              child: RawMaterialButton(
-            constraints: BoxConstraints(),
-            padding: EdgeInsets.all(
-                5.0), // optional, in order to add additional space around text if needed
-            child: Text('view more'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProjectDetail(data)),
-              );
-            },
-          ))
+              child: Row(children: <Widget>[
+            Expanded(
+              child: FlatButton.icon(
+                icon: Icon(
+                  Icons.list,
+                  color: Colors.green,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProjectDetail(data)),
+                  );
+                },
+                label: Text('View more'),
+              ),
+            ),
+            Expanded(
+              child: FlatButton.icon(
+                icon: Icon(
+                  Icons.share,
+                  color: Colors.green,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProjectDetail(data)),
+                  );
+                },
+                label: Text('Share'),
+              ),
+            ),
+          ]))
         ],
       ),
     );
