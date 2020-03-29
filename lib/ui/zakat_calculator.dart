@@ -398,7 +398,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                   flex: 8,
                   child: Text(
-                    'Expensive Jewelry: Gold, Silver etc.(price)',
+                    'Finished goods and goods for sell',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ),
@@ -429,7 +429,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                   flex: 8,
                   child: Text(
-                    'Bank Deposits: Fixed, Saving, Current, DPS etc.',
+                    'Work in progress, raw materials and package',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ),
@@ -459,7 +459,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Shares, savings certificate, bond, insurance, provident fund etc.',
+                      'Receivables',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -488,7 +488,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Foreighn currency, FC account, bond, TC, cash (converted to LKR)',
+                      'Security and advance',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -517,7 +517,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Submitted Goods',
+                      'All Bank deposits',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -546,36 +546,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Security deposit (that can be received), advance',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                    )),
-                Expanded(
-                  flex: 3,
-                  child: TextField(
-                    textDirection: TextDirection.rtl,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      focusColor: Colors.black,
-                      hintText: "0",
-                    ),
-                    style: TextStyle(fontSize: 18, fontFamily: "Exo2"),
-                    onChanged: (value) {},
-                  ),
-                )
-              ],
-            ),
-            Divider(),
-            Row(
-              children: <Widget>[
-                  Expanded(
-                  flex: 1,
-                  child: Icon(Icons.timelapse),
-                ),
-                Expanded(
-                    flex: 8,
-                    child: Text(
-                      'Receivable, lent, money, advance',
+                      'Cash in hands',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -623,7 +594,7 @@ class SlideItem extends StatelessWidget {
                 )
               ],
             ),
-            Divider(),
+            Divider(),          
             Row(
               children: <Widget>[
                   Expanded(
@@ -669,7 +640,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                   flex: 8,
                   child: Text(
-                    'Expensive Jewelry: Gold, Silver etc.(price)',
+                    'Finished goods and goods for sell',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ),
@@ -698,7 +669,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                   flex: 8,
                   child: Text(
-                    'Bank Deposits: Fixed, Saving, Current, DPS etc.',
+                    'work in progress, raw materials and package',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ),
@@ -727,7 +698,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Shares, savings certificate, bond, insurance, provident fund etc.',
+                      'Receivables',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -756,7 +727,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Foreighn currency, FC account, bond, TC, cash (converted to LKR)',
+                      'Security and advance',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -785,7 +756,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Submitted Goods',
+                      'All bank deposits',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -814,7 +785,7 @@ class SlideItem extends StatelessWidget {
                 Expanded(
                     flex: 8,
                     child: Text(
-                      'Security deposit (that can be received), advance',
+                      'Cash in hands',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     )),
@@ -833,36 +804,7 @@ class SlideItem extends StatelessWidget {
                 )
               ],
             ),
-            Divider(),
-            Row(
-              children: <Widget>[
-                  Expanded(
-                  flex: 1,
-                  child: Icon(Icons.timelapse),
-                ),
-                Expanded(
-                    flex: 8,
-                    child: Text(
-                      'Receivable, lent, money, advance',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                    )),
-                Expanded(
-                  flex: 3,
-                  child: TextField(
-                    textDirection: TextDirection.rtl,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      focusColor: Colors.black,
-                      hintText: "0",
-                    ),
-                    style: TextStyle(fontSize: 18, fontFamily: "Exo2"),
-                    onChanged: (value) {},
-                  ),
-                )
-              ],
-            ),
-            Divider(),
+            Divider(),          
             Row(
               children: <Widget>[
                   Expanded(

@@ -173,10 +173,10 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           title: Text('Profile'),
           onTap: () {
             
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => Profile()),
+            // );
           },
         ),
         ListTile(
@@ -193,10 +193,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           leading: Icon(Icons.bookmark),
           title: Text('My Appeals'),
           onTap: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Pay()),
-            );
+          
           },
         ),
         ListTile(
@@ -321,7 +318,8 @@ class DataSearch extends SearchDelegate<String> {
           showResults(context);
         },
         leading: Icon(Icons.location_city),
-        title: RichText(text: TextSpan(
+        title: 
+        RichText(text: TextSpan(
           text: suggestionList[index].substring(0, query.length),
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           children: [

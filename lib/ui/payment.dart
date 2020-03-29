@@ -5,6 +5,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zamzam/payment/main.dart';
 import 'package:zamzam/Tabs.dart';
+import 'package:zamzam/payment/brain_tree.dart';
 
 class Payment extends StatefulWidget {
   @override
@@ -64,6 +65,19 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
                 context,
                 MaterialPageRoute(builder: (context) => StripePayment()),
               );
+            },
+          ),
+           
+              ListTile(
+            title: Text(
+              'Add Paypal',
+              style: TextStyle(color: Colors.blue),
+            ),
+            onTap: () {
+               Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Pay()),
+            );
             },
           ),
         ]),

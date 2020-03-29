@@ -6,6 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:zamzam/ui/payment_result.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:share/share.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -53,7 +54,10 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               IconButton(
                 icon: const Icon(Icons.share),
                 tooltip: 'Share this appeal',
-                onPressed: () {/* ... */},
+                onPressed: () {
+                  Share.share('check out my website https://example.com',
+                      subject: 'Look what I made!');
+                },
               ),
             ],
           ),
@@ -66,20 +70,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 );
               },
               childCount: 1,
-            ),
-          ),
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return Container(
-                  alignment: Alignment.center,
-                  child: _buildBottomBar(),
-                );
-              },
-              childCount: 1,
-            ),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
             ),
           ),
         ]));
@@ -121,7 +111,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: RichText(
+                    child: 
+                    RichText(
                       text: new TextSpan(
                         style: new TextStyle(
                           color: Colors.black,
@@ -135,6 +126,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                         ],
                       ),
                     ),
+                  
                   ),
                   Icon(
                     Icons.check_circle,
@@ -222,7 +214,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   ],
                 ),
               ),
-            
             ],
           ),
         ),
@@ -251,7 +242,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           ),
           child: Column(
             children: <Widget>[
-            
               RichText(
                 text: new TextSpan(
                   style: new TextStyle(
@@ -262,8 +252,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                         text: 'Rs.',
                         style: new TextStyle(fontWeight: FontWeight.w600)),
                     new TextSpan(
-                        text:
-                            '${formattedAmount.output.withoutFractionDigits}', style: TextStyle(fontSize: 32)),
+                        text: '${formattedAmount.output.withoutFractionDigits}',
+                        style: TextStyle(fontSize: 32)),
                   ],
                 ),
               ),
@@ -285,39 +275,80 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ],
           ),
         ),
-       
-        Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5,
+        
+        Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: RichText(
+                  text: new TextSpan(
+                    style: new TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: <TextSpan>[
+                      new TextSpan(
+                          text: 'This appeal requires: ',
+                          style: new TextStyle(fontWeight: FontWeight.w600)),
+                      new TextSpan(
+                          text:
+                              '${widget.projectData['type']} payment $paymentTypeExtension'),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+          ),
+          child:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                child: RaisedButton(
+                  onPressed: () {
+                    payModalBottomSheet(context);
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(
+                    8,
+                  ))),
+                  color: Colors.orange[700],
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      16,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        RichText(
-                          text: new TextSpan(
-                            style: new TextStyle(
-                              color: Colors.black,
-                            ),
-                            children: <TextSpan>[
-                              new TextSpan(
-                                  text: 'This appeal requires: ',
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.w600)),
-                              new TextSpan(
-                                  text:
-                                      '${widget.projectData['type']} payment $paymentTypeExtension'),
-                            ],
+                        Text(
+                          'Donate Now',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
                           ),
                         ),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        )
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            
-      
+            ),
+          ],
+        ),
+        )
       ],
     );
   }

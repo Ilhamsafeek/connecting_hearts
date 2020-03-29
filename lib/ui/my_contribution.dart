@@ -12,21 +12,35 @@ class MyContribution extends StatefulWidget {
 }
 
 class _MyContributionState extends State<MyContribution> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   ApiListener mApiListener;
   dynamic totalContribution = 0;
 
   @override
+  void initState() {
+    super.initState();
+    WebServices(mApiListener).getPaymentData().then((value) {
+      print(value);
+      setState(() {
+        dynamic total = 0;
+        for (var item in value) {
+          total = total + int.parse(item['amount']);
+        }
+        totalContribution = total;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    FlutterMoneyFormatter formattedAmount =
+        FlutterMoneyFormatter(amount: double.parse('$totalContribution'));
     return Scaffold(
         backgroundColor: Colors.grey[200],
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+              // automaticallyImplyLeading: false,
+              
               expandedHeight: 200,
               // backgroundColor: Colors.indigo[900],
               pinned: true,
@@ -38,11 +52,24 @@ class _MyContributionState extends State<MyContribution> {
                         "Total contribution",
                         style: TextStyle(color: Colors.white54, fontSize: 12),
                       ),
-                      subtitle: Text(
-                        "${this.totalContribution}",
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 25,
+                      subtitle: RichText(
+                        text: new TextSpan(
+                          style: new TextStyle(
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            new TextSpan(
+                                text: 'Rs.',
+                                style:
+                                    new TextStyle(color: Colors.white54,fontWeight: FontWeight.w600)),
+                            new TextSpan(
+                                text:
+                                    '${formattedAmount.output.withoutFractionDigits}',
+                                style: TextStyle(
+                                  color: Colors.orange,
+                                  fontSize: 25,
+                                )),
+                          ],
                         ),
                       ),
                     ),
@@ -152,7 +179,7 @@ class _MyContributionState extends State<MyContribution> {
                   color: Colors.orange,
                 ),
                 label: Chip(
-                  backgroundColor: Colors.blueGrey[50],
+                    backgroundColor: Colors.blueGrey[50],
                     label: Text(
                         'Rs.${formattedAmount.output.withoutFractionDigits}',
                         style: TextStyle(
@@ -161,7 +188,11 @@ class _MyContributionState extends State<MyContribution> {
                             fontSize: 18.0)))),
           ),
           Divider(height: 0),
-          ListTile(title: Text('test'))
+          ListTile(
+              title: Text(
+            'Receipt Number: ${item['receipt_no']}',
+            style: TextStyle(fontSize: 12),
+          ))
         ],
       ),
     );

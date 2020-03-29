@@ -5,6 +5,7 @@ import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/project_detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:share/share.dart';
 
 class Project extends StatefulWidget {
   @override
@@ -131,15 +132,28 @@ class _ProjectPageState extends State<Project> {
                   ),
                   subtitle: Text('Family of ${data['children']} Members',
                       style: TextStyle(color: Colors.white)),
-                  trailing:  FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(
-                        Icons.stars,
-                    color: Colors.orange,
-                      ),
-                      label: Text('${data['rating']}',
-                          style:
-                              TextStyle(fontSize: 20.0, color: Colors.white))),
+                  trailing: Expanded(
+                    child: Column(
+                      children: <Widget>[
+                         Icon(
+                    Icons.stars,
+                    color: Colors.yellow[600],
+                    size: 18,
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Text(
+                    "${data['rating']}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+               
+                      ]
+                    )),
                 ),
                
                 ListTile(
@@ -214,11 +228,7 @@ class _ProjectPageState extends State<Project> {
                   color: Colors.green,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProjectDetail(data)),
-                  );
+                 Share.share('check out my website https://example.com', subject: 'Look what I made!');
                 },
                 label: Text('Share'),
               ),
