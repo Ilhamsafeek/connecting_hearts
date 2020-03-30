@@ -7,6 +7,7 @@ import 'package:zamzam/ui/payment_result.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -25,6 +26,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
 
   String selectedMethod;
   dynamic paymentAmount;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   selectsku(method) {
     print(method);
     setState(() {
@@ -37,6 +40,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.grey[200],
         body: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
@@ -111,8 +115,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: 
-                    RichText(
+                    child: RichText(
                       text: new TextSpan(
                         style: new TextStyle(
                           color: Colors.black,
@@ -126,7 +129,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                         ],
                       ),
                     ),
-                  
                   ),
                   Icon(
                     Icons.check_circle,
@@ -275,7 +277,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ],
           ),
         ),
-        
         Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -304,50 +305,49 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           padding: const EdgeInsets.symmetric(
             vertical: 10,
           ),
-          child:
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
-                child: RaisedButton(
-                  onPressed: () {
-                    payModalBottomSheet(context);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(
-                    8,
-                  ))),
-                  color: Colors.orange[700],
-                  child: Padding(
-                    padding: EdgeInsets.all(
-                      16,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Donate Now',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: RaisedButton(
+                    onPressed: () {
+                      payModalBottomSheet(context);
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(
+                      8,
+                    ))),
+                    color: Colors.orange[700],
+                    child: Padding(
+                      padding: EdgeInsets.all(
+                        16,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Donate Now',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                        )
-                      ],
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         )
       ],
     );
@@ -438,6 +438,34 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                     height: 0,
                   ),
                   paymentMethods(),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 11,
+                        child: RadioListTile(
+                          activeColor: Colors.black,
+                          value: 'bank',
+                          groupValue: selectedMethod,
+                          onChanged: selectsku,
+                          title: ListTile(
+                            leading: Icon(
+                              FontAwesomeIcons.solidMoneyBillAlt,
+                            ),
+                            title: Text('Direct bank transfer'),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: IconButton(
+                          icon: Icon(Icons.info_outline),
+                          onPressed: () {
+                            infoModalBottomSheet(context);
+                          },
+                        ),
+                      )
+                    ],
+                  ),
                   ListTile(
                       title: TextFormField(
                         keyboardType: TextInputType.number,
@@ -467,15 +495,34 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                                 if (this.paymentAmount != null &&
                                     this.paymentAmount != 0 &&
                                     this.selectedMethod != null) {
-                                  Navigator.pop(context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PaymentResult(
-                                            selectedMethod,
-                                            widget.projectData,
-                                            paymentAmount)),
-                                  );
+                                  if (this.selectedMethod != 'bank') {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentResult(
+                                              selectedMethod,
+                                              widget.projectData,
+                                              paymentAmount,
+                                              'card')),
+                                    );
+                                  } else {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentResult(
+                                              selectedMethod,
+                                              widget.projectData,
+                                              paymentAmount,
+                                              'bank')),
+                                    );
+                                  }
+                                } else {
+                                  _scaffoldKey.currentState
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Please check inputs"),
+                                  ));
                                 }
                               },
                               child: Text("Proceed Donation"),
@@ -491,6 +538,26 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             );
           });
         });
+  }
+
+  showPaymentProgress(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 5),
+              child: Text("Recording donation..")),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   Widget paymentMethods() {
@@ -546,4 +613,64 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
       },
     );
   }
+
+  Future<bool> infoModalBottomSheet(context) {
+    return showModalBottomSheet(
+        enableDrag: true,
+        context: context,
+        isScrollControlled: true,
+        isDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              child: new Wrap(
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: ListTile(
+                        title: Text('How Direct bank payment works?'),
+                        trailing: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      )),
+                  Divider(
+                    height: 0,
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.featured_play_list),
+                    title: Text('Cast your donation'),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.camera_alt,
+                      color: Colors.black,
+                    ),
+                    title: Text('Click and submit deposit slip'),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.rate_review,
+                      color: Colors.blue[800],
+                    ),
+                    title: Text('Our team will review and update'),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.notifications,
+                      color: Colors.orange,
+                    ),
+                    title: Text('Finally you will get notified with status'),
+                  ),
+                ],
+              ),
+            );
+          });
+        });
+  }
+
 }

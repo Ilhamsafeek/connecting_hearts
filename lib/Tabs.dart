@@ -135,8 +135,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               text: "Inbox",
             ),
             new Tab(
-              icon: new Icon(Icons.call),
-              text: "Contact",
+              icon: new Icon(Icons.more_horiz),
+              text: "More",
             ),
           ])),
       body: new TabBarView(controller: tabcontroller, children: <Widget>[

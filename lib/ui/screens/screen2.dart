@@ -161,12 +161,7 @@ class _TrendingState extends State<Trending> {
                     color: Colors.orange,
                   ),
                   Text('School with a Smile 2020 happens today !'),
-                  Image.asset(
-                    "assets/right-arrow.png",
-                    height: 13,
-                    width: 13,
-                    color: Colors.grey,
-                  ),
+                 
                 ],
               ),
             ),
@@ -196,6 +191,7 @@ class _TrendingState extends State<Trending> {
                                 );
                               }),
                       ]),
+                
                 ];
               } else if (snapshot.hasError) {
                 children = <Widget>[

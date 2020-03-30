@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
-
+import 'package:zamzam/ui/camera.dart';
+import 'package:camera/camera.dart';
 class MyContribution extends StatefulWidget {
   @override
   _MyContributionState createState() => _MyContributionState();
@@ -23,7 +24,7 @@ class _MyContributionState extends State<MyContribution> {
       setState(() {
         dynamic total = 0;
         for (var item in value) {
-          total = total + int.parse(item['amount']);
+          total = total + double.parse(item['amount']);
         }
         totalContribution = total;
       });
@@ -40,7 +41,7 @@ class _MyContributionState extends State<MyContribution> {
           slivers: <Widget>[
             SliverAppBar(
               // automaticallyImplyLeading: false,
-              
+
               expandedHeight: 200,
               // backgroundColor: Colors.indigo[900],
               pinned: true,
@@ -60,8 +61,9 @@ class _MyContributionState extends State<MyContribution> {
                           children: <TextSpan>[
                             new TextSpan(
                                 text: 'Rs.',
-                                style:
-                                    new TextStyle(color: Colors.white54,fontWeight: FontWeight.w600)),
+                                style: new TextStyle(
+                                    color: Colors.white54,
+                                    fontWeight: FontWeight.w600)),
                             new TextSpan(
                                 text:
                                     '${formattedAmount.output.withoutFractionDigits}',
@@ -95,7 +97,7 @@ class _MyContributionState extends State<MyContribution> {
                                 data = snapshot.data;
                                 dynamic total = 0;
                                 for (var item in data) {
-                                  total = total + int.parse(item['amount']);
+                                  total = total + double.parse(item['amount']);
                                 }
 
                                 children = <Widget>[
@@ -164,6 +166,41 @@ class _MyContributionState extends State<MyContribution> {
   Widget contributionCard(item) {
     FlutterMoneyFormatter formattedAmount =
         FlutterMoneyFormatter(amount: double.parse('${item['amount']}'));
+    Widget _trailing;
+    Icon _status_icon = Icon(
+      Icons.check_circle,
+      color: Colors.green,
+    );
+    if (item['status'] == 'pending') {
+      _trailing = RaisedButton(
+        color: Colors.red,
+         onPressed: () async {
+                  // Ensure that plugin services are initialized so that `availableCameras()`
+                  // can be called before `runApp()`
+                  WidgetsFlutterBinding.ensureInitialized();
+                  // Obtain a list of the available cameras on the device.
+                  final cameras = await availableCameras();
+                  // Get a specific camera from the list of available cameras.
+                  final firstCamera = cameras.first;
+                  Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => TakePictureScreen(
+                      camera: firstCamera,
+                    ),));
+                 
+                }
+              ,
+        child: Text(
+          'Submit Deposit Slip',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+      _status_icon = Icon(
+        Icons.info_outline,
+        color: Colors.orange,
+      );
+    }
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -174,10 +211,7 @@ class _MyContributionState extends State<MyContribution> {
             subtitle: Text('${item['date_time']}'),
             trailing: FlatButton.icon(
                 onPressed: null,
-                icon: Icon(
-                  Icons.star_border,
-                  color: Colors.orange,
-                ),
+                icon: _status_icon,
                 label: Chip(
                     backgroundColor: Colors.blueGrey[50],
                     label: Text(
@@ -190,9 +224,10 @@ class _MyContributionState extends State<MyContribution> {
           Divider(height: 0),
           ListTile(
               title: Text(
-            'Receipt Number: ${item['receipt_no']}',
-            style: TextStyle(fontSize: 12),
-          ))
+                'Receipt Number: ${item['receipt_no']}',
+                style: TextStyle(fontSize: 12),
+              ),
+              trailing: _trailing)
         ],
       ),
     );

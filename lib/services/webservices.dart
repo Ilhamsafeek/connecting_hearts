@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/constant/Constant.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:io';
 
 class WebServices {
   ApiListener mApiListener;
@@ -72,7 +75,7 @@ class WebServices {
 
   // Payment records
 
-  Future<dynamic> createPayment(amount, projectData) async {
+  Future<dynamic> createPayment(amount, projectData, method, status) async {
     print('Calling API createPayment --------->>>>>>>');
 
     var url = 'https://www.chadmin.online/api/createpayment';
@@ -81,21 +84,35 @@ class WebServices {
       'amount': '$amount',
       'project_id': projectData['appeal_id'],
       'receipt_no': '123',
-      'method': 'card'
+      'method': '$method',
+      'status': '$status'
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response.statusCode;
   }
 
-  
   Future<dynamic> getPaymentData() async {
-   var url = 'https://www.chadmin.online/api/getpayment';
+    var url = 'https://www.chadmin.online/api/getpayment';
     var response = await http.post(url, body: {
-      'user_id': CURRENT_USER,     
+      'user_id': CURRENT_USER,
     });
     var jsonServerData = json.decode(response.body);
     return jsonServerData;
+  }
+
+  Future updateSlip(path) async {
+    String base64Image = base64Encode(File(path).readAsBytesSync());
+    String fileName = File(path).path.split('/').last;
+    print('file name: $fileName');
+    http.post('https://www.chadmin.online/api/test', body:{
+      "image": base64Image,
+      "filename":fileName
+    }).then((value) {
+      print(value.body);
+    });
+
+  
   }
 
 //Stripe Payment
@@ -242,7 +259,8 @@ class WebServices {
         .toList();
   }
 
-  Future<dynamic> chargeByCustomerAndCardID(String card, paymentAmount, project) async {
+  Future<dynamic> chargeByCustomerAndCardID(
+      String card, paymentAmount, project) async {
     var customer;
     await getCustomerDataByMobile().then((value) {
       customer = value[0]['id'].toString();

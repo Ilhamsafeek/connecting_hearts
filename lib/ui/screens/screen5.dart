@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:zamzam/model/Gridmodel.dart';
+import 'package:zamzam/ui/camera.dart';
+import 'package:camera/camera.dart';
 
 class Library extends StatefulWidget {
-  Library({Key key}) : super(key: key); 
+  Library({Key key}) : super(key: key);
 
   _LibraryState createState() => _LibraryState();
 }
-class _LibraryState extends State<Library> {
 
-List myList;
+class _LibraryState extends State<Library> {
+  List myList;
   ScrollController _scrollController = ScrollController();
   int _currentMax = 10;
 
@@ -37,19 +40,61 @@ List myList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      body: ListView.builder(
-        controller: _scrollController,
-        itemExtent: 80,
-        itemBuilder: (context, i) {
-          if (i == myList.length) {
-            return CupertinoActivityIndicator();
-          }
-          return ListTile(
-            title: Text(myList[i]),
-          );
-        },
-        itemCount: myList.length + 1,
+      // body: ListView.builder(
+      //   controller: _scrollController,
+      //   itemExtent: 80,
+      //   itemBuilder: (context, i) {
+      //     if (i == myList.length) {
+      //       return CupertinoActivityIndicator();
+      //     }
+      //     return ListTile(
+      //       title: Text(myList[i]),
+      //     );
+      //   },
+      //   itemCount: myList.length + 1,
+      // ),
+      body: GridView.count(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          crossAxisCount: 4,
+          children: <Widget>[
+            InkWell(
+                child: GridItem(GridModel("assets/zamzam.png", "Test", null)),
+               
+               ),
+          ]),
+    );
+  }
+}
+
+class GridItem extends StatelessWidget {
+  GridModel gridModel;
+
+  GridItem(this.gridModel);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1 / 2),
+      child: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(child: Icon(Icons.stars)),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(
+                  gridModel.title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
