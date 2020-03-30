@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:zamzam/ui/payment_result.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -353,63 +350,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     );
   }
 
-  Widget _buildBottomBar() {
-    return Padding(
-      padding: const EdgeInsets.all(5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              child: RaisedButton(
-                onPressed: () {
-                  payModalBottomSheet(context);
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(
-                  8,
-                ))),
-                color: Colors.orange[700],
-                child: Padding(
-                  padding: EdgeInsets.all(
-                    16,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Donate Now',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<Null> _handleRefresh() async {
-    await new Future.delayed(new Duration(seconds: 2));
-
-    setState(() {});
-
-    return null;
-  }
-
   Future<bool> payModalBottomSheet(context) {
     return showModalBottomSheet(
         enableDrag: false,
@@ -522,6 +462,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                                   _scaffoldKey.currentState
                                       .showSnackBar(SnackBar(
                                     content: Text("Please check inputs"),
+                                    
                                   ));
                                 }
                               },

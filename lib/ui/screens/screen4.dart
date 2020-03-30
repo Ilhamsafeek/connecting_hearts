@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:zamzam/ui/zakat_calculator.dart';
 class Inbox extends StatefulWidget {
   Inbox({Key key}) : super(key: key);
 

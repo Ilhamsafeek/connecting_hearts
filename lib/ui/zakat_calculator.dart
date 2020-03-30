@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zamzam/constant/Constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ZakatCalculator extends StatefulWidget {

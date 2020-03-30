@@ -51,7 +51,6 @@ dependencies:
   path_provider:
   path:
    
-  dio:    #image upload 
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/constant/Constant.dart';
-import 'package:zamzam/ui/payment.dart';
-import 'package:zamzam/ui/project.dart';
 import 'package:zamzam/ui/splashscreen.dart';
 import 'package:zamzam/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';

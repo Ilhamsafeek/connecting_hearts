@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:zamzam/ui/onboarding_page.dart';
 class SplashScreen extends StatefulWidget {
   @override
   SplashScreenState createState() => new SplashScreenState();

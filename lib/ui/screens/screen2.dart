@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:zamzam/model/Gridmodel.dart';
 import 'package:zamzam/model/ImageSliderModel.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:zamzam/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
-import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/project.dart';
-import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Trending extends StatefulWidget {
@@ -18,7 +14,6 @@ class Trending extends StatefulWidget {
 }
 
 class _TrendingState extends State<Trending> {
-  @override
   ApiListener mApiListener;
 
   int _currentIndex = 0;
@@ -50,45 +45,6 @@ class _TrendingState extends State<Trending> {
     return user;
   }
 
-  Widget _appBar() {
-    return new AppBar(
-      title: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              height: 40,
-              width: MediaQuery.of(context).size.width / 1.35,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Image.asset(
-                      "assets/uanotif_nomessage.png",
-                      color: Colors.grey,
-                      width: 20,
-                      height: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-      elevation: 0,
-    );
-  }
 
   Widget _bodyItem() {
     return SingleChildScrollView(

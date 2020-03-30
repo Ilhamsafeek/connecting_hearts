@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
 import 'package:camera/camera.dart';
+
 class MyContribution extends StatefulWidget {
   @override
   _MyContributionState createState() => _MyContributionState();
@@ -167,39 +167,69 @@ class _MyContributionState extends State<MyContribution> {
     FlutterMoneyFormatter formattedAmount =
         FlutterMoneyFormatter(amount: double.parse('${item['amount']}'));
     Widget _trailing;
-    Icon _status_icon = Icon(
+    Icon _statusIcon = Icon(
       Icons.check_circle,
       color: Colors.green,
     );
+
+    dynamic _text = "You have donated. Now you can monitor the project status.";
     if (item['status'] == 'pending') {
-      _trailing = RaisedButton(
-        color: Colors.red,
-         onPressed: () async {
-                  // Ensure that plugin services are initialized so that `availableCameras()`
-                  // can be called before `runApp()`
-                  WidgetsFlutterBinding.ensureInitialized();
-                  // Obtain a list of the available cameras on the device.
-                  final cameras = await availableCameras();
-                  // Get a specific camera from the list of available cameras.
-                  final firstCamera = cameras.first;
-                  Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) => TakePictureScreen(
-                      camera: firstCamera,
-                    ),));
-                 
-                }
-              ,
-        child: Text(
-          'Submit Deposit Slip',
-          style: TextStyle(color: Colors.white),
-        ),
-      );
-      _status_icon = Icon(
-        Icons.info_outline,
-        color: Colors.orange,
-      );
+      if (item['slip_url'] == "") {
+        _trailing = RaisedButton(
+          color: Colors.red,
+          onPressed: () async {
+           
+            WidgetsFlutterBinding.ensureInitialized();           
+            final cameras = await availableCameras();           
+            final firstCamera = cameras.first;
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => TakePictureScreen(
+                    "${item['id']}",
+                    firstCamera,
+                  ),
+                ));
+          },
+          child: Text(
+            'Submit Deposit Slip',
+            style: TextStyle(color: Colors.white),
+          ),
+        );
+        _statusIcon = Icon(
+          Icons.info_outline,
+          color: Colors.orange,
+        );
+        _text =
+            "You have donated. Please submit your bank slip to be effective";
+      } else {
+        _trailing = Column(children: <Widget>[
+        //  CircleAvatar(child: Icon(Icons.insert_emoticon)),
+          FlatButton.icon(
+            icon: Icon(Icons.edit),
+            onPressed: () async {
+                WidgetsFlutterBinding.ensureInitialized();           
+            final cameras = await availableCameras();           
+            final firstCamera = cameras.first;
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => TakePictureScreen(
+                    "${item['id']}",
+                    firstCamera,
+                  ),
+                ));
+            },
+            label: Text('Edit Slip'),
+          ),
+        ]);
+        _statusIcon = Icon(
+          Icons.schedule,
+          color: Colors.blue,
+        );
+        _text =
+            "You have submitted slip for your donation. your deposit slip is under review.";
+      }
     }
     return Card(
       child: Column(
@@ -210,8 +240,10 @@ class _MyContributionState extends State<MyContribution> {
             title: Text('Project ID: ${item['project_id']}'),
             subtitle: Text('${item['date_time']}'),
             trailing: FlatButton.icon(
-                onPressed: null,
-                icon: _status_icon,
+                onPressed: () {
+                  infoModalBottomSheet(context, _statusIcon, _text);
+                },
+                icon: _statusIcon,
                 label: Chip(
                     backgroundColor: Colors.blueGrey[50],
                     label: Text(
@@ -231,5 +263,43 @@ class _MyContributionState extends State<MyContribution> {
         ],
       ),
     );
+  }
+
+  Future<bool> infoModalBottomSheet(context, icon, text) {
+    return showModalBottomSheet(
+        enableDrag: true,
+        context: context,
+        isScrollControlled: true,
+        isDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              child: new Wrap(
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: ListTile(
+                        title: Text('What does it means?'),
+                        trailing: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      )),
+                  Divider(
+                    height: 0,
+                  ),
+                  ListTile(
+                    leading: icon,
+                    title: Text(text),
+                  ),
+                ],
+              ),
+            );
+          });
+        });
   }
 }

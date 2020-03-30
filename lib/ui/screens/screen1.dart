@@ -16,8 +16,6 @@ class _HomeState extends State<Home> {
   ApiListener mApiListener;
 
 List myList;
-  ScrollController _scrollController = ScrollController();
-  int _currentMax = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +31,11 @@ List myList;
             floating: true,
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Test'),
-              background: Image.asset(
-                "assets/child.png",
-                fit: BoxFit.cover,
-              ),
+              title: Chip(label: Text('Bayans')),
+              // background: Image.asset(
+              //   "assets/child.png",
+              //   fit: BoxFit.cover,
+              // ),
             ),
             actions: <Widget>[
               IconButton(

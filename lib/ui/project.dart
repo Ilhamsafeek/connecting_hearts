@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/project_detail.dart';
@@ -92,13 +91,13 @@ class _ProjectPageState extends State<Project> {
         );
       },
     );
+  
   }
 
   Card projectCard(dynamic data) {
     FlutterMoneyFormatter formattedAmount =
         FlutterMoneyFormatter(amount: double.parse('${data['amount']}'));
-    FlutterMoneyFormatter formattedCollected =
-        FlutterMoneyFormatter(amount: double.parse('${data['collected']}'));
+    
     double completedPercent = 100 *
         double.parse('${data['collected']}') /
         double.parse('${data['amount']}');

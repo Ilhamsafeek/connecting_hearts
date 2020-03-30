@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:zamzam/constant/Constant.dart';
+
 import 'package:zamzam/services/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zamzam/payment/main.dart';
-import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/payment/brain_tree.dart';
 
 class Payment extends StatefulWidget {
@@ -245,11 +243,4 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
         });
   }
 
-  Future<Null> _handleRefresh() async {
-    await new Future.delayed(new Duration(seconds: 2));
-
-    setState(() {});
-
-    return null;
-  }
 }

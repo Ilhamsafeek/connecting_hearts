@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:zamzam/payment/main.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PaymentResult extends StatefulWidget {
@@ -140,7 +136,7 @@ class _PaymentResultState extends State<PaymentResult> {
         },
       );
     } else {
-      print(widget.method);
+     
       return FutureBuilder<dynamic>(
         future: WebServices(this.mApiListener)
             .createPayment(widget.paymentAmount, widget.projectData,widget.method, 'pending'),

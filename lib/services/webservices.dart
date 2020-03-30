@@ -2,11 +2,7 @@ import 'dart:convert';
 
 import 'package:zamzam/services/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
-import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/constant/Constant.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:io';
 
 class WebServices {
@@ -101,11 +97,12 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future updateSlip(path) async {
+  Future updateSlip(id,path) async {
     String base64Image = base64Encode(File(path).readAsBytesSync());
     String fileName = File(path).path.split('/').last;
-    print('file name: $fileName');
-    http.post('https://www.chadmin.online/api/test', body:{
+    print('id:: $id');
+    http.post('https://www.chadmin.online/api/updateslip', body:{
+      "id": "$id",
       "image": base64Image,
       "filename":fileName
     }).then((value) {

@@ -12,8 +12,6 @@ import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
-import 'package:zamzam/ui/profile.dart';
-import 'package:zamzam/payment/brain_tree.dart';
 import 'package:zamzam/ui/zakat_calculator.dart';
 
 
@@ -183,6 +181,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           leading: Icon(Icons.verified_user),
           title: Text('My contribution'),
           onTap: () {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MyContribution()),
@@ -200,6 +199,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           leading: Icon(Icons.payment),
           title: Text('Payment'),
           onTap: () {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Payment()),
@@ -213,6 +213,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           leading: Icon(Icons.info),
           title: Text('About'),
           onTap: () {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Payment()),
@@ -273,14 +274,14 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    // Actions for app bar
-    // return [
-    //   IconButton(
-    //       icon: Icon(Icons.clear),
-    //       onPressed: () {
-    //         query = "";
-    //       })
-    // ];
+    
+    return [
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          })
+    ];
   }
 
   @override

@@ -10,10 +10,9 @@ import 'package:zamzam/services/services.dart';
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
-  const TakePictureScreen({
-    Key key,
-    @required this.camera,
-  }) : super(key: key);
+  final String id;
+  const TakePictureScreen(this.id,@required this.camera,{Key key})
+      : super(key: key);
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -27,6 +26,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
+    print("first id :::::::${widget.id}");
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
@@ -71,6 +71,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         child: Icon(Icons.camera_alt),
         // Provide an onPressed callback.
         onPressed: () async {
+          print("id is :: ${widget.id}");
           // Take the Picture in a try / catch block. If anything goes wrong,
           // catch the error.
           try {
@@ -88,12 +89,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             // Attempt to take a picture and log where it's been saved.
             await _controller.takePicture(path);
-            print(path);
+            
             // If the picture was taken, display it on a new screen.
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path),
+                builder: (context) => DisplayPictureScreen(widget.id, path),
               ),
             );
           } catch (e) {
@@ -107,9 +108,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 }
 
 // A widget that displays the picture taken by the user.
-class DisplayPictureScreen extends StatelessWidget {
+  class DisplayPictureScreen extends StatelessWidget {
+  final String id;
   final String imagePath;
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+  
+  const DisplayPictureScreen(this.id,this.imagePath,
+      {Key key})
+      : super(key: key);
 
   ApiListener get mApiListener => null;
 
@@ -124,7 +129,7 @@ class DisplayPictureScreen extends StatelessWidget {
             children: <Widget>[
               Image.file(File(imagePath)),
               RaisedButton(onPressed: () {
-                WebServices(mApiListener).updateSlip(imagePath).then((value) {
+                WebServices(mApiListener).updateSlip(this.id,imagePath).then((value) {
                   print(value);
                 });
               },
