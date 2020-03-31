@@ -10,6 +10,77 @@ class Subscriptioins extends StatefulWidget {
 class _SubscriptioinsState extends State<Subscriptioins> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: 
+        Column(
+          children: <Widget>[
+         ExpansionTile(
+        title: Text("Post New vacancy"),
+        subtitle: Text('or Request for Job'),
+      leading: Icon(Icons.view_carousel),
+      children: <Widget>[
+        Text('This is pizza'),
+        Image.network('https://cdn4.vectorstock.com/i/1000x1000/15/48/pizza-slice-vector-3601548.jpg')
+      ],
+      initiallyExpanded: false,
+      ),
+         
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+         Text('test'),
+
+          ],
+        )
+        
+       
+      )
+      
+      
+    );
   }
 }

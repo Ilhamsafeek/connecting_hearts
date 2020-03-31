@@ -131,28 +131,40 @@ class _ProjectPageState extends State<Project> {
                   ),
                   subtitle: Text('Family of ${data['children']} Members',
                       style: TextStyle(color: Colors.white)),
-                  trailing: Expanded(
-                    child: Column(
-                      children: <Widget>[
-                         Icon(
-                    Icons.stars,
-                    color: Colors.yellow[600],
-                    size: 18,
-                  ),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  Text(
+                  trailing: Chip(label: 
+                   Text(
                     "${data['rating']}",
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                     
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                     ),
                   ),
+                  ),
+                  
+                  //  Expanded(
+                  //   child: Column(
+                  //     children: <Widget>[
+                  //        Icon(
+                  //   Icons.stars,
+                  //   color: Colors.yellow[600],
+                  //   size: 18,
+                  // ),
+                  // SizedBox(
+                  //   width: 2,
+                  // ),
+                  // Text(
+                  //   "${data['rating']}",
+                  //   style: TextStyle(
+                  //     color: Colors.white,
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.bold
+                  //   ),
+                  // ),
                
-                      ]
-                    )),
+                  //     ]
+                  //   )),
+              
                 ),
                
                 ListTile(

@@ -31,7 +31,7 @@ class ProfileState extends State<Profile> {
                   Padding(
                     padding: EdgeInsets.all(16),
                     child: CircleAvatar(
-                      minRadius: 60,
+                      minRadius: 55,
                       child: Icon(
                         Icons.person,
                         color: Colors.white54,
@@ -74,7 +74,9 @@ class ProfileState extends State<Profile> {
             ListTile(
               leading: Icon(Icons.bookmark),
               title: Text('My Appeals'),
-              onTap: () {},
+              onTap: () {
+               
+              },
             ),
             ListTile(
               leading: Icon(Icons.payment),

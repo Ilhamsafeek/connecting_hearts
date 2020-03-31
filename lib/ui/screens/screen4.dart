@@ -153,12 +153,6 @@ class _MessagesState extends State<Messages> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: RaisedButton(
-      onPressed: () {
-      
-      
-      },
-      child: Text('Save Card'),
-    ));
+        );
   }
 }

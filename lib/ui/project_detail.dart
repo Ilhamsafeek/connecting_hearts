@@ -164,54 +164,37 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 mainAxisAlignment: MainAxisAlignment.start,
               ),
               Divider(),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Categories: ',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Chip(label: Text('${widget.projectData['category']}')),
-                      ],
-                    ),
-                  ],
-                ),
+            
+              Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        'Categories: ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Expanded(
+                        child: Chip(
+                            label: Text('${widget.projectData['category']}')),
+                      ),
+                      
+                     
+                    ],
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        RichText(
-                          text: new TextSpan(
-                            style: new TextStyle(
-                              color: Colors.black,
-                            ),
-                            children: <TextSpan>[
-                              new TextSpan(
-                                  text: 'Address: ',
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.w600)),
-                              new TextSpan(
-                                  text:
-                                      '${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text('Address: ',
+                          style: new TextStyle(fontWeight: FontWeight.bold)),
+                      Expanded(
+                          child: Text(
+                              '${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}')),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
@@ -235,7 +218,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ],
           ),
         ),
-       
         Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 5,
@@ -300,53 +282,21 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: RaisedButton(
-                    onPressed: () {
-                      payModalBottomSheet(context);
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(
-                      8,
-                    ))),
-                    color: Colors.orange[700],
-                    child: Padding(
-                      padding: EdgeInsets.all(
-                        16,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'Donate Now',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            child: Center(
+                child: FlatButton.icon(
+              color: Colors.orange,
+              onPressed: () {
+                payModalBottomSheet(context);
+              },
+              icon: Icon(Icons.lock_outline),
+              label: Text(
+                'Donate now',
+                style: TextStyle(color: Colors.white),
               ),
-            ],
-          ),
-        )
+            )))
       ],
     );
   }
@@ -363,18 +313,15 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             return Container(
               child: new Wrap(
                 children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: ListTile(
-                        title: Text('Choose a payment method'),
-                        trailing: IconButton(
-                          icon: Icon(Icons.clear),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      )),
+                  ListTile(
+                    title: Text('Choose a payment method'),
+                    trailing: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
                   Divider(
                     height: 0,
                   ),
@@ -463,12 +410,11 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                                   _scaffoldKey.currentState
                                       .showSnackBar(SnackBar(
                                     content: Text("Please check inputs"),
-                                    
                                   ));
                                 }
                               },
                               child: Text("Proceed Donation"),
-                              color: Colors.teal,
+                              color: Colors.orange[800],
                               textColor: Colors.white,
                             )),
                           ],

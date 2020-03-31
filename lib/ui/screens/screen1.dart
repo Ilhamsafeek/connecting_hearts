@@ -4,6 +4,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zamzam/ui/single_video.dart';
+import 'package:zamzam/ui/sermon/channels.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -15,57 +16,60 @@ class _HomeState extends State<Home> {
   final flutubePlayer = null;
   ApiListener mApiListener;
 
-List myList;
+  List myList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        body: 
-        
-         CustomScrollView(
+        body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              expandedHeight: 10,
-             backgroundColor: Colors.white,  
-            floating: true,
-            pinned: false,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Chip(label: Text('Bayans')),
-              // background: Image.asset(
-              //   "assets/child.png",
-              //   fit: BoxFit.cover,
-              // ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.share),
-                tooltip: 'Share this appeal',
-                onPressed: () {/* ... */},
-              ),
-            ],
-            ),
-            
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return Container(
-                  alignment: Alignment.center,
-                  child: Center(
-            child: new RefreshIndicator(
-          child: SingleChildScrollView(child: Container(
-            child: videoCadge()
-            )),
-          color: Colors.black,
-          onRefresh: _handleRefresh,
-        ))
+              // expandedHeight: 5,
+              backgroundColor: Colors.white,
+              floating: true,
+              // pinned: false,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Row(
+                  children: <Widget>[
+                    InkWell(
+                      child: Chip(
+                      label: Text('Sermon Channels'),
+                      backgroundColor: Colors.grey[600],
+                      
+                    ),
+                      onTap:(){
+                         Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Channels()),
                 );
-              },
-              childCount: 1,
+                      }
+                    ),
+                    
+                    Chip(label: Text('Zamzam Updates')),
+                  ],
+                ),
+              ),
             ),
-          ),
-
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Container(
+                      alignment: Alignment.center,
+                      child: Center(
+                          child: new RefreshIndicator(
+                        child: SingleChildScrollView(
+                            child: Container(child: videoCadge())),
+                        color: Colors.black,
+                        onRefresh: _handleRefresh,
+                      )));
+                },
+                childCount: 1,
+              ),
+            ),
           ],
+       
+       
         ));
   }
 
@@ -79,24 +83,26 @@ List myList;
         if (snapshot.hasData) {
           children = <Widget>[
             for (var item in snapshot.data)
-            
               Container(
                   child: Column(
                 children: <Widget>[
                   InkWell(
-          onTap: () {
-             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Play(item)),
-            );
-          },
-                child: AspectRatio(
-                child: Image(
-                  image: NetworkImage(YoutubePlayer.getThumbnail(videoId: YoutubePlayer.convertUrlToId(item['url']))),
-                  centerSlice: Rect.largest,
-                ),
-                aspectRatio: 16 / 10,
-              ),),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Play(item)),
+                      );
+                    },
+                    child: AspectRatio(
+                      child: Image(
+                        image: NetworkImage(YoutubePlayer.getThumbnail(
+                            videoId:
+                                YoutubePlayer.convertUrlToId(item['url']))),
+                        centerSlice: Rect.largest,
+                      ),
+                      aspectRatio: 16 / 10,
+                    ),
+                  ),
                   ListTile(
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(item['profile_url']),
@@ -113,7 +119,6 @@ List myList;
                   ),
                 ],
               ))
-         
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[
@@ -153,6 +158,7 @@ List myList;
       },
     );
   }
+
 
   Future<Null> _handleRefresh() async {
     await new Future.delayed(new Duration(seconds: 2));

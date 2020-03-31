@@ -20,22 +20,17 @@ class _TrendingState extends State<Trending> {
   int _currentIndexUp = 0;
   @override
   void initState() {
-    
-
     super.initState();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: _appBar(),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[_bodyItem()],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[_bodyItem()],
         ),
       ),
-
       backgroundColor: Colors.grey[200],
     );
   }
@@ -45,7 +40,7 @@ class _TrendingState extends State<Trending> {
     return user;
   }
 
-
+  
   Widget _bodyItem() {
     return SingleChildScrollView(
       child: new Column(
@@ -77,19 +72,7 @@ class _TrendingState extends State<Trending> {
                     );
                   }),
                 ),
-              )
-
-//            GridView.builder(
-//              gridDelegate:
-//                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
-//              scrollDirection: Axis.horizontal,
-//              itemCount: _getGridList().length,
-//              itemBuilder: (context, index) {
-//                return GridList(_getGridList()[index]);
-//              },
-//            ),
-              ),
-         
+              )),
           Container(
             color: Color.fromRGBO(104, 45, 127, 1),
             child: new Row(
@@ -117,18 +100,17 @@ class _TrendingState extends State<Trending> {
                     color: Colors.orange,
                   ),
                   Text('School with a Smile 2020 happens today !'),
-                 
                 ],
               ),
             ),
           ),
           FutureBuilder<dynamic>(
-            future: WebServices(this.mApiListener).getCategoryData(), // a previously-obtained Future<String> or null
+            future: WebServices(this.mApiListener)
+                .getCategoryData(), // a previously-obtained Future<String> or null
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               List<Widget> children;
 
               if (snapshot.hasData) {
-                
                 children = <Widget>[
                   GridView.count(
                       shrinkWrap: true,
@@ -143,11 +125,11 @@ class _TrendingState extends State<Trending> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Project(item['category'])),
+                                      builder: (context) =>
+                                          Project(item['category'])),
                                 );
                               }),
                       ]),
-                
                 ];
               } else if (snapshot.hasError) {
                 children = <Widget>[

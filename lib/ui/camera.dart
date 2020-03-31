@@ -11,7 +11,7 @@ import 'package:zamzam/services/services.dart';
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
   final String id;
-  const TakePictureScreen(this.id,@required this.camera,{Key key})
+  const TakePictureScreen(this.id, @required this.camera, {Key key})
       : super(key: key);
 
   @override
@@ -71,7 +71,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         child: Icon(Icons.camera_alt),
         // Provide an onPressed callback.
         onPressed: () async {
-         
           // Take the Picture in a try / catch block. If anything goes wrong,
           // catch the error.
           try {
@@ -89,7 +88,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             // Attempt to take a picture and log where it's been saved.
             await _controller.takePicture(path);
-            
+
             // If the picture was taken, display it on a new screen.
             Navigator.push(
               context,
@@ -108,12 +107,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 }
 
 // A widget that displays the picture taken by the user.
-  class DisplayPictureScreen extends StatelessWidget {
+class DisplayPictureScreen extends StatelessWidget {
   final String id;
   final String imagePath;
-  
-  const DisplayPictureScreen(this.id,this.imagePath,
-      {Key key})
+
+  const DisplayPictureScreen(this.id, this.imagePath, {Key key})
       : super(key: key);
 
   ApiListener get mApiListener => null;
@@ -128,18 +126,23 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           child: Column(
             children: <Widget>[
               Image.file(File(imagePath)),
-              RaisedButton(onPressed: () {
-                WebServices(mApiListener).updateSlip(this.id,imagePath).then((value) {
-                  Navigator.pop(context);
-                });
-              },
-              child: Text('Send Slip'),
-              shape: RoundedRectangleBorder(
-  borderRadius: new BorderRadius.circular(18.0),
-  side: BorderSide(color: Colors.black)
-),
+              RaisedButton(
+                onPressed: () {
+                  WebServices(mApiListener)
+                      .updateSlip(this.id, imagePath)
+                      .then((value) {
+                    Navigator.pop(context);
+                  });
+                },
+                child: Text('Send Slip'),
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.black)),
+              ),
+              ListTile(
+                leading: Icon(Icons.perm_device_information, color: Colors.green,),
+                title: Text('You will be notified once we review and accept you donation.'),
               )
-
             ],
           ),
         ));
