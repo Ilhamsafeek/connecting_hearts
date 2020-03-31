@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:zamzam/model/Gridmodel.dart';
-
+import 'package:zamzam/ui/zakat_calculator.dart';
 
 class Library extends StatefulWidget {
   Library({Key key}) : super(key: key);
@@ -39,28 +39,21 @@ class _LibraryState extends State<Library> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: ListView.builder(
-      //   controller: _scrollController,
-      //   itemExtent: 80,
-      //   itemBuilder: (context, i) {
-      //     if (i == myList.length) {
-      //       return CupertinoActivityIndicator();
-      //     }
-      //     return ListTile(
-      //       title: Text(myList[i]),
-      //     );
-      //   },
-      //   itemCount: myList.length + 1,
-      // ),
       body: GridView.count(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           crossAxisCount: 4,
           children: <Widget>[
             InkWell(
-                child: GridItem(GridModel("assets/zamzam.png", "Test", null)),
-               
-               ),
+              child: GridItem(GridModel(
+                  "assets/calculator.png", "Zakat\nCalculator", Colors.black)),
+            onTap: (){
+               Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ZakatCalculator()),
+            );
+            },
+            ),
           ]),
     );
   }
@@ -82,7 +75,10 @@ class GridItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(child: Icon(Icons.stars)),
+              Image.asset(gridModel.imagePath,
+              width: 30,
+                height: 30,
+                color: gridModel.color,),
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(

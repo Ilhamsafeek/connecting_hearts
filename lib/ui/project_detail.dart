@@ -235,6 +235,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ],
           ),
         ),
+       
         Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 5,
@@ -391,12 +392,12 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                             leading: Icon(
                               FontAwesomeIcons.solidMoneyBillAlt,
                             ),
-                            title: Text('Direct bank transfer'),
+                            title: Text('Direct deposit'),
                           ),
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: IconButton(
                           icon: Icon(Icons.info_outline),
                           onPressed: () {
@@ -571,7 +572,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: ListTile(
-                        title: Text('How Direct bank payment works?'),
+                        title: Text('How Direct diposit works?'),
                         trailing: IconButton(
                           icon: Icon(Icons.clear),
                           onPressed: () {

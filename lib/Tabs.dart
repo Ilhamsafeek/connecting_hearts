@@ -12,7 +12,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
-import 'package:zamzam/ui/zakat_calculator.dart';
+import 'package:zamzam/ui/profile.dart';
 
 
 
@@ -98,10 +98,15 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           ),
           IconButton(
             onPressed: () {
-                  Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ZakatCalculator()),
-            );
+                Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, anim1, anim2) => Profile(),
+                  transitionsBuilder: (context, anim1, anim2, child) =>
+                      FadeTransition(opacity: anim1, child: child),
+                  transitionDuration: Duration(milliseconds: 100),
+                ),
+              ); 
             },
             icon: Icon(Icons.person),
           ),
@@ -113,7 +118,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               indicatorColor: Colors.black,
               unselectedLabelColor: Colors.grey,
               labelColor:
-                  Colors.red, //Colors.redAccent[700],
+                  Color.fromRGBO(104, 45, 127, 1),
               labelStyle: TextStyle(fontSize: 11.0),
               tabs: <Tab>[
             new Tab(
@@ -145,7 +150,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         Inbox(),
         Library()
       ]),
-      drawer: _drawer(),
+      // drawer: _drawer(),
     );
   }
 
@@ -170,11 +175,11 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           leading: Icon(Icons.person),
           title: Text('Profile'),
           onTap: () {
-            
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => Profile()),
-            // );
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
           },
         ),
         ListTile(
@@ -250,6 +255,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                 ],
               )),
         ),
+      
       ],
     ));
   }
@@ -318,11 +324,11 @@ class DataSearch extends SearchDelegate<String> {
         onTap: (){
           showResults(context);
         },
-        leading: Icon(Icons.location_city),
+        leading: Icon(Icons.search),
         title: 
         RichText(text: TextSpan(
-          text: suggestionList[index].substring(0, query.length),
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          text: suggestionList[index].substring(0,query.length),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
           children: [
             TextSpan(
               text: suggestionList[index].substring(query.length),

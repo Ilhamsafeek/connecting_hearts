@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zamzam/ui/camera.dart';
+import 'package:camera/camera.dart';
 
 class PaymentResult extends StatefulWidget {
   @override
@@ -44,7 +46,8 @@ class _PaymentResultState extends State<PaymentResult> {
           if (snapshot.hasData) {
             var data = snapshot.data;
             WebServices(this.mApiListener)
-                .createPayment(widget.paymentAmount, widget.projectData,widget.method, 'approved')
+                .createPayment(widget.paymentAmount, widget.projectData,
+                    widget.method, 'approved')
                 .then((value) {
               print(value);
               if (value != null) {}
@@ -136,55 +139,85 @@ class _PaymentResultState extends State<PaymentResult> {
         },
       );
     } else {
-     
       return FutureBuilder<dynamic>(
-        future: WebServices(this.mApiListener)
-            .createPayment(widget.paymentAmount, widget.projectData,widget.method, 'pending'),
+        future: WebServices(this.mApiListener).createPayment(
+            widget.paymentAmount, widget.projectData, widget.method, 'pending'),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           List<Widget> children;
 
           if (snapshot.hasData) {
             var data = snapshot.data;
-            
-            if(data==200){
+
+            if (data == 200) {
               print(data.runtimeType);
-            children = <Widget>[
-              Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 120,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text("Thank you for your donation", style: TextStyle(fontSize: 19.0)),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text('Receipt for your donation'),
-              ),
-              Divider(
-                height: 0,
-              ),
-             Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text('Your donated amount will be updated once you submit '),
-              ),
-              Divider(
-                height: 0,
-              ),
-             
-              RaisedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Done"),
-                color: Colors.orange[400],
-                textColor: Colors.white,
-              ),
-            ];
-            }else{
               children = <Widget>[
-                  Text('Could not make donation. Pplease try again')
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 120,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text("Thank you for your donation",
+                      style: TextStyle(fontSize: 19.0)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text('Receipt for your donation'),
+                ),
+                Divider(
+                  height: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                      'Your donated amount will be updated once you submit deposit slip'),
+                ),
+                Divider(
+                  height: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("May be later"),
+                          textColor: Colors.black,
+                        ),
+                      ),
+                      Expanded(
+                          child: RaisedButton(
+                        color: Colors.red,
+                        onPressed: () async {
+                          WidgetsFlutterBinding.ensureInitialized();
+                          final cameras = await availableCameras();
+                          final firstCamera = cameras.first;
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    TakePictureScreen(
+                                  "${widget.projectData['id']}",
+                                  firstCamera,
+                                ),
+                              ));
+                        },
+                        child: Text(
+                          'Submit Deposit Slip',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ))
+                    ],
+                  ),
+                )
+              ];
+            } else {
+              children = <Widget>[
+                Text('Could not make donation. Please try again')
               ];
             }
           } else if (snapshot.hasError) {

@@ -97,7 +97,7 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future updateSlip(id,path) async {
+  Future<bool> updateSlip(id,path) async {
     String base64Image = base64Encode(File(path).readAsBytesSync());
     String fileName = File(path).path.split('/').last;
     print('id:: $id');
@@ -107,8 +107,10 @@ class WebServices {
       "filename":fileName
     }).then((value) {
       print(value.body);
+      return value.body;
     });
 
+    return false;
   
   }
 
@@ -133,7 +135,7 @@ class WebServices {
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
       },
     );
-    // print(response.body) ;
+    print("token body: ${response.body}") ;
     var jsonServerData = json.decode(response.body);
     return jsonServerData;
   }
@@ -141,6 +143,8 @@ class WebServices {
   //create customer by adding card token
   Future<dynamic> saveCustomer(String token) async {
     //it will return customer id aswell
+
+    
     var url = 'https://api.stripe.com/v1/customers';
     var response = await http.post(
       url,
@@ -156,7 +160,7 @@ class WebServices {
     );
     // print(response.body) ;
     var jsonServerData = json.decode(response.body);
-    print(jsonServerData['id']);
+    print("token=======> $jsonServerData");
     return jsonServerData;
   }
 
@@ -364,7 +368,8 @@ class WebServices {
       }
     } else {
       //No
-      await saveCustomer(card).then((value) {
+      await saveCustomer(token).then((value) {
+        print('card : $card');
         print("Customer registered and Card Added Successfully");
         result = true;
       });

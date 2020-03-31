@@ -67,7 +67,7 @@ class _SliderLayoutViewState extends State<SliderLayoutView> {
               alignment: AlignmentDirectional.bottomCenter,
               children: <Widget>[
                 PageView.builder(
-                  scrollDirection: Axis.vertical,
+                  scrollDirection: Axis.horizontal,
                   controller: _pageController,
                   onPageChanged: _onPageChanged,
                   itemCount: 4,

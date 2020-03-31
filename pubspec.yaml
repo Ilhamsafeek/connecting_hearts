@@ -108,8 +108,8 @@ flutter:
   - assets/slider_2.png
   - assets/slider_3.png
   - assets/add_payment_method.png
-
-
+  - assets/my_contribution.png
+  - assets/background.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

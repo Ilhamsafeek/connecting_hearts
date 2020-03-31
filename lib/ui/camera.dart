@@ -71,7 +71,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         child: Icon(Icons.camera_alt),
         // Provide an onPressed callback.
         onPressed: () async {
-          print("id is :: ${widget.id}");
+         
           // Take the Picture in a try / catch block. If anything goes wrong,
           // catch the error.
           try {
@@ -121,7 +121,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Picture')),
+        appBar: AppBar(title: Text('Update deposit slip')),
         // The image is stored as a file on the device. Use the `Image.file`
         // constructor with the given path to display the image.
         body: SingleChildScrollView(
@@ -130,11 +130,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               Image.file(File(imagePath)),
               RaisedButton(onPressed: () {
                 WebServices(mApiListener).updateSlip(this.id,imagePath).then((value) {
-                  print(value);
+                  Navigator.pop(context);
                 });
               },
               child: Text('Send Slip'),
+              shape: RoundedRectangleBorder(
+  borderRadius: new BorderRadius.circular(18.0),
+  side: BorderSide(color: Colors.black)
+),
               )
+
             ],
           ),
         ));

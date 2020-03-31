@@ -4,6 +4,7 @@ import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
 import 'package:camera/camera.dart';
 
+
 class MyContribution extends StatefulWidget {
   @override
   _MyContributionState createState() => _MyContributionState();
@@ -110,7 +111,7 @@ class _MyContributionState extends State<MyContribution> {
                                     padding: EdgeInsets.all(16.0),
                                     child: ListTile(
                                       title: Image.asset(
-                                        "assets/add_payment_method.png",
+                                        "assets/my_contribution.png",
                                         width: 120,
                                         height: 120,
                                       ),
@@ -175,7 +176,8 @@ class _MyContributionState extends State<MyContribution> {
     dynamic _text = "You have donated. Now you can monitor the project status.";
     if (item['status'] == 'pending') {
       if (item['slip_url'] == "") {
-        _trailing = RaisedButton(
+        _trailing = 
+        RaisedButton(
           color: Colors.red,
           onPressed: () async {
            
@@ -196,6 +198,7 @@ class _MyContributionState extends State<MyContribution> {
             style: TextStyle(color: Colors.white),
           ),
         );
+        
         _statusIcon = Icon(
           Icons.info_outline,
           color: Colors.orange,

@@ -31,11 +31,13 @@ class _SigninPageState extends State<Signin> {
       this.verificationId = verId;
       smsCodeDialog(context).then((value) {
         print('signed in');
+        CURRENT_USER= "${this.countryCode}${this.phoneNo}";
       });
     };
     final PhoneVerificationCompleted verifiedSuccess =
         (AuthCredential credential) {
       print('verified');
+      CURRENT_USER= "${this.countryCode}${this.phoneNo}";
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
@@ -49,7 +51,7 @@ class _SigninPageState extends State<Signin> {
       ));
     };
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "${this.countryCode} ${this.phoneNo}",
+      phoneNumber: "${this.countryCode}${this.phoneNo}",
       codeAutoRetrievalTimeout: autoRetrive,
       codeSent: smsCodeSent,
       timeout: const Duration(seconds: 5),
@@ -129,7 +131,7 @@ class _SigninPageState extends State<Signin> {
     await FirebaseAuth.instance.signOut().then((action) {
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         WebServices(this.mApiListener)
-            .createAccount('${this.countryCode} ${this.phoneNo}');
+            .createAccount('${this.countryCode}${this.phoneNo}');
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
         print(e);
