@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/model/Gridmodel.dart';
 import 'package:zamzam/services/services.dart';
-import 'package:zamzam/ui/project.dart';
+import 'package:zamzam/ui/sermon/channel_detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Channels extends StatefulWidget {
@@ -49,7 +49,18 @@ class _ChannelsState extends State<Channels> {
                           title: Text(item['category']),
                           subtitle: Text('this is subtitle'),
                           trailing: Icon(Icons.more_horiz, color: Colors.grey,),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, anim1, anim2) => ChannelDetail(),
+                transitionsBuilder: (context, anim1, anim2, child) =>
+                    FadeTransition(opacity: anim1, child: child),
+                transitionDuration: Duration(milliseconds: 100),
+              ),
+            );
+          
+                          },
                         ),
                         Divider()
                       ])

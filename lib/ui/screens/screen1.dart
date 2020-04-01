@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     InkWell(
                       child: Chip(
-                      label: Text('Sermon Channels'),
+                      label: Text('Sermon Channels', style: TextStyle(color: Colors.white),),
                       backgroundColor: Colors.grey[600],
                       
                     ),

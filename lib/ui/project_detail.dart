@@ -57,7 +57,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 tooltip: 'Share this appeal',
                 onPressed: () {
                   Share.share('check out my website https://example.com',
-                      subject: 'Look what I made!');
+                      subject: 'Please look at this appeal!');
                 },
               ),
             ],
@@ -526,6 +526,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                           },
                         ),
                       )),
+                  
                   Divider(
                     height: 0,
                   ),
