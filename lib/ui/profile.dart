@@ -7,7 +7,6 @@ import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 class Profile extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -57,7 +56,7 @@ class ProfileState extends State<Profile> {
                 // Navigator.pop(context);
                 // Navigator.push(
                 //   context,
-                //   MaterialPageRoute(builder: (context) => Profile()),
+                //   MaterialPageRoute(builder: (context) => LoginScreen()),
                 // );
               },
             ),
