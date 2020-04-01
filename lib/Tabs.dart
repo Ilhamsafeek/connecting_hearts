@@ -53,7 +53,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     });
 
     messaging.onTokenRefresh.listen((token) {
-      WebServices(this.mApiListener).updateUser(token);
+      WebServices(this.mApiListener).updateUserToken(token);
 
       print("your token is chnged to : $token");
     });

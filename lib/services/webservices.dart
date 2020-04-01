@@ -17,7 +17,7 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<String> updateUser(String appToken) async {
+  Future<String> updateUserToken(String appToken) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
     var url = 'https://www.chadmin.online/api/updateaccount';
@@ -29,6 +29,22 @@ class WebServices {
     print(response.statusCode);
     print(response.body);
     return response.body;
+  }
+
+
+  Future<int> updateUser(username, email) async {
+    // DateTime now = DateTime.now();
+    // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+    var url = 'https://www.chadmin.online/api/updateaccount';
+    var response = await http.post(url, body: {
+      'username': '$username',
+      'phone': '$CURRENT_USER',
+      'email': '$email',
+    });
+
+    print(response.statusCode);
+    print(response.body);
+    return response.statusCode;
   }
 
   Future createAccount(String contact) async {
@@ -66,6 +82,15 @@ class WebServices {
     var response = await http.get("https://www.chadmin.online/api/projects");
     var jsonServerData = json.decode(response.body);
 
+    return jsonServerData;
+  }
+
+  Future<dynamic> getUserData() async {
+    var url = 'https://www.chadmin.online/api/getuser';
+    var response = await http.post(url, body: {
+      'phone': CURRENT_USER,
+    });
+    var jsonServerData = json.decode(response.body);
     return jsonServerData;
   }
 
