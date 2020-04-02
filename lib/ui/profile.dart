@@ -23,6 +23,7 @@ class ProfileState extends State<Profile> {
   TextEditingController username;
   TextEditingController email;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +74,10 @@ class ProfileState extends State<Profile> {
                       List<Widget> children;
 
                       if (snapshot.hasData) {
+                        final _usernameController = TextEditingController(
+                            text: "${snapshot.data['username']}");
+                        final _emailController = TextEditingController(
+                            text: "${snapshot.data['email']}");
                         children = <Widget>[
                           Padding(
                             padding: EdgeInsets.all(16.0),
@@ -80,14 +85,13 @@ class ProfileState extends State<Profile> {
                               children: <Widget>[
                                 Expanded(
                                     child: TextFormField(
-                                  controller: username,
+                                  controller: _usernameController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Username',
                                     hintText: '',
                                   ),
                                   textInputAction: TextInputAction.next,
-                                  initialValue: "${snapshot.data['username']}",
                                 ))
                               ],
                             ),
@@ -98,14 +102,13 @@ class ProfileState extends State<Profile> {
                               children: <Widget>[
                                 Expanded(
                                     child: TextFormField(
-                                  controller: email,
+                                  controller: _emailController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Email',
                                     hintText: '',
                                   ),
                                   textInputAction: TextInputAction.next,
-                                  initialValue: "${snapshot.data['email']}",
                                 ))
                               ],
                             ),
@@ -121,19 +124,20 @@ class ProfileState extends State<Profile> {
                                     ),
                                     onPressed: () {
                                       WebServices(this.mApiListener)
-                                          .updateUser(username.value, email.value)
+                                          .updateUser(_usernameController.text,
+                                              _emailController.text)
                                           .then((value) {
                                         if (value == 200) {
                                           _scaffoldKey.currentState
                                               .showSnackBar(SnackBar(
-                                            content:
-                                                Text("Profile Updated Successfully"),
+                                            content: Text(
+                                                "Profile Updated Successfully"),
                                           ));
-                                        }else{
+                                        } else {
                                           _scaffoldKey.currentState
                                               .showSnackBar(SnackBar(
-                                            content:
-                                                Text("Something went wrong. Please try again."),
+                                            content: Text(
+                                                "Something went wrong. Please try again."),
                                           ));
                                         }
                                       });
@@ -224,6 +228,7 @@ class ProfileState extends State<Profile> {
               title: Text('Sign out'),
               onTap: () async {
                 await FirebaseAuth.instance.signOut().then((action) {
+                  Navigator.pop(context);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

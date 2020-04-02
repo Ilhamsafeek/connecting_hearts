@@ -3,7 +3,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
 import 'package:camera/camera.dart';
-
+import 'package:zamzam/ui/project_detail.dart';
 
 class MyContribution extends StatefulWidget {
   @override
@@ -176,13 +176,11 @@ class _MyContributionState extends State<MyContribution> {
     dynamic _text = "You have donated. Now you can monitor the project status.";
     if (item['status'] == 'pending') {
       if (item['slip_url'] == "") {
-        _trailing = 
-        RaisedButton(
+        _trailing = RaisedButton(
           color: Colors.red,
           onPressed: () async {
-           
-            WidgetsFlutterBinding.ensureInitialized();           
-            final cameras = await availableCameras();           
+            WidgetsFlutterBinding.ensureInitialized();
+            final cameras = await availableCameras();
             final firstCamera = cameras.first;
             Navigator.pushReplacement(
                 context,
@@ -198,7 +196,7 @@ class _MyContributionState extends State<MyContribution> {
             style: TextStyle(color: Colors.white),
           ),
         );
-        
+
         _statusIcon = Icon(
           Icons.info_outline,
           color: Colors.orange,
@@ -207,21 +205,21 @@ class _MyContributionState extends State<MyContribution> {
             "You have donated. Please submit your bank slip to be effective";
       } else {
         _trailing = Column(children: <Widget>[
-        //  CircleAvatar(child: Icon(Icons.insert_emoticon)),
+          //  CircleAvatar(child: Icon(Icons.insert_emoticon)),
           FlatButton.icon(
             icon: Icon(Icons.edit),
             onPressed: () async {
-                WidgetsFlutterBinding.ensureInitialized();           
-            final cameras = await availableCameras();           
-            final firstCamera = cameras.first;
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => TakePictureScreen(
-                    "${item['id']}",
-                    firstCamera,
-                  ),
-                ));
+              WidgetsFlutterBinding.ensureInitialized();
+              final cameras = await availableCameras();
+              final firstCamera = cameras.first;
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => TakePictureScreen(
+                      "${item['id']}",
+                      firstCamera,
+                    ),
+                  ));
             },
             label: Text('Edit Slip'),
           ),
@@ -239,7 +237,21 @@ class _MyContributionState extends State<MyContribution> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            // onTap: () {},
+            onTap: () {
+              WebServices(this.mApiListener).getData().then((value) {
+                print("Result=================>>>>>");
+               
+                var data = value
+              .where((el) => el['appeal_id'] == item['project_id'])
+              .toList();
+             
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProjectDetail(data[0])),
+                );
+              });
+            },
             title: Text('Project ID: ${item['project_id']}'),
             subtitle: Text('${item['date_time']}'),
             trailing: FlatButton.icon(
@@ -305,5 +317,4 @@ class _MyContributionState extends State<MyContribution> {
           });
         });
   }
-
 }

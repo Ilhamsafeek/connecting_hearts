@@ -33,7 +33,7 @@ class _ChannelsState extends State<Channels> {
       child: Column(
         children: <Widget>[
           FutureBuilder<dynamic>(
-              future: WebServices(this.mApiListener).getCategoryData(),
+              future: WebServices(this.mApiListener).getChannelData(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 List<Widget> children;
 
@@ -46,14 +46,14 @@ class _ChannelsState extends State<Channels> {
                            backgroundImage:new AssetImage('assets/mufti_menk.jpg'),
                            radius: 30,
                           ),
-                          title: Text(item['category']),
+                          title: Text(item['channel']),
                           subtitle: Text('this is subtitle'),
                           trailing: Icon(Icons.more_horiz, color: Colors.grey,),
                           onTap: () {
                             Navigator.push(
               context,
               PageRouteBuilder(
-                pageBuilder: (context, anim1, anim2) => ChannelDetail(),
+                pageBuilder: (context, anim1, anim2) => ChannelDetail(item),
                 transitionsBuilder: (context, anim1, anim2, child) =>
                     FadeTransition(opacity: anim1, child: child),
                 transitionDuration: Duration(milliseconds: 100),

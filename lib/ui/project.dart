@@ -28,7 +28,7 @@ class _ProjectPageState extends State<Project> {
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Projects",
+          title: Text(widget.category,
               style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
           backgroundColor: Color.fromRGBO(104, 45, 127, 1),
         ),
@@ -91,13 +91,12 @@ class _ProjectPageState extends State<Project> {
         );
       },
     );
-  
   }
 
   Card projectCard(dynamic data) {
     FlutterMoneyFormatter formattedAmount =
         FlutterMoneyFormatter(amount: double.parse('${data['amount']}'));
-    
+
     double completedPercent = 100 *
         double.parse('${data['collected']}') /
         double.parse('${data['amount']}');
@@ -123,7 +122,7 @@ class _ProjectPageState extends State<Project> {
               children: <Widget>[
                 ListTile(
                   title: Text(
-                    '${data['category']}',
+                    '${data['appeal_id']}',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -131,17 +130,14 @@ class _ProjectPageState extends State<Project> {
                   ),
                   subtitle: Text('Family of ${data['children']} Members',
                       style: TextStyle(color: Colors.white)),
-                  trailing: Chip(label: 
-                   Text(
-                    "${data['rating']}",
-                    style: TextStyle(
-                     
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold
+                  trailing: Chip(
+                    label: Text(
+                      "${data['rating']}",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  ),
-                  
+
                   //  Expanded(
                   //   child: Column(
                   //     children: <Widget>[
@@ -161,12 +157,10 @@ class _ProjectPageState extends State<Project> {
                   //     fontWeight: FontWeight.bold
                   //   ),
                   // ),
-               
+
                   //     ]
                   //   )),
-              
                 ),
-               
                 ListTile(
                   contentPadding: EdgeInsets.only(top: 95),
                   leading: FlatButton.icon(
@@ -181,7 +175,6 @@ class _ProjectPageState extends State<Project> {
                         style: TextStyle(color: Colors.white),
                       )),
                 ),
-              
               ],
             )),
           ]),
@@ -239,7 +232,8 @@ class _ProjectPageState extends State<Project> {
                   color: Colors.green,
                 ),
                 onPressed: () {
-                 Share.share('check out my website https://example.com', subject: 'Look what I made!');
+                  Share.share('check out my website https://example.com',
+                      subject: 'Look what I made!');
                 },
                 label: Text('Share'),
               ),

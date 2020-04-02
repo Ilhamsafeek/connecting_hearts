@@ -13,7 +13,7 @@ class WebServices {
   Future<dynamic> getData() async {
     var response = await http.get("https://www.chadmin.online/api/projects");
     var jsonServerData = json.decode(response.body);
-
+     
     return jsonServerData;
   }
 
@@ -447,4 +447,14 @@ class WebServices {
     }
     return jsonServerData['error']['message'];
   }
+
+// Channels
+
+Future<dynamic> getChannelData() async {
+    var response = await http.get("https://www.chadmin.online/api/channels");
+    var jsonServerData = json.decode(response.body);
+      print(jsonServerData);
+    return jsonServerData;
+  }
+
 }

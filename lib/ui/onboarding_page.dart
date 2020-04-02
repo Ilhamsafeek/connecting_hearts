@@ -185,17 +185,17 @@ class Slider {
 
 final sliderArrayList = [
   Slider(
-      sliderImageUrl: 'assets/slider_2.png',
-      sliderHeading: "Get notified with recent activities.",
+      sliderImageUrl: 'assets/slider_1.png',
+      sliderHeading: "Get notified with recent updates.",
       sliderSubHeading:
           "Keep in touch with us by notifications on recent sermon updates, events organized"),
   Slider(
-      sliderImageUrl: 'assets/slider_3.png',
+      sliderImageUrl: 'assets/slider_2.png',
       sliderHeading: "Find needy people",
       sliderSubHeading:
           "You may not aware of how people are needy. This is the platform for you"),
   Slider(
-      sliderImageUrl: 'assets/slider_1.png',
+      sliderImageUrl: 'assets/slider_3.png',
       sliderHeading: "Support them",
       sliderSubHeading:
           "We connect needy people and donors and make a network"),
