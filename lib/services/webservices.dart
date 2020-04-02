@@ -13,7 +13,7 @@ class WebServices {
   Future<dynamic> getData() async {
     var response = await http.get("https://www.chadmin.online/api/projects");
     var jsonServerData = json.decode(response.body);
-     
+
     return jsonServerData;
   }
 
@@ -30,7 +30,6 @@ class WebServices {
     print(response.body);
     return response.body;
   }
-
 
   Future<int> updateUser(username, email) async {
     // DateTime now = DateTime.now();
@@ -122,21 +121,20 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<bool> updateSlip(id,path) async {
+  Future<bool> updateSlip(id, path) async {
     String base64Image = base64Encode(File(path).readAsBytesSync());
     String fileName = File(path).path.split('/').last;
     print('id:: $id');
-    http.post('https://www.chadmin.online/api/updateslip', body:{
+    http.post('https://www.chadmin.online/api/updateslip', body: {
       "id": "$id",
       "image": base64Image,
-      "filename":fileName
+      "filename": fileName
     }).then((value) {
       print(value.body);
       return value.body;
     });
 
     return false;
-  
   }
 
 //Stripe Payment
@@ -160,7 +158,7 @@ class WebServices {
         "Authorization": "Bearer sk_test_BFCJjwXJ4kMjb24UchyGQg2v007BePNKeK"
       },
     );
-    print("token body: ${response.body}") ;
+    print("token body: ${response.body}");
     var jsonServerData = json.decode(response.body);
     return jsonServerData;
   }
@@ -169,7 +167,6 @@ class WebServices {
   Future<dynamic> saveCustomer(String token) async {
     //it will return customer id aswell
 
-    
     var url = 'https://api.stripe.com/v1/customers';
     var response = await http.post(
       url,
@@ -450,11 +447,39 @@ class WebServices {
 
 // Channels
 
-Future<dynamic> getChannelData() async {
+  Future<dynamic> getChannelData() async {
     var response = await http.get("https://www.chadmin.online/api/channels");
     var jsonServerData = json.decode(response.body);
-      print(jsonServerData);
+    print(jsonServerData);
     return jsonServerData;
   }
 
+// Job
+
+  Future<dynamic> getJobData() async {
+    var url = 'https://www.chadmin.online/api/alljob';
+    var response = await http.get(url);
+    var jsonServerData = json.decode(response.body);
+    return jsonServerData;
+  }
+
+  Future<int> postJob(type, title, location, minExperience, description, contact,
+      email, image, organization) async {
+    var url = 'https://www.chadmin.online/api/createjob';
+    var response = await http.post(url, body: {
+      'posted_by': CURRENT_USER,
+      'type': '$type',
+      'title': '$title',
+      'location': '$location',
+      'min_experience': '$minExperience years',
+      'description': '$description',
+      'contact': '$contact',
+      'email': '$type',
+      'image': '$image',
+      'organization': '$organization',
+    });
+    print('Response status: ${response.statusCode}');
+    return response.statusCode;
+    // print('Response body: ${response.body}');
+  }
 }

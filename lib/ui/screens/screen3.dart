@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zamzam/ui/job_detail.dart';
+import 'package:zamzam/ui/job/job_detail.dart';
+import 'package:zamzam/ui/job/appeal_job.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/services/services.dart';
+import 'package:zamzam/ui/sermon/channel_detail.dart';
 
 class Subscriptioins extends StatefulWidget {
   Subscriptioins({Key key}) : super(key: key);
@@ -9,10 +14,21 @@ class Subscriptioins extends StatefulWidget {
 
 class _SubscriptioinsState extends State<Subscriptioins> {
   @override
+  ApiListener mApiListener;
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
+            // child: AnimationLimiter(
             child: Column(
+                children: AnimationConfiguration.toStaggeredList(
+      duration: const Duration(milliseconds: 375),
+      childAnimationBuilder: (widget) => SlideAnimation(
+        horizontalOffset: 50.0,
+        child: FadeInAnimation(
+          child: widget,
+        ),
+      ),
       children: <Widget>[
         ExpansionTile(
           title: Text("Post New vacancy"),
@@ -41,7 +57,10 @@ class _SubscriptioinsState extends State<Subscriptioins> {
                   color: Colors.blue[900],
                   icon: Icon(Icons.wb_sunny, color: Colors.white),
                   onPressed: () {
-                    appealModalBottomSheet(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AppealJob()),
+                    );
                   },
                   label: Text(
                     'Appeal a Job',
@@ -53,114 +72,121 @@ class _SubscriptioinsState extends State<Subscriptioins> {
           ],
           initiallyExpanded: false,
         ),
-        ListTile(
-          leading: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNx5dVdpXBY0lA7AvUQy-0EbopGojGfhsHJEo_AOpr1154CvUAFtA&s=0'),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Hemas Holdings PLC, Colombo'),
-          trailing: Icon(Icons.favorite_border),
-          onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, anim1, anim2) => JobDetail(),
-                transitionsBuilder: (context, anim1, anim2, child) =>
-                    FadeTransition(opacity: anim1, child: child),
-                transitionDuration: Duration(milliseconds: 100),
-              ),
-            );
-          },
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(child: Icon(Icons.person)),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Experience: 2 years'),
-          // trailing: Icon(Icons.favorite_border),
-        ),
-        Divider(),
-        ListTile(
-          leading: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNx5dVdpXBY0lA7AvUQy-0EbopGojGfhsHJEo_AOpr1154CvUAFtA&s=0'),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Hemas Holdings PLC, Colombo'),
-          trailing: Icon(Icons.favorite_border),
-        ),
-        Divider(),
-        ListTile(
-          leading: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNx5dVdpXBY0lA7AvUQy-0EbopGojGfhsHJEo_AOpr1154CvUAFtA&s=0'),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Hemas Holdings PLC, Colombo'),
-          trailing: Icon(Icons.favorite_border),
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(child: Icon(Icons.person)),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Experience: 2 years'),
-          // trailing: Icon(Icons.favorite_border),
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(child: Icon(Icons.person)),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Experience: 2 years'),
-          // trailing: Icon(Icons.favorite_border),
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(child: Icon(Icons.person)),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Experience: 2 years'),
-          // trailing: Icon(Icons.favorite_border),
-        ),
-        Divider(),
-        ListTile(
-          leading: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNx5dVdpXBY0lA7AvUQy-0EbopGojGfhsHJEo_AOpr1154CvUAFtA&s=0'),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Hemas Holdings PLC, Colombo'),
-          trailing: Icon(Icons.favorite_border),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNx5dVdpXBY0lA7AvUQy-0EbopGojGfhsHJEo_AOpr1154CvUAFtA&s=0'),
-          title: Text(
-            'Graduate Trainee Marketing',
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text('Hemas Holdings PLC, Colombo'),
-          trailing: Icon(Icons.favorite_border),
-        ),
+        FutureBuilder<dynamic>(
+            future: WebServices(this.mApiListener).getJobData(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              List<Widget> children;
+
+              if (snapshot.hasData) {
+                children = <Widget>[
+                  for (var item in snapshot.data)
+                    Container(
+                        child: Column(
+                            children: <Widget>[_buildJobListTile(item), Divider()]))
+                ];
+
+                return Center(
+                  child: Column(
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 500),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        horizontalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: widget,
+                        ),
+                      ),
+                      children: children,
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                children = <Widget>[
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                        'something Went Wrong !'), //Error: ${snapshot.error}
+                  )
+                ];
+              } else {
+                children = <Widget>[
+                  SizedBox(
+                    child: SpinKitPulse(
+                      color: Colors.grey,
+                      size: 120.0,
+                    ),
+                    width: 50,
+                    height: 50,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Text(''),
+                  )
+                ];
+              }
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: children,
+              ));
+            }),
       ],
-    )));
+    ))));
+  }
+
+  Widget _buildJobListTile(item) {
+    if(item['type']=='appeal'){
+      return ListTile(
+      leading: CircleAvatar(child: Icon(Icons.person)),
+      title: Text(item['title']),
+      subtitle: Text('Experience: ${item['min_experience']}'),
+      trailing: Icon(
+        Icons.more_horiz,
+        color: Colors.grey,
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, anim1, anim2) => JobDetail(),
+            transitionsBuilder: (context, anim1, anim2, child) =>
+                FadeTransition(opacity: anim1, child: child),
+            transitionDuration: Duration(milliseconds: 100),
+          ),
+        );
+      },
+    );
+  
+    }else{
+      return ListTile(
+      leading:Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNx5dVdpXBY0lA7AvUQy-0EbopGojGfhsHJEo_AOpr1154CvUAFtA&s=0'
+      ,height: 60, width: 60,),
+      title: Text(item['title']),
+      subtitle: Text('Experience: ${item['min_experience']}'),
+      trailing: Icon(
+        Icons.favorite_border,
+        color: Colors.grey,
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, anim1, anim2) => JobDetail(),
+            transitionsBuilder: (context, anim1, anim2, child) =>
+                FadeTransition(opacity: anim1, child: child),
+            transitionDuration: Duration(milliseconds: 100),
+          ),
+        );
+      },
+    );
+  
+    }
+    
   }
 
   Future<bool> appealModalBottomSheet(context) {

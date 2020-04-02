@@ -253,7 +253,7 @@ class _MyContributionState extends State<MyContribution> {
               });
             },
             title: Text('Project ID: ${item['project_id']}'),
-            subtitle: Text('${item['date_time']}'),
+            subtitle: Text('${item['date_time']}', style: TextStyle(fontSize: 12),),
             trailing: FlatButton.icon(
                 onPressed: () {
                   infoModalBottomSheet(context, _statusIcon, _text);

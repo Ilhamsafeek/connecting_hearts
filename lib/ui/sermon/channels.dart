@@ -32,6 +32,7 @@ class _ChannelsState extends State<Channels> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
+
           FutureBuilder<dynamic>(
               future: WebServices(this.mApiListener).getChannelData(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -100,7 +101,9 @@ class _ChannelsState extends State<Channels> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: children,
                 ));
+             
               }),
+        
         ],
       ),
     );

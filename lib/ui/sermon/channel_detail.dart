@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class ChannelDetail extends StatefulWidget {
   @override
@@ -59,175 +60,184 @@ class _ChannelDetailState extends State<ChannelDetail> {
 
   Widget _detailSection() {
     return Column(
-      children: <Widget>[
-        ExpansionTile(
-          title: Text(
-            "Description about this channel",
-            style: TextStyle(fontWeight: FontWeight.w700),
+      children: AnimationConfiguration.toStaggeredList(
+        duration: const Duration(milliseconds: 375),
+        childAnimationBuilder: (widget) => SlideAnimation(
+          horizontalOffset: 50.0,
+          child: FadeInAnimation(
+            child: widget,
           ),
-          subtitle: Text('Addedd 3 years ago'),
-          leading: CircleAvatar(
-            backgroundImage: new AssetImage('assets/mufti_menk.jpg'),
-          ),
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(widget.channelData['description']),
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                    child: FlatButton.icon(
-                  color: Colors.blue[900],
-                  icon: Icon(Icons.wb_sunny, color: Colors.white),
-                  onPressed: () {},
-                  label: Text(
-                    'Subscribe',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ))
-              ],
-            ),
-          ],
-          initiallyExpanded: false,
         ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(
-            radius: 20,
-            child: Icon(
-              Icons.audiotrack,
-              color: Colors.white,
+        children: <Widget>[
+          ExpansionTile(
+            title: Text(
+              "Description about this channel",
+              style: TextStyle(fontWeight: FontWeight.w700),
             ),
-            backgroundColor: Colors.grey[600],
-          ),
-          title: Text('Allah is Testing you !'),
-          subtitle: Text('12 March, 2020'),
-          trailing: FlatButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.file_download),
-            label: Text('4.5MB'),
-          ),
-          onTap: () {
-            playModalBottomSheet(context);
-          },
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(
-            radius: 20,
-            child: Icon(
-              Icons.audiotrack,
-              color: Colors.white,
+            subtitle: Text('Addedd 3 years ago'),
+            leading: CircleAvatar(
+              backgroundImage: new AssetImage('assets/mufti_menk.jpg'),
             ),
-            backgroundColor: Colors.grey[600],
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(widget.channelData['description']),
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: FlatButton.icon(
+                    color: Colors.blue[900],
+                    icon: Icon(Icons.wb_sunny, color: Colors.white),
+                    onPressed: () {},
+                    label: Text(
+                      'Subscribe',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ))
+                ],
+              ),
+            ],
+            initiallyExpanded: false,
           ),
-          title: Text('Allah is Testing you !'),
-          subtitle: Text('12 March, 2020'),
-          trailing: FlatButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.file_download),
-            label: Text('4.5MB'),
-          ),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(
-            radius: 20,
-            child: Icon(
-              Icons.audiotrack,
-              color: Colors.white,
+          Divider(),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.audiotrack,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.grey[600],
             ),
-            backgroundColor: Colors.grey[600],
-          ),
-          title: Text('Allah is Testing you !'),
-          subtitle: Text('12 March, 2020'),
-          trailing: FlatButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.file_download),
-            label: Text('4.5MB'),
-          ),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(
-            radius: 20,
-            child: Icon(
-              Icons.audiotrack,
-              color: Colors.white,
+            title: Text('Allah is Testing you !'),
+            subtitle: Text('12 March, 2020'),
+            trailing: FlatButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.file_download),
+              label: Text('4.5MB'),
             ),
-            backgroundColor: Colors.grey[600],
+            onTap: () {
+              playModalBottomSheet(context);
+            },
           ),
-          title: Text('Allah is Testing you !'),
-          subtitle: Text('12 March, 2020'),
-          trailing: FlatButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.file_download),
-            label: Text('4.5MB'),
-          ),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(
-            radius: 20,
-            child: Icon(
-              Icons.audiotrack,
-              color: Colors.white,
+          Divider(),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.audiotrack,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.grey[600],
             ),
-            backgroundColor: Colors.grey[600],
-          ),
-          title: Text('Allah is Testing you !'),
-          subtitle: Text('12 March, 2020'),
-          trailing: FlatButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.file_download),
-            label: Text('4.5MB'),
-          ),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(
-            radius: 20,
-            child: Icon(
-              Icons.audiotrack,
-              color: Colors.white,
+            title: Text('Allah is Testing you !'),
+            subtitle: Text('12 March, 2020'),
+            trailing: FlatButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.file_download),
+              label: Text('4.5MB'),
             ),
-            backgroundColor: Colors.grey[600],
+            onTap: () {},
           ),
-          title: Text('Allah is Testing you !'),
-          subtitle: Text('12 March, 2020'),
-          trailing: FlatButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.file_download),
-            label: Text('4.5MB'),
-          ),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: CircleAvatar(
-            radius: 20,
-            child: Icon(
-              Icons.audiotrack,
-              color: Colors.white,
+          Divider(),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.audiotrack,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.grey[600],
             ),
-            backgroundColor: Colors.grey[600],
+            title: Text('Allah is Testing you !'),
+            subtitle: Text('12 March, 2020'),
+            trailing: FlatButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.file_download),
+              label: Text('4.5MB'),
+            ),
+            onTap: () {},
           ),
-          title: Text('Allah is Testing you !'),
-          subtitle: Text('12 March, 2020'),
-          trailing: FlatButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.file_download),
-            label: Text('4.5MB'),
+          Divider(),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.audiotrack,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.grey[600],
+            ),
+            title: Text('Allah is Testing you !'),
+            subtitle: Text('12 March, 2020'),
+            trailing: FlatButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.file_download),
+              label: Text('4.5MB'),
+            ),
+            onTap: () {},
           ),
-          onTap: () {},
-        ),
-        Divider(),
-      ],
+          Divider(),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.audiotrack,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.grey[600],
+            ),
+            title: Text('Allah is Testing you !'),
+            subtitle: Text('12 March, 2020'),
+            trailing: FlatButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.file_download),
+              label: Text('4.5MB'),
+            ),
+            onTap: () {},
+          ),
+          Divider(),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.audiotrack,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.grey[600],
+            ),
+            title: Text('Allah is Testing you !'),
+            subtitle: Text('12 March, 2020'),
+            trailing: FlatButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.file_download),
+              label: Text('4.5MB'),
+            ),
+            onTap: () {},
+          ),
+          Divider(),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.audiotrack,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.grey[600],
+            ),
+            title: Text('Allah is Testing you !'),
+            subtitle: Text('12 March, 2020'),
+            trailing: FlatButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.file_download),
+              label: Text('4.5MB'),
+            ),
+            onTap: () {},
+          ),
+          Divider(),
+        ],
+      ),
     );
   }
 

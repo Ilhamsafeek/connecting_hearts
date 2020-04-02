@@ -5,6 +5,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zamzam/ui/single_video.dart';
 import 'package:zamzam/ui/sermon/channels.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -33,19 +34,19 @@ class _HomeState extends State<Home> {
                 title: Row(
                   children: <Widget>[
                     InkWell(
-                      child: Chip(
-                      label: Text('Sermon Channels', style: TextStyle(color: Colors.white),),
-                      backgroundColor: Colors.grey[600],
-                      
-                    ),
-                      onTap:(){
-                         Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Channels()),
-                );
-                      }
-                    ),
-                    
+                        child: Chip(
+                          label: Text(
+                            'Sermon Channels',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.grey[600],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Channels()),
+                          );
+                        }),
                     Chip(label: Text('Zamzam Updates')),
                   ],
                 ),
@@ -68,8 +69,6 @@ class _HomeState extends State<Home> {
               ),
             ),
           ],
-       
-       
         ));
   }
 
@@ -84,7 +83,7 @@ class _HomeState extends State<Home> {
           children = <Widget>[
             for (var item in snapshot.data)
               Container(
-                  child: Column(
+                child: Column(
                 children: <Widget>[
                   InkWell(
                     onTap: () {
@@ -120,6 +119,21 @@ class _HomeState extends State<Home> {
                 ],
               ))
           ];
+
+          return Center(
+            child: Column(
+              children: AnimationConfiguration.toStaggeredList(
+                duration: const Duration(milliseconds: 375),
+                childAnimationBuilder: (widget) => SlideAnimation(
+                  horizontalOffset: 50.0,
+                  child: FlipAnimation(
+                    child: widget,
+                  ),
+                ),
+                children: children,
+              ),
+            ),
+          );
         } else if (snapshot.hasError) {
           children = <Widget>[
             Icon(
@@ -158,7 +172,6 @@ class _HomeState extends State<Home> {
       },
     );
   }
-
 
   Future<Null> _handleRefresh() async {
     await new Future.delayed(new Duration(seconds: 2));
