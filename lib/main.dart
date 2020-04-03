@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/constant/Constant.dart';
+import 'package:zamzam/ui/single_video.dart';
 import 'package:zamzam/ui/splashscreen.dart';
 import 'package:zamzam/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
         SIGN_IN: (BuildContext context) => Signin(),
         HOME_PAGE: (BuildContext context) => MyTabs(),
+        
       },
     );
   }

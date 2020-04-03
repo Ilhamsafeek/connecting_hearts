@@ -87,6 +87,7 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
+                      print("+++++++++++++++++++++++$item");
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Play(item)),

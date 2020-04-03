@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/ui/screens/screen1.dart';
@@ -13,8 +15,7 @@ import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/ui/profile.dart';
-
-
+import 'package:zamzam/ui/single_video.dart';
 
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
@@ -36,13 +37,35 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     messaging.configure(
       onLaunch: (Map<String, dynamic> event) async {
         print("onLaunch ------>>>>>> $event");
+         
+       dynamic video = json.decode(event['data']['args']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Play(video)),
+        );
       },
       onMessage: (Map<String, dynamic> event) async {
         print("onMessage $event");
-        Navigator.of(context).pushNamed(event['screen']);
+        // foreground
+        // Navigator.of(context).pushNamed(event['screen']);
+       
+        dynamic video = json.decode(event['data']['args']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Play(video)),
+        );
       },
       onResume: (Map<String, dynamic> event) async {
-        print("onResume $event");
+        //background
+        // Navigator.of(context).pushNamed(SPLASH_SCREEN);
+       
+        dynamic video = json.decode(event['data']['args']);
+       
+        print("===================================>>>>>$video");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Play(video)),
+        );
       },
     );
     // messaging.subscribeToTopic('all');
@@ -64,12 +87,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     super.dispose();
     tabcontroller.dispose();
   }
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +115,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           ),
           IconButton(
             onPressed: () {
-                Navigator.push(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, anim1, anim2) => Profile(),
@@ -106,7 +123,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                       FadeTransition(opacity: anim1, child: child),
                   transitionDuration: Duration(milliseconds: 100),
                 ),
-              ); 
+              );
             },
             icon: Icon(Icons.person),
           ),
@@ -117,8 +134,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               controller: tabcontroller,
               indicatorColor: Colors.black,
               unselectedLabelColor: Colors.grey,
-              labelColor:
-                  Color.fromRGBO(104, 45, 127, 1),
+              labelColor: Color.fromRGBO(104, 45, 127, 1),
               labelStyle: TextStyle(fontSize: 11.0),
               tabs: <Tab>[
             new Tab(
@@ -196,9 +212,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         ListTile(
           leading: Icon(Icons.bookmark),
           title: Text('My Appeals'),
-          onTap: (){
-          
-          },
+          onTap: () {},
         ),
         ListTile(
           leading: Icon(Icons.payment),
@@ -214,7 +228,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         Divider(
           height: 0,
         ),
-         ListTile(
+        ListTile(
           leading: Icon(Icons.info),
           title: Text('About'),
           onTap: () {
@@ -255,7 +269,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                 ],
               )),
         ),
-      
       ],
     ));
   }
@@ -280,7 +293,6 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    
     return [
       IconButton(
           icon: Icon(Icons.clear),
@@ -305,37 +317,35 @@ class DataSearch extends SearchDelegate<String> {
   Widget buildResults(BuildContext context) {
     // show some result based on the selection
     return Center(
-   child: Container(
-      height: 100,
-      width: 100,
-         child: Card(color: Colors.orange,child: Center(child: Text(query)),)
-
-    ));
+        child: Container(
+            height: 100,
+            width: 100,
+            child: Card(
+              color: Colors.orange,
+              child: Center(child: Text(query)),
+            )));
   }
 
   Widget buildSuggestions(BuildContext context) {
     // Show when someone searches for something
-    final suggestionList = query.isEmpty
-        ? recents
-        : cities;
+    final suggestionList = query.isEmpty ? recents : cities;
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        onTap: (){
+        onTap: () {
           showResults(context);
         },
         leading: Icon(Icons.search),
-        title: 
-        RichText(text: TextSpan(
-          text: suggestionList[index].substring(0,query.length),
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-          children: [
-            TextSpan(
-              text: suggestionList[index].substring(query.length),
-              style: TextStyle( color: Colors.grey)
-            )
-          ]
-        )),
+        title: RichText(
+            text: TextSpan(
+                text: suggestionList[index].substring(0, query.length),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
+                children: [
+              TextSpan(
+                  text: suggestionList[index].substring(query.length),
+                  style: TextStyle(color: Colors.grey))
+            ])),
       ),
       itemCount: suggestionList.length,
     );
