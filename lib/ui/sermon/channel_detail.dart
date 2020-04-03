@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:zamzam/services/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/ui/single_video.dart';
 
 class ChannelDetail extends StatefulWidget {
   @override
@@ -15,6 +19,8 @@ class _ChannelDetailState extends State<ChannelDetail> {
     super.initState();
   }
 
+  ApiListener mApiListener;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +32,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
         flexibleSpace: FlexibleSpaceBar(
           title: Text(
             widget.channelData['channel'],
-            style: TextStyle(color: Colors.black87),
+            style: TextStyle(color: Colors.white, shadows: []),
           ),
           background: Image.asset(
             'assets/mufti_menk.jpg',
@@ -49,7 +55,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
           (context, index) {
             return Container(
               alignment: Alignment.center,
-              child: _detailSection(),
+              child: _detailSection(widget.channelData['channel_id']),
             );
           },
           childCount: 1,
@@ -58,7 +64,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
     ]));
   }
 
-  Widget _detailSection() {
+  Widget _detailSection(channel_id) {
     return Column(
       children: AnimationConfiguration.toStaggeredList(
         duration: const Duration(milliseconds: 375),
@@ -101,141 +107,102 @@ class _ChannelDetailState extends State<ChannelDetail> {
             initiallyExpanded: false,
           ),
           Divider(),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.audiotrack,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.grey[600],
-            ),
-            title: Text('Allah is Testing you !'),
-            subtitle: Text('12 March, 2020'),
-            trailing: FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.file_download),
-              label: Text('4.5MB'),
-            ),
-            onTap: () {
-              playModalBottomSheet(context);
+          FutureBuilder<dynamic>(
+            future: WebServices(this.mApiListener)
+                .getSermonData(), // a previously-obtained Future<String> or null
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              List<Widget> children;
+
+              if (snapshot.hasData) {
+                var data = snapshot.data.where((el)=> el['channel_id']==channel_id).toList();
+                children = <Widget>[
+                  for (var item in data)
+                    Container(
+                        child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          leading: AspectRatio(
+                            child: Image(
+                              width: 30,
+                              image: NetworkImage(YoutubePlayer.getThumbnail(
+                                  videoId: YoutubePlayer.convertUrlToId(
+                                      item['url']))),
+                              centerSlice: Rect.largest,
+                            ),
+                            aspectRatio: 16 / 10,
+                          ),
+                          title: Text(item['title']),
+                          subtitle: Text(item['date']),
+                          // trailing: FlatButton.icon(
+                          //   onPressed: () {},
+                          //   icon: Icon(Icons.file_download),
+                          //   label: Text('4.5MB'),
+                          // ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Play(item)),
+                            );
+                          },
+                        ),
+                        Divider(height:1)
+                      ],
+                    ))
+                ];
+
+                return Center(
+                  child: Column(
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 375),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        horizontalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: widget,
+                        ),
+                      ),
+                      children: children,
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                children = <Widget>[
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                        'something Went Wrong !'), //Error: ${snapshot.error}
+                  )
+                ];
+              } else {
+                children = <Widget>[
+                  SizedBox(
+                    child: SpinKitPulse(
+                      color: Colors.grey,
+                      size: 120.0,
+                    ),
+                    width: 50,
+                    height: 50,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Text(''),
+                  )
+                ];
+              }
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: children,
+                ),
+              );
             },
-          ),
-          Divider(),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.audiotrack,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.grey[600],
-            ),
-            title: Text('Allah is Testing you !'),
-            subtitle: Text('12 March, 2020'),
-            trailing: FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.file_download),
-              label: Text('4.5MB'),
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.audiotrack,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.grey[600],
-            ),
-            title: Text('Allah is Testing you !'),
-            subtitle: Text('12 March, 2020'),
-            trailing: FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.file_download),
-              label: Text('4.5MB'),
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.audiotrack,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.grey[600],
-            ),
-            title: Text('Allah is Testing you !'),
-            subtitle: Text('12 March, 2020'),
-            trailing: FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.file_download),
-              label: Text('4.5MB'),
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.audiotrack,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.grey[600],
-            ),
-            title: Text('Allah is Testing you !'),
-            subtitle: Text('12 March, 2020'),
-            trailing: FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.file_download),
-              label: Text('4.5MB'),
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.audiotrack,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.grey[600],
-            ),
-            title: Text('Allah is Testing you !'),
-            subtitle: Text('12 March, 2020'),
-            trailing: FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.file_download),
-              label: Text('4.5MB'),
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.audiotrack,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.grey[600],
-            ),
-            title: Text('Allah is Testing you !'),
-            subtitle: Text('12 March, 2020'),
-            trailing: FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.file_download),
-              label: Text('4.5MB'),
-            ),
-            onTap: () {},
-          ),
-          Divider(),
+          )
         ],
       ),
     );

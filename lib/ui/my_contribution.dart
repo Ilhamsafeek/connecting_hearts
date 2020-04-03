@@ -4,6 +4,7 @@ import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
 import 'package:camera/camera.dart';
 import 'package:zamzam/ui/project_detail.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyContribution extends StatefulWidget {
   @override
@@ -240,11 +241,11 @@ class _MyContributionState extends State<MyContribution> {
             onTap: () {
               WebServices(this.mApiListener).getData().then((value) {
                 print("Result=================>>>>>");
-               
+
                 var data = value
-              .where((el) => el['appeal_id'] == item['project_id'])
-              .toList();
-             
+                    .where((el) => el['appeal_id'] == item['project_id'])
+                    .toList();
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -253,7 +254,10 @@ class _MyContributionState extends State<MyContribution> {
               });
             },
             title: Text('Project ID: ${item['project_id']}'),
-            subtitle: Text('${item['date_time']}', style: TextStyle(fontSize: 12),),
+            subtitle: Text(
+              '${item['date_time']}',
+              style: TextStyle(fontSize: 12),
+            ),
             trailing: FlatButton.icon(
                 onPressed: () {
                   infoModalBottomSheet(context, _statusIcon, _text);
@@ -274,6 +278,9 @@ class _MyContributionState extends State<MyContribution> {
                 'Receipt Number: ${item['receipt_no']}',
                 style: TextStyle(fontSize: 12),
               ),
+              subtitle: item['method']=='card'
+                  ? FlatButton.icon(onPressed: null, icon: Icon(Icons.credit_card), label: Text('${item['method']}') )
+                  : FlatButton.icon(onPressed: null, icon: Icon(Icons.local_atm), label: Text('${item['method']}') ),
               trailing: _trailing)
         ],
       ),

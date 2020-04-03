@@ -66,7 +66,7 @@ Future navigateFromSplash() async {
                 padding: EdgeInsets.only(bottom: 30.0),
                 child: new Image.asset(
                   "assets/powered_by.png",
-                  height: 25.0,
+                  height: 35.0,
                   fit: BoxFit.scaleDown,
                 ),
               )

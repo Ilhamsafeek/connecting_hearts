@@ -110,7 +110,7 @@ class _HomeState extends State<Home> {
                       item['title'],
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(item['lecturer'] + " . " + item['date'],
+                    subtitle: Text(item['channel'] + " . " + item['date'],
                         style: TextStyle(
                           color: Colors.grey,
                         )),
@@ -171,6 +171,8 @@ class _HomeState extends State<Home> {
         );
       },
     );
+  
+  
   }
 
   Future<Null> _handleRefresh() async {

@@ -57,7 +57,7 @@ class WebServices {
   Future<dynamic> getSermonData() async {
     var response = await http.get("https://chadmin.online/api/allsermons");
     var jsonServerData = json.decode(response.body);
-
+    print("Response ${response.body}");
     return jsonServerData;
   }
 
@@ -474,7 +474,7 @@ class WebServices {
       'min_experience': '$minExperience years',
       'description': '$description',
       'contact': '$contact',
-      'email': '$type',
+      'email': '$email',
       'image': '$image',
       'organization': '$organization',
     });

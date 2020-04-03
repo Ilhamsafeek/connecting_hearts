@@ -9,7 +9,7 @@ import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:zamzam/test.dart';
+import 'package:zamzam/ui/about.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -216,7 +216,7 @@ class ProfileState extends State<Profile> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Payment()),
+                  MaterialPageRoute(builder: (context) => About()),
                 );
               },
             ),

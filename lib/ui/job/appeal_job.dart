@@ -33,7 +33,11 @@ class _AppealJobState extends State<AppealJob> {
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.grey[200],
-        appBar: AppBar(title: Text('Appeal a job')),
+        appBar: AppBar(title: Text('Appeal a job'), leading: IconButton(
+        icon: Icon(Icons.close),
+        onPressed: () {
+          Navigator.pop(context);
+        })),
         body: SingleChildScrollView(
             child: Container(
           child: new Wrap(
