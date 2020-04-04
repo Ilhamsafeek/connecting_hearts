@@ -5,7 +5,8 @@ import 'package:zamzam/ui/sermon/channel_detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Channels extends StatefulWidget {
-  Channels({Key key}) : super(key: key);
+  final dynamic channelType;
+  Channels(this.channelType,{Key key}) : super(key: key);
 
   _ChannelsState createState() => _ChannelsState();
 }
@@ -21,7 +22,7 @@ class _ChannelsState extends State<Channels> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Channels'),
+        title: Text('${widget.channelType} Channels'),
       ),
       body: _bodyItem(),
       // backgroundColor: Colors.grey[200],
@@ -31,36 +32,45 @@ class _ChannelsState extends State<Channels> {
   Widget _bodyItem() {
     return SingleChildScrollView(
       child: Column(
+        
         children: <Widget>[
-
           FutureBuilder<dynamic>(
               future: WebServices(this.mApiListener).getChannelData(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 List<Widget> children;
 
-                if (snapshot.hasData) {
+                if (snapshot.hasData) {  //channelType
+                  dynamic data = snapshot.data.where((el)=> el['type']==widget.channelType).toList();
+                    
+                 
                   children = <Widget>[
-                    for (var item in snapshot.data)
+                    for (var item in data)
                       Column(children: <Widget>[
                         ListTile(
                           leading: CircleAvatar(
-                           backgroundImage:new AssetImage('assets/mufti_menk.jpg'),
-                           radius: 30,
+                            backgroundImage:
+                                new AssetImage('assets/mufti_menk.jpg'),
+                            radius: 30,
                           ),
                           title: Text(item['channel']),
                           subtitle: Text('this is subtitle'),
-                          trailing: Icon(Icons.more_horiz, color: Colors.grey,),
+                          trailing: Icon(
+                            Icons.more_horiz,
+                            color: Colors.grey,
+                          ),
                           onTap: () {
                             Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, anim1, anim2) => ChannelDetail(item),
-                transitionsBuilder: (context, anim1, anim2, child) =>
-                    FadeTransition(opacity: anim1, child: child),
-                transitionDuration: Duration(milliseconds: 100),
-              ),
-            );
-          
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim1, anim2) =>
+                                    ChannelDetail(item),
+                                transitionsBuilder:
+                                    (context, anim1, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim1, child: child),
+                                transitionDuration: Duration(milliseconds: 100),
+                              ),
+                            );
                           },
                         ),
                         Divider()
@@ -101,9 +111,7 @@ class _ChannelsState extends State<Channels> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: children,
                 ));
-             
               }),
-        
         ],
       ),
     );

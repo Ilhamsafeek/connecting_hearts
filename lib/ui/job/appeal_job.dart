@@ -77,6 +77,7 @@ class _AppealJobState extends State<AppealJob> {
               ListTile(
                 leading: Icon(Icons.description),
                 title: TextFormField(
+                  maxLines: 4,
                   controller: _description,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(

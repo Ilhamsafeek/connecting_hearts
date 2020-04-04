@@ -36,8 +36,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
 
     messaging.configure(
       onLaunch: (Map<String, dynamic> event) async {
-        print("onLaunch ------>>>>>> $event");
-         
+      
        dynamic video = json.decode(event['data']['args']);
         Navigator.push(
           context,
@@ -45,9 +44,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         );
       },
       onMessage: (Map<String, dynamic> event) async {
-        print("onMessage $event");
+        
         // foreground
-        // Navigator.of(context).pushNamed(event['screen']);
        
         dynamic video = json.decode(event['data']['args']);
         Navigator.push(
@@ -57,15 +55,14 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       },
       onResume: (Map<String, dynamic> event) async {
         //background
-        // Navigator.of(context).pushNamed(SPLASH_SCREEN);
-       
+        
         dynamic video = json.decode(event['data']['args']);
        
-        print("===================================>>>>>$video");
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Play(video)),
         );
+        
       },
     );
     // messaging.subscribeToTopic('all');
@@ -161,8 +158,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       body: new TabBarView(controller: tabcontroller, children: <Widget>[
         // All the Class goes here
         Home(),
-        Trending(),
-        Subscriptioins(),
+        Charity(),
+        Jobs(),
         Inbox(),
         Library()
       ]),
@@ -269,6 +266,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                 ],
               )),
         ),
+     
       ],
     ));
   }

@@ -7,13 +7,13 @@ import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/project.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Trending extends StatefulWidget {
-  Trending({Key key}) : super(key: key);
+class Charity extends StatefulWidget {
+  Charity({Key key}) : super(key: key);
 
-  _TrendingState createState() => _TrendingState();
+  _CharityState createState() => _CharityState();
 }
 
-class _TrendingState extends State<Trending> {
+class _CharityState extends State<Charity> {
   ApiListener mApiListener;
 
   int _currentIndex = 0;

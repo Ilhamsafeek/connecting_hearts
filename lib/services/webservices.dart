@@ -482,4 +482,20 @@ class WebServices {
     return response.statusCode;
     // print('Response body: ${response.body}');
   }
+
+Future<int> deleteJob(id) async {
+    // DateTime now = DateTime.now();
+    // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+    var url = 'https://www.chadmin.online/api/deletejob';
+    var response = await http.post(url, body: {
+      'id': '$id',
+    });
+
+    print(response.statusCode);
+    print(response.body);
+    return response.statusCode;
+  }
+
+
+
 }

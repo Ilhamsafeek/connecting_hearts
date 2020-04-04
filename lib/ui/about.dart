@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:zamzam/ui/payment.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
 class About extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class _AboutState extends State<About> {
   ApiListener mApiListener;
   dynamic totalContribution = 0;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -37,10 +40,10 @@ class _AboutState extends State<About> {
   }
 
   Future selectNotification(String payload) {
-     Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Payment()),
-        );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Payment()),
+    );
   }
 
   void showNotification() {
@@ -56,6 +59,7 @@ class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.grey[200],
         appBar: AppBar(),
         body: SingleChildScrollView(
@@ -67,14 +71,57 @@ class _AboutState extends State<About> {
                   children: <Widget>[
                     Center(child: Image.asset('assets/logo.png', height: 80)),
                     RaisedButton(
-                      onPressed: () {
-                        showNotification();
+                      onPressed: () async {
+                       
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content:
+                                Text("Please check your internet connection !!"),
+                          ));
+                        
+                        {}
                       },
                       child: Text('Notify'),
                     )
                   ],
                 ),
-              )
+              ),
+              Builder(builder: (BuildContext context){
+                return OfflineBuilder(
+                  connectivityBuilder: (
+                    BuildContext context,
+                    ConnectivityResult connectivity,
+                    Widget child){
+                    final bool connected =connectivity!= ConnectivityResult.none;
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          child,
+                          Positioned(
+                            left: 0.0,
+                            right: 0.0,
+                            height: 12.0,
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              color: connected ? null : Colors.red,
+                              child: connected ? null :
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('Offline')
+                                ],
+                              )
+                            ),
+                          )
+                        ],
+                      );
+
+                    }
+                  
+                  );
+
+                  
+
+              })
             ],
           ),
         ));

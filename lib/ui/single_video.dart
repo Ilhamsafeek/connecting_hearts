@@ -6,12 +6,12 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class Play extends StatefulWidget {
   
   final dynamic video;
+    static const routeName = '/play';
   Play(this.video, {Key key}) : super(key: key);
   _PlayState createState() => _PlayState();
 }
 
 class _PlayState extends State<Play> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

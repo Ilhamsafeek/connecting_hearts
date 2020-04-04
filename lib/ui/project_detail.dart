@@ -218,7 +218,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             ],
           ),
         ),
-        Padding(
+       
+       Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 5,
           ),

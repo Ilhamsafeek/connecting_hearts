@@ -79,6 +79,8 @@ class _PostVacancyState extends State<PostVacancy> {
               ListTile(
                 leading: Icon(Icons.description),
                 title: TextFormField(
+                  maxLines: 5,
+                  
                   controller: _description,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(

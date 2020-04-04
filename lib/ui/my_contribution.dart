@@ -274,13 +274,19 @@ class _MyContributionState extends State<MyContribution> {
           ),
           Divider(height: 0),
           ListTile(
-              title: Text(
+              title: item['method'] == 'card'
+                  ? FlatButton.icon(
+                      onPressed: null,
+                      icon: Icon(Icons.credit_card),
+                      label: Text('${item['method']}'))
+                  : FlatButton.icon(
+                      onPressed: null,
+                      icon: Icon(Icons.local_atm),
+                      label: Text('${item['method']}')),
+              subtitle: Text(
                 'Receipt Number: ${item['receipt_no']}',
                 style: TextStyle(fontSize: 12),
               ),
-              subtitle: item['method']=='card'
-                  ? FlatButton.icon(onPressed: null, icon: Icon(Icons.credit_card), label: Text('${item['method']}') )
-                  : FlatButton.icon(onPressed: null, icon: Icon(Icons.local_atm), label: Text('${item['method']}') ),
               trailing: _trailing)
         ],
       ),
@@ -324,4 +330,5 @@ class _MyContributionState extends State<MyContribution> {
           });
         });
   }
+
 }

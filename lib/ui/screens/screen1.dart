@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/ui/sermon/channel_detail.dart';
 import 'package:zamzam/ui/single_video.dart';
 import 'package:zamzam/ui/sermon/channels.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -44,10 +45,19 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Channels()),
+                            MaterialPageRoute(builder: (context) => Channels('Personal')),
                           );
                         }),
-                    Chip(label: Text('Zamzam Updates')),
+                        InkWell(
+                        child:Chip(label: Text('Zamzam Updates')),
+                     onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Channels('Special')),
+                          );
+                        }),
+                    
+                    
                   ],
                 ),
               ),
@@ -83,11 +93,11 @@ class _HomeState extends State<Home> {
           children = <Widget>[
             for (var item in snapshot.data)
               Container(
-                child: Column(
+                  child: Column(
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                      print("+++++++++++++++++++++++$item");
+                     
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Play(item)),
@@ -104,8 +114,23 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(item['profile_url']),
+                    leading: InkWell(
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(item['profile_url']),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, anim1, anim2) =>
+                                ChannelDetail(item),
+                            transitionsBuilder: (context, anim1, anim2,
+                                    child) =>
+                                FadeTransition(opacity: anim1, child: child),
+                            transitionDuration: Duration(milliseconds: 100),
+                          ),
+                        );
+                      },
                     ),
                     title: Text(
                       item['title'],
@@ -172,8 +197,6 @@ class _HomeState extends State<Home> {
         );
       },
     );
-  
-  
   }
 
   Future<Null> _handleRefresh() async {
