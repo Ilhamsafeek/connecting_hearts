@@ -40,7 +40,6 @@ class _CharityState extends State<Charity> {
     return user;
   }
 
-  
   Widget _bodyItem() {
     return SingleChildScrollView(
       child: new Column(

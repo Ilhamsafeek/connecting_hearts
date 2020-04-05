@@ -5,7 +5,6 @@ import 'package:zamzam/ui/job/post_vacancy.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zamzam/services/services.dart';
-import 'package:zamzam/ui/sermon/channel_detail.dart';
 import 'package:zamzam/constant/Constant.dart';
 
 class Jobs extends StatefulWidget {

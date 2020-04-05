@@ -10,7 +10,7 @@ class WebServices {
 
   WebServices(this.mApiListener);
 
-  Future<dynamic> getData() async {
+  Future<dynamic> getProjectData() async {
     var response = await http.get("https://www.chadmin.online/api/projects");
     var jsonServerData = json.decode(response.body);
 
@@ -455,7 +455,6 @@ class WebServices {
   }
 
 // Job
-
   Future<dynamic> getJobData() async {
     var url = 'https://www.chadmin.online/api/alljob';
     var response = await http.get(url);

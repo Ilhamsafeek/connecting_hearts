@@ -16,7 +16,7 @@ import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/ui/profile.dart';
 import 'package:zamzam/ui/single_video.dart';
-
+import 'package:zamzam/data_search.dart';
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
   @override
@@ -36,17 +36,15 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
 
     messaging.configure(
       onLaunch: (Map<String, dynamic> event) async {
-      
-       dynamic video = json.decode(event['data']['args']);
+        dynamic video = json.decode(event['data']['args']);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Play(video)),
         );
       },
       onMessage: (Map<String, dynamic> event) async {
-        
         // foreground
-       
+
         dynamic video = json.decode(event['data']['args']);
         Navigator.push(
           context,
@@ -55,14 +53,13 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       },
       onResume: (Map<String, dynamic> event) async {
         //background
-        
+
         dynamic video = json.decode(event['data']['args']);
-       
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Play(video)),
         );
-        
       },
     );
     // messaging.subscribeToTopic('all');
@@ -91,22 +88,12 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       key: homePageKey,
       appBar: new AppBar(
         actions: <Widget>[
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: Icon(Icons.videocam),
-          // ),
+      
           IconButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   PageRouteBuilder(
-              //     pageBuilder: (context, anim1, anim2) => Search(),
-              //     transitionsBuilder: (context, anim1, anim2, child) =>
-              //         FadeTransition(opacity: anim1, child: child),
-              //     transitionDuration: Duration(milliseconds: 100),
-              //   ),
-              // );
+            
               showSearch(context: context, delegate: DataSearch());
+
             },
             icon: Icon(Icons.search),
           ),
@@ -266,7 +253,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                 ],
               )),
         ),
-     
       ],
     ));
   }
@@ -274,78 +260,5 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   Future<FirebaseUser> currentUser() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return user;
-  }
-}
-
-class DataSearch extends SearchDelegate<String> {
-  final cities = [
-    "Trincomalee",
-    "Colombo",
-    "Galle",
-    "Matara",
-    "Anuradhapura",
-    "Gampaha",
-    "Puttalam"
-  ];
-  final recents = ["Trincomalee", "Colombo", "Galle"];
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    // Leading icon on the left side of app bar
-    return IconButton(
-        icon: AnimatedIcon(
-            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
-        onPressed: () {
-          close(context, null);
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // show some result based on the selection
-    return Center(
-        child: Container(
-            height: 100,
-            width: 100,
-            child: Card(
-              color: Colors.orange,
-              child: Center(child: Text(query)),
-            )));
-  }
-
-  Widget buildSuggestions(BuildContext context) {
-    // Show when someone searches for something
-    final suggestionList = query.isEmpty ? recents : cities;
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          showResults(context);
-        },
-        leading: Icon(Icons.search),
-        title: RichText(
-            text: TextSpan(
-                text: suggestionList[index].substring(0, query.length),
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-                children: [
-              TextSpan(
-                  text: suggestionList[index].substring(query.length),
-                  style: TextStyle(color: Colors.grey))
-            ])),
-      ),
-      itemCount: suggestionList.length,
-    );
   }
 }

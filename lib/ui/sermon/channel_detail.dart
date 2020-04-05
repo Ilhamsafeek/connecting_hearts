@@ -64,7 +64,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
     ]));
   }
 
-  Widget _detailSection(channel_id) {
+  Widget _detailSection(channelId) {
     return Column(
       children: AnimationConfiguration.toStaggeredList(
         duration: const Duration(milliseconds: 375),
@@ -114,7 +114,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
               List<Widget> children;
 
               if (snapshot.hasData) {
-                var data = snapshot.data.where((el)=> el['channel_id']==channel_id).toList();
+                var data = snapshot.data.where((el)=> el['channel_id']==channelId).toList();
                 children = <Widget>[
                   for (var item in data)
                     Container(
@@ -203,60 +203,10 @@ class _ChannelDetailState extends State<ChannelDetail> {
               );
             },
           )
+        
         ],
       ),
     );
   }
 
-  Future<bool> playModalBottomSheet(context) {
-    return showModalBottomSheet(
-        enableDrag: true,
-        context: context,
-        isScrollControlled: true,
-        isDismissible: true,
-        builder: (context) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              child: new Wrap(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: ListTile(
-                        title: Text('Allah is Watching you !'),
-                      )),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: ListTile(
-                        leading: IconButton(
-                          icon: CircleAvatar(
-                            radius: 20,
-                            child: Icon(
-                              Icons.play_arrow,
-                              color: Colors.white,
-                            ),
-                            backgroundColor: Colors.grey[600],
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).pop();
-                          },
-                        ),
-                        title: LinearProgressIndicator(
-                          backgroundColor: Colors.grey[600],
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.volume_up),
-                          onPressed: () {
-                            // Navigator.of(context).pop();
-                          },
-                        ),
-                      )),
-                ],
-              ),
-            );
-          });
-        });
-  }
 }

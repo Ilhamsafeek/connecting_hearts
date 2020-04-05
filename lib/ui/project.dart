@@ -42,7 +42,7 @@ class _ProjectPageState extends State<Project> {
   Widget buildData() {
     return FutureBuilder<dynamic>(
       future: WebServices(this.mApiListener)
-          .getData(), // a previously-obtained Future<String> or null
+          .getProjectData(), // a previously-obtained Future<String> or null
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         List<Widget> children;
 
@@ -131,6 +131,7 @@ class _ProjectPageState extends State<Project> {
                   subtitle: Text('Family of ${data['children']} Members',
                       style: TextStyle(color: Colors.white)),
                   trailing: Chip(
+                    avatar: Icon(Icons.star_border),
                     label: Text(
                       "${data['rating']}",
                       style:
@@ -162,8 +163,8 @@ class _ProjectPageState extends State<Project> {
                   //   )),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(top: 95),
-                  leading: FlatButton.icon(
+                  contentPadding: EdgeInsets.only(top: 40),
+                  title: FlatButton.icon(
                       onPressed: null,
                       icon: Icon(
                         Icons.location_on,
@@ -174,34 +175,33 @@ class _ProjectPageState extends State<Project> {
                         '${data['city']}, ${data['district']}',
                         style: TextStyle(color: Colors.white),
                       )),
+                  
+                  subtitle: new LinearPercentIndicator(
+                    animation: true,
+                    lineHeight: 14.0,
+                    animationDuration: 2000,
+                    width: 150.0,
+                    percent: percent,
+                    center: Text(
+                      "${double.parse(completedPercent.toStringAsFixed(2))}%",
+                      style: new TextStyle(fontSize: 12.0, color: percentColor),
+                    ),
+                    trailing: Text(
+                      'Rs.' + '${formattedAmount.output.withoutFractionDigits}',
+                      style: TextStyle(
+                          fontFamily: "Exo2",
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0),
+                    ),
+                    linearStrokeCap: LinearStrokeCap.roundAll,
+                    backgroundColor: Colors.grey,
+                    progressColor: completedColor,
+                  ),
                 ),
               ],
             )),
           ]),
-          ListTile(
-            title: new LinearPercentIndicator(
-              animation: true,
-              lineHeight: 14.0,
-              animationDuration: 2000,
-              width: 150.0,
-              percent: percent,
-              center: Text(
-                "${double.parse(completedPercent.toStringAsFixed(2))}%",
-                style: new TextStyle(fontSize: 12.0, color: percentColor),
-              ),
-              trailing: Text(
-                'Rs.' + '${formattedAmount.output.withoutFractionDigits}',
-                style: TextStyle(
-                    fontFamily: "Exo2",
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0),
-              ),
-              linearStrokeCap: LinearStrokeCap.roundAll,
-              backgroundColor: Colors.grey,
-              progressColor: completedColor,
-            ),
-          ),
           Container(
             color: Colors.black,
             width: double.infinity,

@@ -239,7 +239,7 @@ class _MyContributionState extends State<MyContribution> {
         children: <Widget>[
           ListTile(
             onTap: () {
-              WebServices(this.mApiListener).getData().then((value) {
+              WebServices(this.mApiListener).getProjectData().then((value) {
                 print("Result=================>>>>>");
 
                 var data = value
