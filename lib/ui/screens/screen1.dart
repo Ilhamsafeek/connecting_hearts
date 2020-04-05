@@ -7,6 +7,7 @@ import 'package:zamzam/ui/sermon/channel_detail.dart';
 import 'package:zamzam/ui/single_video.dart';
 import 'package:zamzam/ui/sermon/channels.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -45,19 +46,19 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Channels('Personal')),
+                            MaterialPageRoute(
+                                builder: (context) => Channels('Personal')),
                           );
                         }),
-                        InkWell(
-                        child:Chip(label: Text('Zamzam Updates')),
-                     onTap: () {
+                    InkWell(
+                        child: Chip(label: Text('Zamzam Updates')),
+                        onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Channels('Special')),
+                            MaterialPageRoute(
+                                builder: (context) => Channels('Special')),
                           );
                         }),
-                    
-                    
                   ],
                 ),
               ),
@@ -97,7 +98,6 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                     
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Play(item)),
@@ -148,16 +148,16 @@ class _HomeState extends State<Home> {
 
           return Center(
             child: Column(
-              children: AnimationConfiguration.toStaggeredList(
-                duration: const Duration(milliseconds: 375),
-                childAnimationBuilder: (widget) => SlideAnimation(
-                  horizontalOffset: 50.0,
-                  child: FlipAnimation(
-                    child: widget,
-                  ),
-                ),
+              // children: AnimationConfiguration.toStaggeredList(
+              //   duration: const Duration(milliseconds: 375),
+              //   childAnimationBuilder: (widget) => SlideAnimation(
+              //     horizontalOffset: 50.0,
+              //     child: SlideAnimation(
+              //       child: widget,
+              //     ),
+              //   ),
                 children: children,
-              ),
+              
             ),
           );
         } else if (snapshot.hasError) {
@@ -174,18 +174,54 @@ class _HomeState extends State<Home> {
           ];
         } else {
           children = <Widget>[
-            SizedBox(
-              child: SpinKitPulse(
-                color: Colors.grey,
-                size: 120.0,
-              ),
-              width: 50,
-              height: 50,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text(''),
-            )
+            Shimmer.fromColors(
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[100],
+                child: Container(
+                    child: Column(
+                  children: <Widget>[
+                    AspectRatio(
+                      aspectRatio: 16 / 10,
+                      child: Container(color: Colors.black),
+                    ),
+                    ListTile(
+                      leading: InkWell(
+                        child: CircleAvatar(),
+                      ),
+                      title: Container(
+                        color: Colors.black,
+                        height: 10,
+                        width: 10,
+                      ),
+                      subtitle: Container(
+                        color: Colors.black,
+                        height: 6,
+                        width: 50.0,
+                      ),
+                      trailing: Icon(Icons.more_vert),
+                    ),
+                    AspectRatio(
+                      aspectRatio: 16 / 10,
+                      child: Container(color: Colors.black),
+                    ),
+                    ListTile(
+                      leading: InkWell(
+                        child: CircleAvatar(),
+                      ),
+                      title: Container(
+                        color: Colors.black,
+                        height: 10,
+                        width: 10,
+                      ),
+                      subtitle: Container(
+                        color: Colors.black,
+                        height: 6,
+                        width: 50.0,
+                      ),
+                      trailing: Icon(Icons.more_vert),
+                    ),
+                  ],
+                )))
           ];
         }
         return Center(

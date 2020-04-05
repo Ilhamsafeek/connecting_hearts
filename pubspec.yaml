@@ -54,7 +54,7 @@ dependencies:
   flutter_local_notifications: ^1.1.0
   connectivity:
   flutter_offline:
-    
+  shimmer: ^1.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

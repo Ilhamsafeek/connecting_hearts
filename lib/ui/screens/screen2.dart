@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/project.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Charity extends StatefulWidget {
   Charity({Key key}) : super(key: key);
@@ -145,18 +146,19 @@ class _CharityState extends State<Charity> {
                 ];
               } else {
                 children = <Widget>[
-                  SizedBox(
-                    child: SpinKitPulse(
-                      color: Colors.grey,
-                      size: 120.0,
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey[300],
+                    highlightColor: Colors.grey[100],
+                    child: GridView.count(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: 4,
+                      children: List<GridItem>.generate(12, (int index) {
+                        return GridItem(
+                            GridModel("assets/zamzam.png", "test", null));
+                      }),
                     ),
-                    width: 50,
-                    height: 50,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16),
-                    child: Text(''),
-                  )
                 ];
               }
               return Center(
