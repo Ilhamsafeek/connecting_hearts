@@ -117,6 +117,22 @@ class _ProjectPageState extends State<Project> {
               // borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
               child: Image.asset('assets/child.png'),
             ),
+            Container(
+      height: MediaQuery.of(context).size.width * 0.58,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color(0xCC000000),
+            const Color(0x00000000),
+            const Color(0x00000000),
+            const Color(0xCC000000),
+          ],
+        ),
+      ),
+    ),
             Center(
                 child: Column(
               children: <Widget>[

@@ -20,7 +20,9 @@ class _SigninPageState extends State<Signin> {
   String countryCode = '+94';
   String smsCode;
   String verificationId;
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrive = (String verId) {
@@ -31,13 +33,13 @@ class _SigninPageState extends State<Signin> {
       this.verificationId = verId;
       smsCodeDialog(context).then((value) {
         print('signed in');
-        CURRENT_USER= "${this.countryCode}${this.phoneNo}";
+        CURRENT_USER = "${this.countryCode}${this.phoneNo}";
       });
     };
     final PhoneVerificationCompleted verifiedSuccess =
         (AuthCredential credential) {
       print('verified');
-      CURRENT_USER= "${this.countryCode}${this.phoneNo}";
+      CURRENT_USER = "${this.countryCode}${this.phoneNo}";
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
@@ -66,59 +68,61 @@ class _SigninPageState extends State<Signin> {
         barrierDismissible: false,
         builder: (BuildContext contect) {
           return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text("Mobile verification",
-                  style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
-              
-            ),
-            body: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Text("Enter the 6 digit code sent to ${this.phoneNo}",
-                        style: TextStyle(
-                            fontFamily: "Exo2",
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text("Mobile verification",
+                    style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
+              ),
+              body: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text("Enter the 6 digit code sent to ${this.phoneNo}",
+                          style: TextStyle(
+                              fontFamily: "Exo2",
+                              color: Colors.black,
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold)),
+                      new VerificationCodeInput(
+                        keyboardType: TextInputType.number,
+                        length: 6,
+                        onCompleted: (String value) {
+                          this.smsCode = value;
+                        },
+                      ),
+                      Spacer(),
+                      Container(
+                        child: Ink(
+                          decoration: ShapeDecoration(
                             color: Colors.black,
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold)),
-                    new VerificationCodeInput(
-                      keyboardType: TextInputType.number,
-                      length: 6,
-                      onCompleted: (String value) {
-                        this.smsCode = value;
-                      },
-                    ),
-                    Spacer(),
-                    Container(
-                      child: Ink(
-                        decoration: ShapeDecoration(
-                          color: Colors.black,
-                          shape: CircleBorder(),
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.arrow_forward),
-                          color: Colors.white,
-                          onPressed: () {
-                            FirebaseAuth.instance.currentUser().then((user) {
-                              if (user != null) {
-                                Navigator.of(context)
-                                    .pushReplacementNamed(HOME_PAGE);
-                              } else {
-                                Navigator.of(context).pop();
-                                signIn();
-                              }
-                            });
-                          },
+                            shape: CircleBorder(),
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_forward),
+                            color: Colors.white,
+                            onPressed: () {
+                              FirebaseAuth.instance.currentUser().then((user) {
+                                if (user != null) {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Details()),
+                                  );
+                                } else {
+                                  Navigator.of(context).pop();
+                                  signIn();
+                                }
+                              });
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          );
+              ));
         });
   }
 
@@ -145,61 +149,66 @@ class _SigninPageState extends State<Signin> {
         key: _scaffoldKey,
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Mobile verification",
+          title: Text("Signin",
               style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
-          
         ),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Text('Please enter your mobile number',
-                      style: TextStyle(fontSize: 18, fontFamily: "Exo2")),
-                  SizedBox(height: 15.0),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: CountryPickerDropdown(
-                          initialValue: 'lk',
-                          itemBuilder: _buildDropdownItem,
-                          onValuePicked: (Country country) {
-                            print("${country.phoneCode}");
-                            this.countryCode = "+${country.phoneCode}";
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: TextField(
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            focusColor: Colors.black,
-                            hintText: "777140803",
+            padding: EdgeInsets.all(16.0),
+            child: Center(
+              child: SingleChildScrollView(
+                  child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Text('Please enter your mobile number',
+                        style: TextStyle(fontSize: 18, fontFamily: "Exo2")),
+                    SizedBox(height: 15.0),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: CountryPickerDropdown(
+                            initialValue: 'lk',
+                            itemBuilder: _buildDropdownItem,
+                            onValuePicked: (Country country) {
+                              print("${country.phoneCode}");
+                              this.countryCode = "+${country.phoneCode}";
+                            },
                           ),
-                          style: TextStyle(fontSize: 18, fontFamily: "Exo2"),
-                          onChanged: (value) {
-                            print(value);
-                            this.phoneNo = value;
-                          },
                         ),
-                      ),
-                    ],
-                  ),
-                 
-                  SizedBox(height: 15.0),
-                  RaisedButton(
-                    onPressed: verifyPhone,
-                    child: Text('verify'),
-                    textColor: Colors.white,
-                    elevation: 7.0,
-                    color: Colors.black,
-                  )
-                ],
-              ),
-            ),
-          ),
-        ));
+                        Expanded(
+                          child: TextField(
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(
+                              focusColor: Colors.black,
+                              hintText: "777140803",
+                            ),
+                            style: TextStyle(fontSize: 18, fontFamily: "Exo2"),
+                            onChanged: (value) {
+                              print(value);
+                              this.phoneNo = value;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15.0),
+                    RaisedButton(
+                      onPressed: () {
+                        _formKey.currentState.validate()
+                            ? verifyPhone()
+                            : _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                content: Text("Please check the inputs"),
+                              ));
+                      },
+                      child: Text('verify'),
+                      textColor: Colors.white,
+                      elevation: 7.0,
+                      color: Colors.black,
+                    )
+                  ],
+                ),
+              )),
+            )));
   }
 
   Widget _buildDropdownItem(Country country) => Container(
@@ -214,4 +223,153 @@ class _SigninPageState extends State<Signin> {
           ],
         ),
       );
+}
+
+class Details extends StatefulWidget {
+  @override
+  _DetailsState createState() => _DetailsState();
+
+  // final dynamic projectData;
+  // Payment(this.projectData, {Key key}) : super(key: key);
+}
+
+class _DetailsState extends State<Details> {
+  ApiListener mApiListener;
+  dynamic totalContribution = 0;
+  TextEditingController _firstNameController;
+  TextEditingController _lastNameController;
+  TextEditingController _emailController;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(),
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Center(
+              child: SingleChildScrollView(
+                  child: Form(
+                      key: _formKey,
+                      child: Column(children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text('One more step to go',
+                                style: TextStyle(
+                                    fontSize: 18, fontFamily: "Exo2")),
+                            SizedBox(height: 15.0),
+                            Row(children: <Widget>[
+                              Expanded(
+                                flex: 2,
+                                child: TextFormField(
+                                  controller: _firstNameController,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'please enter first name.';
+                                    }
+                                    if (value.length < 5) {
+                                      return 'choose a firast name with atleast 5 chars.';
+                                    }
+                                  },
+                                  // controller: _usernameController,
+                                  decoration: InputDecoration(
+                                    // border: OutlineInputBorder(),
+                                    labelText: 'First Name',
+                                    hintText: '',
+                                  ),
+                                  textInputAction: TextInputAction.next,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: TextFormField(
+                                  controller: _lastNameController,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'please enter last name.';
+                                    }
+                                    if (value.length < 5) {
+                                      return 'choose a last name with atleast 5 chars.';
+                                    }
+                                  },
+                                  // controller: _usernameController,
+                                  decoration: InputDecoration(
+                                    // border: OutlineInputBorder(),
+                                    labelText: 'Last Name',
+                                    hintText: '',
+                                  ),
+                                  textInputAction: TextInputAction.next,
+                                ),
+                              ),
+                            ]),
+                            TextFormField(
+                              controller: _emailController,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'please enter email.';
+                                }
+                                if (value.length < 5) {
+                                  return 'enter a valid email address';
+                                }
+                                if (!RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value)) {
+                                  return 'email format is not valid';
+                                }
+                              },
+                              // controller: _usernameController,
+                              decoration: InputDecoration(
+                                // border: OutlineInputBorder(),
+                                labelText: 'Email',
+                                hintText: '',
+                              ),
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 15.0),
+                            RaisedButton(
+                              onPressed: () {
+                                _formKey.currentState.validate()
+                                    ? WebServices(this.mApiListener)
+                                        .updateUser(
+                                          "",
+                                          _emailController.text,
+                                            _firstNameController.text,
+                                            _lastNameController.text,
+                                            )
+                                        .then((value) {
+                                        if (value == 200) {
+                                          Navigator.pop(context);
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(HOME_PAGE);
+                                        } else {
+                                          _scaffoldKey.currentState
+                                              .showSnackBar(SnackBar(
+                                            content: Text(
+                                                "Something went wrong. Please try again."),
+                                          ));
+                                        }
+                                      })
+                                    : _scaffoldKey.currentState
+                                        .showSnackBar(SnackBar(
+                                        content:
+                                            Text("Please check the inputs"),
+                                      ));
+                              },
+                              child: Text('Submit'),
+                              textColor: Colors.white,
+                              elevation: 7.0,
+                              color: Colors.black,
+                            )
+                          ],
+                        )
+                      ])))),
+        ));
+  }
 }

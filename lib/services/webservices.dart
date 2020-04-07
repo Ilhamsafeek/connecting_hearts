@@ -31,7 +31,7 @@ class WebServices {
     return response.body;
   }
 
-  Future<int> updateUser(username, email) async {
+  Future<int> updateUser(username, email, fname,lname) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
     var url = 'https://www.chadmin.online/api/updateaccount';
@@ -39,6 +39,8 @@ class WebServices {
       'username': '$username',
       'phone': '$CURRENT_USER',
       'email': '$email',
+      'firstname': '$fname',
+      'lastname': '$lname',
     });
 
     print(response.statusCode);
