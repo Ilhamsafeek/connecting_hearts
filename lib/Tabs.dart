@@ -17,6 +17,7 @@ import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/ui/profile.dart';
 import 'package:zamzam/ui/single_video.dart';
 import 'package:zamzam/data_search.dart';
+
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
   @override
@@ -88,12 +89,14 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       key: homePageKey,
       appBar: new AppBar(
         actions: <Widget>[
-      
           IconButton(
-            onPressed: () {
-            
-              showSearch(context: context, delegate: DataSearch());
-
+            onPressed: () async {
+              await showSearch<String>(
+                context: context,
+                delegate: DataSearch(
+                  onSearchChanged: DataSearch().getRecentSearchesLike,
+                ),
+              );
             },
             icon: Icon(Icons.search),
           ),

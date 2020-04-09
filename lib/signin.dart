@@ -146,69 +146,104 @@ class _SigninPageState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("Signin",
-              style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
-        ),
-        body: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Center(
-              child: SingleChildScrollView(
-                  child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    Text('Please enter your mobile number',
-                        style: TextStyle(fontSize: 18, fontFamily: "Exo2")),
-                    SizedBox(height: 15.0),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: CountryPickerDropdown(
-                            initialValue: 'lk',
-                            itemBuilder: _buildDropdownItem,
-                            onValuePicked: (Country country) {
-                              print("${country.phoneCode}");
-                              this.countryCode = "+${country.phoneCode}";
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              focusColor: Colors.black,
-                              hintText: "777140803",
-                            ),
-                            style: TextStyle(fontSize: 18, fontFamily: "Exo2"),
-                            onChanged: (value) {
-                              print(value);
-                              this.phoneNo = value;
-                            },
-                          ),
-                        ),
-                      ],
+      key: _scaffoldKey,
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Text("Signin",
+      //       style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
+      // ),
+      body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/test.gif"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                ListTile(
+                  leading: CircleAvatar(
+                    radius: 35,
+                    child: Image.asset(
+                      "assets/ch_logo.png",
+                      color: Colors.white,
                     ),
-                    SizedBox(height: 15.0),
-                    RaisedButton(
-                      onPressed: () {
-                        _formKey.currentState.validate()
-                            ? verifyPhone()
-                            : _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                content: Text("Please check the inputs"),
-                              ));
-                      },
-                      child: Text('verify'),
-                      textColor: Colors.white,
-                      elevation: 7.0,
-                      color: Colors.black,
-                    )
-                  ],
+                  ),
                 ),
-              )),
-            )));
+                ListTile(
+                  title: Text(
+                    'You Make a difference, We Make it Easy',
+                    style: TextStyle(color: Colors.white, fontSize: 32),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    padding:
+                        const EdgeInsets.all(16.0),
+                    decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(20.0),
+                          topRight: const Radius.circular(20.0),
+                        )),
+                    child: Column(children: <Widget>[
+                      Text('Please enter your mobile number',
+                          style: TextStyle(fontSize: 18, fontFamily: "Exo2")),
+                      SizedBox(height: 15.0),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: CountryPickerDropdown(
+                              initialValue: 'lk',
+                              itemBuilder: _buildDropdownItem,
+                              onValuePicked: (Country country) {
+                                print("${country.phoneCode}");
+                                this.countryCode = "+${country.phoneCode}";
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: TextField(
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                focusColor: Colors.black,
+                                hintText: "777140803",
+                              ),
+                              style:
+                                  TextStyle(fontSize: 18, fontFamily: "Exo2"),
+                              onChanged: (value) {
+                                print(value);
+                                this.phoneNo = value;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15.0),
+                      RaisedButton(
+                        onPressed: () {
+                          _formKey.currentState.validate()
+                              ? verifyPhone()
+                              : _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text("Please check the inputs"),
+                                ));
+                        },
+                        child: Text('Signin my Account'),
+                        textColor: Colors.white,
+                        color: Colors.green[800],
+                      )
+                    ]))
+              ],
+            ),
+          )),
+    );
   }
 
   Widget _buildDropdownItem(Country country) => Container(
@@ -236,9 +271,10 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   ApiListener mApiListener;
   dynamic totalContribution = 0;
-  TextEditingController _firstNameController;
-  TextEditingController _lastNameController;
-  TextEditingController _emailController;
+  final _emailController = TextEditingController(text: "");
+  final _firstNameController = TextEditingController(text: "");
+  final _lastNameController = TextEditingController(text: "");
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   @override
@@ -264,7 +300,7 @@ class _DetailsState extends State<Details> {
                             Text('One more step to go',
                                 style: TextStyle(
                                     fontSize: 18, fontFamily: "Exo2")),
-                            SizedBox(height: 15.0),
+                            SizedBox(height: 20.0),
                             Row(children: <Widget>[
                               Expanded(
                                 flex: 2,
@@ -278,7 +314,7 @@ class _DetailsState extends State<Details> {
                                       return 'choose a firast name with atleast 5 chars.';
                                     }
                                   },
-                                  // controller: _usernameController,
+                                  keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
                                     // border: OutlineInputBorder(),
                                     labelText: 'First Name',
@@ -324,7 +360,7 @@ class _DetailsState extends State<Details> {
                                   return 'email format is not valid';
                                 }
                               },
-                              // controller: _usernameController,
+                              keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 // border: OutlineInputBorder(),
                                 labelText: 'Email',
@@ -338,11 +374,11 @@ class _DetailsState extends State<Details> {
                                 _formKey.currentState.validate()
                                     ? WebServices(this.mApiListener)
                                         .updateUser(
-                                          "",
-                                          _emailController.text,
-                                            _firstNameController.text,
-                                            _lastNameController.text,
-                                            )
+                                        "",
+                                        _emailController.text,
+                                        _firstNameController.text,
+                                        _lastNameController.text,
+                                      )
                                         .then((value) {
                                         if (value == 200) {
                                           Navigator.pop(context);

@@ -1,4 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,11 +6,20 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:zamzam/ui/job/job_detail.dart';
 import 'package:zamzam/ui/project_detail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+typedef OnSearchChanged = Future<List<String>> Function(String);
 class DataSearch extends SearchDelegate<String> {
   ApiListener mApiListener;
 
-  Future<void> _saveToRecentSearches(String searchText) async {
+  final OnSearchChanged onSearchChanged;
+  List<String> _oldFilters = const [];
+
+  DataSearch({String searchFieldLabel, this.onSearchChanged})
+      : super(searchFieldLabel: searchFieldLabel);
+
+
+  Future<void> saveToRecentSearches(String searchText) async {
     if (searchText == null) return; //Should not be null
     final pref = await SharedPreferences.getInstance();
 
@@ -24,46 +32,13 @@ class DataSearch extends SearchDelegate<String> {
     pref.setStringList("recentSearches", allSearches.toList());
   }
 
-  Future<List<String>> _getRecentSearchesLike(String query) async {
+  
+  Future<List<String>> getRecentSearchesLike(String query) async {
     final pref = await SharedPreferences.getInstance();
     final allSearches = pref.getStringList("recentSearches");
     return allSearches.where((search) => search.startsWith(query)).toList();
   }
 
-  final cities = [
-    "Trincomalee",
-    "Colombo",
-    "Galle",
-    "Matara",
-    "Anuradhapura",
-    "Gampaha",
-    "Puttalam"
-  ];
-  final recents = ["Trincomalee", "Colombo", "Galle"];
-
-  // _getSermonData() async{
-  //   dynamic sermonList;
-  //  await WebServices(this.mApiListener).getSermonData().then((value){
-  //     print("=======>>>>>$value");
-  //     sermonList = value;
-  //   });
-
-  //   return sermonList;
-
-  // }
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: const Icon(Icons.mic),
-        tooltip: 'Voice input',
-        onPressed: () {
-          // this.query = 'TBW: Get input from voice';
-        },
-      ),
-    ];
-  }
 
   @override
   Widget buildLeading(BuildContext context) {
@@ -76,8 +51,21 @@ class DataSearch extends SearchDelegate<String> {
         });
   }
 
+
   @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () => query = "",
+      ),
+    ];
+  }
+
+
+    @override
   Widget buildResults(BuildContext context) {
+    saveToRecentSearches(this.query);
     // show some result based on the selection
     return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -87,9 +75,10 @@ class DataSearch extends SearchDelegate<String> {
             children: <Widget>[
               //Charity
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   //Define your action when clicking on result item.
                   //Here, it simply closes the page
+                  
                   this.close(context, this.query);
                 },
                 child: FutureBuilder<dynamic>(
@@ -431,44 +420,27 @@ class DataSearch extends SearchDelegate<String> {
         ));
   }
 
+  @override
   Widget buildSuggestions(BuildContext context) {
-    // Show when someone searches for something
-    dynamic suggestionList;
-    Icon _icon;
-    if (query.isEmpty) {
-      suggestionList = recents;
-      _icon = Icon(Icons.history);
-    } else {
-      suggestionList = cities
-          .where((c) => c.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-      _icon = Icon(Icons.search);
-    }
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () async {
-          this.query = suggestionList[index];
-          showResults(context);
-          await _saveToRecentSearches(this.query);
-          print(_getRecentSearchesLike(this.query));
-        },
-        leading: _icon,
-        title: RichText(
-            text: TextSpan(
-                text: suggestionList[index].substring(0, query.length),
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-                children: [
-              TextSpan(
-                  text: suggestionList[index].substring(query.length),
-                  style: TextStyle(color: Colors.grey))
-            ])),
-      ),
-      itemCount: suggestionList.length,
+    return FutureBuilder<List<String>>(
+      future: onSearchChanged != null ? onSearchChanged(query) : null,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) _oldFilters = snapshot.data;
+        return ListView.builder(
+          itemCount: _oldFilters.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              leading: Icon(Icons.restore),
+              title: Text("${_oldFilters[index]}"),
+              onTap: () => close(context, _oldFilters[index]),
+            );
+          },
+        );
+      },
     );
   }
 
+  
   Widget _buildJobListTile(context, item) {
     if (item['type'] == 'appeal') {
       return ListTile(
@@ -513,4 +485,16 @@ class DataSearch extends SearchDelegate<String> {
       );
     }
   }
+
+
 }
+
+
+
+
+
+
+
+
+
+// }

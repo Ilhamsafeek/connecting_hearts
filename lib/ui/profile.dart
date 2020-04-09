@@ -4,12 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'dart:io';
 
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
-import 'package:zamzam/constant/Constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zamzam/ui/about.dart';
+
+import '../search.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -91,6 +93,7 @@ class ProfileState extends State<Profile> {
                                   flex: 2,
                                   child: TextFormField(
                                     controller: _firstNameController,
+                                    keyboardType: TextInputType.text,
                                     validator: (value) {
                                       if (value.isEmpty) {
                                         return 'please enter first name.';
@@ -99,7 +102,6 @@ class ProfileState extends State<Profile> {
                                         return 'choose a firast name with atleast 5 chars.';
                                       }
                                     },
-                                    // controller: _usernameController,
                                     decoration: InputDecoration(
                                       // border: OutlineInputBorder(),
                                       labelText: 'First Name',
@@ -112,6 +114,7 @@ class ProfileState extends State<Profile> {
                                   flex: 2,
                                   child: TextFormField(
                                     controller: _lastNameController,
+                                    keyboardType: TextInputType.text,
                                     validator: (value) {
                                       if (value.isEmpty) {
                                         return 'please enter last name.';
@@ -120,7 +123,6 @@ class ProfileState extends State<Profile> {
                                         return 'choose a last name with atleast 5 chars.';
                                       }
                                     },
-                                    // controller: _usernameController,
                                     decoration: InputDecoration(
                                       // border: OutlineInputBorder(),
                                       labelText: 'Last Name',
@@ -146,6 +148,7 @@ class ProfileState extends State<Profile> {
                                       }
                                     },
                                     controller: _usernameController,
+                                    keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       labelText: 'Username',
@@ -176,6 +179,7 @@ class ProfileState extends State<Profile> {
                                       }
                                     },
                                     controller: _emailController,
+                                    keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       labelText: 'Email',
@@ -278,7 +282,22 @@ class ProfileState extends State<Profile> {
             ListTile(
               leading: Icon(Icons.bookmark),
               title: Text('My Appeals'),
-              onTap: () {},
+              onTap: () async {
+                // try {
+                //   final result = await InternetAddress.lookup('google.com');
+                //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                //     print('connected');
+                //   }
+                // } on SocketException catch (_) {
+                //   print('not connected');
+                // }
+
+                
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Search()),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.payment),

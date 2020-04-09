@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zamzam/ui/job/edit_appeal.dart';
+import 'package:zamzam/ui/job/edit_vacancy.dart';
 import 'package:zamzam/ui/job/job_detail.dart';
 import 'package:zamzam/ui/job/appeal_job.dart';
 import 'package:zamzam/ui/job/post_vacancy.dart';
@@ -233,12 +235,42 @@ class _JobsState extends State<Jobs> {
         title: Text(item['title']),
         subtitle: Text('Experience: ${item['min_experience']}'),
         trailing: category == 'my'
-            ? IconButton(
-                icon: Icon(Icons.delete),
-                color: Colors.grey,
-                onPressed: () {
-                  _deleteModalBottomSheet(context, item['id']);
+            ? PopupMenuButton<String>(
+                onSelected: (String value) {
+                  setState(() {});
                 },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: 'Value1',
+                    child: FlatButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, anim1, anim2) =>
+                                  EditAppeal(item),
+                              transitionsBuilder: (context, anim1, anim2,
+                                      child) =>
+                                  FadeTransition(opacity: anim1, child: child),
+                              transitionDuration: Duration(milliseconds: 100),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.edit),
+                        label: Text("Edit")),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'Value2',
+                    child: FlatButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _deleteModalBottomSheet(context, item['id']);
+                        },
+                        icon: Icon(Icons.delete),
+                        label: Text("Delete")),
+                  ),
+                ],
               )
             : null,
         onTap: () {
@@ -259,18 +291,49 @@ class _JobsState extends State<Jobs> {
           backgroundColor: Colors.teal,
           child: Text(
             '${item['organization'][0]}',
-            style: TextStyle(color:Colors.white ,fontWeight:FontWeight.bold, fontSize: 20),
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
         ),
         title: Text(item['title']),
         subtitle: Text('${item['organization']}'),
         trailing: category == 'my'
-            ? IconButton(
-                icon: Icon(Icons.delete),
-                color: Colors.grey,
-                onPressed: () {
-                  _deleteModalBottomSheet(context, item['id']);
+            ? PopupMenuButton<String>(
+                onSelected: (String value) {
+                  setState(() {});
                 },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: 'Value2',
+                    child: FlatButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, anim1, anim2) =>
+                                  EditVacancy(item),
+                              transitionsBuilder: (context, anim1, anim2,
+                                      child) =>
+                                  FadeTransition(opacity: anim1, child: child),
+                              transitionDuration: Duration(milliseconds: 100),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.edit),
+                        label: Text("Edit")),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'Value3',
+                    child: FlatButton.icon(
+                        onPressed: () {
+                          _deleteModalBottomSheet(context, item['id']);
+                        },
+                        icon: Icon(Icons.delete),
+                        label: Text("Delete")),
+                  ),
+                ],
               )
             : Icon(
                 Icons.favorite_border,

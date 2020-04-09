@@ -118,21 +118,21 @@ class _ProjectPageState extends State<Project> {
               child: Image.asset('assets/child.png'),
             ),
             Container(
-      height: MediaQuery.of(context).size.width * 0.58,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color(0xCC000000),
-            const Color(0x00000000),
-            const Color(0x00000000),
-            const Color(0xCC000000),
-          ],
-        ),
-      ),
-    ),
+              height: MediaQuery.of(context).size.width * 0.58,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    const Color(0xCC000000),
+                    const Color(0x00000000),
+                    const Color(0x00000000),
+                    const Color(0xCC000000),
+                  ],
+                ),
+              ),
+            ),
             Center(
                 child: Column(
               children: <Widget>[
@@ -147,11 +147,21 @@ class _ProjectPageState extends State<Project> {
                   subtitle: Text('Family of ${data['children']} Members',
                       style: TextStyle(color: Colors.white)),
                   trailing: Chip(
-                    avatar: Icon(Icons.star_border),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 1),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(6))),
+                    backgroundColor: Colors.blue[800],
+                    avatar: Icon(
+                      Icons.star_border,
+                      color: Colors.orange,
+                    ),
                     label: Text(
                       "${data['rating']}",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                   ),
 
@@ -191,8 +201,8 @@ class _ProjectPageState extends State<Project> {
                         '${data['city']}, ${data['district']}',
                         style: TextStyle(color: Colors.white),
                       )),
-                  
                   subtitle: new LinearPercentIndicator(
+                    alignment: MainAxisAlignment.start,
                     animation: true,
                     lineHeight: 14.0,
                     animationDuration: 2000,

@@ -51,7 +51,7 @@ class WebServices {
   Future createAccount(String contact) async {
     var url = 'https://www.chadmin.online/api/createaccount';
     var response = await http.post(url,
-        body: {'name': 'ilham', 'phone': '$contact', 'role_id': '2'});
+        body: {'phone': '$contact', 'role_id': '2'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
@@ -498,5 +498,20 @@ Future<int> deleteJob(id) async {
   }
 
 
+Future<int> editJob(id,title, location, minExperience, description,contact, email, image, organization) async {
+    var url = 'https://www.chadmin.online/api/editjob';
+    var response = await http.post(url, body: {
+      'id': '$id',
+      'title': '$title',
+      'location': '$location',
+      'min_experience': '$minExperience',
+      'description': '$description',
+      'contact': '$contact',
+      'email': '$email',
+      'organization': '$organization',
+    });
+    
+    return response.statusCode;
+  }
 
 }

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/test.dart';
+import 'package:zamzam/ui/job/edit_appeal.dart';
 import 'package:zamzam/ui/payment_result.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
+
+import 'edit_vacancy.dart';
 
 class JobDetail extends StatefulWidget {
   @override
@@ -28,9 +31,30 @@ class _JobDetailState extends State<JobDetail> {
         actions: <Widget>[
           Chip(label: Text(widget.jobDetails['type'])),
           IconButton(
-            onPressed: null,
+            onPressed: () {
+            widget.jobDetails['type'] == 'vacancy'?  Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, anim1, anim2) =>
+                      EditVacancy(widget.jobDetails),
+                  transitionsBuilder: (context, anim1, anim2, child) =>
+                      FadeTransition(opacity: anim1, child: child),
+                  transitionDuration: Duration(milliseconds: 100),
+                ),
+              )
+            : Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, anim1, anim2) =>
+                      EditAppeal(widget.jobDetails),
+                  transitionsBuilder: (context, anim1, anim2, child) =>
+                      FadeTransition(opacity: anim1, child: child),
+                  transitionDuration: Duration(milliseconds: 100),
+                ),
+              );
+            },
             icon: Icon(
-              Icons.share,
+              Icons.edit,
               color: Colors.white,
             ),
           ),
@@ -59,7 +83,11 @@ class _JobDetailState extends State<JobDetail> {
                           ? ListTile(
                               leading: CircleAvatar(
                                 child: Text(
-                                    '${widget.jobDetails['organization'][0]}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                                  '${widget.jobDetails['organization'][0]}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
                               ),
                               title: Text(
                                   '${widget.jobDetails['organization']}',
@@ -122,12 +150,10 @@ class _JobDetailState extends State<JobDetail> {
                     ],
                   ),
                 ),
-              
-               Card(
+                Card(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                    
                       ListTile(
                         leading: Icon(Icons.mail),
                         title: Text(
@@ -137,8 +163,8 @@ class _JobDetailState extends State<JobDetail> {
                               fontSize: 14,
                               wordSpacing: 5),
                         ),
-                      )
-                       ,ListTile(
+                      ),
+                      ListTile(
                         leading: Icon(Icons.call),
                         title: Text(
                           "${widget.jobDetails['contact']}",
@@ -148,12 +174,9 @@ class _JobDetailState extends State<JobDetail> {
                               wordSpacing: 5),
                         ),
                       )
-                   
                     ],
                   ),
                 ),
-              
-              
               ],
             ),
           ),
