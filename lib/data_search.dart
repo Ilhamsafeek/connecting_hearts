@@ -432,7 +432,10 @@ class DataSearch extends SearchDelegate<String> {
             return ListTile(
               leading: Icon(Icons.restore),
               title: Text("${_oldFilters[index]}"),
-              onTap: () => close(context, _oldFilters[index]),
+              onTap: () {
+                showResults(context);
+                // close(context, _oldFilters[index]);
+              },
             );
           },
         );
