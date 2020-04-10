@@ -23,6 +23,7 @@ class _SigninPageState extends State<Signin> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  Widget _signoutProgress;
 
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrive = (String verId) {
@@ -185,8 +186,7 @@ class _SigninPageState extends State<Signin> {
                   height: 20,
                 ),
                 Container(
-                    padding:
-                        const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.only(
@@ -194,15 +194,22 @@ class _SigninPageState extends State<Signin> {
                           topRight: const Radius.circular(20.0),
                         )),
                     child: Column(children: <Widget>[
+                      
                       Text('Please enter your mobile number',
                           style: TextStyle(fontSize: 18, fontFamily: "Exo2")),
+                          SizedBox(height: 2.0, child: _signoutProgress),
                       SizedBox(height: 15.0),
                       Row(
                         children: <Widget>[
                           Expanded(
+                            flex: 5,
                             child: CountryPickerDropdown(
-                              initialValue: 'lk',
+                              initialValue: 'LK',
                               itemBuilder: _buildDropdownItem,
+                              itemFilter: (Country country) {
+                                return ['AR', 'DE', 'GB', 'CN', 'LK']
+                                    .contains(country.isoCode);
+                              },
                               onValuePicked: (Country country) {
                                 print("${country.phoneCode}");
                                 this.countryCode = "+${country.phoneCode}";
@@ -210,7 +217,13 @@ class _SigninPageState extends State<Signin> {
                             ),
                           ),
                           Expanded(
-                            child: TextField(
+                            flex: 5,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'please enter phone number.';
+                                }
+                              },
                               keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
                                 focusColor: Colors.black,
@@ -229,11 +242,23 @@ class _SigninPageState extends State<Signin> {
                       SizedBox(height: 15.0),
                       RaisedButton(
                         onPressed: () {
-                          _formKey.currentState.validate()
-                              ? verifyPhone()
-                              : _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                  content: Text("Please check the inputs"),
-                                ));
+                          setState(() {
+                            _signoutProgress = LinearProgressIndicator(
+                              backgroundColor: Colors.grey,
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Colors.black),
+                            );
+                          });
+                          if (_formKey.currentState.validate()) {
+                            verifyPhone();
+                          } else {
+                            _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text("Please check the input"),
+                            ));
+                            setState(() {
+                              _signoutProgress = null;
+                            });
+                          }
                         },
                         child: Text('Signin my Account'),
                         textColor: Colors.white,
@@ -253,8 +278,7 @@ class _SigninPageState extends State<Signin> {
             SizedBox(
               width: 3.0,
             ),
-            Text("+${country.phoneCode}",
-                style: TextStyle(fontSize: 18, fontFamily: "Exo2")),
+            Text("+${country.phoneCode}(${country.isoCode})"),
           ],
         ),
       );

@@ -47,7 +47,7 @@ class DataSearch extends SearchDelegate<String> {
         icon: AnimatedIcon(
             icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
         onPressed: () {
-          close(context, null);
+          close(context, this.query);
         });
   }
 
@@ -56,12 +56,14 @@ class DataSearch extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () => query = "",
+        icon: const Icon(Icons.mic),
+        tooltip: 'Voice input',
+        onPressed: () {
+          // this.query = 'TBW: Get input from voice';
+        },
       ),
     ];
   }
-
 
     @override
   Widget buildResults(BuildContext context) {
@@ -434,6 +436,7 @@ class DataSearch extends SearchDelegate<String> {
               title: Text("${_oldFilters[index]}"),
               onTap: () {
                 showResults(context);
+               this.query = _oldFilters[index];
                 // close(context, _oldFilters[index]);
               },
             );

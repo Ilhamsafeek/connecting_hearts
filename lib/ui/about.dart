@@ -27,6 +27,7 @@ class _AboutState extends State<About> {
     var initSetting = new InitializationSettings(android, ios);
     flutterLocalNotificationsPlugin.initialize(initSetting,
         onSelectNotification: selectNotification);
+
     WebServices(mApiListener).getPaymentData().then((value) {
       print(value);
       setState(() {
@@ -73,12 +74,7 @@ class _AboutState extends State<About> {
                     RaisedButton(
                       onPressed: () async {
                        
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(
-                            content:
-                                Text("Please check your internet connection !!"),
-                          ));
-                        
-                        {}
+                          showNotification();
                       },
                       child: Text('Notify'),
                     )

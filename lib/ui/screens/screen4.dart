@@ -72,7 +72,7 @@ class _NotificationsState extends State<Notifications> {
                         children: <Widget>[
                           ListTile(
                             leading: CircleAvatar(
-                              child: Icon(Icons.videocam),
+                              child: Icon(Icons.notifications),
                             ),
                             title: Text(item['message']),
                             subtitle: Text(

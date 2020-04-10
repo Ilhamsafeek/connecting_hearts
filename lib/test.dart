@@ -1,121 +1,89 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 
+import 'badge_icon.dart';
 
-
-class ExamplePage extends StatefulWidget {
-  // ExamplePage({ Key key }) : super(key: key);
+class MyHomePage extends StatefulWidget {
   @override
-  _ExamplePageState createState() => new _ExamplePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _ExamplePageState extends State<ExamplePage> {
- // final formKey = new GlobalKey<FormState>();
- // final key = new GlobalKey<ScaffoldState>();
-  final TextEditingController _filter = new TextEditingController();
-  final dio = new Dio();
-  String _searchText = "";
-  List names = new List();
-  List filteredNames = new List();
-  Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text( 'Search Example' );
+class _MyHomePageState extends State<MyHomePage> {
+  StreamController<int> _countController = StreamController<int>();
 
-  _ExamplePageState() {
-    _filter.addListener(() {
-      if (_filter.text.isEmpty) {
-        setState(() {
-          _searchText = "";
-          filteredNames = names;
-        });
-      } else {
-        setState(() {
-          _searchText = _filter.text;
-        });
-      }
-    });
+  int _currentIndex = 0;
+  int _tabBarCount = 0;
+
+  List<Widget> _pages;
+
+  Widget _tabBar() {
+    return BottomNavigationBar(
+      items: [
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.home, size: 25),
+          title: const Text("Increment"),
+        ),
+        BottomNavigationBarItem(
+          icon: StreamBuilder(
+            initialData: _tabBarCount,
+            stream: _countController.stream,
+            builder: (_, snapshot) => BadgeIcon(
+              icon: Icon(Icons.chat, size: 25),
+              badgeCount: snapshot.data,
+            ),
+          ),
+          title: const Text("Decrement"),
+        ),
+      ],
+      currentIndex: _currentIndex,
+      onTap: (index) => setState(() => _currentIndex = index),
+    );
   }
 
   @override
   void initState() {
-    this._getNames();
+    _pages = [
+      Container(
+        child: Center(
+          child: FlatButton(
+            child: Text('Increment'),
+            onPressed: () {
+              _tabBarCount = _tabBarCount + 1;
+              _countController.sink.add(_tabBarCount);
+            },
+          ),
+        ),
+      ),
+      Container(
+        child: Center(
+          child: FlatButton(
+            child: Text('Decrement'),
+            onPressed: () {
+              _tabBarCount = _tabBarCount - 1;
+              _countController.sink.add(_tabBarCount);
+            },
+          ),
+        ),
+      ),
+    ];
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildBar(context),
-      body: Container(
-        child: _buildList(),
+      appBar: AppBar(
+        title: Text('Tab Bar Icon Badge'),
       ),
-      resizeToAvoidBottomPadding: false,
+      body: _pages[_currentIndex],
+      bottomNavigationBar: _tabBar(),
     );
   }
 
-  Widget _buildBar(BuildContext context) {
-    return new AppBar(
-      centerTitle: true,
-      title: _appBarTitle,
-      leading: new IconButton(
-        icon: _searchIcon,
-        onPressed: _searchPressed,
-
-      ),
-    );
+  @override
+  void dispose() {
+    _countController.close();
+    super.dispose();
   }
-
-  Widget _buildList() {
-    if (!(_searchText.isEmpty)) {
-      List tempList = new List();
-      for (int i = 0; i < filteredNames.length; i++) {
-        if (filteredNames[i]['name'].toLowerCase().contains(_searchText.toLowerCase())) {
-          tempList.add(filteredNames[i]);
-        }
-      }
-      filteredNames = tempList;
-    }
-    return ListView.builder(
-      itemCount: names == null ? 0 : filteredNames.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new ListTile(
-          title: Text(filteredNames[index]['name']),
-          onTap: () => print(filteredNames[index]['name']),
-        );
-      },
-    );
-  }
-
-  void _searchPressed() {
-    setState(() {
-      if (this._searchIcon.icon == Icons.search) {
-        this._searchIcon = new Icon(Icons.close);
-        this._appBarTitle = new TextField(
-          controller: _filter,
-          decoration: new InputDecoration(
-            prefixIcon: new Icon(Icons.search),
-            hintText: 'Search...'
-          ),
-        );
-      } else {
-        this._searchIcon = new Icon(Icons.search);
-        this._appBarTitle = new Text( 'Search Example' );
-        filteredNames = names;
-        _filter.clear();
-      }
-    });
-  }
-
-  void _getNames() async {
-    final response = await dio.get('https://swapi.co/api/people');
-    List tempList = new List();
-    for (int i = 0; i < response.data['results'].length; i++) {
-      tempList.add(response.data['results'][i]);
-    }
-    setState(() {
-      names = tempList;
-      names.shuffle();
-      filteredNames = names;
-    });
-  }
-
-
 }

@@ -11,7 +11,7 @@ import 'package:zamzam/ui/my_contribution.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zamzam/ui/about.dart';
 
-import '../search.dart';
+import '../test.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -25,6 +25,7 @@ class ProfileState extends State<Profile> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  Widget _signoutProgress;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -292,10 +293,9 @@ class ProfileState extends State<Profile> {
                 //   print('not connected');
                 // }
 
-                
-                 Navigator.push(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Search()),
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
                 );
               },
             ),
@@ -328,7 +328,14 @@ class ProfileState extends State<Profile> {
                 size: 18,
               ),
               title: Text('Sign out'),
+              subtitle: SizedBox(height: 2.0, child: _signoutProgress),
               onTap: () async {
+                setState(() {
+                  _signoutProgress = LinearProgressIndicator(
+                    backgroundColor: Colors.grey,
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),
+                  );
+                });
                 await FirebaseAuth.instance.signOut().then((action) {
                   Navigator.pop(context);
                   Navigator.pushReplacement(
