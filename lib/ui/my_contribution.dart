@@ -99,7 +99,8 @@ class _MyContributionState extends State<MyContribution> {
                                 data = snapshot.data;
                                 dynamic total = 0;
                                 for (var item in data) {
-                                  total = total + double.parse(item['paid_amount']);
+                                  total =
+                                      total + double.parse(item['paid_amount']);
                                 }
 
                                 children = <Widget>[
@@ -238,13 +239,6 @@ class _MyContributionState extends State<MyContribution> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ContributedProject(item)),
-                );
-            },
             title: Text('${item['category']}'),
             subtitle: Text(
               '${item['date_time']}',
@@ -266,17 +260,15 @@ class _MyContributionState extends State<MyContribution> {
           ),
           Divider(height: 0),
           ListTile(
-              // title: item['method'] == 'card'
-              //     ? FlatButton.icon(
-              //         onPressed: null,
-              //         icon: Icon(Icons.credit_card),
-              //         label: Text('${item['method']}'))
-              //     : FlatButton.icon(
-              //         onPressed: null,
-              //         icon: Icon(Icons.local_atm),
-              //         label: Text('${item['method']}')),
-              subtitle: FlatButton.icon(
-                  onPressed: null,
+             
+              leading: FlatButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ContributedProject(item)),
+                    );
+                  },
                   icon: Icon(Icons.list),
                   label: Text('More details')),
               trailing: _trailing)
@@ -322,5 +314,4 @@ class _MyContributionState extends State<MyContribution> {
           });
         });
   }
-
 }

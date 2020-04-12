@@ -34,8 +34,8 @@ class _ChannelDetailState extends State<ChannelDetail> {
             widget.channelData['channel'],
             style: TextStyle(color: Colors.white, shadows: []),
           ),
-          background: Image.asset(
-            'assets/mufti_menk.jpg',
+          background: Image.network(
+            widget.channelData['photo'],
             fit: BoxFit.cover,
           ),
         ),
@@ -82,7 +82,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
             ),
             subtitle: Text('Addedd 3 years ago'),
             leading: CircleAvatar(
-              backgroundImage: new AssetImage('assets/mufti_menk.jpg'),
+              backgroundImage: NetworkImage(widget.channelData['photo']),
             ),
             children: <Widget>[
               Padding(

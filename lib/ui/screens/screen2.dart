@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:zamzam/model/Gridmodel.dart';
 import 'package:zamzam/model/ImageSliderModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -119,18 +120,21 @@ class _CharityState extends State<Charity> {
                       children: <Widget>[
                         for (var item in snapshot.data)
                           InkWell(
-                              child: GridItem(GridModel("assets/zamzam.png",
+                              child: GridItem(GridModel(item['photo'],
                                   "${item['category']}", null)),
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Project(item['category'])),
+                                          Project(item)),
                                 );
                               }),
                       ]),
                 ];
+                 
+                 
+              
               } else if (snapshot.hasError) {
                 children = <Widget>[
                   Icon(
@@ -165,7 +169,16 @@ class _CharityState extends State<Charity> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: children,
+                  children: AnimationConfiguration.toStaggeredList(
+                          duration: const Duration(milliseconds: 375),
+                          childAnimationBuilder: (widget) => SlideAnimation(
+                            horizontalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: widget,
+                            ),
+                          ),
+                          children: children,
+                        ),
                 ),
               );
             },
@@ -302,7 +315,7 @@ class GridItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
+              Image.network(
                 gridModel.imagePath,
                 width: 30,
                 height: 30,

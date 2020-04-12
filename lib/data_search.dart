@@ -89,11 +89,13 @@ class DataSearch extends SearchDelegate<String> {
 
                     if (snapshot.hasData) {
                       var data = snapshot.data.where((el) {
-                        return el['category']
-                                .toLowerCase()
-                                .contains(this.query.toLowerCase())
-                            ? true
-                            : false || el['appeal_id'].toLowerCase().contains(this.query.toLowerCase())
+                        return 
+                        // el['category']
+                        //         .toLowerCase()
+                        //         .contains(this.query.toLowerCase())
+                        //     ? true
+                        //     : false || 
+                            el['appeal_id'].toLowerCase().contains(this.query.toLowerCase())
                                 ? true
                                 : false ||
                                         el['address']

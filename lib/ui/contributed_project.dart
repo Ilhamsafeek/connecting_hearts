@@ -55,16 +55,7 @@ class _ContributedProjectState extends State<ContributedProject> {
                 fit: BoxFit.cover,
               ),
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.share),
-                tooltip: 'Share this appeal',
-                onPressed: () {
-                  Share.share('check out my website https://example.com',
-                      subject: 'Please look at this appeal!');
-                },
-              ),
-            ],
+           
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -149,7 +140,7 @@ class _ContributedProjectState extends State<ContributedProject> {
               WidgetsFlutterBinding.ensureInitialized();
               final cameras = await availableCameras();
               final firstCamera = cameras.first;
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) => TakePictureScreen(
@@ -386,15 +377,18 @@ class _ContributedProjectState extends State<ContributedProject> {
                         SizedBox(
                           width: 10,
                         ),
-                        _statusIcon
+                        InkWell(
+                          onTap: () {
+                            infoModalBottomSheet(context, _statusIcon, _text);
+                          },
+                          child: _statusIcon,
+                        ),
                       ],
                     ),
                   ],
                 ),
-              )
-           
-              
-                ,Padding(
+              ),
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
@@ -409,15 +403,14 @@ class _ContributedProjectState extends State<ContributedProject> {
                         ),
                         Text(
                           'View Donation Receipt',
-                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.blue),
                         ),
-                        
                       ],
                     ),
                   ],
                 ),
               )
-           
             ],
           ),
         ),
@@ -483,7 +476,7 @@ class _ContributedProjectState extends State<ContributedProject> {
                     Row(
                       children: <Widget>[
                         Icon(
-                          Icons.access_time,
+                          Icons.description,
                           size: 20,
                         ),
                         SizedBox(

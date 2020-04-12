@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
                   ListTile(
                     leading: InkWell(
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(item['profile_url']),
+                        backgroundImage: NetworkImage(item['photo']),
                       ),
                       onTap: () {
                         Navigator.push(

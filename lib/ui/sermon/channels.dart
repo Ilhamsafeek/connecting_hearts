@@ -49,7 +49,7 @@ class _ChannelsState extends State<Channels> {
                         ListTile(
                           leading: CircleAvatar(
                             backgroundImage:
-                                new AssetImage('assets/mufti_menk.jpg'),
+                                NetworkImage(item['photo']),
                             radius: 30,
                           ),
                           title: Text(item['channel']),

@@ -8,9 +8,9 @@ import 'package:share/share.dart';
 
 class Project extends StatefulWidget {
   @override
-  final dynamic category;
+  final dynamic categoryData;
 
-  Project(this.category, {Key key}) : super(key: key);
+  Project(this.categoryData, {Key key}) : super(key: key);
   _ProjectPageState createState() => _ProjectPageState();
 }
 
@@ -28,8 +28,18 @@ class _ProjectPageState extends State<Project> {
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
           centerTitle: true,
-          title: Text(widget.category,
+          title: Text(widget.categoryData['category'],
               style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
+          actions: <Widget>[
+            Image.network(
+              widget.categoryData['photo'],
+              width: 30,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 10,
+            )
+          ],
           backgroundColor: Color.fromRGBO(104, 45, 127, 1),
         ),
         body: Center(
@@ -48,7 +58,8 @@ class _ProjectPageState extends State<Project> {
 
         if (snapshot.hasData) {
           var data = snapshot.data
-              .where((el) => el['category'] == this.widget.category)
+              .where((el) =>
+                  el['category'] == this.widget.categoryData['category'])
               .toList();
 
           children = <Widget>[
@@ -164,29 +175,6 @@ class _ProjectPageState extends State<Project> {
                           color: Colors.white),
                     ),
                   ),
-
-                  //  Expanded(
-                  //   child: Column(
-                  //     children: <Widget>[
-                  //        Icon(
-                  //   Icons.stars,
-                  //   color: Colors.yellow[600],
-                  //   size: 18,
-                  // ),
-                  // SizedBox(
-                  //   width: 2,
-                  // ),
-                  // Text(
-                  //   "${data['rating']}",
-                  //   style: TextStyle(
-                  //     color: Colors.white,
-                  //     fontSize: 20,
-                  //     fontWeight: FontWeight.bold
-                  //   ),
-                  // ),
-
-                  //     ]
-                  //   )),
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.only(top: 40),
@@ -225,6 +213,7 @@ class _ProjectPageState extends State<Project> {
                     progressColor: completedColor,
                   ),
                 ),
+              
               ],
             )),
           ]),

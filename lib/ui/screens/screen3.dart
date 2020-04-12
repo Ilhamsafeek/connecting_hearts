@@ -274,7 +274,6 @@ class _JobsState extends State<Jobs> {
               transitionDuration: Duration(milliseconds: 100),
             ),
           );
-         
         },
       );
     } else {
