@@ -56,11 +56,13 @@ class _AppealJobState extends State<AppealJob> {
                       ListTile(
                         leading: Icon(Icons.card_travel),
                         title: TextFormField(
+                          maxLength: 35,
                           controller: _title,
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Title cannot be empty";
                             }
+                             
                           },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(

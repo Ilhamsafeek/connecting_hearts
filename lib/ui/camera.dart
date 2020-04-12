@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:zamzam/services/services.dart';
@@ -11,6 +12,7 @@ import 'package:zamzam/services/services.dart';
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
   final String id;
+
   const TakePictureScreen(this.id, @required this.camera, {Key key})
       : super(key: key);
 
@@ -22,6 +24,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   ApiListener mApiListener;
   Future<void> _initializeControllerFuture;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -126,6 +129,20 @@ class DisplayPictureScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Image.file(File(imagePath)),
+              SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.perm_device_information,
+                  color: Colors.green,
+                ),
+                title: Text(
+                    'You will be notified once we review and accept you donation.'),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               RaisedButton(
                 onPressed: () {
                   WebServices(mApiListener)
@@ -139,10 +156,7 @@ class DisplayPictureScreen extends StatelessWidget {
                     borderRadius: new BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.black)),
               ),
-              ListTile(
-                leading: Icon(Icons.perm_device_information, color: Colors.green,),
-                title: Text('You will be notified once we review and accept you donation.'),
-              )
+              
             ],
           ),
         ));

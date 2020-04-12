@@ -64,6 +64,8 @@ class _PostVacancyState extends State<PostVacancy> {
                       ListTile(
                         leading: Icon(Icons.card_travel),
                         title: TextFormField(
+                          
+                          maxLength: 35,
                           controller: _title,
                           validator: (value) {
                             if (value.isEmpty) {

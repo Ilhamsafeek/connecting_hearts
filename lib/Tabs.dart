@@ -61,7 +61,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           _countController.sink.add(_tabBarNotificationCount);
         });
       } else {
-        setState(() {          
+        setState(() {
           _tabBarNotificationCount = value;
           _countController.sink.add(_tabBarNotificationCount);
         });
@@ -93,6 +93,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         updateNotificationCount(_tabBarNotificationCount);
       },
       onResume: (Map<String, dynamic> event) async {
+
         //background
         _tabBarNotificationCount = _tabBarNotificationCount + 1;
         _countController.sink.add(_tabBarNotificationCount);
@@ -128,6 +129,9 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   }
 
   Future _selectNotification(String payload) {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
     return Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Payment()),
@@ -140,7 +144,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         priority: Priority.High, importance: Importance.Max);
     var iOS = IOSNotificationDetails();
     var platform = new NotificationDetails(android, iOS);
-    flutterLocalNotificationsPlugin.show(0, 'title', 'body', platform,
+    flutterLocalNotificationsPlugin.show(0, 'Connecting hearts', 'Watch or Listen to new sermon update', platform,
         payload: "send message");
   }
 

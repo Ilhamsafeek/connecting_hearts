@@ -5,6 +5,7 @@ import 'package:zamzam/ui/payment_result.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
+import 'package:zamzam/utils/read_more_text.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -127,20 +128,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                    size: 18,
-                  ),
-                  SizedBox(
-                    width: 2,
-                  ),
                   Text(
-                    "${formattedCollected.output.withoutFractionDigits}",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 14,
-                    ),
+                    "Star Rating:",
                   ),
                   SizedBox(
                     width: 8,
@@ -164,7 +153,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 mainAxisAlignment: MainAxisAlignment.start,
               ),
               Divider(),
-            
               Column(
                 children: <Widget>[
                   Row(
@@ -177,25 +165,23 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                         child: Chip(
                             label: Text('${widget.projectData['category']}')),
                       ),
-                      
-                     
                     ],
                   ),
                 ],
               ),
-              Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text('Address: ',
-                          style: new TextStyle(fontWeight: FontWeight.bold)),
-                      Expanded(
-                          child: Text(
-                              '${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}')),
-                    ],
-                  ),
-                ],
-              ),
+              // Column(
+              //   children: <Widget>[
+              //     Row(
+              //       children: <Widget>[
+              //         Text('Address: ',
+              //             style: new TextStyle(fontWeight: FontWeight.bold)),
+              //         Expanded(
+              //             child: Text(
+              //                 '${widget.projectData['mahalla']}, ${widget.projectData['city']}, ${widget.projectData['district']}')),
+              //       ],
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
@@ -209,17 +195,12 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
               Divider(height: 0),
               ListTile(
-                title: Text(
-                  "${widget.projectData['details']}",
-                  style: TextStyle(
-                      color: Colors.black, fontSize: 14, wordSpacing: 5),
-                ),
+                title: ReadMoreText("${widget.projectData['details']}"),
               )
             ],
           ),
         ),
-       
-       Padding(
+        Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 5,
           ),
@@ -527,7 +508,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                           },
                         ),
                       )),
-                  
                   Divider(
                     height: 0,
                   ),
@@ -562,5 +542,4 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           });
         });
   }
-
 }

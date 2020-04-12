@@ -3,7 +3,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
 import 'package:camera/camera.dart';
-import 'package:zamzam/ui/project_detail.dart';
+import 'package:zamzam/ui/contributed_project.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyContribution extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MyContributionState extends State<MyContribution> {
       setState(() {
         dynamic total = 0;
         for (var item in value) {
-          total = total + double.parse(item['amount']);
+          total = total + double.parse(item['paid_amount']);
         }
         totalContribution = total;
       });
@@ -99,7 +99,7 @@ class _MyContributionState extends State<MyContribution> {
                                 data = snapshot.data;
                                 dynamic total = 0;
                                 for (var item in data) {
-                                  total = total + double.parse(item['amount']);
+                                  total = total + double.parse(item['paid_amount']);
                                 }
 
                                 children = <Widget>[
@@ -167,7 +167,7 @@ class _MyContributionState extends State<MyContribution> {
 
   Widget contributionCard(item) {
     FlutterMoneyFormatter formattedAmount =
-        FlutterMoneyFormatter(amount: double.parse('${item['amount']}'));
+        FlutterMoneyFormatter(amount: double.parse('${item['paid_amount']}'));
     Widget _trailing;
     Icon _statusIcon = Icon(
       Icons.check_circle,
@@ -183,7 +183,7 @@ class _MyContributionState extends State<MyContribution> {
             WidgetsFlutterBinding.ensureInitialized();
             final cameras = await availableCameras();
             final firstCamera = cameras.first;
-            Navigator.pushReplacement(
+            Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => TakePictureScreen(
@@ -239,21 +239,13 @@ class _MyContributionState extends State<MyContribution> {
         children: <Widget>[
           ListTile(
             onTap: () {
-              WebServices(this.mApiListener).getProjectData().then((value) {
-                print("Result=================>>>>>");
-
-                var data = value
-                    .where((el) => el['appeal_id'] == item['project_id'])
-                    .toList();
-
-                Navigator.push(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProjectDetail(data[0])),
+                      builder: (context) => ContributedProject(item)),
                 );
-              });
             },
-            title: Text('Project ID: ${item['project_id']}'),
+            title: Text('${item['category']}'),
             subtitle: Text(
               '${item['date_time']}',
               style: TextStyle(fontSize: 12),
@@ -274,19 +266,19 @@ class _MyContributionState extends State<MyContribution> {
           ),
           Divider(height: 0),
           ListTile(
-              title: item['method'] == 'card'
-                  ? FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.credit_card),
-                      label: Text('${item['method']}'))
-                  : FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.local_atm),
-                      label: Text('${item['method']}')),
-              subtitle: Text(
-                'Receipt Number: ${item['receipt_no']}',
-                style: TextStyle(fontSize: 12),
-              ),
+              // title: item['method'] == 'card'
+              //     ? FlatButton.icon(
+              //         onPressed: null,
+              //         icon: Icon(Icons.credit_card),
+              //         label: Text('${item['method']}'))
+              //     : FlatButton.icon(
+              //         onPressed: null,
+              //         icon: Icon(Icons.local_atm),
+              //         label: Text('${item['method']}')),
+              subtitle: FlatButton.icon(
+                  onPressed: null,
+                  icon: Icon(Icons.list),
+                  label: Text('More details')),
               trailing: _trailing)
         ],
       ),

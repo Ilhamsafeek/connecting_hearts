@@ -6,6 +6,7 @@ import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/services/webservices.dart';
 import 'package:zamzam/services/apilistener.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Signin extends StatefulWidget {
   @override
@@ -288,8 +289,6 @@ class Details extends StatefulWidget {
   @override
   _DetailsState createState() => _DetailsState();
 
-  // final dynamic projectData;
-  // Payment(this.projectData, {Key key}) : super(key: key);
 }
 
 class _DetailsState extends State<Details> {
@@ -321,6 +320,11 @@ class _DetailsState extends State<Details> {
                       child: Column(children: <Widget>[
                         Column(
                           children: <Widget>[
+                            SpinKitThreeBounce(
+                                  color: Colors.grey,
+                                  size: 50.0,
+                                ),
+                             SizedBox(height: 20.0),
                             Text('One more step to go',
                                 style: TextStyle(
                                     fontSize: 18, fontFamily: "Exo2")),
@@ -427,6 +431,7 @@ class _DetailsState extends State<Details> {
                               elevation: 7.0,
                               color: Colors.black,
                             )
+                         
                           ],
                         )
                       ])))),

@@ -295,7 +295,7 @@ class ProfileState extends State<Profile> {
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                  MaterialPageRoute(builder: (context) => Page()),
                 );
               },
             ),

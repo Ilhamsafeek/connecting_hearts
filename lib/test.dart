@@ -1,89 +1,47 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/animation.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 
-import 'badge_icon.dart';
-
-class MyHomePage extends StatefulWidget {
+class Page extends StatefulWidget {
+  const Page({Key key}) : super(key: key);
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  PageState createState() => new PageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  StreamController<int> _countController = StreamController<int>();
-
-  int _currentIndex = 0;
-  int _tabBarCount = 0;
-
-  List<Widget> _pages;
-
-  Widget _tabBar() {
-    return BottomNavigationBar(
-      items: [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home, size: 25),
-          title: const Text("Increment"),
-        ),
-        BottomNavigationBarItem(
-          icon: StreamBuilder(
-            initialData: _tabBarCount,
-            stream: _countController.stream,
-            builder: (_, snapshot) => BadgeIcon(
-              icon: Icon(Icons.chat, size: 25),
-              badgeCount: snapshot.data,
-            ),
-          ),
-          title: const Text("Decrement"),
-        ),
-      ],
-      currentIndex: _currentIndex,
-      onTap: (index) => setState(() => _currentIndex = index),
-    );
-  }
-
+class PageState extends State<Page> with TickerProviderStateMixin{
+  AnimationController _loginButtonController;
+  var animationStatus = 0;
   @override
   void initState() {
-    _pages = [
-      Container(
-        child: Center(
-          child: FlatButton(
-            child: Text('Increment'),
-            onPressed: () {
-              _tabBarCount = _tabBarCount + 1;
-              _countController.sink.add(_tabBarCount);
-            },
-          ),
-        ),
-      ),
-      Container(
-        child: Center(
-          child: FlatButton(
-            child: Text('Decrement'),
-            onPressed: () {
-              _tabBarCount = _tabBarCount - 1;
-              _countController.sink.add(_tabBarCount);
-            },
-          ),
-        ),
-      ),
-    ];
     super.initState();
+    _loginButtonController = new AnimationController(
+        duration: new Duration(milliseconds: 3000), vsync: this);
   }
 
-  @override
+  Future<Null> _playAnimation() async {
+    try {
+      await _loginButtonController.forward();
+      await _loginButtonController.reverse();
+    } on TickerCanceled {}
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tab Bar Icon Badge'),
+      appBar: AppBar(),
+      body: Center(
+        child: RaisedButton(
+          child: Text('Go!'),
+          onPressed: () {
+            setState(() {
+              animationStatus = 1;
+            });
+            _playAnimation();
+          },
+        ),
       ),
-      body: _pages[_currentIndex],
-      bottomNavigationBar: _tabBar(),
     );
-  }
-
-  @override
-  void dispose() {
-    _countController.close();
-    super.dispose();
   }
 }

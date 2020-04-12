@@ -132,7 +132,7 @@ class _JobsState extends State<Jobs> {
                     Expanded(
                         child: FlatButton.icon(
                       color: Colors.blue[900],
-                      icon: Icon(Icons.wb_sunny, color: Colors.white),
+                      icon: Icon(Icons.send, color: Colors.white),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -237,38 +237,29 @@ class _JobsState extends State<Jobs> {
         trailing: category == 'my'
             ? PopupMenuButton<String>(
                 onSelected: (String value) {
-                  setState(() {});
+                  if (value == "edit") {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, anim1, anim2) =>
+                            EditAppeal(item),
+                        transitionsBuilder: (context, anim1, anim2, child) =>
+                            FadeTransition(opacity: anim1, child: child),
+                        transitionDuration: Duration(milliseconds: 100),
+                      ),
+                    );
+                  } else {
+                    _deleteModalBottomSheet(context, item['id']);
+                  }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                   PopupMenuItem<String>(
-                    value: 'Value1',
-                    child: FlatButton.icon(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, anim1, anim2) =>
-                                  EditAppeal(item),
-                              transitionsBuilder: (context, anim1, anim2,
-                                      child) =>
-                                  FadeTransition(opacity: anim1, child: child),
-                              transitionDuration: Duration(milliseconds: 100),
-                            ),
-                          );
-                        },
-                        icon: Icon(Icons.edit),
-                        label: Text("Edit")),
+                    value: 'edit',
+                    child: Text("Edit"),
                   ),
                   PopupMenuItem<String>(
-                    value: 'Value2',
-                    child: FlatButton.icon(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _deleteModalBottomSheet(context, item['id']);
-                        },
-                        icon: Icon(Icons.delete),
-                        label: Text("Delete")),
+                    value: 'delete',
+                    child: Text("Delete"),
                   ),
                 ],
               )
@@ -283,6 +274,7 @@ class _JobsState extends State<Jobs> {
               transitionDuration: Duration(milliseconds: 100),
             ),
           );
+         
         },
       );
     } else {
@@ -300,43 +292,34 @@ class _JobsState extends State<Jobs> {
         trailing: category == 'my'
             ? PopupMenuButton<String>(
                 onSelected: (String value) {
-                  setState(() {});
+                  if (value == 'edit') {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, anim1, anim2) =>
+                            EditVacancy(item),
+                        transitionsBuilder: (context, anim1, anim2, child) =>
+                            FadeTransition(opacity: anim1, child: child),
+                        transitionDuration: Duration(milliseconds: 100),
+                      ),
+                    );
+                  } else {
+                    _deleteModalBottomSheet(context, item['id']);
+                  }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                   PopupMenuItem<String>(
-                    value: 'Value2',
-                    child: FlatButton.icon(
-                        onPressed: () {
-                          Navigator.pop(context);
-
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, anim1, anim2) =>
-                                  EditVacancy(item),
-                              transitionsBuilder: (context, anim1, anim2,
-                                      child) =>
-                                  FadeTransition(opacity: anim1, child: child),
-                              transitionDuration: Duration(milliseconds: 100),
-                            ),
-                          );
-                        },
-                        icon: Icon(Icons.edit),
-                        label: Text("Edit")),
+                    value: 'edit',
+                    child: Text("Edit"),
                   ),
                   PopupMenuItem<String>(
-                    value: 'Value3',
-                    child: FlatButton.icon(
-                        onPressed: () {
-                          _deleteModalBottomSheet(context, item['id']);
-                        },
-                        icon: Icon(Icons.delete),
-                        label: Text("Delete")),
+                    value: 'delete',
+                    child: Text("Delete"),
                   ),
                 ],
               )
             : Icon(
-                Icons.favorite_border,
+                Icons.turned_in_not,
                 color: Colors.grey,
               ),
         onTap: () {

@@ -9,6 +9,7 @@ import 'package:zamzam/ui/project_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 typedef OnSearchChanged = Future<List<String>> Function(String);
+
 class DataSearch extends SearchDelegate<String> {
   ApiListener mApiListener;
 
@@ -17,7 +18,6 @@ class DataSearch extends SearchDelegate<String> {
 
   DataSearch({String searchFieldLabel, this.onSearchChanged})
       : super(searchFieldLabel: searchFieldLabel);
-
 
   Future<void> saveToRecentSearches(String searchText) async {
     if (searchText == null) return; //Should not be null
@@ -32,13 +32,11 @@ class DataSearch extends SearchDelegate<String> {
     pref.setStringList("recentSearches", allSearches.toList());
   }
 
-  
   Future<List<String>> getRecentSearchesLike(String query) async {
     final pref = await SharedPreferences.getInstance();
     final allSearches = pref.getStringList("recentSearches");
     return allSearches.where((search) => search.startsWith(query)).toList();
   }
-
 
   @override
   Widget buildLeading(BuildContext context) {
@@ -50,7 +48,6 @@ class DataSearch extends SearchDelegate<String> {
           close(context, this.query);
         });
   }
-
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -65,7 +62,7 @@ class DataSearch extends SearchDelegate<String> {
     ];
   }
 
-    @override
+  @override
   Widget buildResults(BuildContext context) {
     saveToRecentSearches(this.query);
     // show some result based on the selection
@@ -80,7 +77,7 @@ class DataSearch extends SearchDelegate<String> {
                 onTap: () async {
                   //Define your action when clicking on result item.
                   //Here, it simply closes the page
-                  
+
                   this.close(context, this.query);
                 },
                 child: FutureBuilder<dynamic>(
@@ -92,47 +89,54 @@ class DataSearch extends SearchDelegate<String> {
 
                     if (snapshot.hasData) {
                       var data = snapshot.data.where((el) {
-                        return el['category'].toLowerCase().contains(this.query.toLowerCase())
+                        return el['category']
+                                .toLowerCase()
+                                .contains(this.query.toLowerCase())
                             ? true
-                            : false 
-                            ||
-                               el['appeal_id'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['address'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['city'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['district'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['mahalla'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['details'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['type'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false;
+                            : false || el['appeal_id'].toLowerCase().contains(this.query.toLowerCase())
+                                ? true
+                                : false ||
+                                        el['address']
+                                            .toLowerCase()
+                                            .contains(this.query.toLowerCase())
+                                    ? true
+                                    : false ||
+                                            el['city'].toLowerCase().contains(
+                                                this.query.toLowerCase())
+                                        ? true
+                                        : false ||
+                                                el['district'].toLowerCase().contains(
+                                                    this.query.toLowerCase())
+                                            ? true
+                                            : false || el['mahalla'].toLowerCase().contains(this.query.toLowerCase())
+                                                ? true
+                                                : false || el['details'].toLowerCase().contains(this.query.toLowerCase())
+                                                    ? true
+                                                    : false ||
+                                                            el['type']
+                                                                .toLowerCase()
+                                                                .contains(this.query.toLowerCase())
+                                                        ? true
+                                                        : false;
                       }).toList();
                       children = <Widget>[
-                      data.length!=0 ? Text('Charity', style: TextStyle(fontWeight: FontWeight.bold)):Text(''),
+                        data.length != 0
+                            ? Text('Charity',
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                            : Text(''),
                         for (var item in data)
                           Container(
                               child: Column(
                             children: <Widget>[
                               ListTile(
-                                title: Text(item['city']),
-                                subtitle: Text(item['amount']),
+                                title: Text(item['category']),
+                                subtitle: Text("Posted: ${item['date']}", style: TextStyle(fontSize:12),),
+                                trailing: Chip(
+                                    avatar: Icon(
+                                      Icons.star_border,
+                                      color: Colors.orange,
+                                    ),
+                                    label: Text(' ${item['rating']}')),
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -216,17 +220,22 @@ class DataSearch extends SearchDelegate<String> {
 
                     if (snapshot.hasData) {
                       var data = snapshot.data.where((el) {
-                        return el['channel'].toLowerCase().contains(this.query.toLowerCase())
+                        return el['channel']
+                                .toLowerCase()
+                                .contains(this.query.toLowerCase())
                             ? true
-                            : false
-                            ||
-                               el['title'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false;
+                            : false ||
+                                    el['title']
+                                        .toLowerCase()
+                                        .contains(this.query.toLowerCase())
+                                ? true
+                                : false;
                       }).toList();
                       children = <Widget>[
-                      data.length!=0 ? Text('Sermons', style: TextStyle(fontWeight: FontWeight.bold)):Text(''),
-
+                        data.length != 0
+                            ? Text('Sermons',
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                            : Text(''),
                         for (var item in data)
                           Container(
                               child: Column(
@@ -333,34 +342,46 @@ class DataSearch extends SearchDelegate<String> {
 
                     if (snapshot.hasData) {
                       var data = snapshot.data.where((el) {
-                        return el['title'].toLowerCase().contains(this.query.toLowerCase())
+                        return el['title']
+                                .toLowerCase()
+                                .contains(this.query.toLowerCase())
                             ? true
-                            : false
-                            ||
-                               el['type'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['location'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['min_experience'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['description'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ||
-                               el['organization'].toLowerCase().contains(this.query.toLowerCase())
-                            ? true
-                            : false
-                            ;
+                            : false ||
+                                    el['type']
+                                        .toLowerCase()
+                                        .contains(this.query.toLowerCase())
+                                ? true
+                                : false ||
+                                        el['location']
+                                            .toLowerCase()
+                                            .contains(this.query.toLowerCase())
+                                    ? true
+                                    : false ||
+                                            el['min_experience']
+                                                .toLowerCase()
+                                                .contains(
+                                                    this.query.toLowerCase())
+                                        ? true
+                                        : false ||
+                                                el['description']
+                                                    .toLowerCase()
+                                                    .contains(this
+                                                        .query
+                                                        .toLowerCase())
+                                            ? true
+                                            : false ||
+                                                    el['organization']
+                                                        .toLowerCase()
+                                                        .contains(
+                                                            this.query.toLowerCase())
+                                                ? true
+                                                : false;
                       }).toList();
                       children = <Widget>[
-                      data.length!=0 ? Text('Jobs', style: TextStyle(fontWeight: FontWeight.bold)):Text(''),
-
+                        data.length != 0
+                            ? Text('Jobs',
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                            : Text(''),
                         for (var item in data) _buildJobListTile(context, item)
                       ];
 
@@ -436,7 +457,7 @@ class DataSearch extends SearchDelegate<String> {
               title: Text("${_oldFilters[index]}"),
               onTap: () {
                 showResults(context);
-               this.query = _oldFilters[index];
+                this.query = _oldFilters[index];
                 // close(context, _oldFilters[index]);
               },
             );
@@ -446,7 +467,6 @@ class DataSearch extends SearchDelegate<String> {
     );
   }
 
-  
   Widget _buildJobListTile(context, item) {
     if (item['type'] == 'appeal') {
       return ListTile(
@@ -491,16 +511,6 @@ class DataSearch extends SearchDelegate<String> {
       );
     }
   }
-
-
 }
-
-
-
-
-
-
-
-
 
 // }
