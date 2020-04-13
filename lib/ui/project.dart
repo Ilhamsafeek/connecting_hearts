@@ -59,7 +59,7 @@ class _ProjectPageState extends State<Project> {
         if (snapshot.hasData) {
           var data = snapshot.data
               .where((el) =>
-                  el['category'] == this.widget.categoryData['category'])
+                  el['project_category_id'] == this.widget.categoryData['project_category_id'])
               .toList();
 
           children = <Widget>[
@@ -159,13 +159,14 @@ class _ProjectPageState extends State<Project> {
                       style: TextStyle(color: Colors.white)),
                   trailing: Chip(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 2, horizontal: 1),
+                        const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6))),
-                    backgroundColor: Colors.blue[800],
+                    backgroundColor: Colors.orange[700],
                     avatar: Icon(
                       Icons.star_border,
-                      color: Colors.orange,
+                      color: Colors.white,
+                     
                     ),
                     label: Text(
                       "${data['rating']}",

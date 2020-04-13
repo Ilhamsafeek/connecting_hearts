@@ -12,6 +12,7 @@ class ProjectDetail extends StatefulWidget {
   _ProjectDetailPageState createState() => _ProjectDetailPageState();
 
   final dynamic projectData;
+  
 
   ProjectDetail(this.projectData, {Key key}) : super(key: key);
 }
@@ -163,7 +164,15 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       ),
                       Expanded(
                         child: Chip(
+                            label: Text('${widget.projectData['project_type']}')),
+                      ),
+                      Expanded(
+                        child: Chip(
                             label: Text('${widget.projectData['category']}')),
+                      ),
+                      Expanded(
+                        child: Chip(
+                            label: Text('${widget.projectData['sub_category']}')),
                       ),
                     ],
                   ),

@@ -53,10 +53,10 @@ class DataSearch extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: const Icon(Icons.mic),
-        tooltip: 'Voice input',
+        icon: const Icon(Icons.close),
+        tooltip: 'Clear',
         onPressed: () {
-          // this.query = 'TBW: Get input from voice';
+          this.query = '';
         },
       ),
     ];

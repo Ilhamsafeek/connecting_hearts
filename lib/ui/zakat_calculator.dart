@@ -14,7 +14,7 @@ class _ZakatCalculatorState extends State<ZakatCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('Zakat calculator')),
+     
       body: onBordingBody(),
     );
   }
@@ -85,7 +85,7 @@ class _SliderLayoutViewState extends State<SliderLayoutView> {
                             padding: EdgeInsets.all(
                                 5.0), // optional, in order to add additional space around text if needed
                             child: Text(
-                              "Skip",
+                              "Next",
                               style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontWeight: FontWeight.w600,

@@ -55,7 +55,6 @@ class _ContributedProjectState extends State<ContributedProject> {
                 fit: BoxFit.cover,
               ),
             ),
-           
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -221,9 +220,20 @@ class _ContributedProjectState extends State<ContributedProject> {
                         'Categories: ',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
+                      
+                      Expanded(
+                        child: Chip(
+                            label:
+                                Text('${widget.projectData['project_type']}')),
+                      ),
                       Expanded(
                         child: Chip(
                             label: Text('${widget.projectData['category']}')),
+                      ),
+                       Expanded(
+                        child: Chip(
+                            label:
+                                Text('${widget.projectData['sub_category']}')),
                       ),
                     ],
                   ),

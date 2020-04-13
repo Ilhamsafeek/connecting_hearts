@@ -239,7 +239,7 @@ class _MyContributionState extends State<MyContribution> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            title: Text('${item['category']}'),
+            title: Text('${item['project_id']}'),
             subtitle: Text(
               '${item['date_time']}',
               style: TextStyle(fontSize: 12),

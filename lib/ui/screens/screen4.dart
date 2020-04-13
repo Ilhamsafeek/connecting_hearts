@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 class Inbox extends StatefulWidget {
   Inbox({Key key}) : super(key: key);
 
@@ -10,33 +11,10 @@ class Inbox extends StatefulWidget {
 class _InboxState extends State<Inbox> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: new Scaffold(
-        appBar: new PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: new Container(
-            height: 50.0,
-            child: new TabBar(
-              tabs: [
-                Tab(
-                  child: Text('Notifications',
-                      style: TextStyle(color: Colors.black)),
-                ),
-                Tab(
-                  child:
-                      Text('Messages', style: TextStyle(color: Colors.black)),
-                ),
-              ],
-            ),
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            Notifications(),
-            Messages(),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(title: Text('Notifications'),),
+      body: SingleChildScrollView(
+        child: Notifications(),
       ),
     );
   }
@@ -152,7 +130,6 @@ class _MessagesState extends State<Messages> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        );
+    return Container();
   }
 }

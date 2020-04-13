@@ -103,7 +103,7 @@ class WebServices {
     var url = 'https://www.chadmin.online/api/createpayment';
     var response = await http.post(url, body: {
       'user_id': CURRENT_USER,
-      'amount': '$amount',
+      'paid_amount': '$amount',
       'project_id': projectData['appeal_id'],
       'receipt_no': '123',
       'method': '$method',

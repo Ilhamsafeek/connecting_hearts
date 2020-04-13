@@ -17,6 +17,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zamzam/ui/zakat_calculator.dart';
 
 import 'badge_icon.dart';
 
@@ -93,7 +94,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         updateNotificationCount(_tabBarNotificationCount);
       },
       onResume: (Map<String, dynamic> event) async {
-
         //background
         _tabBarNotificationCount = _tabBarNotificationCount + 1;
         _countController.sink.add(_tabBarNotificationCount);
@@ -144,7 +144,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         priority: Priority.High, importance: Importance.Max);
     var iOS = IOSNotificationDetails();
     var platform = new NotificationDetails(android, iOS);
-    flutterLocalNotificationsPlugin.show(0, 'Connecting hearts', 'Watch or Listen to new sermon update', platform,
+    flutterLocalNotificationsPlugin.show(0, 'Connecting hearts',
+        'Watch or Listen to new sermon update', platform,
         payload: "send message");
   }
 
@@ -161,18 +162,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       appBar: new AppBar(
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.add_circle),
-              onPressed: () {
-                _tabBarNotificationCount = _tabBarNotificationCount + 1;
-                _countController.sink.add(_tabBarNotificationCount);
-              }),
-          IconButton(
-              icon: Icon(Icons.announcement),
-              onPressed: () {
-                _tabBarNotificationCount = _tabBarNotificationCount - 1;
-                _countController.sink.add(_tabBarNotificationCount);
-              }),
-          IconButton(
             onPressed: () async {
               await showSearch<String>(
                 context: context,
@@ -182,6 +171,26 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               );
             },
             icon: Icon(Icons.search),
+          ),
+          IconButton(
+            icon: StreamBuilder(
+              initialData: _tabBarNotificationCount,
+              stream: _countController.stream,
+              builder: (_, snapshot) => BadgeIcon(
+                icon: Icon(
+                  Icons.notifications,
+                  size: 27.0,
+                  color: Colors.white,
+                ),
+                badgeCount: snapshot.data,
+              ),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Inbox()),
+              );
+            },
           ),
           IconButton(
             onPressed: () {
@@ -209,7 +218,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
             Home(),
             Charity(),
             Jobs(),
-            Inbox(),
+            ZakatCalculator(),
           ],
         ),
       ),
@@ -236,19 +245,9 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
             activeColor: Theme.of(context).primaryColor,
           ),
           BottomNavyBarItem(
-            title: Text('Notifications'),
+            title: Text('Zakat'),
             //Actually icon was in Icon type. we have changed in the cache of bottomnavybaritem. (Ctrl + click on BottomNavyBarItem to edit)
-            icon: StreamBuilder(
-              initialData: _tabBarNotificationCount,
-              stream: _countController.stream,
-              builder: (_, snapshot) => BadgeIcon(
-                icon: Icon(
-                  Icons.notifications,
-                  size: 27.0,
-                ),
-                badgeCount: snapshot.data,
-              ),
-            ),
+            icon: Icon(Icons.dialpad),
             activeColor: Theme.of(context).primaryColor,
           ),
         ],
