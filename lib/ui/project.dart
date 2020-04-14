@@ -162,7 +162,7 @@ class _ProjectPageState extends State<Project> {
                         const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6))),
-                    backgroundColor: Colors.orange[700],
+                    backgroundColor: Colors.amber,
                     avatar: Icon(
                       Icons.star_border,
                       color: Colors.white,
@@ -173,7 +173,7 @@ class _ProjectPageState extends State<Project> {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                          color: Colors.black),
                     ),
                   ),
                 ),

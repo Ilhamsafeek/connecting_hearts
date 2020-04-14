@@ -71,53 +71,55 @@ class _AboutState extends State<About> {
                 child: Column(
                   children: <Widget>[
                     Center(child: Image.asset('assets/logo.png', height: 80)),
-                    RaisedButton(
-                      onPressed: () async {
+                    // RaisedButton(
+                    //   onPressed: () async {
                        
-                          showNotification();
-                      },
-                      child: Text('Notify'),
-                    )
+                    //       showNotification();
+                    //   },
+                    //   child: Text('Notify'),
+                    // )
+                  
                   ],
                 ),
               ),
-              Builder(builder: (BuildContext context){
-                return OfflineBuilder(
-                  connectivityBuilder: (
-                    BuildContext context,
-                    ConnectivityResult connectivity,
-                    Widget child){
-                    final bool connected =connectivity!= ConnectivityResult.none;
-                      return Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          child,
-                          Positioned(
-                            left: 0.0,
-                            right: 0.0,
-                            height: 12.0,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 300),
-                              color: connected ? null : Colors.red,
-                              child: connected ? null :
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('Offline')
-                                ],
-                              )
-                            ),
-                          )
-                        ],
-                      );
+              // Builder(builder: (BuildContext context){
+              //   return OfflineBuilder(
+              //     connectivityBuilder: (
+              //       BuildContext context,
+              //       ConnectivityResult connectivity,
+              //       Widget child){
+              //       final bool connected =connectivity!= ConnectivityResult.none;
+              //         return Stack(
+              //           fit: StackFit.expand,
+              //           children: [
+              //             child,
+              //             Positioned(
+              //               left: 0.0,
+              //               right: 0.0,
+              //               height: 12.0,
+              //               child: AnimatedContainer(
+              //                 duration: const Duration(milliseconds: 300),
+              //                 color: connected ? null : Colors.red,
+              //                 child: connected ? null :
+              //                 Row(
+              //                   mainAxisAlignment: MainAxisAlignment.center,
+              //                   children: <Widget>[
+              //                     Text('Offline')
+              //                   ],
+              //                 )
+              //               ),
+              //             )
+              //           ],
+              //         );
 
-                    }
+              //       }
                   
-                  );
+              //     );
 
                   
 
-              })
+              // })
+           
             ],
           ),
         ));

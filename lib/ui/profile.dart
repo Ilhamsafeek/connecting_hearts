@@ -299,6 +299,7 @@ class ProfileState extends State<Profile> {
                 );
               },
             ),
+            
             ListTile(
               leading: Icon(Icons.payment),
               title: Text('Payment'),
@@ -324,8 +325,8 @@ class ProfileState extends State<Profile> {
             ),
             ListTile(
               leading: Icon(
-                FontAwesomeIcons.powerOff,
-                size: 18,
+                Icons.power_settings_new,
+               
               ),
               title: Text('Sign out'),
               subtitle: SizedBox(height: 2.0, child: _signoutProgress),

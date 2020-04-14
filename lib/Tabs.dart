@@ -179,7 +179,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               builder: (_, snapshot) => BadgeIcon(
                 icon: Icon(
                   Icons.notifications,
-                  size: 27.0,
+                  size: 25.0,
                   color: Colors.white,
                 ),
                 badgeCount: snapshot.data,
@@ -190,6 +190,9 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                 context,
                 MaterialPageRoute(builder: (context) => Inbox()),
               );
+              _tabBarNotificationCount = 0;
+              _countController.sink.add(_tabBarNotificationCount);
+              updateNotificationCount(_tabBarNotificationCount);
             },
           ),
           IconButton(
@@ -247,7 +250,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           BottomNavyBarItem(
             title: Text('Zakat'),
             //Actually icon was in Icon type. we have changed in the cache of bottomnavybaritem. (Ctrl + click on BottomNavyBarItem to edit)
-            icon: Icon(Icons.dialpad),
+            icon: Icon(Icons.chrome_reader_mode),
             activeColor: Theme.of(context).primaryColor,
           ),
         ],

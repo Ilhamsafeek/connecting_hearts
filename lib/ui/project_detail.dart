@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/payment_result.dart';
@@ -12,7 +13,6 @@ class ProjectDetail extends StatefulWidget {
   _ProjectDetailPageState createState() => _ProjectDetailPageState();
 
   final dynamic projectData;
-  
 
   ProjectDetail(this.projectData, {Key key}) : super(key: key);
 }
@@ -26,6 +26,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   String selectedMethod;
   dynamic paymentAmount;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _amount = TextEditingController(text: "");
+  final _formKey = GlobalKey<FormState>();
 
   selectsku(method) {
     print(method);
@@ -79,6 +81,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
   }
 
   Widget _detailSection() {
+    print('=========================>>>>>>>${widget.projectData}');
     var paymentTypeExtension = "";
     var months = '${widget.projectData['months']}';
     if (widget.projectData['type'] == 'recursive') {
@@ -164,7 +167,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       ),
                       Expanded(
                         child: Chip(
-                            label: Text('${widget.projectData['project_type']}')),
+                            label:
+                                Text('${widget.projectData['project_type']}')),
                       ),
                       Expanded(
                         child: Chip(
@@ -172,7 +176,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       ),
                       Expanded(
                         child: Chip(
-                            label: Text('${widget.projectData['sub_category']}')),
+                            label:
+                                Text('${widget.projectData['sub_category']}')),
                       ),
                     ],
                   ),
@@ -322,6 +327,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       Expanded(
                         flex: 11,
                         child: RadioListTile(
+                          selected: true,
                           activeColor: Colors.black,
                           value: 'bank',
                           groupValue: selectedMethod,
@@ -345,73 +351,58 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       )
                     ],
                   ),
-                  ListTile(
-                      title: TextFormField(
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: 'Amount',
-                          labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20.0),
-                        ),
-                        onChanged: (value) {
-                          this.paymentAmount = value;
-                        },
-                      ),
-                      onTap: () => {}),
-                  ListTile(
-                      title: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                                child: RaisedButton(
-                              onPressed: () {
-                                if (this.paymentAmount != null &&
-                                    this.paymentAmount != 0 &&
-                                    this.selectedMethod != null) {
-                                  if (this.selectedMethod != 'bank') {
-                                    Navigator.pop(context);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => PaymentResult(
-                                              selectedMethod,
-                                              widget.projectData,
-                                              paymentAmount,
-                                              'card')),
-                                    );
-                                  } else {
-                                    Navigator.pop(context);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => PaymentResult(
-                                              selectedMethod,
-                                              widget.projectData,
-                                              paymentAmount,
-                                              'bank')),
-                                    );
-                                  }
-                                } else {
-                                  _scaffoldKey.currentState
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Please check inputs"),
-                                  ));
+                  Form(
+                      key: _formKey,
+                      child: Column(children: <Widget>[
+                        ListTile(
+                            title: TextFormField(
+                              controller: _amount,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Please input amount";
                                 }
                               },
-                              child: Text("Proceed Donation"),
-                              color: Colors.orange[800],
-                              textColor: Colors.white,
-                            )),
-                          ],
-                        ),
-                      ),
-                      onTap: () => {}),
+                              inputFormatters: <TextInputFormatter>[
+                                WhitelistingTextInputFormatter.digitsOnly,
+                              ],
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black),
+                              decoration: InputDecoration(
+                                hintText: 'Amount',
+                                labelStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0),
+                              ),
+                              // onChanged: (value) {
+                              //   this.paymentAmount = value;
+                              // },
+                            ),
+                            onTap: () => {}),
+                        ListTile(
+                            title: Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      child: RaisedButton(
+                                    onPressed: () {
+                                      _formKey.currentState.validate()
+                                          ? _navigateToPayment()
+                                          : null;
+                                    },
+                                    child: Text("Proceed Donation"),
+                                    color: Colors.amber,
+                                  )),
+                                ],
+                              ),
+                            ),
+                            onTap: () => {}),
+                      ]))
                 ],
               ),
             );
@@ -550,5 +541,25 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             );
           });
         });
+  }
+
+  _navigateToPayment() {
+    if (this.selectedMethod != 'bank') {
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PaymentResult(
+                selectedMethod, widget.projectData, _amount, 'card')),
+      );
+    } else {
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PaymentResult(
+                selectedMethod, widget.projectData, _amount, 'bank')),
+      );
+    }
   }
 }

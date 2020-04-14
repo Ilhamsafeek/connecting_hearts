@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -96,18 +97,39 @@ class _CharityState extends State<Charity> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Icon(
-                    Icons.flash_on,
-                    color: Colors.orange,
-                  ),
-                  Text('School with a Smile 2020 happens today !'),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      // Icon(
+                      //   Icons.flash_on,
+                      //   color: Colors.orange,
+                      // ),
+                      SizedBox(width: 2.0),
+                      RotateAnimatedTextKit(
+                          isRepeatingAnimation: true,
+                          totalRepeatCount: 100,
+                          duration: Duration(milliseconds: 2000),
+                          pause: Duration(milliseconds: 2000),
+                          onTap: () {
+                            print("Tap Event");
+                          },
+                          text: [
+                            "School with Smile begins today",
+                            "View Photos of the day",
+                            "Convocation re-scheduled"
+                          ],
+                          textStyle:
+                              TextStyle(fontSize: 18.0, fontFamily: "Horizon"),
+                          textAlign: TextAlign.start,
+                          alignment: AlignmentDirectional.center),
+                    ],
+                  )
                 ],
               ),
             ),
           ),
           FutureBuilder<dynamic>(
-            future: WebServices(this.mApiListener)
-                .getCategoryData(), // a previously-obtained Future<String> or null
+            future: WebServices(this.mApiListener).getCategoryData(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               List<Widget> children;
 
@@ -120,21 +142,17 @@ class _CharityState extends State<Charity> {
                       children: <Widget>[
                         for (var item in snapshot.data)
                           InkWell(
-                              child: GridItem(GridModel(item['photo'],
-                                  "${item['category']}", null)),
+                              child: GridItem(GridModel(
+                                  item['photo'], "${item['category']}", null)),
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          Project(item)),
+                                      builder: (context) => Project(item)),
                                 );
                               }),
                       ]),
                 ];
-                 
-                 
-              
               } else if (snapshot.hasError) {
                 children = <Widget>[
                   Icon(
@@ -170,15 +188,15 @@ class _CharityState extends State<Charity> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: AnimationConfiguration.toStaggeredList(
-                          duration: const Duration(milliseconds: 375),
-                          childAnimationBuilder: (widget) => SlideAnimation(
-                            horizontalOffset: 50.0,
-                            child: FadeInAnimation(
-                              child: widget,
-                            ),
-                          ),
-                          children: children,
-                        ),
+                    duration: const Duration(milliseconds: 375),
+                    childAnimationBuilder: (widget) => SlideAnimation(
+                      horizontalOffset: 50.0,
+                      child: FadeInAnimation(
+                        child: widget,
+                      ),
+                    ),
+                    children: children,
+                  ),
                 ),
               );
             },

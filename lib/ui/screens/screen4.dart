@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/ui/project_detail.dart';
+import 'package:zamzam/ui/single_video.dart';
+import 'package:zamzam/ui/success_page.dart';
 
 class Inbox extends StatefulWidget {
   Inbox({Key key}) : super(key: key);
@@ -12,7 +17,9 @@ class _InboxState extends State<Inbox> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Notifications'),),
+      appBar: AppBar(
+        title: Text('Notifications'),
+      ),
       body: SingleChildScrollView(
         child: Notifications(),
       ),
@@ -50,14 +57,61 @@ class _NotificationsState extends State<Notifications> {
                         children: <Widget>[
                           ListTile(
                             leading: CircleAvatar(
-                              child: Icon(Icons.notifications),
+                              child: item['type'] == 'approval'
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      color: Colors.orange,
+                                    )
+                                  : item['type'] == 'project'
+                                      ? Icon(Icons.short_text)
+                                      : Icon(Icons.videocam),
                             ),
                             title: Text(item['message']),
                             subtitle: Text(
                               item['time'],
                               style: TextStyle(fontSize: 12),
                             ),
-                            onTap: () {},
+                            trailing: Text(
+                              item['type'],
+                              style: TextStyle(fontWeight: FontWeight.w300),
+                            ),
+                            onTap: () {
+                              dynamic type = item['type'];
+                              switch (type) {
+                                case 'sermon':
+                               
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Play(json.decode(item['data']))));
+                                  break;
+                                case 'project':
+                                  print(json.decode(item['data']));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProjectDetail(
+                                              json.decode(item['data']))));
+                                  break;
+                                case 'approval':
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SuccessPage(
+                                              json.decode(item['data']))));
+                                  break;
+                                default:
+                                 print(json.decode(item['data']));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Play(json.decode(item['data']))));
+                              }
+                             
+
+                            },
                           ),
                           Divider(
                             height: 0,

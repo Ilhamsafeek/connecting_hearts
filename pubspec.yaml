@@ -56,7 +56,10 @@ dependencies:
   flutter_offline:
   shimmer: ^1.1.1
   bottom_navy_bar: ^5.4.0
-  
+  animated_text_kit: ^2.0.0
+  circular_reveal_animation:
+
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter
