@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zamzam/ui/project_detail.dart';
@@ -51,8 +52,16 @@ class _NotificationsState extends State<Notifications> {
                 List<Widget> children;
 
                 if (snapshot.hasData) {
+                  dynamic data = snapshot.data.where((el) {
+                    if (el['target'].contains(CURRENT_USER)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }).toList();
+
                   children = <Widget>[
-                    for (var item in snapshot.data)
+                    for (var item in data)
                       Column(
                         children: <Widget>[
                           ListTile(
@@ -75,24 +84,47 @@ class _NotificationsState extends State<Notifications> {
                               item['type'],
                               style: TextStyle(fontWeight: FontWeight.w300),
                             ),
-                            onTap: () {
+                            onTap: () async {
                               dynamic type = item['type'];
                               switch (type) {
                                 case 'sermon':
-                               
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Play(json.decode(item['data']))));
+                                  await WebServices(this.mApiListener)
+                                      .getSermonData()
+                                      .then((value) {
+                                    dynamic sermonData;
+                                    sermonData = value
+                                        .where((el) =>
+                                            el['sermon_id'] ==
+                                            '${item['data']}')
+                                        .toList()[0];
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Play(sermonData)));
+                                  });
+
                                   break;
                                 case 'project':
-                                  print(json.decode(item['data']));
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProjectDetail(
-                                              json.decode(item['data']))));
+                                  CircularProgressIndicator();
+                                  await WebServices(this.mApiListener)
+                                      .getProjectData()
+                                      .then((value) {
+                                    dynamic projectData;
+                                    projectData = value
+                                        .where((el) =>
+                                            el['appeal_id'] ==
+                                            '${item['data']}')
+                                        .toList()[0];
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProjectDetail(projectData)));
+                                  });
+
                                   break;
                                 case 'approval':
                                   Navigator.push(
@@ -102,15 +134,23 @@ class _NotificationsState extends State<Notifications> {
                                               json.decode(item['data']))));
                                   break;
                                 default:
-                                 print(json.decode(item['data']));
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Play(json.decode(item['data']))));
-                              }
-                             
+                                  await WebServices(this.mApiListener)
+                                      .getSermonData()
+                                      .then((value) {
+                                    dynamic sermonData;
+                                    sermonData = value
+                                        .where((el) =>
+                                            el['sermon_id'] ==
+                                            '${item['data']}')
+                                        .toList()[0];
 
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Play(sermonData)));
+                                  });
+                              }
                             },
                           ),
                           Divider(

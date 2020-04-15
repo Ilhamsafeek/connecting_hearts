@@ -373,9 +373,9 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.0),
                               ),
-                              // onChanged: (value) {
-                              //   this.paymentAmount = value;
-                              // },
+                              onChanged: (value) {
+                                print("====================${_amount.text}");
+                              },
                             ),
                             onTap: () => {}),
                         ListTile(
@@ -547,7 +547,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         context,
         MaterialPageRoute(
             builder: (context) => PaymentResult(
-                selectedMethod, widget.projectData, _amount, 'card')),
+                selectedMethod, widget.projectData, _amount.text, 'card')),
       );
     } else {
       Navigator.pop(context);
@@ -555,7 +555,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         context,
         MaterialPageRoute(
             builder: (context) => PaymentResult(
-                selectedMethod, widget.projectData, _amount, 'bank')),
+                selectedMethod, widget.projectData, _amount.text, 'bank')),
       );
     }
   }

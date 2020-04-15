@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 
 class Page extends StatefulWidget {
   const Page({Key key}) : super(key: key);
@@ -10,93 +7,54 @@ class Page extends StatefulWidget {
 }
 
 class PageState extends State<Page> with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1000),
-    );
-    animation = CurvedAnimation(
-      parent: animationController,
-      curve: Curves.easeIn,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CRA Demo"),
+        title: Text('Main Screen'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              MaterialButton(
-                child: Text("show reveal dialog"),
-                onPressed: () => showRevealDialog(context),
-                color: Colors.amber,
-              ),
-              SizedBox(height: 16),
-              CircularRevealAnimation(
-                child: Image.asset('assets/child.jpg'),
-                animation: animation,
-//                centerAlignment: Alignment.centerRight,
-                centerOffset: Offset(130, 100),
-//                minRadius: 12,
-//                maxRadius: 200,
-              ),
-            ],
+      body: GestureDetector(
+        child: Hero(
+          tag: 'imageHero',
+          child: Image.network(
+            'https://picsum.photos/250?image=9',
           ),
         ),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return DetailScreen();
+          }));
+        },
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        if (animationController.status == AnimationStatus.forward ||
-            animationController.status == AnimationStatus.completed) {
-          animationController.reverse();
-        } else {
-          animationController.forward();
-        }
-      }),
     );
   }
+}
 
-  Future<void> showRevealDialog(BuildContext context) async {
-    showGeneralDialog(
-      barrierLabel: "Label",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 700),
-      context: context,
-      pageBuilder: (context, anim1, anim2) {
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Image.asset('assets/child.png'),
-            ),
-            margin: EdgeInsets.only(top: 50, left: 12, right: 12, bottom: 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
+class DetailScreen extends StatefulWidget {
+  const DetailScreen({Key key}) : super(key: key);
+  @override
+  DetailScreenState createState() => new DetailScreenState();
+}
+
+class DetailScreenState extends State<DetailScreen> with SingleTickerProviderStateMixin {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Center(
+          child: Hero(
+            tag: 'imageHero',
+            child: Image.network(
+              'https://picsum.photos/250?image=9',
             ),
           ),
-        );
-      },
-      transitionBuilder: (context, anim1, anim2, child) {
-        return CircularRevealAnimation(
-          child: child,
-          animation: anim1,
-          centerAlignment: Alignment.bottomCenter,
-        );
-      },
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 }
