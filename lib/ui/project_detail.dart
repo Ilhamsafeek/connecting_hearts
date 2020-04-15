@@ -50,10 +50,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('${widget.projectData['appeal_id']}'),
-              background: Image.asset(
-                "assets/child.png",
-                fit: BoxFit.cover,
-              ),
+              background: Image.network(widget.projectData['featured_image'],fit: BoxFit.cover,),
+             
             ),
             actions: <Widget>[
               IconButton(
@@ -159,28 +157,27 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               Divider(),
               Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Categories: ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Expanded(
-                        child: Chip(
-                            label:
-                                Text('${widget.projectData['project_type']}')),
-                      ),
-                      Expanded(
-                        child: Chip(
-                            label: Text('${widget.projectData['category']}')),
-                      ),
-                      Expanded(
-                        child: Chip(
-                            label:
-                                Text('${widget.projectData['sub_category']}')),
-                      ),
-                    ],
+                  Text(
+                    'Categories',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  Container(
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      height: 35,
+                      child: new ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          Chip(
+                              label: Text(
+                                  '${widget.projectData['project_type']}')),
+                          Chip(
+                              label: Text('${widget.projectData['category']}')),
+                          Chip(
+                              label: Text(
+                                  '${widget.projectData['sub_category']}')),
+                          
+                        ],
+                      ))
                 ],
               ),
               // Column(

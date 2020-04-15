@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -29,39 +30,51 @@ class _HomeState extends State<Home> {
           slivers: <Widget>[
             SliverAppBar(
               // expandedHeight: 5,
+              title: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                      child: FlatButton.icon(
+                          icon: Icon(
+                            Icons.voice_chat,
+                            color: Colors.grey[800],
+                            size: 30,
+                          ),
+                          label: Text(
+                            'Channels',
+                          ),
+                          onPressed: () {
+                            // Navigator.of(context, rootNavigator: true).push(
+                            //   new CupertinoPageRoute<bool>(
+                            //     maintainState: true,
+                            //     fullscreenDialog: true,
+                            //     builder: (context) => Channels('Personal'))
+                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Channels('Personal')),
+                            );
+                          })),
+                         
+                  Expanded(
+                    flex: 4,
+                      child: FlatButton.icon(
+                          icon: Icon(Icons.offline_bolt, color: Colors.teal,size: 30,),
+                          label: Text('Special Updates'),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Channels('Special')),
+                            );
+                          })),
+                ],
+              ),
+
               backgroundColor: Colors.white,
               floating: true,
               // pinned: false,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Row(
-                  children: <Widget>[
-                    InkWell(
-                        child: Chip(
-                          label: Text(
-                            'Sermon Channels',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.grey[600],
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Channels('Personal')),
-                          );
-                        }),
-                    InkWell(
-                        child: Chip(label: Text('Zamzam Updates')),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Channels('Special')),
-                          );
-                        }),
-                  ],
-                ),
-              ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
@@ -156,8 +169,7 @@ class _HomeState extends State<Home> {
               //       child: widget,
               //     ),
               //   ),
-                children: children,
-              
+              children: children,
             ),
           );
         } else if (snapshot.hasError) {

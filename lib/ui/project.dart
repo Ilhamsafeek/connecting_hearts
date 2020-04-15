@@ -126,7 +126,7 @@ class _ProjectPageState extends State<Project> {
           Stack(children: <Widget>[
             ClipRRect(
               // borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-              child: Image.asset('assets/child.png'),
+              child: Image.network(data['featured_image']),
             ),
             Container(
               height: MediaQuery.of(context).size.width * 0.58,

@@ -50,10 +50,9 @@ class _ContributedProjectState extends State<ContributedProject> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('${widget.projectData['appeal_id']}'),
-              background: Image.asset(
-                "assets/child.png",
-                fit: BoxFit.cover,
-              ),
+              background: 
+              Image.network(widget.projectData['featured_image'],fit: BoxFit.cover,),
+             
             ),
           ),
           SliverList(
