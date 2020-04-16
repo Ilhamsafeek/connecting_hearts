@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/ui/job/edit_appeal.dart';
 import 'package:zamzam/ui/job/edit_vacancy.dart';
@@ -118,11 +119,10 @@ class _JobsState extends State<Jobs> {
                         Icons.flash_on,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PostVacancy()),
-                        );
+                        Navigator.of(context).push(CupertinoPageRoute<Null>(
+                            builder: (BuildContext context) {
+                          return new PostVacancy();
+                        }));
                       },
                       label: Text(
                         'Post a Vacancy',
@@ -134,10 +134,10 @@ class _JobsState extends State<Jobs> {
                       color: Colors.blue[900],
                       icon: Icon(Icons.send, color: Colors.white),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AppealJob()),
-                        );
+                        Navigator.of(context).push(CupertinoPageRoute<Null>(
+                            builder: (BuildContext context) {
+                          return new AppealJob();
+                        }));
                       },
                       label: Text(
                         'Appeal a Job',
@@ -238,16 +238,10 @@ class _JobsState extends State<Jobs> {
             ? PopupMenuButton<String>(
                 onSelected: (String value) {
                   if (value == "edit") {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, anim1, anim2) =>
-                            EditAppeal(item),
-                        transitionsBuilder: (context, anim1, anim2, child) =>
-                            FadeTransition(opacity: anim1, child: child),
-                        transitionDuration: Duration(milliseconds: 100),
-                      ),
-                    );
+                    Navigator.of(context).push(CupertinoPageRoute<Null>(
+                        builder: (BuildContext context) {
+                      return new EditAppeal(item);
+                    }));
                   } else {
                     _deleteModalBottomSheet(context, item['id']);
                   }
@@ -265,15 +259,10 @@ class _JobsState extends State<Jobs> {
               )
             : null,
         onTap: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, anim1, anim2) => JobDetail(item),
-              transitionsBuilder: (context, anim1, anim2, child) =>
-                  FadeTransition(opacity: anim1, child: child),
-              transitionDuration: Duration(milliseconds: 100),
-            ),
-          );
+          Navigator.of(context)
+              .push(CupertinoPageRoute<Null>(builder: (BuildContext context) {
+            return new JobDetail(item);
+          }));
         },
       );
     } else {
@@ -292,16 +281,10 @@ class _JobsState extends State<Jobs> {
             ? PopupMenuButton<String>(
                 onSelected: (String value) {
                   if (value == 'edit') {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, anim1, anim2) =>
-                            EditVacancy(item),
-                        transitionsBuilder: (context, anim1, anim2, child) =>
-                            FadeTransition(opacity: anim1, child: child),
-                        transitionDuration: Duration(milliseconds: 100),
-                      ),
-                    );
+                    Navigator.of(context).push(CupertinoPageRoute<Null>(
+                        builder: (BuildContext context) {
+                      return new EditVacancy(item);
+                    }));
                   } else {
                     _deleteModalBottomSheet(context, item['id']);
                   }
@@ -322,15 +305,10 @@ class _JobsState extends State<Jobs> {
                 color: Colors.grey,
               ),
         onTap: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, anim1, anim2) => JobDetail(item),
-              transitionsBuilder: (context, anim1, anim2, child) =>
-                  FadeTransition(opacity: anim1, child: child),
-              transitionDuration: Duration(milliseconds: 100),
-            ),
-          );
+          Navigator.of(context)
+              .push(CupertinoPageRoute<Null>(builder: (BuildContext context) {
+            return new JobDetail(item);
+          }));
         },
       );
     }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -89,22 +90,22 @@ class DataSearch extends SearchDelegate<String> {
 
                     if (snapshot.hasData) {
                       var data = snapshot.data.where((el) {
-                        return 
-                        // el['category']
-                        //         .toLowerCase()
-                        //         .contains(this.query.toLowerCase())
-                        //     ? true
-                        //     : false || 
-                            el['appeal_id'].toLowerCase().contains(this.query.toLowerCase())
+                        return
+                            // el['category']
+                            //         .toLowerCase()
+                            //         .contains(this.query.toLowerCase())
+                            //     ? true
+                            //     : false ||
+                            el['appeal_id']
+                                    .toLowerCase()
+                                    .contains(this.query.toLowerCase())
                                 ? true
                                 : false ||
                                         el['address']
                                             .toLowerCase()
                                             .contains(this.query.toLowerCase())
                                     ? true
-                                    : false ||
-                                            el['city'].toLowerCase().contains(
-                                                this.query.toLowerCase())
+                                    : false || el['city'].toLowerCase().contains(this.query.toLowerCase())
                                         ? true
                                         : false ||
                                                 el['district'].toLowerCase().contains(
@@ -112,7 +113,12 @@ class DataSearch extends SearchDelegate<String> {
                                             ? true
                                             : false || el['mahalla'].toLowerCase().contains(this.query.toLowerCase())
                                                 ? true
-                                                : false || el['details'].toLowerCase().contains(this.query.toLowerCase())
+                                                : false ||
+                                                        el['details']
+                                                            .toLowerCase()
+                                                            .contains(this
+                                                                .query
+                                                                .toLowerCase())
                                                     ? true
                                                     : false ||
                                                             el['type']
@@ -132,7 +138,10 @@ class DataSearch extends SearchDelegate<String> {
                             children: <Widget>[
                               ListTile(
                                 title: Text(item['category']),
-                                subtitle: Text("Posted: ${item['date']}", style: TextStyle(fontSize:12),),
+                                subtitle: Text(
+                                  "Posted: ${item['date']}",
+                                  style: TextStyle(fontSize: 12),
+                                ),
                                 trailing: Chip(
                                     avatar: Icon(
                                       Icons.star_border,
@@ -476,15 +485,10 @@ class DataSearch extends SearchDelegate<String> {
         title: Text(item['title']),
         subtitle: Text('Experience: ${item['min_experience']}'),
         onTap: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, anim1, anim2) => JobDetail(item),
-              transitionsBuilder: (context, anim1, anim2, child) =>
-                  FadeTransition(opacity: anim1, child: child),
-              transitionDuration: Duration(milliseconds: 100),
-            ),
-          );
+          Navigator.of(context)
+              .push(CupertinoPageRoute<Null>(builder: (BuildContext context) {
+            return new JobDetail(item);
+          }));
         },
       );
     } else {
@@ -500,15 +504,11 @@ class DataSearch extends SearchDelegate<String> {
         title: Text(item['title']),
         subtitle: Text('${item['organization']}'),
         onTap: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, anim1, anim2) => JobDetail(item),
-              transitionsBuilder: (context, anim1, anim2, child) =>
-                  FadeTransition(opacity: anim1, child: child),
-              transitionDuration: Duration(milliseconds: 100),
-            ),
-          );
+         
+               Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new JobDetail(item);
+              }));
         },
       );
     }

@@ -52,6 +52,7 @@ class _NotificationsState extends State<Notifications> {
                 List<Widget> children;
 
                 if (snapshot.hasData) {
+                   if (snapshot.data.length != 0) {
                   dynamic data = snapshot.data.where((el) {
                     if (el['target'].contains(CURRENT_USER)) {
                       return true;
@@ -159,6 +160,28 @@ class _NotificationsState extends State<Notifications> {
                         ],
                       ),
                   ];
+                   }else{
+                      children = <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: ListTile(
+                                      title: Image.asset(
+                                        "assets/my_contribution.png",
+                                        width: 120,
+                                        height: 120,
+                                      ),
+                                    ),
+                                  ),
+                                  ListTile(
+                                      title: Text(
+                                    'you have not received notification yet. You will be notified once you get notifications.',
+                                    style: TextStyle(
+                                        color: Colors.black45, fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                  )),
+                                ];
+                              
+                   }
                 } else if (snapshot.hasError) {
                   children = <Widget>[
                     Icon(

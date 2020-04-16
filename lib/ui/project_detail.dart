@@ -43,7 +43,11 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.grey[200],
-        body: CustomScrollView(slivers: <Widget>[
+        body: CustomScrollView(
+          
+          
+          slivers: <Widget>[
+         
           SliverAppBar(
             expandedHeight: 200.0,
             floating: false,
@@ -75,6 +79,9 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               childCount: 1,
             ),
           ),
+        
+        
+        
         ]));
   }
 

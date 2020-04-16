@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -274,10 +275,11 @@ class ProfileState extends State<Profile> {
               leading: Icon(Icons.verified_user),
               title: Text('My contribution'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyContribution()),
-                );
+             
+                 Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new MyContribution();
+              }));
               },
             ),
             ListTile(
@@ -293,21 +295,23 @@ class ProfileState extends State<Profile> {
                 //   print('not connected');
                 // }
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Page()),
-                );
+               
+                Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new StaggeredGridExample();
+              }));
+              
               },
             ),
-            
             ListTile(
               leading: Icon(Icons.payment),
               title: Text('Payment'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Payment()),
-                );
+             
+                  Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new Payment();
+              }));
               },
             ),
             Divider(
@@ -317,16 +321,16 @@ class ProfileState extends State<Profile> {
               leading: Icon(Icons.info),
               title: Text('About'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => About()),
-                );
+               
+                  Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new About();
+              }));
               },
             ),
             ListTile(
               leading: Icon(
                 Icons.power_settings_new,
-               
               ),
               title: Text('Sign out'),
               subtitle: SizedBox(height: 2.0, child: _signoutProgress),

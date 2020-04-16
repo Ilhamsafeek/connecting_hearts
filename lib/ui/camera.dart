@@ -148,7 +148,10 @@ class DisplayPictureScreen extends StatelessWidget {
                   WebServices(mApiListener)
                       .updateSlip(this.id, imagePath)
                       .then((value) {
+                        print("===========>>>>$value");
+                        if(value!=null){
                     Navigator.pop(context);
+                        }
                   });
                 },
                 child: Text('Send Slip'),

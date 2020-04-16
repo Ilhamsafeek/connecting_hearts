@@ -197,15 +197,11 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, anim1, anim2) => Profile(),
-                  transitionsBuilder: (context, anim1, anim2, child) =>
-                      FadeTransition(opacity: anim1, child: child),
-                  transitionDuration: Duration(milliseconds: 100),
-                ),
-              );
+            
+               Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new Profile();
+              }));
             },
             icon: Icon(Icons.person),
           ),

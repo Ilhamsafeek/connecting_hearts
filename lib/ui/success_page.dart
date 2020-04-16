@@ -24,7 +24,7 @@ class _SuccessPageState extends State<SuccessPage> {
           child: Container(
             child: Column(children: <Widget>[
               Icon(
-                Icons.check_circle,
+                Icons.check_circle_outline,
                 color: Colors.green,
                 size: 120,
               ),

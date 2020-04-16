@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:country_pickers/country.dart';
@@ -107,11 +108,12 @@ class _SigninPageState extends State<Signin> {
                               FirebaseAuth.instance.currentUser().then((user) {
                                 if (user != null) {
                                   Navigator.pop(context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Details()),
-                                  );
+
+                                  Navigator.of(context).push(
+                                      CupertinoPageRoute<Null>(
+                                          builder: (BuildContext context) {
+                                    return new Details();
+                                  }));
                                 } else {
                                   Navigator.of(context).pop();
                                   signIn();
@@ -195,10 +197,9 @@ class _SigninPageState extends State<Signin> {
                           topRight: const Radius.circular(20.0),
                         )),
                     child: Column(children: <Widget>[
-                      
                       Text('Please enter your mobile number',
                           style: TextStyle(fontSize: 18, fontFamily: "Exo2")),
-                          SizedBox(height: 2.0, child: _signoutProgress),
+                      SizedBox(height: 2.0, child: _signoutProgress),
                       SizedBox(height: 15.0),
                       Row(
                         children: <Widget>[
@@ -288,7 +289,6 @@ class _SigninPageState extends State<Signin> {
 class Details extends StatefulWidget {
   @override
   _DetailsState createState() => _DetailsState();
-
 }
 
 class _DetailsState extends State<Details> {
@@ -321,10 +321,10 @@ class _DetailsState extends State<Details> {
                         Column(
                           children: <Widget>[
                             SpinKitThreeBounce(
-                                  color: Colors.grey,
-                                  size: 50.0,
-                                ),
-                             SizedBox(height: 20.0),
+                              color: Colors.grey,
+                              size: 50.0,
+                            ),
+                            SizedBox(height: 20.0),
                             Text('One more step to go',
                                 style: TextStyle(
                                     fontSize: 18, fontFamily: "Exo2")),
@@ -431,7 +431,6 @@ class _DetailsState extends State<Details> {
                               elevation: 7.0,
                               color: Colors.black,
                             )
-                         
                           ],
                         )
                       ])))),

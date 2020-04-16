@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,7 +30,7 @@ class _PaymentResultState extends State<PaymentResult> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        // appBar: AppBar(title: Text('Payment')),
+        appBar: AppBar(),
         body: Center(
           child: Container(child: doCharging(widget.cardId)),
         ));
@@ -152,7 +153,7 @@ class _PaymentResultState extends State<PaymentResult> {
               print(data.runtimeType);
               children = <Widget>[
                 Icon(
-                  Icons.check_circle,
+                  Icons.check_circle_outline,
                   color: Colors.green,
                   size: 120,
                 ),
@@ -196,15 +197,14 @@ class _PaymentResultState extends State<PaymentResult> {
                           WidgetsFlutterBinding.ensureInitialized();
                           final cameras = await availableCameras();
                           final firstCamera = cameras.first;
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    TakePictureScreen(
-                                  "${widget.projectData['id']}",
-                                  firstCamera,
-                                ),
-                              ));
+
+                          Navigator.of(context).push(CupertinoPageRoute<Null>(
+                              builder: (BuildContext context) {
+                            return new TakePictureScreen(
+                              "${widget.projectData['payment_id']}",
+                              firstCamera,
+                            );
+                          }));
                         },
                         child: Text(
                           'Submit Deposit Slip',

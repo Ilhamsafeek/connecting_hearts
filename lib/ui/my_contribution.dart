@@ -127,6 +127,7 @@ class _MyContributionState extends State<MyContribution> {
                                     textAlign: TextAlign.center,
                                   )),
                                 ];
+                              
                               }
                             } else if (snapshot.hasError) {
                               children = <Widget>[
@@ -188,7 +189,7 @@ class _MyContributionState extends State<MyContribution> {
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => TakePictureScreen(
-                    "${item['id']}",
+                    "${item['payment_id']}",
                     firstCamera,
                   ),
                 ));
@@ -218,7 +219,7 @@ class _MyContributionState extends State<MyContribution> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) => TakePictureScreen(
-                      "${item['id']}",
+                      "${item['payment_id']}",
                       firstCamera,
                     ),
                   ));

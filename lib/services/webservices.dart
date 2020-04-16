@@ -126,9 +126,9 @@ class WebServices {
   Future<bool> updateSlip(id, path) async {
     String base64Image = base64Encode(File(path).readAsBytesSync());
     String fileName = File(path).path.split('/').last;
-    print('id:: $id');
+    print('payment_id:: $id');
     http.post('https://www.chadmin.online/api/updateslip', body: {
-      "id": "$id",
+      "payment_id": "$id",
       "image": base64Image,
       "filename": fileName
     }).then((value) {
