@@ -14,7 +14,7 @@ class _ZakatCalculatorState extends State<ZakatCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-     
+     appBar: AppBar(title: Text('Zakat Calculator')),
       body: onBordingBody(),
     );
   }

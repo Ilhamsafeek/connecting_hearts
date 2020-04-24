@@ -32,7 +32,7 @@ class ProfileState extends State<Profile> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -282,27 +282,28 @@ class ProfileState extends State<Profile> {
               }));
               },
             ),
-            ListTile(
-              leading: Icon(Icons.bookmark),
-              title: Text('My Appeals'),
-              onTap: () async {
-                // try {
-                //   final result = await InternetAddress.lookup('google.com');
-                //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-                //     print('connected');
-                //   }
-                // } on SocketException catch (_) {
-                //   print('not connected');
-                // }
+            // ListTile(
+            //   leading: Icon(Icons.bookmark),
+            //   title: Text('My Appeals'),
+            //   onTap: () async {
+            //     // try {
+            //     //   final result = await InternetAddress.lookup('google.com');
+            //     //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+            //     //     print('connected');
+            //     //   }
+            //     // } on SocketException catch (_) {
+            //     //   print('not connected');
+            //     // }
 
                
-                Navigator.of(context).push(
-                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                return new StaggeredGridExample();
-              }));
+            //     Navigator.of(context).push(
+            //       CupertinoPageRoute<Null>(builder: (BuildContext context) {
+            //     return new StaggeredGridExample();
+            //   }));
               
-              },
-            ),
+            //   },
+            // ),
+            
             ListTile(
               leading: Icon(Icons.payment),
               title: Text('Payment'),
@@ -337,7 +338,7 @@ class ProfileState extends State<Profile> {
               onTap: () async {
                 setState(() {
                   _signoutProgress = LinearProgressIndicator(
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.grey[200],
                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),
                   );
                 });

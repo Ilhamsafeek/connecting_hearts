@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:zamzam/model/Gridmodel.dart';
 import 'package:zamzam/ui/zakat_calculator.dart';
 
-class Library extends StatefulWidget {
-  Library({Key key}) : super(key: key);
+class Chat extends StatefulWidget {
+  Chat({Key key}) : super(key: key);
 
-  _LibraryState createState() => _LibraryState();
+  _ChatState createState() => _ChatState();
 }
 
-class _LibraryState extends State<Library> {
+class _ChatState extends State<Chat> {
   List myList;
   ScrollController _scrollController = ScrollController();
   int _currentMax = 10;
@@ -39,58 +39,25 @@ class _LibraryState extends State<Library> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.count(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          crossAxisCount: 4,
-          children: <Widget>[
-            InkWell(
-              child: GridItem(GridModel(
-                  "assets/calculator.png", "Zakat\nCalculator", Colors.black)),
-            onTap: (){
-               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ZakatCalculator()),
-            );
-            },
-            ),
-          ]),
-    );
-  }
-}
+      body: 
 
-class GridItem extends StatelessWidget {
-  GridModel gridModel;
-
-  GridItem(this.gridModel);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(1 / 2),
-      child: Container(
-        color: Colors.white,
-        child: Center(
+       Center(
+          
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(gridModel.imagePath,
-              width: 30,
-                height: 30,
-                color: gridModel.color,),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Text(
-                  gridModel.title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12),
-                ),
+              Image.asset(
+                'assets/chat.png',
+                height: 250,
+                color: Colors.grey[200],
               ),
+              Text('There are no conversations to display.', style: TextStyle(color: Colors.grey))
+              
             ],
           ),
         ),
-      ),
+      
     );
   }
 }

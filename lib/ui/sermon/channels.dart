@@ -22,7 +22,7 @@ class _ChannelsState extends State<Channels> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.channelType} Channels'),
+        title: Text('${widget.channelType}'),
       ),
       body: _bodyItem(),
       // backgroundColor: Colors.grey[200],
@@ -34,13 +34,15 @@ class _ChannelsState extends State<Channels> {
       child: Column(
         
         children: <Widget>[
+          
           FutureBuilder<dynamic>(
               future: WebServices(this.mApiListener).getChannelData(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 List<Widget> children;
 
                 if (snapshot.hasData) {  //channelType
-                  dynamic data = snapshot.data.where((el)=> el['type']==widget.channelType).toList();
+                  dynamic data = snapshot.data;
+                  //.where((el)=> el['type']==widget.channelType).toList();
                     
                  
                   children = <Widget>[
@@ -63,7 +65,7 @@ class _ChannelsState extends State<Channels> {
                               context,
                               PageRouteBuilder(
                                 pageBuilder: (context, anim1, anim2) =>
-                                    ChannelDetail(item),
+                                    ChannelDetail(item,widget.channelType),
                                 transitionsBuilder:
                                     (context, anim1, anim2, child) =>
                                         FadeTransition(
@@ -112,6 +114,7 @@ class _ChannelsState extends State<Channels> {
                   children: children,
                 ));
               }),
+       
         ],
       ),
     );
@@ -134,12 +137,14 @@ class GridItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
+              CircleAvatar(
+                radius: 20,
+                backgroundImage:  NetworkImage(
                 gridModel.imagePath,
-                width: 30,
-                height: 30,
-                color: gridModel.color,
+                
               ),
+              ),
+             
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(

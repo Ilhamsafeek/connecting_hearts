@@ -67,10 +67,11 @@ class _NotificationsState extends State<Notifications> {
                         children: <Widget>[
                           ListTile(
                             leading: CircleAvatar(
+                              backgroundColor: Colors.grey[400],
                               child: item['type'] == 'approval'
                                   ? Icon(
                                       Icons.check_circle,
-                                      color: Colors.orange,
+                                      color: Colors.green,
                                     )
                                   : item['type'] == 'project'
                                       ? Icon(Icons.short_text)
@@ -128,11 +129,11 @@ class _NotificationsState extends State<Notifications> {
 
                                   break;
                                 case 'approval':
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SuccessPage(
-                                              json.decode(item['data']))));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => SuccessPage(
+                                  //             json.decode(item['data']))));
                                   break;
                                 default:
                                   await WebServices(this.mApiListener)

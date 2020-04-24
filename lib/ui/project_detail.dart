@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zamzam/payment/main.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/payment_result.dart';
@@ -43,19 +44,28 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.grey[200],
-        body: CustomScrollView(
-          
-          
-          slivers: <Widget>[
-         
+        body: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
             expandedHeight: 200.0,
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('${widget.projectData['appeal_id']}'),
-              background: Image.network(widget.projectData['featured_image'],fit: BoxFit.cover,),
-             
+              title: Text(
+                '${widget.projectData['appeal_id']}',
+                style: TextStyle(
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(0.0, 0.0),
+                      blurRadius: 3.0,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ),
+              background: Image.network(
+                widget.projectData['featured_image'],
+                fit: BoxFit.cover,
+              ),
             ),
             actions: <Widget>[
               IconButton(
@@ -79,9 +89,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               childCount: 1,
             ),
           ),
-        
-        
-        
         ]));
   }
 
@@ -182,11 +189,11 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                           Chip(
                               label: Text(
                                   '${widget.projectData['sub_category']}')),
-                          
                         ],
                       ))
                 ],
               ),
+
               // Column(
               //   children: <Widget>[
               //     Row(
@@ -399,7 +406,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                                           ? _navigateToPayment()
                                           : null;
                                     },
-                                    child: Text("Proceed Donation"),
+                                    child: Text("Checkout"),
                                     color: Colors.amber,
                                   )),
                                 ],
@@ -443,24 +450,39 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
           var data;
           if (snapshot.data.length != 0) {
             data = snapshot.data[0]['sources']['data'];
-          }
-          children = <Widget>[
-            for (var item in data)
-              RadioListTile(
-                activeColor: Colors.black,
-                value: '${item['id']}',
-                groupValue: selectedMethod,
-                onChanged: selectsku,
-                title: ListTile(
-                  leading: Icon(
-                    FontAwesomeIcons.ccVisa,
-                    color: Colors.indigo[700],
+            children = <Widget>[
+              for (var item in data)
+                RadioListTile(
+                  activeColor: Colors.black,
+                  value: '${item['id']}',
+                  groupValue: selectedMethod,
+                  onChanged: selectsku,
+                  title: ListTile(
+                    leading: Icon(
+                      FontAwesomeIcons.ccVisa,
+                      color: Colors.indigo[700],
+                    ),
+                    title: Text('****${item['last4']}'),
                   ),
-                  title: Text('****${item['last4']}'),
-                ),
-              )
-            // ),
-          ];
+                )
+              // ),
+            ];
+          }else{
+            children= <Widget>[
+              ListTile(
+            title: Text(
+              'Add Debit or Credit card',
+              style: TextStyle(color: Colors.blue),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => StripePayment()),
+              );
+            },
+          ),
+            ];
+          }
         } else if (snapshot.hasError) {
           children = <Widget>[
             Icon(

@@ -159,53 +159,58 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        actions: <Widget>[
-          IconButton(
-            onPressed: () async {
-              await showSearch<String>(
-                context: context,
-                delegate: DataSearch(
-                  onSearchChanged: DataSearch().getRecentSearchesLike,
-                ),
-              );
-            },
-            icon: Icon(Icons.search),
-          ),
-          IconButton(
-            icon: StreamBuilder(
-              initialData: _tabBarNotificationCount,
-              stream: _countController.stream,
-              builder: (_, snapshot) => BadgeIcon(
-                icon: Icon(
-                  Icons.notifications,
-                  size: 25.0,
-                  color: Colors.white,
-                ),
-                badgeCount: snapshot.data,
-              ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: new AppBar(
+          title: 
+          
+          Image.asset('assets/ch_logo.png', height: 35,color: Colors.white60,),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () async {
+                await showSearch<String>(
+                  context: context,
+                  delegate: DataSearch(
+                    onSearchChanged: DataSearch().getRecentSearchesLike,
+                  ),
+                );
+              },
+              icon: Icon(Icons.search),
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Inbox()),
-              );
-              _tabBarNotificationCount = 0;
-              _countController.sink.add(_tabBarNotificationCount);
-              updateNotificationCount(_tabBarNotificationCount);
-            },
-          ),
-          IconButton(
-            onPressed: () {
-            
-               Navigator.of(context).push(
-                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                return new Profile();
-              }));
-            },
-            icon: Icon(Icons.person),
-          ),
-        ],
+            IconButton(
+              icon: StreamBuilder(
+                initialData: _tabBarNotificationCount,
+                stream: _countController.stream,
+                builder: (_, snapshot) => BadgeIcon(
+                  icon: Icon(
+                    Icons.notifications,
+                    
+                    color: Colors.white,
+                  ),
+                  badgeCount: snapshot.data,
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Inbox()),
+                );
+                _tabBarNotificationCount = 0;
+                _countController.sink.add(_tabBarNotificationCount);
+                updateNotificationCount(_tabBarNotificationCount);
+              },
+            ),
+            // IconButton(
+            //   onPressed: () {
+            //     Navigator.of(context).push(
+            //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
+            //       return new Profile();
+            //     }));
+            //   },
+            //   icon: Icon(Icons.person),
+            // ),
+          ],
+        ),
       ),
       body: SizedBox.expand(
         child: PageView(
@@ -216,8 +221,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           children: <Widget>[
             Home(),
             Charity(),
-            Jobs(),
-            ZakatCalculator(),
+           Chat(),
+            Profile(),
           ],
         ),
       ),
@@ -239,14 +244,14 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
             activeColor: Theme.of(context).primaryColor,
           ),
           BottomNavyBarItem(
-            title: Text('Jobs'),
-            icon: Icon(Icons.card_travel),
+            title: Text('Messages'),
+            icon: Icon(Icons.chat),
             activeColor: Theme.of(context).primaryColor,
           ),
           BottomNavyBarItem(
-            title: Text('Zakat'),
+            title: Text('Account'),
             //Actually icon was in Icon type. we have changed in the cache of bottomnavybaritem. (Ctrl + click on BottomNavyBarItem to edit)
-            icon: Icon(Icons.chrome_reader_mode),
+            icon: Icon(Icons.person),
             activeColor: Theme.of(context).primaryColor,
           ),
         ],

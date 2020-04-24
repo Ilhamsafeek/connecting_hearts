@@ -24,6 +24,7 @@ class _JobsState extends State<Jobs> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
+        appBar: AppBar(title:Text('Job Bank')),
         body: SingleChildScrollView(
 
             // child: AnimationLimiter(

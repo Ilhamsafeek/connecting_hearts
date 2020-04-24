@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zamzam/ui/camera.dart';
@@ -25,14 +27,48 @@ class _PaymentResultState extends State<PaymentResult> {
   }
 
   ApiListener mApiListener;
-
+  bool _processing = false;
+  Widget _paid = Text('');
+  Widget _title = Text('Checkout');
   @override
   Widget build(BuildContext context) {
+    _paid = FlatButton.icon(
+      onPressed: () {
+        setState(() {
+          _processing = true;
+          _paid = doCharging(widget.cardId);
+        });
+      },
+      icon: Icon(Icons.check_circle_outline, color: Colors.white),
+      label: Text(
+        'Proceed donation',
+        style: TextStyle(color: Colors.white),
+      ),
+      color: Colors.teal,
+    );
+
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        appBar: AppBar(),
-        body: Center(
-          child: Container(child: doCharging(widget.cardId)),
+        appBar: AppBar(
+            title: _title,
+            leading: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  Navigator.pop(context);
+                })),
+        body: LoadingOverlay(
+          child: Center(
+            child: Container(
+                child: Column(
+              children: <Widget>[Text(widget.method), _paid],
+            )),
+          ),
+          isLoading: _processing,
+          color: Colors.white,
+          progressIndicator: SpinKitThreeBounce(
+            color: Colors.red[700],
+            size: 30.0,
+          ),
         ));
   }
 

@@ -149,12 +149,11 @@ class DataSearch extends SearchDelegate<String> {
                                     ),
                                     label: Text(' ${item['rating']}')),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProjectDetail(item)),
-                                  );
+                                  
+                                   Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new ProjectDetail(item);
+              }));
                                 },
                               ),
                               Divider(height: 1)

@@ -44,6 +44,7 @@ class _SigninPageState extends State<Signin> {
       print('verified');
       CURRENT_USER = "${this.countryCode}${this.phoneNo}";
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
+        // Navigator.pop(context);
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
         print(e);
@@ -107,8 +108,7 @@ class _SigninPageState extends State<Signin> {
                             onPressed: () {
                               FirebaseAuth.instance.currentUser().then((user) {
                                 if (user != null) {
-                                  Navigator.pop(context);
-
+                                 
                                   Navigator.of(context).push(
                                       CupertinoPageRoute<Null>(
                                           builder: (BuildContext context) {
@@ -140,6 +140,7 @@ class _SigninPageState extends State<Signin> {
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         WebServices(this.mApiListener)
             .createAccount('${this.countryCode}${this.phoneNo}');
+            Navigator.pop(context);
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       }).catchError((e) {
         print(e);
@@ -246,7 +247,7 @@ class _SigninPageState extends State<Signin> {
                         onPressed: () {
                           setState(() {
                             _signoutProgress = LinearProgressIndicator(
-                              backgroundColor: Colors.grey,
+                              backgroundColor: Colors.white,
                               valueColor: new AlwaysStoppedAnimation<Color>(
                                   Colors.black),
                             );

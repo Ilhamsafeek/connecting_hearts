@@ -58,7 +58,9 @@ dependencies:
   bottom_navy_bar: ^5.4.0
   animated_text_kit: ^2.0.0
   image_picker:
-  flutter_staggered_grid_view:  
+  flutter_staggered_grid_view:
+  loading_overlay:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -96,7 +98,6 @@ flutter:
 
 
 
-  - assets/zamzam.png
   - assets/help.png
   - assets/sadaka.png
   - assets/sanitation.png
@@ -121,7 +122,9 @@ flutter:
   - assets/mufti_menk.jpg
   - assets/test.gif
   - assets/ch_logo.png
-
+  - assets/placeholder.png
+  - assets/sermon_title.png
+  - assets/chat.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

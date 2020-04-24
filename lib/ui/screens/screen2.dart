@@ -28,7 +28,7 @@ class _CharityState extends State<Charity> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: _appBar(),
+      appBar: AppBar(title: Text('Charity')),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[_bodyItem()],
@@ -47,87 +47,88 @@ class _CharityState extends State<Charity> {
     return SingleChildScrollView(
       child: new Column(
         children: <Widget>[
-          Container(
-              width: double.maxFinite,
-              color: Color.fromRGBO(104, 45, 127, 1),
-              child: Container(
-                child: CarouselSlider(
-                  reverse: false,
-                  aspectRatio: 5,
-                  viewportFraction: 1.0,
-                  initialPage: 0,
-                  enlargeCenterPage: true,
-                  autoPlay: false,
-                  onPageChanged: (index) {
-                    setState(() {
-                      _currentIndexUp = index;
-                      print(_currentIndexUp);
-                    });
-                  },
-                  items: List<GridView>.generate((2), (int index) {
-                    return GridView.count(
-                      crossAxisCount: 4,
-                      children: List<GridItemTop>.generate((4), (int index) {
-                        return GridItemTop(
-                            _getGridList()[index + (_currentIndexUp * 4)]);
-                      }),
-                    );
-                  }),
-                ),
-              )),
-          Container(
-            color: Color.fromRGBO(104, 45, 127, 1),
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(2, (int index) {
-                return dots(_currentIndexUp, index);
-              }),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 1),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))),
-              height: 40,
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      // Icon(
-                      //   Icons.flash_on,
-                      //   color: Colors.orange,
-                      // ),
-                      SizedBox(width: 2.0),
-                      RotateAnimatedTextKit(
-                          isRepeatingAnimation: true,
-                          totalRepeatCount: 100,
-                          duration: Duration(milliseconds: 2000),
-                          pause: Duration(milliseconds: 2000),
-                          onTap: () {
-                            print("Tap Event");
-                          },
-                          text: [
-                            "School with Smile begins today",
-                            "View Photos of the day",
-                            "Convocation re-scheduled"
-                          ],
-                          textStyle:
-                              TextStyle(fontSize: 18.0, fontFamily: "Horizon"),
-                          textAlign: TextAlign.start,
-                          alignment: AlignmentDirectional.center),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
+          // Container(
+          //     width: double.maxFinite,
+          //     color: Color.fromRGBO(104, 45, 127, 1),
+          //     child: Container(
+          //       child: CarouselSlider(
+          //         reverse: false,
+          //         aspectRatio: 5,
+          //         viewportFraction: 1.0,
+          //         initialPage: 0,
+          //         enlargeCenterPage: true,
+          //         autoPlay: false,
+          //         onPageChanged: (index) {
+          //           setState(() {
+          //             _currentIndexUp = index;
+          //             print(_currentIndexUp);
+          //           });
+          //         },
+          //         items: List<GridView>.generate((2), (int index) {
+          //           return GridView.count(
+          //             crossAxisCount: 4,
+          //             children: List<GridItemTop>.generate((4), (int index) {
+          //               return GridItemTop(
+          //                   _getGridList()[index + (_currentIndexUp * 4)]);
+          //             }),
+          //           );
+          //         }),
+          //       ),
+          //     )),
+          // Container(
+          //   color: Color.fromRGBO(104, 45, 127, 1),
+          //   child: new Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: List.generate(2, (int index) {
+          //       return dots(_currentIndexUp, index);
+          //     }),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom: 1),
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.only(
+          //             topLeft: Radius.circular(20),
+          //             topRight: Radius.circular(20))),
+          //     height: 40,
+          //     width: MediaQuery.of(context).size.width,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       children: <Widget>[
+          //         Row(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: <Widget>[
+          //             // Icon(
+          //             //   Icons.flash_on,
+          //             //   color: Colors.orange,
+          //             // ),
+          //             SizedBox(width: 2.0),
+          //             RotateAnimatedTextKit(
+          //                 isRepeatingAnimation: true,
+          //                 totalRepeatCount: 100,
+          //                 duration: Duration(milliseconds: 2000),
+          //                 pause: Duration(milliseconds: 2000),
+          //                 onTap: () {
+          //                   print("Tap Event");
+          //                 },
+          //                 text: [
+          //                   "School with Smile begins today",
+          //                   "View Photos of the day",
+          //                   "Convocation re-scheduled"
+          //                 ],
+          //                 textStyle:
+          //                     TextStyle(fontSize: 18.0, fontFamily: "Horizon"),
+          //                 textAlign: TextAlign.start,
+          //                 alignment: AlignmentDirectional.center),
+          //           ],
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
+
           FutureBuilder<dynamic>(
             future: WebServices(this.mApiListener).getCategoryData(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -138,7 +139,7 @@ class _CharityState extends State<Charity> {
                   GridView.count(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 4,
+                      crossAxisCount: 3,
                       children: <Widget>[
                         for (var item in snapshot.data)
                           InkWell(
@@ -174,10 +175,10 @@ class _CharityState extends State<Charity> {
                     child: GridView.count(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 4,
+                      crossAxisCount: 3,
                       children: List<GridItem>.generate(12, (int index) {
                         return GridItem(
-                            GridModel("assets/zamzam.png", "test", null));
+                            GridModel("assets/ch_logo.png", "test", null));
                       }),
                     ),
                   ),
@@ -201,29 +202,30 @@ class _CharityState extends State<Charity> {
               );
             },
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 1, bottom: 5),
-            child: Container(
-              color: Colors.white,
-              child: CarouselSlider(
-                aspectRatio: 2,
-                viewportFraction: 1.0,
-                initialPage: 0,
-                autoPlayInterval: Duration(seconds: 2),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                pauseAutoPlayOnTouch: Duration(seconds: 2),
-                enlargeCenterPage: true,
-                autoPlay: true,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                    print(_currentIndex);
-                  });
-                },
-                items: CarouselSliderList(_getImageSliderList()),
-              ),
-            ),
-          ),
+
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 1, bottom: 5),
+          //   child: Container(
+          //     color: Colors.white,
+          //     child: CarouselSlider(
+          //       aspectRatio: 2,
+          //       viewportFraction: 1.0,
+          //       initialPage: 0,
+          //       autoPlayInterval: Duration(seconds: 2),
+          //       autoPlayAnimationDuration: Duration(milliseconds: 800),
+          //       pauseAutoPlayOnTouch: Duration(seconds: 2),
+          //       enlargeCenterPage: true,
+          //       autoPlay: true,
+          //       onPageChanged: (index) {
+          //         setState(() {
+          //           _currentIndex = index;
+          //           print(_currentIndex);
+          //         });
+          //       },
+          //       items: CarouselSliderList(_getImageSliderList()),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -335,8 +337,8 @@ class GridItem extends StatelessWidget {
             children: <Widget>[
               Image.network(
                 gridModel.imagePath,
-                width: 30,
-                height: 30,
+                width: 40,
+                height: 40,
                 color: gridModel.color,
               ),
               Padding(

@@ -1,4 +1,4 @@
-// import 'package:camera/camera.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:zamzam/services/services.dart';
@@ -62,7 +62,13 @@ class _ContributedProjectState extends State<ContributedProject> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('${widget.projectData['appeal_id']}'),
+              title: Text('${widget.projectData['appeal_id']}', style: TextStyle(shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(0, 0),
+                  blurRadius: 3.0,
+                  color: Colors.black,
+                ),
+              ],),),
               background: Image.network(
                 widget.projectData['featured_image'],
                 fit: BoxFit.cover,
@@ -119,17 +125,17 @@ class _ContributedProjectState extends State<ContributedProject> {
         _trailing = RaisedButton(
           color: Colors.red,
           onPressed: () async {
-            // WidgetsFlutterBinding.ensureInitialized();
-            // final cameras = await availableCameras();
-            // final firstCamera = cameras.first;
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (BuildContext context) => TakePictureScreen(
-            //         "${widget.projectData['payment_id']}",
-            //         firstCamera,
-            //       ),
-            //     ));
+            WidgetsFlutterBinding.ensureInitialized();
+            final cameras = await availableCameras();
+            final firstCamera = cameras.first;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => TakePictureScreen(
+                    "${widget.projectData['payment_id']}",
+                    firstCamera,
+                  ),
+                ));
           },
           child: Text(
             'Submit Deposit Slip',
@@ -225,32 +231,33 @@ class _ContributedProjectState extends State<ContributedProject> {
                 mainAxisAlignment: MainAxisAlignment.start,
               ),
               Divider(),
+              
               Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Categories: ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Expanded(
-                        child: Chip(
-                            label:
-                                Text('${widget.projectData['project_type']}')),
-                      ),
-                      Expanded(
-                        child: Chip(
-                            label: Text('${widget.projectData['category']}')),
-                      ),
-                      Expanded(
-                        child: Chip(
-                            label:
-                                Text('${widget.projectData['sub_category']}')),
-                      ),
-                    ],
+                  Text(
+                    'Categories',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  Container(
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      height: 35,
+                      child: new ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          Chip(
+                              label: Text(
+                                  '${widget.projectData['project_type']}')),
+                          Chip(
+                              label: Text('${widget.projectData['category']}')),
+                          Chip(
+                              label: Text(
+                                  '${widget.projectData['sub_category']}')),
+                          
+                        ],
+                      ))
                 ],
               ),
+             
             ],
           ),
         ),

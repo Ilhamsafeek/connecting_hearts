@@ -153,10 +153,22 @@ class _ProjectPageState extends State<Project> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                    ),
+                    shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(0.5, 0.5),
+                  blurRadius: 3.0,
+                  color: Colors.black,
+                ),
+              ],),
                   ),
                   subtitle: Text('Family of ${data['children']} Members',
-                      style: TextStyle(color: Colors.white)),
+                      style: TextStyle(color: Colors.white, shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(0.5, 0.5),
+                  blurRadius: 3.0,
+                  color: Colors.black,
+                ),
+              ],)),
                   trailing: Chip(
                     padding:
                         const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -188,7 +200,13 @@ class _ProjectPageState extends State<Project> {
                       ),
                       label: Text(
                         '${data['city']}, ${data['district']}',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white,shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(0.5, 0.5),
+                  blurRadius: 3.0,
+                  color: Colors.black,
+                ),
+              ],),
                       )),
                   subtitle: new LinearPercentIndicator(
                     alignment: MainAxisAlignment.start,
@@ -207,7 +225,13 @@ class _ProjectPageState extends State<Project> {
                           fontFamily: "Exo2",
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16.0),
+                          fontSize: 16.0,shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(0.5, 0.5),
+                  blurRadius: 3.0,
+                  color: Colors.black,
+                ),
+              ],),
                     ),
                     linearStrokeCap: LinearStrokeCap.roundAll,
                     backgroundColor: Colors.grey,

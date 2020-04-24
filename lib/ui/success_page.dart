@@ -53,12 +53,13 @@ class _SuccessPageState extends State<SuccessPage> {
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                      child: RaisedButton(
+                      child: OutlineButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         child: Text("Done"),
                         textColor: Colors.black,
+                        
                       ),
                     ),
                   ],

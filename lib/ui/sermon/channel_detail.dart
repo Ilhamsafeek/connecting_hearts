@@ -10,7 +10,9 @@ class ChannelDetail extends StatefulWidget {
   @override
   _ChannelDetailState createState() => _ChannelDetailState();
   final dynamic channelData;
-  ChannelDetail(this.channelData, {Key key}) : super(key: key);
+  final dynamic channelType;
+  ChannelDetail(this.channelData, this.channelType, {Key key})
+      : super(key: key);
 }
 
 class _ChannelDetailState extends State<ChannelDetail> {
@@ -32,7 +34,15 @@ class _ChannelDetailState extends State<ChannelDetail> {
         flexibleSpace: FlexibleSpaceBar(
           title: Text(
             widget.channelData['channel'],
-            style: TextStyle(color: Colors.white, shadows: []),
+            style: TextStyle(
+              shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(0.0, 0.0),
+                  blurRadius: 3.0,
+                  color: Colors.black,
+                ),
+              ],
+            ),
           ),
           background: Image.network(
             widget.channelData['photo'],
@@ -80,7 +90,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
               "Description about this channel",
               style: TextStyle(fontWeight: FontWeight.w700),
             ),
-            subtitle: Text('Addedd 3 years ago'),
+            subtitle: Text(widget.channelType),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(widget.channelData['photo']),
             ),
@@ -89,20 +99,20 @@ class _ChannelDetailState extends State<ChannelDetail> {
                 padding: const EdgeInsets.all(16),
                 child: Text(widget.channelData['description']),
               ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: FlatButton.icon(
-                    color: Colors.blue[900],
-                    icon: Icon(Icons.wb_sunny, color: Colors.white),
-                    onPressed: () {},
-                    label: Text(
-                      'Subscribe',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ))
-                ],
-              ),
+              // Row(
+              //   children: <Widget>[
+              //     Expanded(
+              //         child: FlatButton.icon(
+              //       color: Colors.blue[900],
+              //       icon: Icon(Icons.wb_sunny, color: Colors.white),
+              //       onPressed: () {},
+              //       label: Text(
+              //         'Subscribe',
+              //         style: TextStyle(color: Colors.white),
+              //       ),
+              //     ))
+              //   ],
+              // ),
             ],
             initiallyExpanded: false,
           ),
@@ -114,7 +124,11 @@ class _ChannelDetailState extends State<ChannelDetail> {
               List<Widget> children;
 
               if (snapshot.hasData) {
-                var data = snapshot.data.where((el)=> el['channel_id']==channelId).toList();
+                var data = snapshot.data
+                    .where((el) =>
+                        el['channel_id'] == channelId &&
+                        el['type'] == widget.channelType)
+                    .toList();
                 children = <Widget>[
                   for (var item in data)
                     Container(
@@ -146,7 +160,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
                             );
                           },
                         ),
-                        Divider(height:1)
+                        Divider(height: 1)
                       ],
                     ))
                 ];
@@ -208,5 +222,4 @@ class _ChannelDetailState extends State<ChannelDetail> {
       ),
     );
   }
-
 }
