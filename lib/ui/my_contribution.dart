@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
+import 'package:zamzam/test.dart';
+
 import 'package:camera/camera.dart';
 import 'package:zamzam/ui/contributed_project.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -48,34 +50,30 @@ class _MyContributionState extends State<MyContribution> {
               // backgroundColor: Colors.indigo[900],
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                title: Container(
-                  child: Expanded(
-                    child: ListTile(
-                      title: Text(
-                        "Total contribution",
-                        style: TextStyle(color: Colors.white54, fontSize: 12),
+                title: ListTile(
+                  title: Text(
+                    "Total contribution",
+                    style: TextStyle(color: Colors.white54, fontSize: 12),
+                  ),
+                  subtitle: RichText(
+                    text: new TextSpan(
+                      style: new TextStyle(
+                        color: Colors.black,
                       ),
-                      subtitle: RichText(
-                        text: new TextSpan(
-                          style: new TextStyle(
-                            color: Colors.black,
-                          ),
-                          children: <TextSpan>[
-                            new TextSpan(
-                                text: 'Rs.',
-                                style: new TextStyle(
-                                    color: Colors.white54,
-                                    fontWeight: FontWeight.w600)),
-                            new TextSpan(
-                                text:
-                                    '${formattedAmount.output.withoutFractionDigits}',
-                                style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 25,
-                                )),
-                          ],
-                        ),
-                      ),
+                      children: <TextSpan>[
+                        new TextSpan(
+                            text: 'Rs.',
+                            style: new TextStyle(
+                                color: Colors.white54,
+                                fontWeight: FontWeight.w600)),
+                        new TextSpan(
+                            text:
+                                '${formattedAmount.output.withoutFractionDigits}',
+                            style: TextStyle(
+                              color: Colors.orange,
+                              fontSize: 25,
+                            )),
+                      ],
                     ),
                   ),
                 ),
@@ -127,7 +125,6 @@ class _MyContributionState extends State<MyContribution> {
                                     textAlign: TextAlign.center,
                                   )),
                                 ];
-                              
                               }
                             } else if (snapshot.hasError) {
                               children = <Widget>[
@@ -177,21 +174,16 @@ class _MyContributionState extends State<MyContribution> {
     );
 
     dynamic _text = "You have donated. Now you can monitor the project status.";
-    if (item['status'] == 'pending') {
+    if (item['status'] == 'pending' && item['method'] == 'bank') {
       if (item['slip_url'] == "") {
         _trailing = RaisedButton(
           color: Colors.red,
           onPressed: () async {
-            WidgetsFlutterBinding.ensureInitialized();
-            final cameras = await availableCameras();
-            final firstCamera = cameras.first;
+           
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => TakePictureScreen(
-                    "${item['payment_id']}",
-                    firstCamera,
-                  ),
+                  builder: (BuildContext context) => CameraApp()
                 ));
           },
           child: Text(
@@ -212,17 +204,11 @@ class _MyContributionState extends State<MyContribution> {
           FlatButton.icon(
             icon: Icon(Icons.edit),
             onPressed: () async {
-              WidgetsFlutterBinding.ensureInitialized();
-              final cameras = await availableCameras();
-              final firstCamera = cameras.first;
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => TakePictureScreen(
-                      "${item['payment_id']}",
-                      firstCamera,
-                    ),
-                  ));
+             Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => CameraApp()
+                ));
             },
             label: Text('Edit Slip'),
           ),
@@ -261,7 +247,6 @@ class _MyContributionState extends State<MyContribution> {
           ),
           Divider(height: 0),
           ListTile(
-             
               leading: FlatButton.icon(
                   onPressed: () {
                     Navigator.push(

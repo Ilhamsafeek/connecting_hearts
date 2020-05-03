@@ -40,24 +40,34 @@ class ProfileState extends State<Profile> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: CircleAvatar(
-                      minRadius: 45,
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.white54,
-                        size: 60,
+                  Stack(
+                    children: <Widget>[
+                      Image.asset('assets/profile-background.png',
+                          color: Colors.grey[100]),
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: CircleAvatar(
+                          minRadius: 45,
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.white54,
+                            size: 60,
+                          ),
+                          backgroundColor: Colors.grey[400],
+                        ),
                       ),
-                      backgroundColor: Colors.grey[400],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      CURRENT_USER,
-                      style: TextStyle(fontSize: 16),
-                    ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            CURRENT_USER,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),
@@ -275,44 +285,39 @@ class ProfileState extends State<Profile> {
               leading: Icon(Icons.verified_user),
               title: Text('My contribution'),
               onTap: () {
-             
-                 Navigator.of(context).push(
-                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                return new MyContribution();
-              }));
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new MyContribution();
+                }));
               },
             ),
-            // ListTile(
-            //   leading: Icon(Icons.bookmark),
-            //   title: Text('My Appeals'),
-            //   onTap: () async {
-            //     // try {
-            //     //   final result = await InternetAddress.lookup('google.com');
-            //     //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-            //     //     print('connected');
-            //     //   }
-            //     // } on SocketException catch (_) {
-            //     //   print('not connected');
-            //     // }
+            ListTile(
+              leading: Icon(Icons.bookmark),
+              title: Text('My Appeals'),
+              onTap: () async {
+                // try {
+                //   final result = await InternetAddress.lookup('google.com');
+                //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                //     print('connected');
+                //   }
+                // } on SocketException catch (_) {
+                //   print('not connected');
+                // }
 
-               
-            //     Navigator.of(context).push(
-            //       CupertinoPageRoute<Null>(builder: (BuildContext context) {
-            //     return new StaggeredGridExample();
-            //   }));
-              
-            //   },
-            // ),
-            
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new CameraApp();
+                }));
+              },
+            ),
             ListTile(
               leading: Icon(Icons.payment),
               title: Text('Payment'),
               onTap: () {
-             
-                  Navigator.of(context).push(
-                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                return new Payment();
-              }));
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new Payment();
+                }));
               },
             ),
             Divider(
@@ -322,11 +327,10 @@ class ProfileState extends State<Profile> {
               leading: Icon(Icons.info),
               title: Text('About'),
               onTap: () {
-               
-                  Navigator.of(context).push(
-                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                return new About();
-              }));
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new About();
+                }));
               },
             ),
             ListTile(
@@ -343,7 +347,7 @@ class ProfileState extends State<Profile> {
                   );
                 });
                 await FirebaseAuth.instance.signOut().then((action) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

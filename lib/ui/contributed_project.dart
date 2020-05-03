@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
@@ -62,13 +64,18 @@ class _ContributedProjectState extends State<ContributedProject> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('${widget.projectData['appeal_id']}', style: TextStyle(shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(0, 0),
-                  blurRadius: 3.0,
-                  color: Colors.black,
+              title: Text(
+                '${widget.projectData['appeal_id']}',
+                style: TextStyle(
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(0, 0),
+                      blurRadius: 3.0,
+                      color: Colors.black,
+                    ),
+                  ],
                 ),
-              ],),),
+              ),
               background: Image.network(
                 widget.projectData['featured_image'],
                 fit: BoxFit.cover,
@@ -120,7 +127,8 @@ class _ContributedProjectState extends State<ContributedProject> {
     );
 
     dynamic _text = "You have donated. Now you can monitor the project status.";
-    if (widget.projectData['status'] == 'pending') {
+    if (widget.projectData['status'] == 'pending' &&
+        widget.projectData['method'] == 'bank') {
       if (widget.projectData['slip_url'] == "") {
         _trailing = RaisedButton(
           color: Colors.red,
@@ -231,7 +239,6 @@ class _ContributedProjectState extends State<ContributedProject> {
                 mainAxisAlignment: MainAxisAlignment.start,
               ),
               Divider(),
-              
               Column(
                 children: <Widget>[
                   Text(
@@ -252,12 +259,10 @@ class _ContributedProjectState extends State<ContributedProject> {
                           Chip(
                               label: Text(
                                   '${widget.projectData['sub_category']}')),
-                          
                         ],
                       ))
                 ],
               ),
-             
             ],
           ),
         ),
@@ -430,11 +435,17 @@ class _ContributedProjectState extends State<ContributedProject> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          'View Donation Receipt',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.blue),
-                        ),
+                        GestureDetector(
+                          child: Text(
+                            'View Donation Receipt',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue),
+                          ),
+                          onTap: () {
+                            _launchURL(widget.projectData['receipt_url']);
+                          },
+                        )
                       ],
                     ),
                   ],
@@ -495,31 +506,99 @@ class _ContributedProjectState extends State<ContributedProject> {
                       backgroundColor: Colors.grey,
                       progressColor: completedColor,
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.donut_small),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Project Execution stage: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(widget.projectData['completed_percentage'], style: TextStyle(color: Colors.red),)
+                      ],
+                    )
                   ],
                 ),
               ),
+            ],
+          ),
+        ),
+        Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Icon(
-                          Icons.description,
-                          size: 20,
-                        ),
+                        Icon(FontAwesomeIcons.fileImage),
                         SizedBox(
                           width: 10,
                         ),
-                        Text('Project Documents: ',
+                        Text('Project Images: ',
                             style: new TextStyle(fontWeight: FontWeight.bold)),
-                        Icon(FontAwesomeIcons.filePdf),
-                        Icon(FontAwesomeIcons.fileWord),
-                        Icon(FontAwesomeIcons.fileImage)
                       ],
                     ),
                   ],
                 ),
+              ),
+              Divider(height: 0),
+              FutureBuilder<dynamic>(
+                future: WebServices(this.mApiListener).getImageFromFolder(
+                    widget.projectData['project_supportives']),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  List<Widget> children;
+
+                  if (snapshot.hasData) {
+                    dynamic data = snapshot.data;
+                    children = <Widget>[
+                      for (var item in data) Image.network(item)
+                    ];
+                  } else if (snapshot.hasError) {
+                    children = <Widget>[
+                      Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 60,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text(
+                            'something Went Wrong !'), //Error: ${snapshot.error}
+                      )
+                    ];
+                  } else {
+                    children = <Widget>[
+                      Shimmer.fromColors(
+                          baseColor: Colors.grey[300],
+                          highlightColor: Colors.grey[100],
+                          child: Container(
+                              child: Column(
+                            children: <Widget>[
+                              AspectRatio(
+                                aspectRatio: 16 / 10,
+                                child: Container(color: Colors.black),
+                              ),
+                            ],
+                          )))
+                    ];
+                  }
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: children,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -564,5 +643,15 @@ class _ContributedProjectState extends State<ContributedProject> {
             );
           });
         });
+  }
+
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("You will be notified when we prepared your receipt."),
+      ));
+    }
   }
 }

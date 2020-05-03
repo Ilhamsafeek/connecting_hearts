@@ -40,6 +40,12 @@
 @import firebase_messaging;
 #endif
 
+#if __has_include(<flutter_image_compress/FlutterImageCompressPlugin.h>)
+#import <flutter_image_compress/FlutterImageCompressPlugin.h>
+#else
+@import flutter_image_compress;
+#endif
+
 #if __has_include(<flutter_local_notifications/FlutterLocalNotificationsPlugin.h>)
 #import <flutter_local_notifications/FlutterLocalNotificationsPlugin.h>
 #else
@@ -52,10 +58,16 @@
 @import flutter_money_formatter;
 #endif
 
-#if __has_include(<image_picker/FLTImagePickerPlugin.h>)
-#import <image_picker/FLTImagePickerPlugin.h>
+#if __has_include(<image_cropper/ImageCropperPlugin.h>)
+#import <image_cropper/ImageCropperPlugin.h>
 #else
-@import image_picker;
+@import image_cropper;
+#endif
+
+#if __has_include(<image_picker_modern/ImagePickerPlugin.h>)
+#import <image_picker_modern/ImagePickerPlugin.h>
+#else
+@import image_picker_modern;
 #endif
 
 #if __has_include(<path_provider/FLTPathProviderPlugin.h>)
@@ -109,8 +121,10 @@
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
+  [FlutterImageCompressPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterImageCompressPlugin"]];
   [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
   [FlutterMoneyFormatterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterMoneyFormatterPlugin"]];
+  [FLTImageCropperPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImageCropperPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
   [FLTSharePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharePlugin"]];

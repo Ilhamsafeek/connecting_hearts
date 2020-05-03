@@ -95,19 +95,34 @@ class WebServices {
     return jsonServerData;
   }
 
+
+  Future<dynamic> getImageFromFolder(folder) async {
+    print("=========>>>>>"+folder);
+    var url = 'https://www.chadmin.online/api/getimagefile';
+    var response = await http.post(url, body: {
+      'project_supportives': folder,
+     
+    });
+
+    var jsonServerData = json.decode(response.body);
+    
+    return jsonServerData;
+  }
   // Payment records
 
   Future<dynamic> createPayment(amount, projectData, method, status) async {
     print('Calling API createPayment --------->>>>>>>');
-
+    
+     var timestamp =new DateTime.now().millisecondsSinceEpoch;
+      print(' --------->>>>>>>$timestamp');
     var url = 'https://www.chadmin.online/api/createpayment';
     var response = await http.post(url, body: {
       'user_id': CURRENT_USER,
       'paid_amount': '$amount',
       'project_id': projectData['appeal_id'],
-      'receipt_no': '123',
-      'method': '$method',
-      'status': '$status'
+      'receipt_no': '$timestamp',
+      'method': method,
+      'status': status
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');

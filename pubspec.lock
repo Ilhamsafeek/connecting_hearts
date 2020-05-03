@@ -202,6 +202,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_image_compress:
+    dependency: "direct main"
+    description:
+      name: flutter_image_compress
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.7"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -244,13 +251,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.3"
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.6"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -333,13 +333,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
-  image_picker:
+  image_cropper:
     dependency: "direct main"
     description:
-      name: image_picker
+      name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.5"
+    version: "1.2.1"
+  image_picker_modern:
+    dependency: "direct main"
+    description:
+      name: image_picker_modern
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.12+3"
   intl:
     dependency: transitive
     description:

@@ -59,7 +59,8 @@ class _ProjectPageState extends State<Project> {
         if (snapshot.hasData) {
           var data = snapshot.data
               .where((el) =>
-                  el['project_category_id'] == this.widget.categoryData['project_category_id'])
+                  el['project_category_id'] ==
+                  this.widget.categoryData['project_category_id'])
               .toList();
 
           children = <Widget>[
@@ -144,7 +145,7 @@ class _ProjectPageState extends State<Project> {
             //     ),
             //   ),
             // ),
-            Center(
+            Container(
                 child: Column(
               children: <Widget>[
                 ListTile(
@@ -153,22 +154,26 @@ class _ProjectPageState extends State<Project> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                    shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(0.5, 0.5),
-                  blurRadius: 3.0,
-                  color: Colors.black,
-                ),
-              ],),
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(0.5, 0.5),
+                          blurRadius: 3.0,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
                   ),
                   subtitle: Text('Family of ${data['children']} Members',
-                      style: TextStyle(color: Colors.white, shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(0.5, 0.5),
-                  blurRadius: 3.0,
-                  color: Colors.black,
-                ),
-              ],)),
+                      style: TextStyle(
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(0.5, 0.5),
+                            blurRadius: 3.0,
+                            color: Colors.black,
+                          ),
+                        ],
+                      )),
                   trailing: Chip(
                     padding:
                         const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -178,7 +183,6 @@ class _ProjectPageState extends State<Project> {
                     avatar: Icon(
                       Icons.star_border,
                       color: Colors.white,
-                     
                     ),
                     label: Text(
                       "${data['rating']}",
@@ -189,9 +193,15 @@ class _ProjectPageState extends State<Project> {
                     ),
                   ),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(top: 40),
-                  title: FlatButton.icon(
+                
+              ],
+            )),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              child: Column(
+                children: <Widget>[
+                  FlatButton.icon(
                       onPressed: null,
                       icon: Icon(
                         Icons.location_on,
@@ -200,15 +210,18 @@ class _ProjectPageState extends State<Project> {
                       ),
                       label: Text(
                         '${data['city']}, ${data['district']}',
-                        style: TextStyle(color: Colors.white,shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(0.5, 0.5),
-                  blurRadius: 3.0,
-                  color: Colors.black,
-                ),
-              ],),
+                        style: TextStyle(
+                          color: Colors.white,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(0.5, 0.5),
+                              blurRadius: 3.0,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
                       )),
-                  subtitle: new LinearPercentIndicator(
+                  new LinearPercentIndicator(
                     alignment: MainAxisAlignment.start,
                     animation: true,
                     lineHeight: 14.0,
@@ -222,31 +235,27 @@ class _ProjectPageState extends State<Project> {
                     trailing: Text(
                       'Rs.' + '${formattedAmount.output.withoutFractionDigits}',
                       style: TextStyle(
-                          fontFamily: "Exo2",
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(0.5, 0.5),
-                  blurRadius: 3.0,
-                  color: Colors.black,
-                ),
-              ],),
+                        fontFamily: "Exo2",
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(0.5, 0.5),
+                            blurRadius: 3.0,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
                     ),
                     linearStrokeCap: LinearStrokeCap.roundAll,
                     backgroundColor: Colors.grey,
                     progressColor: completedColor,
                   ),
-                ),
-              
-              ],
-            )),
+                ],
+              ),
+            ),
           ]),
-          Container(
-            color: Colors.black,
-            width: double.infinity,
-            height: 0.1,
-          ),
           Container(
               child: Row(children: <Widget>[
             Expanded(

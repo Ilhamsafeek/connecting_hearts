@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
+import 'package:zamzam/test.dart';
 import 'package:zamzam/ui/payment.dart';
-import 'package:zamzam/ui/screens/screen1.dart';
-import 'package:zamzam/ui/screens/screen2.dart';
-import 'package:zamzam/ui/screens/screen3.dart';
+import 'package:zamzam/ui/screens/offline.dart';
+import 'package:zamzam/ui/screens/home.dart';
+import 'package:zamzam/ui/screens/charity.dart';
+import 'package:zamzam/ui/screens/jobs.dart';
 import 'package:zamzam/ui/screens/screen4.dart';
 import 'package:zamzam/ui/screens/screen5.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -38,6 +41,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   PageController _pageController;
   int _tabBarNotificationCount = 0;
+  final ScrollController controller = ScrollController();
 
   StreamController<int> _countController = StreamController<int>();
 
@@ -53,8 +57,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
     getNotificationCount().then((value) {
       if (value == null) {
         setState(() {
@@ -126,6 +129,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     var initSetting = new InitializationSettings(android, ios);
     flutterLocalNotificationsPlugin.initialize(initSetting,
         onSelectNotification: _selectNotification);
+    super.didChangeDependencies();
   }
 
   Future _selectNotification(String payload) {
@@ -162,9 +166,11 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: new AppBar(
-          title: 
-          
-          Image.asset('assets/ch_logo.png', height: 35,color: Colors.white60,),
+          title: Image.asset(
+            'assets/ch_logo.png',
+            height: 35,
+            color: Colors.white60,
+          ),
           actions: <Widget>[
             IconButton(
               onPressed: () async {
@@ -184,7 +190,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                 builder: (_, snapshot) => BadgeIcon(
                   icon: Icon(
                     Icons.notifications,
-                    
                     color: Colors.white,
                   ),
                   badgeCount: snapshot.data,
@@ -212,17 +217,40 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() => _currentIndex = index);
-          },
+      body: OfflineBuilder(
+        connectivityBuilder: (
+          BuildContext context,
+          ConnectivityResult connectivity,
+          Widget child,
+        ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          return new Stack(
+            fit: StackFit.expand,
+            children: [
+              connected
+                  ? SizedBox.expand(
+                      child: PageView(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() => _currentIndex = index);
+                        },
+                        children: <Widget>[
+                          Home(),
+                          Charity(),
+                          Chat(),
+                          Profile(),
+                        ],
+                      ),
+                    )
+                  : Offline()
+            ],
+          );
+        },
+        child: Column(
           children: <Widget>[
-            Home(),
-            Charity(),
-           Chat(),
-            Profile(),
+            new Text(
+              'There are no bottons to push :)',
+            ),
           ],
         ),
       ),

@@ -30,13 +30,14 @@ class _PaymentResultState extends State<PaymentResult> {
   bool _processing = false;
   Widget _paid = Text('');
   Widget _title = Text('Checkout');
+  Widget _result = Text('');
   @override
   Widget build(BuildContext context) {
     _paid = FlatButton.icon(
       onPressed: () {
         setState(() {
           _processing = true;
-          _paid = doCharging(widget.cardId);
+          _result = doCharging(widget.cardId);
         });
       },
       icon: Icon(Icons.check_circle_outline, color: Colors.white),
@@ -60,7 +61,7 @@ class _PaymentResultState extends State<PaymentResult> {
           child: Center(
             child: Container(
                 child: Column(
-              children: <Widget>[Text(widget.method), _paid],
+              children: <Widget>[Text(widget.method), _paid, _result],
             )),
           ),
           isLoading: _processing,
@@ -84,7 +85,7 @@ class _PaymentResultState extends State<PaymentResult> {
             var data = snapshot.data;
             WebServices(this.mApiListener)
                 .createPayment(widget.paymentAmount, widget.projectData,
-                    widget.method, 'approved')
+                    widget.method, 'pending')
                 .then((value) {
               print(value);
               if (value != null) {}
@@ -300,4 +301,5 @@ class _PaymentResultState extends State<PaymentResult> {
       throw 'Could not launch $url';
     }
   }
+
 }

@@ -57,10 +57,12 @@ dependencies:
   shimmer: ^1.1.1
   bottom_navy_bar: ^5.4.0
   animated_text_kit: ^2.0.0
-  image_picker:
   flutter_staggered_grid_view:
   loading_overlay:
-
+  image_picker_modern:
+  image_cropper: ^1.0.2
+  flutter_image_compress: ^0.6.3
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -118,13 +120,19 @@ flutter:
   - assets/slider_3.png
   - assets/add_payment_method.png
   - assets/my_contribution.png
-  - assets/background.png
   - assets/mufti_menk.jpg
   - assets/test.gif
   - assets/ch_logo.png
   - assets/placeholder.png
   - assets/sermon_title.png
   - assets/chat.png
+  - assets/profile-background.png
+  - assets/job-bank.png
+  - assets/charity.png
+  - assets/updates.png
+  - assets/elearning.png
+  - assets/sermon.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:country_pickers/country.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_verification_code_input/flutter_verification_code_input.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/services/webservices.dart';
@@ -22,6 +23,7 @@ class _SigninPageState extends State<Signin> {
   String countryCode = '+94';
   String smsCode;
   String verificationId;
+  var _mobileController = new MaskedTextController(mask: '000000000');
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
@@ -44,8 +46,10 @@ class _SigninPageState extends State<Signin> {
       print('verified');
       CURRENT_USER = "${this.countryCode}${this.phoneNo}";
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-        // Navigator.pop(context);
-        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+        if (user != null) {
+         
+          Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+        }
       }).catchError((e) {
         print(e);
       });
@@ -108,16 +112,17 @@ class _SigninPageState extends State<Signin> {
                             onPressed: () {
                               FirebaseAuth.instance.currentUser().then((user) {
                                 if (user != null) {
-                                 
-                                  Navigator.of(context).push(
+                                  Navigator.of(context).pushReplacement(
                                       CupertinoPageRoute<Null>(
                                           builder: (BuildContext context) {
                                     return new Details();
                                   }));
-                                } else {
-                                  Navigator.of(context).pop();
-                                  signIn();
-                                }
+                                  
+                                } 
+                                // else {
+                                //   Navigator.of(context).pop();
+                                //   signIn();
+                                // }
                               });
                             },
                           ),
@@ -138,10 +143,12 @@ class _SigninPageState extends State<Signin> {
 
     await FirebaseAuth.instance.signOut().then((action) {
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-        WebServices(this.mApiListener)
-            .createAccount('${this.countryCode}${this.phoneNo}');
-            Navigator.pop(context);
-        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+        if (user != null) {
+          WebServices(this.mApiListener)
+              .createAccount('${this.countryCode}${this.phoneNo}');
+          // Navigator.pop(context);
+          Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+        }
       }).catchError((e) {
         print(e);
       });
@@ -222,6 +229,7 @@ class _SigninPageState extends State<Signin> {
                           Expanded(
                             flex: 5,
                             child: TextFormField(
+                              controller: _mobileController,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'please enter phone number.';
@@ -236,7 +244,7 @@ class _SigninPageState extends State<Signin> {
                                   TextStyle(fontSize: 18, fontFamily: "Exo2"),
                               onChanged: (value) {
                                 print(value);
-                                this.phoneNo = value;
+                                this.phoneNo = _mobileController.text;
                               },
                             ),
                           ),
@@ -410,7 +418,7 @@ class _DetailsState extends State<Details> {
                                       )
                                         .then((value) {
                                         if (value == 200) {
-                                          Navigator.pop(context);
+                                          // Navigator.pop(context);
                                           Navigator.of(context)
                                               .pushReplacementNamed(HOME_PAGE);
                                         } else {
