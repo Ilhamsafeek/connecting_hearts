@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -6,12 +7,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
-import 'package:zamzam/ui/payment_result.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:share/share.dart';
 import 'package:zamzam/utils/read_more_text.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContributedProject extends StatefulWidget {
   @override
@@ -23,8 +21,11 @@ class ContributedProject extends StatefulWidget {
 }
 
 class _ContributedProjectState extends State<ContributedProject> {
+  Future _projectImages;
   @override
   void initState() {
+   _projectImages= WebServices(this.mApiListener).getImageFromFolder(
+                    widget.projectData['project_supportives']);
     super.initState();
   }
 
@@ -41,18 +42,7 @@ class _ContributedProjectState extends State<ContributedProject> {
 
   ApiListener mApiListener;
 
-  final List<String> images = [
-    "https://uae.microless.com/cdn/no_image.jpg",
-    "https://images-na.ssl-images-amazon.com/images/I/81aF3Ob-2KL._UX679_.jpg",
-    "https://www.boostmobile.com/content/dam/boostmobile/en/products/phones/apple/iphone-7/silver/device-front.png.transform/pdpCarousel/image.jpg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgUgs8_kmuhScsx-J01d8fA1mhlCR5-1jyvMYxqCB8h3LCqcgl9Q",
-    "https://ae01.alicdn.com/kf/HTB11tA5aiAKL1JjSZFoq6ygCFXaw/Unlocked-Samsung-GALAXY-S2-I9100-Mobile-Phone-Android-Wi-Fi-GPS-8-0MP-camera-Core-4.jpg_640x640.jpg",
-    "https://media.ed.edmunds-media.com/gmc/sierra-3500hd/2018/td/2018_gmc_sierra-3500hd_f34_td_411183_1600.jpg",
-    "https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/images/16q1/665019/2016-chevrolet-silverado-2500hd-high-country-diesel-test-review-car-and-driver-photo-665520-s-original.jpg",
-    "https://www.galeanasvandykedodge.net/assets/stock/ColorMatched_01/White/640/cc_2018DOV170002_01_640/cc_2018DOV170002_01_640_PSC.jpg",
-    "https://media.onthemarket.com/properties/6191869/797156548/composite.jpg",
-    "https://media.onthemarket.com/properties/6191840/797152761/composite.jpg",
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,8 +66,8 @@ class _ContributedProjectState extends State<ContributedProject> {
                   ],
                 ),
               ),
-              background: Image.network(
-                widget.projectData['featured_image'],
+              background: CachedNetworkImage(
+                imageUrl: widget.projectData['featured_image'],
                 fit: BoxFit.cover,
               ),
             ),
@@ -519,7 +509,10 @@ class _ContributedProjectState extends State<ContributedProject> {
                           "Project Execution stage: ",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(widget.projectData['completed_percentage'], style: TextStyle(color: Colors.red),)
+                        Text(
+                          widget.projectData['completed_percentage'],
+                          style: TextStyle(color: Colors.red),
+                        )
                       ],
                     )
                   ],
@@ -551,8 +544,7 @@ class _ContributedProjectState extends State<ContributedProject> {
               ),
               Divider(height: 0),
               FutureBuilder<dynamic>(
-                future: WebServices(this.mApiListener).getImageFromFolder(
-                    widget.projectData['project_supportives']),
+                future: _projectImages,
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   List<Widget> children;
@@ -560,7 +552,10 @@ class _ContributedProjectState extends State<ContributedProject> {
                   if (snapshot.hasData) {
                     dynamic data = snapshot.data;
                     children = <Widget>[
-                      for (var item in data) Image.network(item)
+                      for (var item in data)
+                        CachedNetworkImage(
+                          imageUrl: item,
+                        ),
                     ];
                   } else if (snapshot.hasError) {
                     children = <Widget>[

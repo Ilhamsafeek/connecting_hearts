@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:zamzam/model/Gridmodel.dart';
@@ -8,9 +9,7 @@ import 'package:zamzam/ui/project.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:zamzam/ui/project_detail.dart';
-import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+
 
 class Charity extends StatefulWidget {
   Charity({Key key}) : super(key: key);
@@ -20,16 +19,10 @@ class Charity extends StatefulWidget {
 
 class _CharityState extends State<Charity> {
   ApiListener mApiListener;
-  dynamic projectData;
 
   @override
   void initState() {
     super.initState();
-    WebServices(this.mApiListener).getProjectData().then((data) {
-      setState(() {
-        projectData = data;
-      });
-    });
   }
 
   Widget build(BuildContext context) {
@@ -48,7 +41,6 @@ class _CharityState extends State<Charity> {
               childCount: 1,
             ),
           ),
-         
         ],
       ),
     );
@@ -224,8 +216,9 @@ class GridItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.network(
-                gridModel.imagePath,
+              CachedNetworkImage(
+             
+                imageUrl: gridModel.imagePath,
                 width: 40,
                 height: 40,
                 color: gridModel.color,

@@ -3,12 +3,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:zamzam/test.dart';
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/screens/offline.dart';
 import 'package:zamzam/ui/screens/home.dart';
 import 'package:zamzam/ui/screens/charity.dart';
-import 'package:zamzam/ui/screens/jobs.dart';
 import 'package:zamzam/ui/screens/screen4.dart';
 import 'package:zamzam/ui/screens/screen5.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -20,7 +18,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zamzam/ui/zakat_calculator.dart';
 
 import 'badge_icon.dart';
 
@@ -41,7 +38,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   PageController _pageController;
   int _tabBarNotificationCount = 0;
-  final ScrollController controller = ScrollController();
+  // final ScrollController controller = ScrollController();
 
   StreamController<int> _countController = StreamController<int>();
 
@@ -153,12 +150,12 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         payload: "send message");
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    _countController.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _pageController.dispose();
+  //   _countController.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -262,28 +259,29 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            title: Text('Home'),
-            icon: Icon(Icons.apps),
-            activeColor: Theme.of(context).primaryColor,
+            title: Text('Home', style: TextStyle(color:Theme.of(context).primaryColor),),
+            icon: Icon(Icons.apps, color: Theme.of(context).primaryColor),
+            activeColor: Colors.amber, //Theme.of(context).primaryColor,
           ),
           BottomNavyBarItem(
-            title: Text('Charity'),
-            icon: Icon(Icons.people),
-            activeColor: Theme.of(context).primaryColor,
+            title: Text('Charity', style: TextStyle(color: Theme.of(context).primaryColor),),
+            icon: Icon(Icons.people, color: Theme.of(context).primaryColor),
+            activeColor: Colors.amber,
           ),
           BottomNavyBarItem(
-            title: Text('Messages'),
-            icon: Icon(Icons.chat),
-            activeColor: Theme.of(context).primaryColor,
+            title: Text('Messages', style: TextStyle(color: Theme.of(context).primaryColor),),
+            icon: Icon(Icons.chat, color: Theme.of(context).primaryColor),
+            activeColor: Colors.amber,
           ),
           BottomNavyBarItem(
-            title: Text('Account'),
+            title: Text('Account', style: TextStyle(color: Theme.of(context).primaryColor),),
             //Actually icon was in Icon type. we have changed in the cache of bottomnavybaritem. (Ctrl + click on BottomNavyBarItem to edit)
-            icon: Icon(Icons.person),
-            activeColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.person, color: Theme.of(context).primaryColor),
+            activeColor: Colors.amber,
           ),
         ],
       ),
     );
   }
+  
 }

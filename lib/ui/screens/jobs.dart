@@ -17,14 +17,14 @@ class Jobs extends StatefulWidget {
 }
 
 class _JobsState extends State<Jobs> {
-  @override
   ApiListener mApiListener;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(title:Text('Job Bank')),
+        appBar: AppBar(title: Text('Job Bank')),
         body: SingleChildScrollView(
 
             // child: AnimationLimiter(
@@ -49,7 +49,7 @@ class _JobsState extends State<Jobs> {
                   title: Text('My Appeals and vacancies'),
                   children: <Widget>[
                     FutureBuilder<dynamic>(
-                        future: WebServices(this.mApiListener).getJobData(),
+                        future: WebServices(mApiListener).getJobData(),
                         builder: (BuildContext context,
                             AsyncSnapshot<dynamic> snapshot) {
                           List<Widget> children;
@@ -160,7 +160,7 @@ class _JobsState extends State<Jobs> {
               height: 0,
             ),
             FutureBuilder<dynamic>(
-                future: WebServices(this.mApiListener).getJobData(),
+                future: WebServices(mApiListener).getJobData(),
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   List<Widget> children;

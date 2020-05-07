@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zamzam/payment/main.dart';
@@ -62,8 +63,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   ],
                 ),
               ),
-              background: Image.network(
-                widget.projectData['featured_image'],
+              background: CachedNetworkImage(
+                imageUrl: widget.projectData['featured_image'],
                 fit: BoxFit.cover,
               ),
             ),
@@ -467,20 +468,20 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                 )
               // ),
             ];
-          }else{
-            children= <Widget>[
+          } else {
+            children = <Widget>[
               ListTile(
-            title: Text(
-              'Add Debit or Credit card',
-              style: TextStyle(color: Colors.blue),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => StripePayment()),
-              );
-            },
-          ),
+                title: Text(
+                  'Add Debit or Credit card',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StripePayment()),
+                  );
+                },
+              ),
             ];
           }
         } else if (snapshot.hasError) {

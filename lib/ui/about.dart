@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:zamzam/ui/payment.dart';
-import 'package:flutter_offline/flutter_offline.dart';
 
 class About extends StatefulWidget {
   @override

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -44,8 +45,8 @@ class _ChannelDetailState extends State<ChannelDetail> {
               ],
             ),
           ),
-          background: Image.network(
-            widget.channelData['photo'],
+          background: CachedNetworkImage(
+            imageUrl: widget.channelData['photo'],
             fit: BoxFit.cover,
           ),
         ),
@@ -136,12 +137,11 @@ class _ChannelDetailState extends State<ChannelDetail> {
                       children: <Widget>[
                         ListTile(
                           leading: AspectRatio(
-                            child: Image(
-                              width: 30,
-                              image: NetworkImage(YoutubePlayer.getThumbnail(
+                            child: CachedNetworkImage(
+                              imageUrl: YoutubePlayer.getThumbnail(
                                   videoId: YoutubePlayer.convertUrlToId(
-                                      item['url']))),
-                              centerSlice: Rect.largest,
+                                      item['url'])),
+                              width: 30,
                             ),
                             aspectRatio: 16 / 10,
                           ),
@@ -217,7 +217,6 @@ class _ChannelDetailState extends State<ChannelDetail> {
               );
             },
           )
-        
         ],
       ),
     );

@@ -49,13 +49,14 @@ class _ChannelsState extends State<Channels> {
                     for (var item in data)
                       Column(children: <Widget>[
                         ListTile(
+                          isThreeLine: true,
                           leading: CircleAvatar(
                             backgroundImage:
                                 NetworkImage(item['photo']),
                             radius: 30,
                           ),
                           title: Text(item['channel']),
-                          subtitle: Text('this is subtitle'),
+                          subtitle: Text("Total Jumma: ${item['total_jumma']} \nTotal Special Bayan: ${item['total_special']}"),
                           trailing: Icon(
                             Icons.more_horiz,
                             color: Colors.grey,
@@ -151,46 +152,6 @@ class GridItem extends StatelessWidget {
                   gridModel.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 12),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class GridItemTop extends StatelessWidget {
-  GridModel gridModel;
-
-  GridItemTop(this.gridModel);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(1 / 2),
-      child: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                gridModel.imagePath,
-                width: 30,
-                height: 30,
-                color: gridModel.color,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Text(
-                  gridModel.title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                  ),
                 ),
               ),
             ],

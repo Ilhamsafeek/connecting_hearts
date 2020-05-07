@@ -96,6 +96,14 @@ class WebServices {
   }
 
 
+  Future<dynamic> getZamzamUpdateData() async {
+    var response = await http.get("https://chadmin.online/api/zamzamupdates");
+    var jsonServerData = json.decode(response.body);
+    print("Response ${response.body}");
+    return jsonServerData;
+  }
+
+
   Future<dynamic> getImageFromFolder(folder) async {
     print("=========>>>>>"+folder);
     var url = 'https://www.chadmin.online/api/getimagefile';
@@ -153,6 +161,8 @@ class WebServices {
 
     return false;
   }
+
+
 
 //Stripe Payment
   //Sources :

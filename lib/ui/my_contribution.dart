@@ -19,6 +19,7 @@ class MyContribution extends StatefulWidget {
 class _MyContributionState extends State<MyContribution> {
   ApiListener mApiListener;
   dynamic totalContribution = 0;
+  Future<dynamic> _paymentData;
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _MyContributionState extends State<MyContribution> {
         totalContribution = total;
       });
     });
+    _paymentData = WebServices(mApiListener).getPaymentData();
   }
 
   @override
@@ -87,9 +89,8 @@ class _MyContributionState extends State<MyContribution> {
                     child: Container(
                       child: Column(children: <Widget>[
                         FutureBuilder(
-                          future: WebServices(mApiListener).getPaymentData(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
+                          future: _paymentData,
+                          builder: (context, snapshot) {
                             List<Widget> children;
                             if (snapshot.hasData) {
                               var data;
@@ -179,12 +180,10 @@ class _MyContributionState extends State<MyContribution> {
         _trailing = RaisedButton(
           color: Colors.red,
           onPressed: () async {
-           
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => CameraApp()
-                ));
+                    builder: (BuildContext context) => CameraApp()));
           },
           child: Text(
             'Submit Deposit Slip',
@@ -204,11 +203,10 @@ class _MyContributionState extends State<MyContribution> {
           FlatButton.icon(
             icon: Icon(Icons.edit),
             onPressed: () async {
-             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => CameraApp()
-                ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => CameraApp()));
             },
             label: Text('Edit Slip'),
           ),

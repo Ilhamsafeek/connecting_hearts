@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:zamzam/model/Gridmodel.dart';
-import 'package:zamzam/ui/zakat_calculator.dart';
+
 
 class Chat extends StatefulWidget {
   Chat({Key key}) : super(key: key);

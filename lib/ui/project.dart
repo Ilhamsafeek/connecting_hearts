@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
@@ -7,7 +8,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
 
 class Project extends StatefulWidget {
-  @override
+ 
   final dynamic categoryData;
 
   Project(this.categoryData, {Key key}) : super(key: key);
@@ -31,8 +32,8 @@ class _ProjectPageState extends State<Project> {
           title: Text(widget.categoryData['category'],
               style: TextStyle(fontFamily: "Exo2", color: Colors.white)),
           actions: <Widget>[
-            Image.network(
-              widget.categoryData['photo'],
+            CachedNetworkImage(
+              imageUrl: widget.categoryData['photo'],
               width: 30,
               color: Colors.white,
             ),
@@ -127,7 +128,9 @@ class _ProjectPageState extends State<Project> {
           Stack(children: <Widget>[
             ClipRRect(
               // borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-              child: Image.network(data['featured_image']),
+              child: CachedNetworkImage(
+                imageUrl: data['featured_image'],
+              ),
             ),
             // Container(
             //   height: MediaQuery.of(context).size.width * 0.58,
@@ -193,12 +196,11 @@ class _ProjectPageState extends State<Project> {
                     ),
                   ),
                 ),
-                
               ],
             )),
             Positioned(
-              bottom: 0,
-              left: 0,
+              bottom: 5,
+              left: 5,
               child: Column(
                 children: <Widget>[
                   FlatButton.icon(

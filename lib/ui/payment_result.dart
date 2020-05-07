@@ -36,7 +36,7 @@ class _PaymentResultState extends State<PaymentResult> {
     _paid = FlatButton.icon(
       onPressed: () {
         setState(() {
-          _processing = true;
+          // _processing = true;
           _result = doCharging(widget.cardId);
         });
       },
@@ -82,6 +82,8 @@ class _PaymentResultState extends State<PaymentResult> {
           List<Widget> children;
 
           if (snapshot.hasData) {
+
+            
             var data = snapshot.data;
             WebServices(this.mApiListener)
                 .createPayment(widget.paymentAmount, widget.projectData,
@@ -142,6 +144,7 @@ class _PaymentResultState extends State<PaymentResult> {
                 textColor: Colors.white,
               ),
             ];
+
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(
@@ -167,6 +170,7 @@ class _PaymentResultState extends State<PaymentResult> {
               )
             ];
           }
+          
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -293,6 +297,34 @@ class _PaymentResultState extends State<PaymentResult> {
       );
     }
   }
+
+  Future _showDialog(){
+      return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Picker"),
+                content: new Text("Select image picker type."),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("Camera"),
+                    onPressed: () {
+                     
+                      Navigator.pop(context);
+                    },
+                  ),
+                  new FlatButton(
+                    child: new Text("Gallery"),
+                    onPressed: () {
+                     
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+   }
 
   _launchURL(url) async {
     if (await canLaunch(url)) {

@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:zamzam/model/Gridmodel.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/sermon/channels.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:zamzam/ui/single_video.dart';
 
 class Sermons extends StatefulWidget {
@@ -23,7 +21,6 @@ class _SermonsState extends State<Sermons> {
   }
 
   ApiListener mApiListener;
-  bool _saving = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
