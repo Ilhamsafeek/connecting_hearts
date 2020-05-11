@@ -162,7 +162,12 @@ class WebServices {
     return false;
   }
 
-
+ Future<dynamic> getCompanyData() async {
+    var response = await http.get("https://chadmin.online/api/companydata");
+    var jsonServerData = json.decode(response.body);
+    print("Response ${response.body}");
+    return jsonServerData;
+  }
 
 //Stripe Payment
   //Sources :

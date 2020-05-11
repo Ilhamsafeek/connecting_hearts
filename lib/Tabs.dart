@@ -259,25 +259,25 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            title: Text('Home', style: TextStyle(color:Theme.of(context).primaryColor),),
-            icon: Icon(Icons.apps, color: Theme.of(context).primaryColor),
-            activeColor: Colors.amber, //Theme.of(context).primaryColor,
+            title: Text('Home', style: TextStyle(color:Colors.black),),
+            icon: Icon(Icons.apps, color: Colors.red),
+            activeColor: Colors.red, //Theme.of(context).primaryColor,
           ),
           BottomNavyBarItem(
             title: Text('Charity', style: TextStyle(color: Theme.of(context).primaryColor),),
             icon: Icon(Icons.people, color: Theme.of(context).primaryColor),
-            activeColor: Colors.amber,
+            activeColor: Theme.of(context).primaryColor,
           ),
           BottomNavyBarItem(
             title: Text('Messages', style: TextStyle(color: Theme.of(context).primaryColor),),
             icon: Icon(Icons.chat, color: Theme.of(context).primaryColor),
-            activeColor: Colors.amber,
+            activeColor: Theme.of(context).primaryColor,
           ),
           BottomNavyBarItem(
             title: Text('Account', style: TextStyle(color: Theme.of(context).primaryColor),),
             //Actually icon was in Icon type. we have changed in the cache of bottomnavybaritem. (Ctrl + click on BottomNavyBarItem to edit)
             icon: Icon(Icons.person, color: Theme.of(context).primaryColor),
-            activeColor: Colors.amber,
+            activeColor: Theme.of(context).primaryColor,
           ),
         ],
       ),

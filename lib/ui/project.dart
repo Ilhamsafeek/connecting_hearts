@@ -41,7 +41,7 @@ class _ProjectPageState extends State<Project> {
               width: 10,
             )
           ],
-          backgroundColor: Color.fromRGBO(104, 45, 127, 1),
+         
         ),
         body: Center(
             child: new RefreshIndicator(

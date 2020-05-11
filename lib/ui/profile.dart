@@ -5,12 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'dart:io';
 
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:zamzam/ui/about.dart';
+import 'package:zamzam/utils/dialogs.dart';
 
 import '../test.dart';
 
@@ -202,45 +201,100 @@ class ProfileState extends State<Profile> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Center(
-                                  child: RaisedButton(
-                                      color: Colors.blue[900],
-                                      child: Text(
-                                        'Save',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        _formKey.currentState.validate()
-                                            ? WebServices(this.mApiListener)
-                                                .updateUser(
-                                                    _usernameController.text,
-                                                    _emailController.text,
-                                                    _firstNameController.text,
-                                                    _lastNameController.text)
-                                                .then((value) {
-                                                if (value == 200) {
-                                                  _scaffoldKey.currentState
-                                                      .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        "Profile Updated Successfully"),
-                                                  ));
-                                                } else {
-                                                  _scaffoldKey.currentState
-                                                      .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        "Something went wrong. Please try again."),
-                                                  ));
+                            ListTile(
+                                title: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                          child: RaisedButton(
+                                              color: Colors.amber,
+                                              child: Text(
+                                                'Save',
+                                                style: TextStyle(
+                                                    color: Colors.black87),
+                                              ),
+                                              onPressed: () async {
+                                                
+                                                // _formKey.currentState.validate()
+                                                //     ? await WebServices(
+                                                //             this.mApiListener)
+                                                //         .updateUser(
+                                                //             _usernameController
+                                                //                 .text,
+                                                //             _emailController
+                                                //                 .text,
+                                                //             _firstNameController
+                                                //                 .text,
+                                                //             _lastNameController
+                                                //                 .text)
+                                                //         .then((value) {
+                                                //         Navigator.pop(context);
+                                                //         if (value == 200) {
+                                                //           _scaffoldKey
+                                                //               .currentState
+                                                //               .showSnackBar(
+                                                //                   SnackBar(
+                                                //             content: Text(
+                                                //                 "Profile Updated Successfully"),
+                                                //           ));
+                                                //         } else {
+                                                //           _scaffoldKey
+                                                //               .currentState
+                                                //               .showSnackBar(
+                                                //                   SnackBar(
+                                                //             content: Text(
+                                                //                 "Something went wrong. Please try again."),
+                                                //           ));
+                                                //         }
+                                                //       })
+
+                                                //     : _scaffoldKey.currentState
+                                                //         .showSnackBar(SnackBar(
+                                                //         content: Text(
+                                                //             "Please check the inputs"),
+                                                //       ));
+
+                                                if (_formKey.currentState
+                                                    .validate()) {
+                                                      showWaitingProgress(context);
+                                                  await WebServices(
+                                                          this.mApiListener)
+                                                      .updateUser(
+                                                          _usernameController
+                                                              .text,
+                                                          _emailController.text,
+                                                          _firstNameController
+                                                              .text,
+                                                          _lastNameController
+                                                              .text)
+                                                      .then((value) {
+                                                    Navigator.pop(context);
+                                                    if (value == 200) {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              SnackBar(
+                                                        content: Text(
+                                                            "Profile Updated Successfully"),
+                                                      ));
+                                                    } else {
+                                                      _scaffoldKey.currentState
+                                                          .showSnackBar(
+                                                              SnackBar(
+                                                        content: Text(
+                                                            "Something went wrong. Please try again."),
+                                                      ));
+                                                    }
+                                                  });
                                                 }
-                                              })
-                                            : _scaffoldKey.currentState
-                                                .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "Please check the inputs"),
-                                              ));
-                                      })),
-                            ),
+                                              })),
+                                    ],
+                                  ),
+                                ),
+                                onTap: () => {}),
                           ];
                         } else if (snapshot.hasError) {
                           children = <Widget>[

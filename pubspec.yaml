@@ -65,8 +65,10 @@ dependencies:
   cached_network_image: ^2.2.0
   flutter_blurhash:
   flutter_braintree:
- 
-    
+  # permission_handler: ^5.0.0+hotfix.5
+  # image_picker: ^0.6.6+1
+  image_picker_flutter: ^1.4.4
+  permission_handler: ^4.0.0  
 dev_dependencies:
   flutter_test:
     sdk: flutter

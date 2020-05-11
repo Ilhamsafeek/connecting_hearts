@@ -9,6 +9,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/constant/Constant.dart';
+import 'package:zamzam/utils/dialogs.dart';
 
 class Jobs extends StatefulWidget {
   Jobs({Key key}) : super(key: key);
@@ -358,11 +359,9 @@ class _JobsState extends State<Jobs> {
                           Expanded(
                               child: RaisedButton(
                             onPressed: () async {
-                              Navigator.of(context).pop();
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                content: Text("Deleting.."),
-                              ));
-                              WebServices(mApiListener)
+                               Navigator.pop(context);
+                              showWaitingProgress(context);
+                             await WebServices(mApiListener)
                                   .deleteJob(id)
                                   .then((value) => {
                                         if (value == 200)
@@ -382,6 +381,7 @@ class _JobsState extends State<Jobs> {
                                             ))
                                           }
                                       });
+                              Navigator.pop(context);
                             },
                             child: Text("Yes"),
                             color: Colors.black,

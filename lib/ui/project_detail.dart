@@ -1,7 +1,9 @@
+import 'package:braintree_payment/braintree_payment.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zamzam/payment/main.dart';
+import 'package:zamzam/services/braintree.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/payment_result.dart';
@@ -9,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
 import 'package:zamzam/utils/read_more_text.dart';
+import 'package:zamzam/utils/dialogs.dart';
 
 class ProjectDetail extends StatefulWidget {
   @override
@@ -333,7 +336,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                   Divider(
                     height: 0,
                   ),
-                  paymentMethods(),
+                  // paymentMethods(),
+
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -363,6 +367,29 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       )
                     ],
                   ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 11,
+                        child: RadioListTile(
+                          selected: true,
+                          activeColor: Colors.black,
+                          value: 'card',
+                          groupValue: selectedMethod,
+                          onChanged: selectsku,
+                          title: ListTile(
+                            leading: Icon(
+                              Icons.credit_card,
+                              color: Colors.indigo[700],
+                              size: 30,
+                            ),
+                            title: Text('Other Payment Methods'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
                   Form(
                       key: _formKey,
                       child: Column(children: <Widget>[
@@ -414,32 +441,13 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                               ),
                             ),
                             onTap: () => {}),
+                     
                       ]))
                 ],
               ),
             );
           });
         });
-  }
-
-  showPaymentProgress(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      content: new Row(
-        children: [
-          CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 5),
-              child: Text("Recording donation..")),
-        ],
-      ),
-    );
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 
   Widget paymentMethods() {
@@ -570,23 +578,48 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         });
   }
 
-  _navigateToPayment() {
-    if (this.selectedMethod != 'bank') {
+  _navigateToPayment() async {
+    if (this.selectedMethod == 'bank') {
       Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => PaymentResult(
+            builder: (context) => Checkout(
                 selectedMethod, widget.projectData, _amount.text, 'card')),
       );
     } else {
       Navigator.pop(context);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => PaymentResult(
-                selectedMethod, widget.projectData, _amount.text, 'bank')),
-      );
+      showWaitingProgress(context);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => Checkout(
+      //           selectedMethod, widget.projectData, _amount.text, 'bank')),
+      // );
+      String clientNonce =
+          // "eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiJlNTc1Mjc3MzZiODkyZGZhYWFjOTIxZTlmYmYzNDNkMzc2ODU5NTIxYTFlZmY2MDhhODBlN2Q5OTE5NWI3YTJjfGNyZWF0ZWRfYXQ9MjAxOS0wNS0yMFQwNzoxNDoxNi4zMTg0ODg2MDArMDAwMFx1MDAyNm1lcmNoYW50X2lkPTM0OHBrOWNnZjNiZ3l3MmJcdTAwMjZwdWJsaWNfa2V5PTJuMjQ3ZHY4OWJxOXZtcHIiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvMzQ4cGs5Y2dmM2JneXcyYi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJncmFwaFFMIjp7InVybCI6Imh0dHBzOi8vcGF5bWVudHMuc2FuZGJveC5icmFpbnRyZWUtYXBpLmNvbS9ncmFwaHFsIiwiZGF0ZSI6IjIwMTgtMDUtMDgifSwiY2hhbGxlbmdlcyI6W10sImVudmlyb25tZW50Ijoic2FuZGJveCIsImNsaWVudEFwaVVybCI6Imh0dHBzOi8vYXBpLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb206NDQzL21lcmNoYW50cy8zNDhwazljZ2YzYmd5dzJiL2NsaWVudF9hcGkiLCJhc3NldHNVcmwiOiJodHRwczovL2Fzc2V0cy5icmFpbnRyZWVnYXRld2F5LmNvbSIsImF1dGhVcmwiOiJodHRwczovL2F1dGgudmVubW8uc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbSIsImFuYWx5dGljcyI6eyJ1cmwiOiJodHRwczovL29yaWdpbi1hbmFseXRpY3Mtc2FuZC5zYW5kYm94LmJyYWludHJlZS1hcGkuY29tLzM0OHBrOWNnZjNiZ3l3MmIifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiQWNtZSBXaWRnZXRzLCBMdGQuIChTYW5kYm94KSIsImNsaWVudElkIjpudWxsLCJwcml2YWN5VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3BwIiwidXNlckFncmVlbWVudFVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS90b3MiLCJiYXNlVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhc3NldHNVcmwiOiJodHRwczovL2NoZWNrb3V0LnBheXBhbC5jb20iLCJkaXJlY3RCYXNlVXJsIjpudWxsLCJhbGxvd0h0dHAiOnRydWUsImVudmlyb25tZW50Tm9OZXR3b3JrIjp0cnVlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFjbWV3aWRnZXRzbHRkc2FuZGJveCIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJtZXJjaGFudElkIjoiMzQ4cGs5Y2dmM2JneXcyYiIsInZlbm1vIjoib2ZmIn0=";
+          "sandbox_rz775339_x226f9698ybxg938"; // Tokenized key
+
+      BraintreePayment braintreePayment = new BraintreePayment();
+      var companyData = await WebServices(this.mApiListener).getCompanyData();
+      Navigator.pop(context);
+      var data = await braintreePayment.showDropIn(
+          nonce: companyData['tokenized_key'], amount: _amount.text);
+
+      print("Response of the payment $data");
+      showWaitingProgress(context);
+      if (data['status'] == 'success') {
+        var saleResponse = await Braintree(mApiListener).sale(_amount.text,
+            data['paymentNonce'], widget.projectData, 'card', 'pending');
+
+        print(saleResponse);
+        
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          backgroundColor: Colors.green[600],
+          content: Text("$saleResponse"),
+        ));
+      }
+      Navigator.pop(context);
     }
   }
 }

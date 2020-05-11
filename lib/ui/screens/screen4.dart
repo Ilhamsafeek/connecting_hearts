@@ -34,6 +34,15 @@ class Notifications extends StatefulWidget {
 
 class _NotificationsState extends State<Notifications> {
   ApiListener mApiListener;
+  dynamic notificationData;
+  @override
+  void initState() {
+    super.initState();
+   notificationData = WebServices(this.mApiListener)
+                  .getNotificationData();
+  }
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +53,7 @@ class _NotificationsState extends State<Notifications> {
           child: SingleChildScrollView(
               child: Container(
             child: FutureBuilder<dynamic>(
-              future: WebServices(this.mApiListener)
-                  .getNotificationData(), // a previously-obtained Future<String> or null
+              future: notificationData, 
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 List<Widget> children;
 

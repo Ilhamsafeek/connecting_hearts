@@ -7,20 +7,20 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zamzam/ui/camera.dart';
 import 'package:camera/camera.dart';
 
-class PaymentResult extends StatefulWidget {
+class Checkout extends StatefulWidget {
   @override
-  _PaymentResultState createState() => _PaymentResultState();
+  _CheckoutState createState() => _CheckoutState();
 
   final String cardId;
   final dynamic projectData;
   final dynamic paymentAmount;
   final dynamic method;
-  PaymentResult(this.cardId, this.projectData, this.paymentAmount, this.method,
+  Checkout(this.cardId, this.projectData, this.paymentAmount, this.method,
       {Key key})
       : super(key: key);
 }
 
-class _PaymentResultState extends State<PaymentResult> {
+class _CheckoutState extends State<Checkout> {
   @override
   void initState() {
     super.initState();
@@ -37,6 +37,9 @@ class _PaymentResultState extends State<PaymentResult> {
       onPressed: () {
         setState(() {
           // _processing = true;
+
+          Navigator.pop(context);
+          _showDialog();
           _result = doCharging(widget.cardId);
         });
       },
@@ -61,7 +64,7 @@ class _PaymentResultState extends State<PaymentResult> {
           child: Center(
             child: Container(
                 child: Column(
-              children: <Widget>[Text(widget.method), _paid, _result],
+              children: <Widget>[Text(widget.method), _paid],
             )),
           ),
           isLoading: _processing,
@@ -82,8 +85,6 @@ class _PaymentResultState extends State<PaymentResult> {
           List<Widget> children;
 
           if (snapshot.hasData) {
-
-            
             var data = snapshot.data;
             WebServices(this.mApiListener)
                 .createPayment(widget.paymentAmount, widget.projectData,
@@ -102,13 +103,13 @@ class _PaymentResultState extends State<PaymentResult> {
                 padding: const EdgeInsets.all(16),
                 child: Text(data['status'], style: TextStyle(fontSize: 19.0)),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text('Receipt for your donation'),
-              ),
-              Divider(
-                height: 0,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(16),
+              //   child: Text('Receipt for your donation'),
+              // ),
+              // Divider(
+              //   height: 0,
+              // ),
               Padding(
                   padding: const EdgeInsets.all(16),
                   child: Center(
@@ -119,32 +120,44 @@ class _PaymentResultState extends State<PaymentResult> {
               Divider(
                 height: 0,
               ),
-              Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ListTile(
-                    title: FlatButton.icon(
-                      icon: Icon(
-                        Icons.receipt,
-                      ),
-                      onPressed: () {
-                        _launchURL(data['receipt_url']);
-                      },
-                      label: Text(
-                        'view stripe receipt',
-                        style: TextStyle(fontSize: 15.0, color: Colors.blue),
-                      ),
+              // Padding(
+              //     padding: const EdgeInsets.all(16),
+              //     child: ListTile(
+              //       title: FlatButton.icon(
+              //         icon: Icon(
+              //           Icons.receipt,
+              //         ),
+              //         onPressed: () {
+              //           _launchURL(data['receipt_url']);
+              //         },
+              //         label: Text(
+              //           'view receipt',
+              //           style: TextStyle(fontSize: 15.0, color: Colors.blue),
+              //         ),
+              //       ),
+              //     )),
+              
+              ListTile(
+                  title: Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: RaisedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Done"),
+                            color: Colors.orange[400],
+                            textColor: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                  )),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Done"),
-                color: Colors.orange[400],
-                textColor: Colors.white,
-              ),
+                  ),
+                  onTap: () => {}),
             ];
-
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(
@@ -166,11 +179,11 @@ class _PaymentResultState extends State<PaymentResult> {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Please wait until we process payment..'),
+                child: Text('Processing payment..'),
               )
             ];
           }
-          
+
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -218,43 +231,57 @@ class _PaymentResultState extends State<PaymentResult> {
                 Divider(
                   height: 0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: RaisedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("May be later"),
-                          textColor: Colors.black,
-                        ),
+                ListTile(
+                    title: Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: RaisedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("May be later"),
+                              textColor: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                          child: RaisedButton(
-                        color: Colors.red,
-                        onPressed: () async {
-                          WidgetsFlutterBinding.ensureInitialized();
-                          final cameras = await availableCameras();
-                          final firstCamera = cameras.first;
+                    ),
+                    onTap: () => {}),
+                ListTile(
+                    title: Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: RaisedButton(
+                            color: Colors.red,
+                            onPressed: () async {
+                              WidgetsFlutterBinding.ensureInitialized();
+                              final cameras = await availableCameras();
+                              final firstCamera = cameras.first;
 
-                          Navigator.of(context).push(CupertinoPageRoute<Null>(
-                              builder: (BuildContext context) {
-                            return new TakePictureScreen(
-                              "${widget.projectData['payment_id']}",
-                              firstCamera,
-                            );
-                          }));
-                        },
-                        child: Text(
-                          'Submit Deposit Slip',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ))
-                    ],
-                  ),
-                )
+                              Navigator.of(context).push(
+                                  CupertinoPageRoute<Null>(
+                                      builder: (BuildContext context) {
+                                return new TakePictureScreen(
+                                  "${widget.projectData['payment_id']}",
+                                  firstCamera,
+                                );
+                              }));
+                            },
+                            child: Text(
+                              'Submit Deposit Slip',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
+                    onTap: () => {}),
               ];
             } else {
               children = <Widget>[
@@ -282,7 +309,7 @@ class _PaymentResultState extends State<PaymentResult> {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Please wait until we process payment..'),
+                child: Text('Processing payment..'),
               )
             ];
           }
@@ -298,33 +325,17 @@ class _PaymentResultState extends State<PaymentResult> {
     }
   }
 
-  Future _showDialog(){
-      return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: new Text("Picker"),
-                content: new Text("Select image picker type."),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text("Camera"),
-                    onPressed: () {
-                     
-                      Navigator.pop(context);
-                    },
-                  ),
-                  new FlatButton(
-                    child: new Text("Gallery"),
-                    onPressed: () {
-                     
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-   }
+  Future _showDialog() {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: _result,
+        );
+      },
+    );
+  }
 
   _launchURL(url) async {
     if (await canLaunch(url)) {
@@ -333,5 +344,4 @@ class _PaymentResultState extends State<PaymentResult> {
       throw 'Could not launch $url';
     }
   }
-
 }

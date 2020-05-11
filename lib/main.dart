@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       theme: new ThemeData(
-        primaryColor: Color.fromRGBO(110, 3, 3, 1), //Color.fromRGBO(139,0,0, 1),
+       
+        primaryColor: Color.fromRGBO(104, 45, 127, 1)
+        
       ),
       initialRoute: initScreen == 0 || initScreen == null ? "onboard" : "/",
       routes: <String, WidgetBuilder>{

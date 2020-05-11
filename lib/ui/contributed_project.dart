@@ -510,7 +510,7 @@ class _ContributedProjectState extends State<ContributedProject> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          widget.projectData['completed_percentage'],
+                          "${widget.projectData['completed_percentage']} %",
                           style: TextStyle(color: Colors.red),
                         )
                       ],

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker_modern/image_picker_modern.dart';
-import 'package:zamzam/ui/screens/test_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CameraApp extends StatefulWidget {
   @override
@@ -11,6 +11,24 @@ class CameraApp extends StatefulWidget {
 
 class _CameraAppState extends State<CameraApp> {
   File imageFile;
+
+   @override
+  void initState() {
+    if (Platform.isAndroid) {
+      PermissionHandler().requestPermissions([
+        PermissionGroup.storage,
+        PermissionGroup.camera,
+      ]);
+    }
+    if (Platform.isIOS) {
+      PermissionHandler().requestPermissions([
+        PermissionGroup.photos,
+        PermissionGroup.camera,
+      ]);
+    }
+    
+    super.initState();
+  }
 
   Future _getImage(int type) async {
     print("Called Image Picker");
@@ -46,35 +64,42 @@ class _CameraAppState extends State<CameraApp> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           
-            Navigator.of(context).push(
-                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new MyHomePage();
-                }));
-          // showDialog(
-          //   context: context,
-          //   builder: (BuildContext context) {
-          //     return AlertDialog(
-          //       title: new Text("Picker"),
-          //       content: new Text("Select image picker type."),
-          //       actions: <Widget>[
-          //         new FlatButton(
-          //           child: new Text("Camera"),
-          //           onPressed: () {
-          //             _getImage(1);
-          //             Navigator.pop(context);
-          //           },
-          //         ),
-          //         new FlatButton(
-          //           child: new Text("Gallery"),
-          //           onPressed: () {
-          //             _getImage(2);
-          //             Navigator.pop(context);
-          //           },
-          //         ),
-          //       ],
-          //     );
-          //   },
-          // );
+            // Navigator.of(context).push(
+            //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
+            //       return new MyHomePage();
+            //     }));
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+               
+                title: new Text("Add Slip"),
+                content: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: new FlatButton(
+                    child: new Text("Camera"),
+                    onPressed: () {
+                      _getImage(1);
+                      Navigator.pop(context);
+                    },
+                  ),
+                    ),
+                    Expanded(
+                      child:  new FlatButton(
+                    child: new Text("Gallery"),
+                    onPressed: () {
+                      _getImage(2);
+                      Navigator.pop(context);
+                    },
+                  ),
+                    )
+                  ],
+                ),
+              
+              );
+            },
+          );
         
         },
         tooltip: 'Pick Image',

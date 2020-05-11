@@ -70,6 +70,12 @@
 @import image_cropper;
 #endif
 
+#if __has_include(<image_picker_flutter/ImagePickerFlutterPlugin.h>)
+#import <image_picker_flutter/ImagePickerFlutterPlugin.h>
+#else
+@import image_picker_flutter;
+#endif
+
 #if __has_include(<image_picker_modern/ImagePickerPlugin.h>)
 #import <image_picker_modern/ImagePickerPlugin.h>
 #else
@@ -80,6 +86,12 @@
 #import <path_provider/FLTPathProviderPlugin.h>
 #else
 @import path_provider;
+#endif
+
+#if __has_include(<permission_handler/PermissionHandlerPlugin.h>)
+#import <permission_handler/PermissionHandlerPlugin.h>
+#else
+@import permission_handler;
 #endif
 
 #if __has_include(<share/FLTSharePlugin.h>)
@@ -138,8 +150,10 @@
   [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
   [FlutterMoneyFormatterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterMoneyFormatterPlugin"]];
   [FLTImageCropperPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImageCropperPlugin"]];
+  [ImagePickerFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"ImagePickerFlutterPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
+  [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
   [FLTSharePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharePlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
