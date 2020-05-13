@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker_modern/image_picker_modern.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class CameraApp extends StatefulWidget {
@@ -12,7 +12,7 @@ class CameraApp extends StatefulWidget {
 class _CameraAppState extends State<CameraApp> {
   File imageFile;
 
-   @override
+  @override
   void initState() {
     if (Platform.isAndroid) {
       PermissionHandler().requestPermissions([
@@ -26,20 +26,35 @@ class _CameraAppState extends State<CameraApp> {
         PermissionGroup.camera,
       ]);
     }
-    
+
     super.initState();
   }
 
   Future _getImage(int type) async {
     print("Called Image Picker");
-    await ImagePicker.pickImage(
+    var image = await ImagePicker.pickImage(
       source: type == 1 ? ImageSource.camera : ImageSource.gallery,
-    ).then((image) {
-      setState(() {
-        print("========================>>>>>>>>>>>Set State");
-        imageFile = image;
-      });
+    );
+    
+    setState(() {
+      print("$image.path");
+      imageFile = image;
     });
+    // await retrieveLostData();
+  }
+
+  Future<void> retrieveLostData() async {
+    final LostDataResponse response = await ImagePicker.retrieveLostData();
+    if (response == null) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        if (response.type == RetrieveType.image) {
+          imageFile = response.file;
+        }
+      });
+    }
   }
 
   @override
@@ -63,44 +78,40 @@ class _CameraAppState extends State<CameraApp> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          
-            // Navigator.of(context).push(
-            //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
-            //       return new MyHomePage();
-            //     }));
+          // Navigator.of(context).push(
+          //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
+          //       return new MyHomePage();
+          //     }));
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-               
                 title: new Text("Add Slip"),
                 content: Row(
                   children: <Widget>[
                     Expanded(
                       child: new FlatButton(
-                    child: new Text("Camera"),
-                    onPressed: () {
-                      _getImage(1);
-                      Navigator.pop(context);
-                    },
-                  ),
+                        child: new Text("Camera"),
+                        onPressed: () {
+                          _getImage(1);
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
                     Expanded(
-                      child:  new FlatButton(
-                    child: new Text("Gallery"),
-                    onPressed: () {
-                      _getImage(2);
-                      Navigator.pop(context);
-                    },
-                  ),
+                      child: new FlatButton(
+                        child: new Text("Gallery"),
+                        onPressed: () {
+                          _getImage(2);
+                          Navigator.pop(context);
+                        },
+                      ),
                     )
                   ],
                 ),
-              
               );
             },
           );
-        
         },
         tooltip: 'Pick Image',
         child: Icon(Icons.camera),

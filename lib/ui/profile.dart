@@ -12,6 +12,7 @@ import 'package:zamzam/ui/about.dart';
 import 'package:zamzam/utils/dialogs.dart';
 
 import '../test.dart';
+import 'imagepicker/main.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -210,8 +211,9 @@ class ProfileState extends State<Profile> {
                                   child: Row(
                                     children: <Widget>[
                                       Expanded(
-                                          child: RaisedButton(
-                                              color: Colors.amber,
+                                          child: OutlineButton(
+                                            color: Colors.red,
+                                              // color: Colors.amber,
                                               child: Text(
                                                 'Save',
                                                 style: TextStyle(
@@ -360,7 +362,7 @@ class ProfileState extends State<Profile> {
 
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new CameraApp();
+                  return new PickImage();
                 }));
               },
             ),

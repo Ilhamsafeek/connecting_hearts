@@ -24,8 +24,8 @@ class _ContributedProjectState extends State<ContributedProject> {
   Future _projectImages;
   @override
   void initState() {
-   _projectImages= WebServices(this.mApiListener).getImageFromFolder(
-                    widget.projectData['project_supportives']);
+    _projectImages = WebServices(this.mApiListener)
+        .getImageFromFolder(widget.projectData['project_supportives']);
     super.initState();
   }
 
@@ -41,7 +41,6 @@ class _ContributedProjectState extends State<ContributedProject> {
   }
 
   ApiListener mApiListener;
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +67,8 @@ class _ContributedProjectState extends State<ContributedProject> {
               ),
               background: CachedNetworkImage(
                 imageUrl: widget.projectData['featured_image'],
+                placeholder: (context, url) =>
+                    Image.asset('assets/placeholder.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -555,6 +556,8 @@ class _ContributedProjectState extends State<ContributedProject> {
                       for (var item in data)
                         CachedNetworkImage(
                           imageUrl: item,
+                          placeholder: (context, url) =>
+                              Image.asset('assets/placeholder.png'),
                         ),
                     ];
                   } else if (snapshot.hasError) {

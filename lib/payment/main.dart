@@ -14,12 +14,13 @@ class _StripePaymentState extends State<StripePayment> {
   dynamic _cardValid;
   dynamic _isCardSaved;
   ApiListener mApiListener;
+ 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   CardController _cardController = CardController();
 
   Future<void> _validate() async {
-    dynamic valid = await WebServices(this.mApiListener).isCardValid(
+    dynamic valid = await StripePayments(this.mApiListener).isCardValid(
         _cardController.cardNumber,
         _cardController.expiryMonth,
         _cardController.expiryYear,
@@ -41,7 +42,7 @@ class _StripePaymentState extends State<StripePayment> {
   }
 
   Future<dynamic> _saveCard() async {
-    await WebServices(this.mApiListener)
+    await StripePayments(this.mApiListener)
         .saveCard(_cardController.cardNumber, _cardController.expiryMonth,
             _cardController.expiryYear, _cardController.cvv)
         .then((saved) {

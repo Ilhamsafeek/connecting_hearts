@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:zamzam/ui/payment.dart';
+import 'package:zamzam/ui/screens/new_chat.dart';
 import 'package:zamzam/ui/screens/offline.dart';
 import 'package:zamzam/ui/screens/home.dart';
 import 'package:zamzam/ui/screens/charity.dart';
-import 'package:zamzam/ui/screens/screen4.dart';
-import 'package:zamzam/ui/screens/screen5.dart';
+import 'package:zamzam/ui/screens/notifications.dart';
+import 'package:zamzam/ui/screens/chat.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/profile.dart';
@@ -159,129 +160,152 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
-        child: new AppBar(
-          title: Image.asset(
-            'assets/ch_logo.png',
-            height: 35,
-            color: Colors.white60,
-          ),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () async {
-                await showSearch<String>(
-                  context: context,
-                  delegate: DataSearch(
-                    onSearchChanged: DataSearch().getRecentSearchesLike,
-                  ),
-                );
-              },
-              icon: Icon(Icons.search),
-            ),
-            IconButton(
-              icon: StreamBuilder(
-                initialData: _tabBarNotificationCount,
-                stream: _countController.stream,
-                builder: (_, snapshot) => BadgeIcon(
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.white,
-                  ),
-                  badgeCount: snapshot.data,
-                ),
+    return new WillPopScope(
+        child: new Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(50.0),
+            child: new AppBar(
+              title: Image.asset(
+                'assets/ch_logo.png',
+                height: 35,
+                color: Colors.white60,
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Inbox()),
-                );
-                _tabBarNotificationCount = 0;
-                _countController.sink.add(_tabBarNotificationCount);
-                updateNotificationCount(_tabBarNotificationCount);
-              },
-            ),
-            // IconButton(
-            //   onPressed: () {
-            //     Navigator.of(context).push(
-            //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
-            //       return new Profile();
-            //     }));
-            //   },
-            //   icon: Icon(Icons.person),
-            // ),
-          ],
-        ),
-      ),
-      body: OfflineBuilder(
-        connectivityBuilder: (
-          BuildContext context,
-          ConnectivityResult connectivity,
-          Widget child,
-        ) {
-          final bool connected = connectivity != ConnectivityResult.none;
-          return new Stack(
-            fit: StackFit.expand,
-            children: [
-              connected
-                  ? SizedBox.expand(
-                      child: PageView(
-                        controller: _pageController,
-                        onPageChanged: (index) {
-                          setState(() => _currentIndex = index);
-                        },
-                        children: <Widget>[
-                          Home(),
-                          Charity(),
-                          Chat(),
-                          Profile(),
-                        ],
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () async {
+                    await showSearch<String>(
+                      context: context,
+                      delegate: DataSearch(
+                        onSearchChanged: DataSearch().getRecentSearchesLike,
                       ),
-                    )
-                  : Offline()
-            ],
-          );
-        },
-        child: Column(
-          children: <Widget>[
-            new Text(
-              'There are no bottons to push :)',
+                    );
+                  },
+                  icon: Icon(Icons.search),
+                ),
+                IconButton(
+                  icon: StreamBuilder(
+                    initialData: _tabBarNotificationCount,
+                    stream: _countController.stream,
+                    builder: (_, snapshot) => BadgeIcon(
+                      icon: Icon(
+                        Icons.notifications,
+                        color: Colors.white,
+                      ),
+                      badgeCount: snapshot.data,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Notifications()),
+                    );
+                    _tabBarNotificationCount = 0;
+                    _countController.sink.add(_tabBarNotificationCount);
+                    updateNotificationCount(_tabBarNotificationCount);
+                  },
+                ),
+                // IconButton(
+                //   onPressed: () {
+                //     Navigator.of(context).push(
+                //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                //       return new Profile();
+                //     }));
+                //   },
+                //   icon: Icon(Icons.person),
+                // ),
+              ],
             ),
-          ],
+          ),
+          body: OfflineBuilder(
+            connectivityBuilder: (
+              BuildContext context,
+              ConnectivityResult connectivity,
+              Widget child,
+            ) {
+              final bool connected = connectivity != ConnectivityResult.none;
+              return new Stack(
+                fit: StackFit.expand,
+                children: [
+                  connected
+                      ? SizedBox.expand(
+                          child: PageView(
+                            controller: _pageController,
+                            onPageChanged: (index) {
+                              setState(() => _currentIndex = index);
+                            },
+                            children: <Widget>[
+                              Home(),
+                              Charity(),
+                              // Chat(),
+                              NewChat(),
+                              Profile(),
+                            ],
+                          ),
+                        )
+                      : Offline()
+                ],
+              );
+            },
+            child: Column(
+              children: <Widget>[
+                new Text(
+                  'There are no bottons to push :)',
+                ),
+              ],
+            ),
+          ),
+          bottomNavigationBar: BottomNavyBar(
+            selectedIndex: _currentIndex,
+            onItemSelected: (index) {
+              setState(() => _currentIndex = index);
+              _pageController.jumpToPage(index);
+            },
+            items: <BottomNavyBarItem>[
+              BottomNavyBarItem(
+                title: Text(
+                  'Home',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                icon: Icon(Icons.apps, color: Theme.of(context).primaryColor),
+                activeColor: Theme.of(context)
+                    .primaryColor, //Theme.of(context).primaryColor,
+              ),
+              BottomNavyBarItem(
+                title: Text(
+                  'Charity',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                icon: Icon(Icons.people, color: Theme.of(context).primaryColor),
+                activeColor: Theme.of(context).primaryColor,
+              ),
+              BottomNavyBarItem(
+                title: Text(
+                  'Messages',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                icon: Icon(Icons.chat, color: Theme.of(context).primaryColor),
+                activeColor: Theme.of(context).primaryColor,
+              ),
+              BottomNavyBarItem(
+                title: Text(
+                  'Account',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                //Actually icon was in Icon type. we have changed in the cache of bottomnavybaritem. (Ctrl + click on BottomNavyBarItem to edit)
+                icon: Icon(Icons.person, color: Theme.of(context).primaryColor),
+                activeColor: Theme.of(context).primaryColor,
+              ),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _currentIndex,
-        onItemSelected: (index) {
-          setState(() => _currentIndex = index);
-          _pageController.jumpToPage(index);
-        },
-        items: <BottomNavyBarItem>[
-          BottomNavyBarItem(
-            title: Text('Home', style: TextStyle(color:Colors.black),),
-            icon: Icon(Icons.apps, color: Colors.red),
-            activeColor: Colors.red, //Theme.of(context).primaryColor,
-          ),
-          BottomNavyBarItem(
-            title: Text('Charity', style: TextStyle(color: Theme.of(context).primaryColor),),
-            icon: Icon(Icons.people, color: Theme.of(context).primaryColor),
-            activeColor: Theme.of(context).primaryColor,
-          ),
-          BottomNavyBarItem(
-            title: Text('Messages', style: TextStyle(color: Theme.of(context).primaryColor),),
-            icon: Icon(Icons.chat, color: Theme.of(context).primaryColor),
-            activeColor: Theme.of(context).primaryColor,
-          ),
-          BottomNavyBarItem(
-            title: Text('Account', style: TextStyle(color: Theme.of(context).primaryColor),),
-            //Actually icon was in Icon type. we have changed in the cache of bottomnavybaritem. (Ctrl + click on BottomNavyBarItem to edit)
-            icon: Icon(Icons.person, color: Theme.of(context).primaryColor),
-            activeColor: Theme.of(context).primaryColor,
-          ),
-        ],
-      ),
-    );
+        onWillPop: (){
+          print('Back button pressed');
+          if(_currentIndex!=0){
+            setState(() => _currentIndex = 0);
+              _pageController.jumpToPage(0);
+            return new Future(()=>false);
+          }
+          return new Future(()=>true);
+        });
   }
-  
 }

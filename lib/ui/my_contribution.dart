@@ -142,10 +142,12 @@ class _MyContributionState extends State<MyContribution> {
                               ];
                             } else {
                               children = <Widget>[
-                                const Padding(
+                                 Padding(
                                   padding: EdgeInsets.only(top: 16),
                                   child: SizedBox(
-                                      child: CircularProgressIndicator()),
+                                      child: CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor))),
                                 ),
                               ];
                             }

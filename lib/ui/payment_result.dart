@@ -40,7 +40,7 @@ class _CheckoutState extends State<Checkout> {
 
           Navigator.pop(context);
           _showDialog();
-          _result = doCharging(widget.cardId);
+          _result = doCharging();
         });
       },
       icon: Icon(Icons.check_circle_outline, color: Colors.white),
@@ -76,125 +76,8 @@ class _CheckoutState extends State<Checkout> {
         ));
   }
 
-  Widget doCharging(String card) {
-    if (widget.method == 'card') {
-      return FutureBuilder<dynamic>(
-        future: WebServices(this.mApiListener).chargeByCustomerAndCardID(
-            card, widget.paymentAmount, widget.projectData['appeal_id']),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          List<Widget> children;
-
-          if (snapshot.hasData) {
-            var data = snapshot.data;
-            WebServices(this.mApiListener)
-                .createPayment(widget.paymentAmount, widget.projectData,
-                    widget.method, 'pending')
-                .then((value) {
-              print(value);
-              if (value != null) {}
-            });
-            children = <Widget>[
-              Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 120,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(data['status'], style: TextStyle(fontSize: 19.0)),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.all(16),
-              //   child: Text('Receipt for your donation'),
-              // ),
-              // Divider(
-              //   height: 0,
-              // ),
-              Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Center(
-                    child: Text("${data['created']}",
-                        style: TextStyle(
-                            fontSize: 22.0, fontWeight: FontWeight.bold)),
-                  )),
-              Divider(
-                height: 0,
-              ),
-              // Padding(
-              //     padding: const EdgeInsets.all(16),
-              //     child: ListTile(
-              //       title: FlatButton.icon(
-              //         icon: Icon(
-              //           Icons.receipt,
-              //         ),
-              //         onPressed: () {
-              //           _launchURL(data['receipt_url']);
-              //         },
-              //         label: Text(
-              //           'view receipt',
-              //           style: TextStyle(fontSize: 15.0, color: Colors.blue),
-              //         ),
-              //       ),
-              //     )),
-              
-              ListTile(
-                  title: Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: RaisedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text("Done"),
-                            color: Colors.orange[400],
-                            textColor: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  onTap: () => {}),
-            ];
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child:
-                    Text('something Went Wrong !'), //Error: ${snapshot.error}
-              )
-            ];
-          } else {
-            children = <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: SizedBox(child: CircularProgressIndicator()),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Processing payment..'),
-              )
-            ];
-          }
-
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: children,
-            ),
-          );
-        },
-      );
-    } else {
-      return FutureBuilder<dynamic>(
+  Widget doCharging() {
+    return FutureBuilder<dynamic>(
         future: WebServices(this.mApiListener).createPayment(
             widget.paymentAmount, widget.projectData, widget.method, 'pending'),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -204,7 +87,7 @@ class _CheckoutState extends State<Checkout> {
             var data = snapshot.data;
 
             if (data == 200) {
-              print(data.runtimeType);
+              
               children = <Widget>[
                 Icon(
                   Icons.check_circle_outline,
@@ -213,20 +96,17 @@ class _CheckoutState extends State<Checkout> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Text("Thank you for your donation",
+                  child: Text("Thank you for your donation",textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 19.0)),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text('Receipt for your donation'),
-                ),
+              
                 Divider(
                   height: 0,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                      'Your donated amount will be updated once you submit deposit slip'),
+                      'Your donated amount will be updated once you submit deposit slip',textAlign: TextAlign.center,),
                 ),
                 Divider(
                   height: 0,
@@ -283,6 +163,7 @@ class _CheckoutState extends State<Checkout> {
                     ),
                     onTap: () => {}),
               ];
+            
             } else {
               children = <Widget>[
                 Text('Could not make donation. Please try again')
@@ -303,9 +184,11 @@ class _CheckoutState extends State<Checkout> {
             ];
           } else {
             children = <Widget>[
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: SizedBox(child: CircularProgressIndicator()),
+                child: SizedBox(child:  CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor))),
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 16),
@@ -315,14 +198,17 @@ class _CheckoutState extends State<Checkout> {
           }
           return Center(
             child: Column(
+              
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: children,
+              
             ),
+          
           );
         },
       );
-    }
+    
   }
 
   Future _showDialog() {

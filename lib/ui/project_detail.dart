@@ -28,18 +28,11 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
     super.initState();
   }
 
-  String selectedMethod;
+  String selectedMethod = "bank";
   dynamic paymentAmount;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _amount = TextEditingController(text: "");
   final _formKey = GlobalKey<FormState>();
-
-  selectsku(method) {
-    print(method);
-    setState(() {
-      selectedMethod = method;
-    });
-  }
 
   ApiListener mApiListener;
 
@@ -68,6 +61,8 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               ),
               background: CachedNetworkImage(
                 imageUrl: widget.projectData['featured_image'],
+                placeholder: (context, url) =>
+                    Image.asset('assets/placeholder.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -225,7 +220,21 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
               Divider(height: 0),
               ListTile(
                 title: ReadMoreText("${widget.projectData['details']}"),
-              )
+              ),
+              Text(
+                "Bank details",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+              ),
+              ListTile(
+                isThreeLine: true,
+                //  leading: Text("Bank: ${widget.projectData['branch']}"),
+                title: Text(
+                    "Bank: ${widget.projectData['bank_name']}\nBranch: ${widget.projectData['branch']}"),
+                subtitle: Text(
+                    "Account number: ${widget.projectData['account_number']}\n\nSwift code: ${widget.projectData['swift_code']}"),
+              ),
+             
             ],
           ),
         ),
@@ -343,11 +352,15 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       Expanded(
                         flex: 11,
                         child: RadioListTile(
-                          selected: true,
                           activeColor: Colors.black,
                           value: 'bank',
                           groupValue: selectedMethod,
-                          onChanged: selectsku,
+                          onChanged: (T) {
+                            print(T);
+                            setState(() {
+                              selectedMethod = T;
+                            });
+                          },
                           title: ListTile(
                             leading: Icon(
                               FontAwesomeIcons.solidMoneyBillAlt,
@@ -372,11 +385,15 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                       Expanded(
                         flex: 11,
                         child: RadioListTile(
-                          selected: true,
                           activeColor: Colors.black,
                           value: 'card',
                           groupValue: selectedMethod,
-                          onChanged: selectsku,
+                          onChanged: (T) {
+                            print(T);
+                            setState(() {
+                              selectedMethod = T;
+                            });
+                          },
                           title: ListTile(
                             leading: Icon(
                               Icons.credit_card,
@@ -441,7 +458,6 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
                               ),
                             ),
                             onTap: () => {}),
-                     
                       ]))
                 ],
               ),
@@ -450,74 +466,77 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         });
   }
 
-  Widget paymentMethods() {
-    return FutureBuilder<dynamic>(
-      future: WebServices(this.mApiListener).getCustomerDataByMobile(),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        List<Widget> children;
-        if (snapshot.hasData) {
-          var data;
-          if (snapshot.data.length != 0) {
-            data = snapshot.data[0]['sources']['data'];
-            children = <Widget>[
-              for (var item in data)
-                RadioListTile(
-                  activeColor: Colors.black,
-                  value: '${item['id']}',
-                  groupValue: selectedMethod,
-                  onChanged: selectsku,
-                  title: ListTile(
-                    leading: Icon(
-                      FontAwesomeIcons.ccVisa,
-                      color: Colors.indigo[700],
-                    ),
-                    title: Text('****${item['last4']}'),
-                  ),
-                )
-              // ),
-            ];
-          } else {
-            children = <Widget>[
-              ListTile(
-                title: Text(
-                  'Add Debit or Credit card',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => StripePayment()),
-                  );
-                },
-              ),
-            ];
-          }
-        } else if (snapshot.hasError) {
-          children = <Widget>[
-            Icon(
-              Icons.error_outline,
-              color: Colors.red,
-              size: 60,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Text('something Went Wrong !'), //Error: ${snapshot.error}
-            )
-          ];
-        } else {
-          children = <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: SizedBox(child: CircularProgressIndicator()),
-            ),
-          ];
-        }
-        return Center(
-          child: Column(children: children),
-        );
-      },
-    );
-  }
+  // Widget paymentMethods() {
+  //   return FutureBuilder<dynamic>(
+  //     future: WebServices(this.mApiListener).getCustomerDataByMobile(),
+  //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+  //       List<Widget> children;
+  //       if (snapshot.hasData) {
+  //         var data;
+  //         if (snapshot.data.length != 0) {
+  //           data = snapshot.data[0]['sources']['data'];
+  //           children = <Widget>[
+  //             for (var item in data)
+  //               RadioListTile(
+  //                 activeColor: Colors.black,
+  //                 value: '${item['id']}',
+  //                 groupValue: selectedMethod,
+  //                 onChanged: selectMethod,
+  //                 title: ListTile(
+  //                   leading: Icon(
+  //                     FontAwesomeIcons.ccVisa,
+  //                     color: Colors.indigo[900],
+  //                   ),
+  //                   title: Text('****${item['last4']}'),
+  //                 ),
+  //               )
+  //             // ),
+  //           ];
+  //         } else {
+  //           children = <Widget>[
+  //             ListTile(
+  //               title: Text(
+  //                 'Add Debit or Credit card',
+  //                 style: TextStyle(color: Colors.blue),
+  //               ),
+  //               onTap: () {
+  //                 Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(builder: (context) => StripePayment()),
+  //                 );
+  //               },
+  //             ),
+  //           ];
+  //         }
+  //       } else if (snapshot.hasError) {
+  //         children = <Widget>[
+  //           Icon(
+  //             Icons.error_outline,
+  //             color: Colors.red,
+  //             size: 60,
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.only(top: 16),
+  //             child: Text('something Went Wrong !'), //Error: ${snapshot.error}
+  //           )
+  //         ];
+  //       } else {
+  //         children = <Widget>[
+  //           Padding(
+  //             padding: EdgeInsets.only(top: 16),
+  //             child: SizedBox(
+  //                 child: CircularProgressIndicator(
+  //                     valueColor: new AlwaysStoppedAnimation<Color>(
+  //                         Theme.of(context).primaryColor))),
+  //           ),
+  //         ];
+  //       }
+  //       return Center(
+  //         child: Column(children: children),
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<bool> infoModalBottomSheet(context) {
     return showModalBottomSheet(
@@ -613,7 +632,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
             data['paymentNonce'], widget.projectData, 'card', 'pending');
 
         print(saleResponse);
-        
+
         _scaffoldKey.currentState.showSnackBar(SnackBar(
           backgroundColor: Colors.green[600],
           content: Text("$saleResponse"),

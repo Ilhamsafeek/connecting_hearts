@@ -10,7 +10,6 @@ import 'package:shimmer/shimmer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class Charity extends StatefulWidget {
   Charity({Key key}) : super(key: key);
 
@@ -217,8 +216,9 @@ class GridItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               CachedNetworkImage(
-             
                 imageUrl: gridModel.imagePath,
+                placeholder: (context, url) =>
+                    Image.asset('assets/placeholder.png', width: 40,),
                 width: 40,
                 height: 40,
                 color: gridModel.color,

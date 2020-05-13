@@ -59,7 +59,7 @@ dependencies:
   animated_text_kit: ^2.0.0
   flutter_staggered_grid_view:
   loading_overlay:
-  image_picker_modern:
+  # image_picker_modern:
   image_cropper: ^1.0.2
   flutter_image_compress: ^0.6.3
   cached_network_image: ^2.2.0
@@ -67,8 +67,13 @@ dependencies:
   flutter_braintree:
   # permission_handler: ^5.0.0+hotfix.5
   # image_picker: ^0.6.6+1
-  image_picker_flutter: ^1.4.4
-  permission_handler: ^4.0.0  
+  # image_picker_flutter: ^1.4.4
+  image_picker: ^0.6.1+10
+  permission_handler: ^4.0.0
+  dash_chat:
+  cloud_firestore:
+  firebase_storage:
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

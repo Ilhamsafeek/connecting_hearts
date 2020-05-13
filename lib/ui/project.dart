@@ -8,7 +8,6 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
 
 class Project extends StatefulWidget {
- 
   final dynamic categoryData;
 
   Project(this.categoryData, {Key key}) : super(key: key);
@@ -34,6 +33,10 @@ class _ProjectPageState extends State<Project> {
           actions: <Widget>[
             CachedNetworkImage(
               imageUrl: widget.categoryData['photo'],
+              placeholder: (context, url) => Image.asset(
+                'assets/placeholder.png',
+                width: 30,
+              ),
               width: 30,
               color: Colors.white,
             ),
@@ -41,7 +44,6 @@ class _ProjectPageState extends State<Project> {
               width: 10,
             )
           ],
-         
         ),
         body: Center(
             child: new RefreshIndicator(
@@ -61,7 +63,8 @@ class _ProjectPageState extends State<Project> {
           var data = snapshot.data
               .where((el) =>
                   el['project_category_id'] ==
-                  this.widget.categoryData['project_category_id'])
+                      this.widget.categoryData['project_category_id'] &&
+                  el['completed_percentage'] != "100")
               .toList();
 
           children = <Widget>[
@@ -130,6 +133,8 @@ class _ProjectPageState extends State<Project> {
               // borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
               child: CachedNetworkImage(
                 imageUrl: data['featured_image'],
+                placeholder: (context, url) =>
+                    Image.asset('assets/placeholder.png'),
               ),
             ),
             // Container(

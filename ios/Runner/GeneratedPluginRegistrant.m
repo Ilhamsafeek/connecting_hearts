@@ -16,6 +16,12 @@
 @import camera;
 #endif
 
+#if __has_include(<cloud_firestore/FLTCloudFirestorePlugin.h>)
+#import <cloud_firestore/FLTCloudFirestorePlugin.h>
+#else
+@import cloud_firestore;
+#endif
+
 #if __has_include(<connectivity/FLTConnectivityPlugin.h>)
 #import <connectivity/FLTConnectivityPlugin.h>
 #else
@@ -38,6 +44,12 @@
 #import <firebase_messaging/FLTFirebaseMessagingPlugin.h>
 #else
 @import firebase_messaging;
+#endif
+
+#if __has_include(<firebase_storage/FLTFirebaseStoragePlugin.h>)
+#import <firebase_storage/FLTFirebaseStoragePlugin.h>
+#else
+@import firebase_storage;
 #endif
 
 #if __has_include(<flutter_braintree/FlutterBraintreePlugin.h>)
@@ -70,16 +82,10 @@
 @import image_cropper;
 #endif
 
-#if __has_include(<image_picker_flutter/ImagePickerFlutterPlugin.h>)
-#import <image_picker_flutter/ImagePickerFlutterPlugin.h>
+#if __has_include(<image_picker/FLTImagePickerPlugin.h>)
+#import <image_picker/FLTImagePickerPlugin.h>
 #else
-@import image_picker_flutter;
-#endif
-
-#if __has_include(<image_picker_modern/ImagePickerPlugin.h>)
-#import <image_picker_modern/ImagePickerPlugin.h>
-#else
-@import image_picker_modern;
+@import image_picker;
 #endif
 
 #if __has_include(<path_provider/FLTPathProviderPlugin.h>)
@@ -141,16 +147,17 @@
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [BraintreePaymentPlugin registerWithRegistrar:[registry registrarForPlugin:@"BraintreePaymentPlugin"]];
   [CameraPlugin registerWithRegistrar:[registry registrarForPlugin:@"CameraPlugin"]];
+  [FLTCloudFirestorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTCloudFirestorePlugin"]];
   [FLTConnectivityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTConnectivityPlugin"]];
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
+  [FLTFirebaseStoragePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseStoragePlugin"]];
   [FlutterBraintreePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterBraintreePlugin"]];
   [FlutterImageCompressPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterImageCompressPlugin"]];
   [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
   [FlutterMoneyFormatterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterMoneyFormatterPlugin"]];
   [FLTImageCropperPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImageCropperPlugin"]];
-  [ImagePickerFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"ImagePickerFlutterPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];

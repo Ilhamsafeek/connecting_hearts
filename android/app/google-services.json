@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "342076150108",
-    "firebase_url": "https://connecting-hearts-zamzam.firebaseio.com",
-    "project_id": "connecting-hearts-zamzam",
-    "storage_bucket": "connecting-hearts-zamzam.appspot.com"
+    "project_number": "240143470796",
+    "firebase_url": "https://connecting-hearts-6cef3.firebaseio.com",
+    "project_id": "connecting-hearts-6cef3",
+    "storage_bucket": "connecting-hearts-6cef3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:342076150108:android:0c607e54e96fe1441d7199",
+        "mobilesdk_app_id": "1:240143470796:android:143e8b55cedb67cee5b269",
         "android_client_info": {
           "package_name": "mertics.zamzam"
         }
       },
       "oauth_client": [
         {
-          "client_id": "342076150108-foit38cmae5ib439b36960vhe3v3l5gv.apps.googleusercontent.com",
+          "client_id": "240143470796-qta88c0cls7lq93humem7k0una0c4ulb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAJBe-TqFY-zqvg-7j4cuL3VQoThGVwRYU"
+          "current_key": "AIzaSyD4kMQx8ly6So8oPY-x55SQVNNQ7PQP-YI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "342076150108-foit38cmae5ib439b36960vhe3v3l5gv.apps.googleusercontent.com",
+              "client_id": "240143470796-qta88c0cls7lq93humem7k0una0c4ulb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

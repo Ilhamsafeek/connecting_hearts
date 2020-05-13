@@ -10,6 +10,7 @@ import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/project_detail.dart';
 import 'package:zamzam/ui/screens/charity.dart';
 import 'package:zamzam/ui/screens/jobs.dart';
+import 'package:zamzam/ui/screens/updates.dart';
 import 'package:zamzam/ui/sermon/sermons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
@@ -34,13 +35,11 @@ class _HomeState extends State<Home> {
     super.initState();
     WebServices(this.mApiListener).getProjectData().then((data) {
       setState(() {
-        projectData = data;
+        projectData = data.where((el) => el['completed_percentage'] != "100").toList();
       });
     });
 
     _zamzamUpdates = WebServices(this.mApiListener).getZamzamUpdateData();
-
-    
   }
 
   @override
@@ -83,7 +82,7 @@ class _HomeState extends State<Home> {
                           children: <Widget>[
                             CircularProgressIndicator(
                                 valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Colors.black))
+                                    Theme.of(context).primaryColor))
                           ],
                         ),
                       ))
@@ -116,6 +115,7 @@ class _HomeState extends State<Home> {
       height: MediaQuery.of(context).size.height,
       child: CachedNetworkImage(
         imageUrl: i.path,
+        placeholder: (context, url) => Image.asset('assets/placeholder.png'),
         fit: BoxFit.cover,
       ),
     );
@@ -204,7 +204,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Jobs();
+                  return new Updates();
                 }));
               }),
           InkWell(
@@ -243,8 +243,7 @@ class _HomeState extends State<Home> {
           List<Widget> children;
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
-              dynamic data = snapshot.data;
-
+              dynamic data = snapshot.data.toList();
               children = <Widget>[
                 CarouselSlider(
                   aspectRatio: 2,
@@ -280,18 +279,10 @@ class _HomeState extends State<Home> {
             }
           } else {
             children = <Widget>[
-              Shimmer.fromColors(
-                  baseColor: Colors.grey[300],
-                  highlightColor: Colors.grey[100],
-                  child: Container(
-                      child: Column(
-                    children: <Widget>[
-                      AspectRatio(
-                        aspectRatio: 16 / 10,
-                        child: Container(color: Colors.black),
-                      ),
-                    ],
-                  )))
+              AspectRatio(
+                aspectRatio: 16 / 10,
+                child: Image.asset('assets/placeholder.png'),
+              ),
             ];
           }
           return Center(
@@ -319,11 +310,9 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   Stack(children: <Widget>[
                     CachedNetworkImage(
-                      // progressIndicatorBuilder: (context, url, progress) =>
-                      //     CircularProgressIndicator(
-                      //   value: progress.progress,
-                      // ),
                       imageUrl: projectData[index]['featured_image'],
+                      placeholder: (context, url) =>
+                          Image.asset('assets/placeholder.png'),
                       fit: BoxFit.cover,
                     ),
                     Align(

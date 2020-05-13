@@ -47,6 +47,8 @@ class _ChannelDetailState extends State<ChannelDetail> {
           ),
           background: CachedNetworkImage(
             imageUrl: widget.channelData['photo'],
+            placeholder: (context, url) =>
+                Image.asset('assets/placeholder.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -141,6 +143,10 @@ class _ChannelDetailState extends State<ChannelDetail> {
                               imageUrl: YoutubePlayer.getThumbnail(
                                   videoId: YoutubePlayer.convertUrlToId(
                                       item['url'])),
+                              placeholder: (context, url) => Image.asset(
+                                'assets/placeholder.png',
+                                width: 30,
+                              ),
                               width: 30,
                             ),
                             aspectRatio: 16 / 10,

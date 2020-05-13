@@ -1,6 +1,8 @@
 # This is a generated file; do not edit or check into version control.
 braintree_payment=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\braintree_payment-1.2.3\\
 camera=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\camera-0.5.7+4\\
+cloud_firestore=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\cloud_firestore-0.13.5\\
+cloud_firestore_web=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\cloud_firestore_web-0.1.1+2\\
 connectivity=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\connectivity-0.4.8+2\\
 connectivity_macos=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\connectivity_macos-0.1.0+2\\
 firebase_auth=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\firebase_auth-0.15.5+2\\
@@ -8,13 +10,13 @@ firebase_auth_web=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\
 firebase_core=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\firebase_core-0.4.4+3\\
 firebase_core_web=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\firebase_core_web-0.1.1+2\\
 firebase_messaging=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\firebase_messaging-6.0.12\\
+firebase_storage=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\firebase_storage-3.1.5\\
 flutter_braintree=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\flutter_braintree-0.6.0\\
 flutter_image_compress=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\flutter_image_compress-0.6.7\\
 flutter_local_notifications=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\flutter_local_notifications-1.4.0\\
 flutter_money_formatter=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\flutter_money_formatter-0.8.3\\
 image_cropper=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\image_cropper-1.2.1\\
-image_picker_flutter=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\image_picker_flutter-1.4.4\\
-image_picker_modern=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\image_picker_modern-0.4.12+3\\
+image_picker=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\image_picker-0.6.2+3\\
 path_provider=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider-1.6.5\\
 path_provider_macos=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4\\
 permission_handler=C:\\Users\\Ilham Safeek\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\permission_handler-4.4.0+hotfix.4\\
