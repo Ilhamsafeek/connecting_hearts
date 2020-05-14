@@ -9,6 +9,7 @@ import 'package:zamzam/services/webservices.dart';
 import 'package:zamzam/services/apilistener.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/utils/dialogs.dart';
 
 class Signin extends StatefulWidget {
   @override
@@ -45,10 +46,10 @@ class _SigninPageState extends State<Signin> {
         (AuthCredential credential) {
       print('verified');
       CURRENT_USER = "${this.countryCode}${this.phoneNo}";
+
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         if (user != null) {
-         
-          Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+          _redirect();
         }
       }).catchError((e) {
         print(e);
@@ -112,17 +113,13 @@ class _SigninPageState extends State<Signin> {
                             onPressed: () {
                               FirebaseAuth.instance.currentUser().then((user) {
                                 if (user != null) {
-                                  Navigator.of(context).pushReplacement(
-                                      CupertinoPageRoute<Null>(
-                                          builder: (BuildContext context) {
-                                    return new Details();
-                                  }));
-                                  
-                                } 
-                                // else {
-                                //   Navigator.of(context).pop();
-                                //   signIn();
-                                // }
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context)
+                                      .pushReplacementNamed(HOME_PAGE);
+                                } else {
+                                  Navigator.of(context).pop();
+                                  signIn();
+                                }
                               });
                             },
                           ),
@@ -141,18 +138,32 @@ class _SigninPageState extends State<Signin> {
       smsCode: smsCode,
     );
 
-    await FirebaseAuth.instance.signOut().then((action) {
-      FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-        if (user != null) {
-          WebServices(this.mApiListener)
-              .createAccount('${this.countryCode}${this.phoneNo}');
-          // Navigator.pop(context);
-          Navigator.of(context).pushReplacementNamed(HOME_PAGE);
-        }
-      }).catchError((e) {
-        print(e);
-      });
+    FirebaseAuth.instance.signInWithCredential(credential).then((user) async {
+      if (user != null) {
+        _redirect();
+      }
+    }).catchError((e) {
+      print("====>>>>${e.message}");
     });
+  }
+
+  _redirect() async {
+    CURRENT_USER = '${this.countryCode}${this.phoneNo}';
+    var userdata = await WebServices(this.mApiListener).getUserData();
+
+    if (userdata != null) {
+      Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+    } else {
+      showWaitingProgress(context);
+      await WebServices(this.mApiListener)
+          .createAccount('${this.countryCode}${this.phoneNo}');
+      Navigator.pop(context);
+
+      Navigator.of(context).pushReplacement(
+          CupertinoPageRoute<Null>(builder: (BuildContext context) {
+        return new Details();
+      }));
+    }
   }
 
   @override
@@ -408,6 +419,7 @@ class _DetailsState extends State<Details> {
                             SizedBox(height: 15.0),
                             RaisedButton(
                               onPressed: () {
+                                showWaitingProgress(context);
                                 _formKey.currentState.validate()
                                     ? WebServices(this.mApiListener)
                                         .updateUser(
@@ -418,10 +430,11 @@ class _DetailsState extends State<Details> {
                                       )
                                         .then((value) {
                                         if (value == 200) {
-                                          // Navigator.pop(context);
+                                          Navigator.pop(context);
                                           Navigator.of(context)
                                               .pushReplacementNamed(HOME_PAGE);
                                         } else {
+                                          Navigator.pop(context);
                                           _scaffoldKey.currentState
                                               .showSnackBar(SnackBar(
                                             content: Text(
