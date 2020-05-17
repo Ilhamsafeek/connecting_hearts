@@ -58,12 +58,6 @@
 @import flutter_braintree;
 #endif
 
-#if __has_include(<flutter_image_compress/FlutterImageCompressPlugin.h>)
-#import <flutter_image_compress/FlutterImageCompressPlugin.h>
-#else
-@import flutter_image_compress;
-#endif
-
 #if __has_include(<flutter_local_notifications/FlutterLocalNotificationsPlugin.h>)
 #import <flutter_local_notifications/FlutterLocalNotificationsPlugin.h>
 #else
@@ -74,12 +68,6 @@
 #import <flutter_money_formatter/FlutterMoneyFormatterPlugin.h>
 #else
 @import flutter_money_formatter;
-#endif
-
-#if __has_include(<image_cropper/ImageCropperPlugin.h>)
-#import <image_cropper/ImageCropperPlugin.h>
-#else
-@import image_cropper;
 #endif
 
 #if __has_include(<image_picker/FLTImagePickerPlugin.h>)
@@ -154,10 +142,8 @@
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
   [FLTFirebaseStoragePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseStoragePlugin"]];
   [FlutterBraintreePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterBraintreePlugin"]];
-  [FlutterImageCompressPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterImageCompressPlugin"]];
   [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
   [FlutterMoneyFormatterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterMoneyFormatterPlugin"]];
-  [FLTImageCropperPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImageCropperPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];

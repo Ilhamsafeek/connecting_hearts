@@ -48,10 +48,10 @@ class WebServices {
     return response.statusCode;
   }
 
-  Future createAccount(String contact) async {
+  Future createAccount(String contact, String country) async {
     var url = 'https://www.chadmin.online/api/createaccount';
     var response =
-        await http.post(url, body: {'phone': '$contact', 'role_id': '2'});
+        await http.post(url, body: {'phone': '$contact', 'role_id': '2', 'country':country});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
