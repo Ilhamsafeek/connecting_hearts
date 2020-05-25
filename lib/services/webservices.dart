@@ -244,13 +244,13 @@ class WebServices {
   }
 
   //Chat
-   Future createChat(chatId, message) async {
+  Future createChat(chatTopic, chatId, message) async {
     var url = 'https://www.chadmin.online/api/createchat';
 
     var response = await http.post(url, body: {
       'from_phone': CURRENT_USER,
       'to_phone': '+94638567569',
-      'topic': "Test Topic",
+      'topic': chatTopic,
       'message': message,
       'chat_id': chatId,
     });
@@ -259,5 +259,31 @@ class WebServices {
     return response.statusCode;
   }
 
+  Future<dynamic> getChatTopicsByPhone() async {
+    var url = 'https://www.chadmin.online/api/getchattopicsbyphone';
+    var response = await http.post(url, body: {
+      'phone': CURRENT_USER,
+    });
+    var jsonServerData = json.decode(response.body);
 
+    return jsonServerData;
+  }
+
+  Future<dynamic> getChatById(chatId) async {
+    var url = 'https://www.chadmin.online/api/getchatbyid';
+    var response = await http.post(url, body: {
+      'chat_id': chatId,
+    });
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData;
+  }
+
+  Future<dynamic> getChatTopics() async {
+    var url = 'https://www.chadmin.online/api/getchattopics';
+    var response = await http.post(url);
+    var jsonServerData = json.decode(response.body);
+
+    return jsonServerData.where((el) => el['from_phone'] == CURRENT_USER).toList();
+  }
 }

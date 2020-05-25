@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zamzam/services/services.dart';
@@ -10,6 +9,9 @@ import 'package:zamzam/ui/camera.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:zamzam/utils/read_more_text.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:zamzam/ui/screens/chat_detail.dart';
+import 'package:zamzam/utils/dialogs.dart';
 
 class ContributedProject extends StatefulWidget {
   @override
@@ -271,7 +273,46 @@ class _ContributedProjectState extends State<ContributedProject> {
               Divider(height: 0),
               ListTile(
                 title: ReadMoreText("${widget.projectData['details']}"),
-              )
+              ),
+              FlatButton.icon(
+                onPressed: () async {
+                  dynamic chatId='0';
+                  dynamic topic =
+                      '${widget.projectData['appeal_id']} - ${widget.projectData['sub_category']}';
+                  showWaitingProgress(context);
+                  await WebServices(mApiListener).getChatTopics().then((value) {
+                    if (value != null) {
+                      dynamic result;
+                      if (value.length != 0) {
+                        result =value.where((el) => el['topic'] == topic).toList();
+                        if (result.length != 0) {
+                          print('${result[0]['chat_id']}');
+                          chatId=result[0]['chat_id'];
+                        }
+                      }
+                    }
+                  });
+                   Navigator.pop(context);
+                  Navigator.of(context).push(
+                      CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                    return new ChatDetail(
+                        topic,
+                        chatId);
+                  }));
+                },
+                icon: Icon(
+                  Icons.message,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Contact project manager',
+                  style: TextStyle(color: Colors.white),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Theme.of(context).primaryColor)),
+                color: Theme.of(context).primaryColor,
+              ),
             ],
           ),
         ),

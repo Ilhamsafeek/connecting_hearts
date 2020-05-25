@@ -12,8 +12,7 @@ import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/ui/about.dart';
 import 'package:zamzam/utils/dialogs.dart';
 
-import '../test.dart';
-import 'imagepicker/main.dart';
+
 
 class Profile extends StatefulWidget {
   @override

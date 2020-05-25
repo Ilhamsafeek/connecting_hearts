@@ -93,17 +93,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/smartphone.png
-  - assets/phone-charge.png
-  - assets/iocl_tip.png
-  - assets/add_money_passbook.png
   - assets/real.png
   - assets/logo.png
   - assets/powered_by.png
-  - assets/book.png
-  - assets/report.png
   - assets/donations.png
-  - assets/ic_passbook_header.png
   - assets/amex.png
   - assets/visa.png
   - assets/discover.png
@@ -120,11 +113,8 @@ flutter:
   - assets/marriage.png
   - assets/shelter.png
   - assets/education.png
-  - assets/success-stories.png
   - assets/events.png
   - assets/calculator.png
-  - assets/receipt.png
-  - assets/profilebackground.png
   - assets/language.png
   - assets/child.png
   - assets/slider_1.png
@@ -144,7 +134,6 @@ flutter:
   - assets/updates.png
   - assets/elearning.png
   - assets/sermon.png
-  - assets/background.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

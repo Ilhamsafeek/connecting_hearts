@@ -16,6 +16,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:zamzam/ui/zakat_calculator.dart';
 import 'dart:async';
+import 'package:zamzam/test.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -219,7 +220,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Jobs();
+                  return new Test();
                 }));
               }),
         ]);

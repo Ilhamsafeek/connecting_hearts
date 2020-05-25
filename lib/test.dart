@@ -1,120 +1,107 @@
-import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/constant/Constant.dart';
+import 'package:zamzam/services/services.dart';
+import 'package:http/http.dart' as http;
 
-class CameraApp extends StatefulWidget {
+class Test extends StatefulWidget {
   @override
-  _CameraAppState createState() => _CameraAppState();
+  _TestState createState() => _TestState();
 }
 
-class _CameraAppState extends State<CameraApp> {
-  File imageFile;
+class _TestState extends State<Test> {
+  StreamController _postsController;
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  int count = 1;
+
+  Future fetchPost() async {
+    final response = await http.get(
+        'https://chadmin.online/api/allsermons');
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  loadPosts() async {
+    fetchPost().then((res) async {
+      _postsController.add(res);
+      return res;
+    });
+  }
+
+  showSnack() {
+    return scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text('New content loaded'),
+      ),
+    );
+  }
+
+  Future<Null> _handleRefresh() async {
+   
+    fetchPost().then((res) async {
+      _postsController.add(res);
+      showSnack();
+      return null;
+    });
+  }
 
   @override
   void initState() {
-    if (Platform.isAndroid) {
-      PermissionHandler().requestPermissions([
-        PermissionGroup.storage,
-        PermissionGroup.camera,
-      ]);
-    }
-    if (Platform.isIOS) {
-      PermissionHandler().requestPermissions([
-        PermissionGroup.photos,
-        PermissionGroup.camera,
-      ]);
-    }
-
+    _postsController = new StreamController();
+    loadPosts();
     super.initState();
-  }
-
-  Future _getImage(int type) async {
-    print("Called Image Picker");
-    var image = await ImagePicker.pickImage(
-      source: type == 1 ? ImageSource.camera : ImageSource.gallery,
-    );
-    
-    setState(() {
-      print("$image.path");
-      imageFile = image;
-    });
-    // await retrieveLostData();
-  }
-
-  Future<void> retrieveLostData() async {
-    final LostDataResponse response = await ImagePicker.retrieveLostData();
-    if (response == null) {
-      return;
-    }
-    if (response.file != null) {
-      setState(() {
-        if (response.type == RetrieveType.image) {
-          imageFile = response.file;
-        }
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Image Editor"),
+    return new Scaffold(
+      key: scaffoldKey,
+      appBar: new AppBar(
+        title: new Text('StreamBuilder'),
+        actions: <Widget>[
+          IconButton(
+            tooltip: 'Refresh',
+            icon: Icon(Icons.refresh),
+            onPressed: _handleRefresh,
+          )
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            imageFile != null
-                ? Image.file(
-                    imageFile,
-                    height: MediaQuery.of(context).size.height / 2,
-                  )
-                : Text("Image editor"),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigator.of(context).push(
-          //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
-          //       return new MyHomePage();
-          //     }));
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: new Text("Add Slip"),
-                content: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: new FlatButton(
-                        child: new Text("Camera"),
-                        onPressed: () {
-                          _getImage(1);
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: new FlatButton(
-                        child: new Text("Gallery"),
-                        onPressed: () {
-                          _getImage(2);
-                          Navigator.pop(context);
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          );
+      body: StreamBuilder(
+        stream: _postsController.stream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          print('Has error: ${snapshot.hasError}');
+          print('Has data: ${snapshot.hasData}');
+          print('Snapshot Data ${snapshot.data}');
+
+          if (snapshot.hasError) {
+            return Text(snapshot.error);
+          }
+
+          if (snapshot.hasData) {
+            return 
+            Text(snapshot.data.toString());
+          }
+
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (!snapshot.hasData &&
+              snapshot.connectionState == ConnectionState.done) {
+            return Text('No Posts');
+          }
         },
-        tooltip: 'Pick Image',
-        child: Icon(Icons.camera),
       ),
     );
   }

@@ -6,7 +6,6 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/services/services.dart';
-import 'package:http/http.dart' as http;
 import 'dart:async';
 
 class ChatDetail extends StatefulWidget {
@@ -19,22 +18,39 @@ class ChatDetail extends StatefulWidget {
 
 class _ChatDetailState extends State<ChatDetail> {
   static ApiListener mApiListener;
-  Stream<dynamic> _bids;
+  StreamController _messageController;
+  TextEditingController _chatController = TextEditingController();
+  Timer timer;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    _bids = (() async* {
-      var url = 'https://www.chadmin.online/api/getchatbyid';
-      var response = await http.post(url, body: {
-        'chat_id': widget.chatId,
-      });
-      var jsonServerData = json.decode(response.body);
-      print(jsonServerData);
-      print("=======>>>>>>($jsonServerData)");
-      yield jsonServerData;
-    })();
+    _messageController = new StreamController();
+    timer = Timer.periodic(Duration(seconds: 1), (_) => loadMessages());
+
     super.initState();
   }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  loadMessages() async {
+    print('Chat ID ========>>>>> ${widget.chatId}');
+    WebServices(mApiListener).getChatById(widget.chatId).then((res) async {
+      _messageController.add(res);
+      return res;
+    });
+  }
+
+  // Future<Null> _handleRefresh() async {
+  //   _bids().then((res) async {
+  //     _messageController.add(res);
+  //     return null;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +73,7 @@ class _ChatDetailState extends State<ChatDetail> {
     );
 
     return Scaffold(
+       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -78,7 +95,7 @@ class _ChatDetailState extends State<ChatDetail> {
                     children: <Widget>[
                       Container(
                         child: StreamBuilder<dynamic>(
-                          stream: _bids,
+                          stream: _messageController.stream,
                           builder: (context, snapshot) {
                             List<Widget> children;
                             if (snapshot.hasError) {
@@ -140,11 +157,15 @@ class _ChatDetailState extends State<ChatDetail> {
                                       item['chat_from_phone'] != CURRENT_USER
                                           ? Bubble(
                                               style: styleSomebody,
-                                              child: Text(item['message']),
+                                              child: Text(item['message'],
+                                                  style: TextStyle(
+                                                      fontSize: 15.5)),
                                             )
                                           : Bubble(
                                               style: styleMe,
-                                              child: Text(item['message']),
+                                              child: Text(item['message'],
+                                                  style: TextStyle(
+                                                      fontSize: 15.5)),
                                             ),
                                   ];
                                   break;
@@ -168,7 +189,6 @@ class _ChatDetailState extends State<ChatDetail> {
                                               style: styleMe,
                                               child: Text(item['message']),
                                             ),
-                                    SizedBox(height: 5)
                                   ];
                                   break;
                               }
@@ -181,17 +201,17 @@ class _ChatDetailState extends State<ChatDetail> {
                             );
                           },
                         ),
-                      )
+                      ),
+                      SizedBox(height: 10)
                     ],
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: ChatInput(widget.chatId),
-            ),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: _chatBox()),
           ],
         ),
       ),
@@ -201,21 +221,8 @@ class _ChatDetailState extends State<ChatDetail> {
 
     // );
   }
-}
 
-class ChatInput extends StatefulWidget {
-  final dynamic chatId;
-
-  ChatInput(this.chatId, {Key key}) : super(key: key);
-  @override
-  _ChatInputState createState() => _ChatInputState();
-}
-
-class _ChatInputState extends State<ChatInput> {
-  TextEditingController _messageController = TextEditingController();
-  ApiListener mApiListener;
-  @override
-  Widget build(BuildContext context) {
+  Widget _chatBox() {
     var border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(color: Colors.transparent),
@@ -225,14 +232,14 @@ class _ChatInputState extends State<ChatInput> {
         color: Colors.grey[200],
       ),
       padding: const EdgeInsets.symmetric(
-        horizontal: 10.0,
-        vertical: 10.0,
+        horizontal: 8.0,
+        vertical: 8.0,
       ),
       child: Row(
         children: <Widget>[
           Expanded(
             child: TextField(
-              controller: _messageController,
+              controller: _chatController,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               autofocus: false,
@@ -258,18 +265,33 @@ class _ChatInputState extends State<ChatInput> {
                 child: Material(
                   color: Colors.blue, // button color
                   child: InkWell(
-                    splashColor: Colors.red, // inkwell color
-                    child: SizedBox(
-                        width: 56, height: 56, child: Icon(Icons.send, color: Colors.white,)),
-                    onTap: () {
-                      setState(() async {
-                        await WebServices(mApiListener)
-                            .createChat(widget.chatId, _messageController.text);
-                        _messageController.clear();
-                        _messageController.text = '';
-                      });
-                    },
-                  ),
+                      splashColor: Colors.red, // inkwell color
+                      child: SizedBox(
+                          width: 56,
+                          height: 56,
+                          child: Icon(
+                            Icons.send,
+                            color: Colors.white,
+                          )),
+                      onTap: () async {
+                        if (_chatController.text != '') {
+                          await WebServices(mApiListener).createChat(
+                              widget.chatTopic,
+                              widget.chatId,
+                              _chatController.text);
+                          _chatController.clear();
+                          _chatController.text = '';
+                          print(widget.chatId.runtimeType);
+                          if (widget.chatId != '0') {
+                          } else {
+                            _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text("Message sent to management."),
+                            ));
+                            await Future.delayed(new Duration(seconds: 2));
+                            Navigator.pop(context);
+                          }
+                        }
+                      }),
                 ),
               ))
         ],

@@ -1,11 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/screens/chat_detail.dart';
-import 'package:http/http.dart' as http;
-import 'package:zamzam/constant/Constant.dart';
-import 'dart:convert';
+
 
 class Chat extends StatefulWidget {
   Chat({Key key}) : super(key: key);
@@ -15,40 +15,28 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   List myList;
-  ScrollController _scrollController = ScrollController();
-  int _currentMax = 10;
   static ApiListener mApiListener;
+  StreamController _messageController;
+  Timer timer;
+
   @override
   void initState() {
     super.initState();
-    myList = List.generate(10, (i) => "Item : ${i + 1}");
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        _getMoreData();
-      }
-    });
+    _messageController = new StreamController();
+    timer = Timer.periodic(Duration(seconds: 1), (_) => loadMessages());
   }
 
-  _getMoreData() {
-    for (int i = _currentMax; i < _currentMax + 10; i++) {
-      myList.add("Item : ${i + 1}");
-    }
-
-    _currentMax = _currentMax + 10;
-
-    setState(() {});
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
-  Stream<dynamic> _bids() async* {
-    
-    var url = 'https://www.chadmin.online/api/getchattopicsbyphone';
-    var response = await http.post(url, body: {
-      'phone': CURRENT_USER,
+  loadMessages() async {
+    WebServices(mApiListener).getChatTopicsByPhone().then((res) async {
+      _messageController.add(res);
+      return res;
     });
-    var jsonServerData = json.decode(response.body);
-    yield jsonServerData;
-   
   }
 
   @override
@@ -65,8 +53,8 @@ class _ChatState extends State<Chat> {
             //   color: Colors.grey[200],
             // ),
 
-            StreamBuilder<dynamic>(
-              stream: _bids(),
+            StreamBuilder(
+              stream: _messageController.stream,
               builder: (context, snapshot) {
                 List<Widget> children;
                 if (snapshot.hasError) {

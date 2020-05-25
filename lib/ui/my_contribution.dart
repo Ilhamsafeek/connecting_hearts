@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zamzam/camera.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
-import 'package:zamzam/test.dart';
 
 import 'package:camera/camera.dart';
 import 'package:zamzam/ui/contributed_project.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyContribution extends StatefulWidget {
   @override
