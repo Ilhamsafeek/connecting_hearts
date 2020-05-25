@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:zamzam/services/services.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   SplashScreenState createState() => new SplashScreenState();
@@ -14,7 +16,7 @@ class SplashScreenState extends State<SplashScreen>
 
   AnimationController animationController;
   Animation<double> animation;
-
+  ApiListener mApiListener;
   startTime() async {
     var _duration = new Duration(seconds: 1);
     return new Timer(_duration, navigateFromSplash);
@@ -39,17 +41,19 @@ class SplashScreenState extends State<SplashScreen>
     startTime();
   }
 
+  Future navigateFromSplash() async {
+    await WebServices(mApiListener).createUserHit();
+    FirebaseAuth.instance.currentUser().then((user) {
+      print(user);
 
-Future navigateFromSplash() async {
-   FirebaseAuth.instance.currentUser().then((user) {
-        print(user);
+      if (user != null) {
+        //User Hit
 
-        if (user != null) {
-          Navigator.of(context).pushReplacementNamed(HOME_PAGE);
-        } else {
-          Navigator.of(context).pushReplacementNamed(SIGN_IN);
-        }
-      });
+        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+      } else {
+        Navigator.of(context).pushReplacementNamed(SIGN_IN);
+      }
+    });
   }
 
   @override
@@ -58,6 +62,7 @@ Future navigateFromSplash() async {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
+      
           new Column(
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
@@ -86,6 +91,4 @@ Future navigateFromSplash() async {
       ),
     );
   }
-
-  
 }

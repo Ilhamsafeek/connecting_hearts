@@ -142,12 +142,14 @@ class _MyContributionState extends State<MyContribution> {
                               ];
                             } else {
                               children = <Widget>[
-                                 Padding(
+                                Padding(
                                   padding: EdgeInsets.only(top: 16),
                                   child: SizedBox(
                                       child: CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Theme.of(context).primaryColor))),
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  Theme.of(context)
+                                                      .primaryColor))),
                                 ),
                               ];
                             }
@@ -182,10 +184,17 @@ class _MyContributionState extends State<MyContribution> {
         _trailing = RaisedButton(
           color: Colors.red,
           onPressed: () async {
-            Navigator.push(
+            WidgetsFlutterBinding.ensureInitialized();
+            final cameras = await availableCameras();
+            final firstCamera = cameras.first;
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => CameraApp()));
+                  builder: (BuildContext context) => TakePictureScreen(
+                    "${item['id']}",
+                    firstCamera,
+                  ),
+                ));
           },
           child: Text(
             'Submit Deposit Slip',

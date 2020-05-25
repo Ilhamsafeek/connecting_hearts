@@ -50,8 +50,24 @@ class WebServices {
 
   Future createAccount(String contact, String country) async {
     var url = 'https://www.chadmin.online/api/createaccount';
-    var response =
-        await http.post(url, body: {'phone': '$contact', 'role_id': '2', 'country':country});
+    var registeredTimeStamp = new DateTime.now().millisecondsSinceEpoch;
+
+    var response = await http.post(url, body: {
+      'phone': '$contact',
+      'role_id': '2',
+      'country': country,
+      'registered_time_stamp': registeredTimeStamp
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  Future createUserHit() async {
+    var url = 'https://www.chadmin.online/api/createuserhit';
+
+    var response = await http.post(url, body: {
+      'phone': CURRENT_USER,
+    });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
@@ -107,7 +123,6 @@ class WebServices {
     return jsonServerData;
   }
 
-
   // Payment records
 
   Future<dynamic> createPayment(amount, projectData, method, status) async {
@@ -141,7 +156,7 @@ class WebServices {
   Future<bool> updateSlip(id, path) async {
     String base64Image = base64Encode(File(path).readAsBytesSync());
     String fileName = File(path).path.split('/').last;
-    print('payment_id:: $id');
+    print('payment_id::::::::: $id');
     http.post('https://www.chadmin.online/api/updateslip', body: {
       "payment_id": "$id",
       "image": base64Image,
@@ -227,4 +242,22 @@ class WebServices {
 
     return response.statusCode;
   }
+
+  //Chat
+   Future createChat(chatId, message) async {
+    var url = 'https://www.chadmin.online/api/createchat';
+
+    var response = await http.post(url, body: {
+      'from_phone': CURRENT_USER,
+      'to_phone': '+94638567569',
+      'topic': "Test Topic",
+      'message': message,
+      'chat_id': chatId,
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    return response.statusCode;
+  }
+
+
 }

@@ -21,8 +21,8 @@ class _SigninPageState extends State<Signin> {
 
   ApiListener mApiListener;
   String phoneNo;
-  String countryCode = '+94';
-  String country = 'LK';
+  String countryPhoneCode = '+94';
+  String countryCode = 'LK';
   String smsCode;
   String verificationId;
   var _mobileController = new MaskedTextController(mask: '000000000');
@@ -40,16 +40,17 @@ class _SigninPageState extends State<Signin> {
       this.verificationId = verId;
       smsCodeDialog(context).then((value) {
         print('signed in');
-        CURRENT_USER = "${this.countryCode}${this.phoneNo}";
+        CURRENT_USER = "${this.countryPhoneCode}${this.phoneNo}";
       });
     };
     final PhoneVerificationCompleted verifiedSuccess =
         (AuthCredential credential) {
       print('verified');
-      CURRENT_USER = "${this.countryCode}${this.phoneNo}";
+      CURRENT_USER = "${this.countryPhoneCode}${this.phoneNo}";
 
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         if (user != null) {
+          print("===========>>>>>>>$countryCode");
           _redirect();
         }
       }).catchError((e) {
@@ -63,7 +64,7 @@ class _SigninPageState extends State<Signin> {
       ));
     };
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "${this.countryCode}${this.phoneNo}",
+      phoneNumber: "${this.countryPhoneCode}${this.phoneNo}",
       codeAutoRetrievalTimeout: autoRetrive,
       codeSent: smsCodeSent,
       timeout: const Duration(seconds: 5),
@@ -149,7 +150,8 @@ class _SigninPageState extends State<Signin> {
   }
 
   _redirect() async {
-    CURRENT_USER = '${this.countryCode}${this.phoneNo}';
+     print("????===========>>>>>>>$countryCode");
+    CURRENT_USER = '${this.countryPhoneCode}${this.phoneNo}';
     var userdata = await WebServices(this.mApiListener).getUserData();
 
     if (userdata != null) {
@@ -157,7 +159,7 @@ class _SigninPageState extends State<Signin> {
     } else {
       showWaitingProgress(context);
       await WebServices(this.mApiListener)
-          .createAccount('${this.countryCode}${this.phoneNo}',this.country);
+          .createAccount('${this.countryPhoneCode}${this.phoneNo}',countryCode);
       Navigator.pop(context);
 
       Navigator.of(context).pushReplacement(
@@ -234,8 +236,8 @@ class _SigninPageState extends State<Signin> {
                               },
                               onValuePicked: (Country country) {
                                
-                                this.countryCode = "+${country.phoneCode}";
-                                this.country = "${country.isoCode}";
+                                this.countryPhoneCode = "+${country.phoneCode}";
+                                this.countryCode = "${country.isoCode}";
                                 
                               },
                             ),
@@ -257,7 +259,8 @@ class _SigninPageState extends State<Signin> {
                               style:
                                   TextStyle(fontSize: 18, fontFamily: "Exo2"),
                               onChanged: (value) {
-                                print(value);
+                                print("======>>>$value");
+                                 
                                 this.phoneNo = _mobileController.text;
                               },
                             ),

@@ -75,34 +75,9 @@ class _SliderLayoutViewState extends State<SliderLayoutView> {
                 Stack(
                   alignment: AlignmentDirectional.topStart,
                   children: <Widget>[
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                          padding: EdgeInsets.only(right: 15.0, bottom: 15.0),
-                          child:
-                             
-                              RawMaterialButton(
-                            constraints: BoxConstraints(),
-                            padding: EdgeInsets.all(
-                                5.0), // optional, in order to add additional space around text if needed
-                            child: Text(
-                              "Skip",
-                              style: TextStyle(
-                                fontFamily: "OpenSans",
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14.0,
-                              ),
-                            ),
-
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(SIGN_IN);
-                            },
-                          )),
-                    ),
                     Container(
                       alignment: AlignmentDirectional.bottomCenter,
-                      margin: EdgeInsets.only(bottom: 20.0),
+                      margin: EdgeInsets.only(bottom: 100.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -112,6 +87,38 @@ class _SliderLayoutViewState extends State<SliderLayoutView> {
                             else
                               SlideDots(false)
                         ],
+                      ),
+                    ),
+                    Container(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      margin: EdgeInsets.only(bottom: 75.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text('Click to view our'),
+                          Text(
+                            ' Privacy Policy',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 15.0, bottom: 15.0),
+                        child: FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacementNamed(SIGN_IN);
+                          },
+                          child: Text('Accept and Continue', style: TextStyle(color:Colors.white),),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color:  Theme.of(context).primaryColor)),
+                              color:  Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
                   ],

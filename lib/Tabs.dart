@@ -19,8 +19,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zamzam/webview.dart';
 
 import 'badge_icon.dart';
+import 'constant/Constant.dart';
 
 // Main code for all the tabs
 class MyTabs extends StatefulWidget {
@@ -56,6 +58,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
 
   @override
   void didChangeDependencies() {
+   
     getNotificationCount().then((value) {
       if (value == null) {
         setState(() {
@@ -127,6 +130,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     var initSetting = new InitializationSettings(android, ios);
     flutterLocalNotificationsPlugin.initialize(initSetting,
         onSelectNotification: _selectNotification);
+    
+  
     super.didChangeDependencies();
   }
 
@@ -204,15 +209,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                     updateNotificationCount(_tabBarNotificationCount);
                   },
                 ),
-                // IconButton(
-                //   onPressed: () {
-                //     Navigator.of(context).push(
-                //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                //       return new Profile();
-                //     }));
-                //   },
-                //   icon: Icon(Icons.person),
-                // ),
               ],
             ),
           ),
@@ -236,8 +232,9 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                             children: <Widget>[
                               Home(),
                               Charity(),
-                              // Chat(),
-                              NewChat(),
+                              USER_ROLE == 'Management'
+                                  ? Webview()
+                                  : Chat(),
                               Profile(),
                             ],
                           ),
@@ -280,10 +277,15 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               ),
               BottomNavyBarItem(
                 title: Text(
-                  'Messages',
+                  USER_ROLE == 'Management' ? 'Report' : 'Messages',
                   style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
-                icon: Icon(Icons.chat, color: Theme.of(context).primaryColor),
+                icon: Icon(
+                  USER_ROLE == 'Management'
+                                  ? Icons.insert_chart
+                                  : Icons.chat,
+                   
+                  color: Theme.of(context).primaryColor),
                 activeColor: Theme.of(context).primaryColor,
               ),
               BottomNavyBarItem(
@@ -298,14 +300,14 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
             ],
           ),
         ),
-        onWillPop: (){
+        onWillPop: () {
           print('Back button pressed');
-          if(_currentIndex!=0){
+          if (_currentIndex != 0) {
             setState(() => _currentIndex = 0);
-              _pageController.jumpToPage(0);
-            return new Future(()=>false);
+            _pageController.jumpToPage(0);
+            return new Future(() => false);
           }
-          return new Future(()=>true);
+          return new Future(() => true);
         });
   }
 }

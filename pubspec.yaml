@@ -73,7 +73,8 @@ dependencies:
   dash_chat:
   cloud_firestore:
   firebase_storage:
-    
+  bubble: ^1.1.9+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -143,7 +144,7 @@ flutter:
   - assets/updates.png
   - assets/elearning.png
   - assets/sermon.png
-
+  - assets/background.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

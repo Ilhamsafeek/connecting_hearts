@@ -7,6 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:zamzam/services/services.dart';
+import 'package:zamzam/utils/dialogs.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -86,7 +87,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               // Store the picture in the temp directory.
               // Find the temp directory using the `path_provider` plugin.
               (await getTemporaryDirectory()).path,
-              '${DateTime.now()}.png',
+              '${DateTime.now().millisecondsSinceEpoch}.png',
             );
 
             // Attempt to take a picture and log where it's been saved.
@@ -143,23 +144,30 @@ class DisplayPictureScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              RaisedButton(
+              FlatButton(
                 onPressed: () {
+                  showWaitingProgress(context);
+
                   WebServices(mApiListener)
                       .updateSlip(this.id, imagePath)
                       .then((value) {
-                        print("===========>>>>$value");
-                        if(value!=null){
-                    Navigator.pop(context);
-                        }
+                        print(imagePath);
+                    print("===========>>>>$value");
+                    if (value != null) {
+                     Navigator.pop(context);
+                     Navigator.pop(context);
+                    }
                   });
                 },
-                child: Text('Send Slip'),
+                child: Text(
+                  'Submit deposit slip',
+                  style: TextStyle(color: Colors.white),
+                ),
                 shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.black)),
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Theme.of(context).primaryColor)),
+                color: Theme.of(context).primaryColor,
               ),
-              
             ],
           ),
         ));

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zamzam/Tabs.dart';
 import 'package:zamzam/constant/Constant.dart';
+import 'package:zamzam/services/services.dart';
+import 'package:zamzam/services/webservices.dart';
 import 'package:zamzam/ui/splashscreen.dart';
 import 'package:zamzam/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,12 +16,21 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
+  ApiListener mApiListener;
 
   await currentUser().then((value) {
     if (value != null) {
       CURRENT_USER = value.phoneNumber;
     }
   });
+   await WebServices(mApiListener).getUserData().then((value) {
+       if (value != null) {
+      USER_ROLE = value['role'];
+    }
+    });
+
+
+
 
   runApp(MyApp());
 }

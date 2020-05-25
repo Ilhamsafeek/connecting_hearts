@@ -47,8 +47,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
           ),
           background: CachedNetworkImage(
             imageUrl: widget.channelData['photo'],
-            placeholder: (context, url) =>
-                Image.asset('assets/placeholder.png'),
+           
             fit: BoxFit.cover,
           ),
         ),

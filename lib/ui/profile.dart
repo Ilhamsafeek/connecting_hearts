@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:zamzam/ui/onboarding_page.dart';
 
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
@@ -211,88 +212,50 @@ class ProfileState extends State<Profile> {
                                   child: Row(
                                     children: <Widget>[
                                       Expanded(
-                                          child: OutlineButton(
-                                            color: Colors.red,
-                                              // color: Colors.amber,
-                                              child: Text(
-                                                'Save',
-                                                style: TextStyle(
-                                                    color: Colors.black87),
-                                              ),
-                                              onPressed: () async {
-                                                
-                                                // _formKey.currentState.validate()
-                                                //     ? await WebServices(
-                                                //             this.mApiListener)
-                                                //         .updateUser(
-                                                //             _usernameController
-                                                //                 .text,
-                                                //             _emailController
-                                                //                 .text,
-                                                //             _firstNameController
-                                                //                 .text,
-                                                //             _lastNameController
-                                                //                 .text)
-                                                //         .then((value) {
-                                                //         Navigator.pop(context);
-                                                //         if (value == 200) {
-                                                //           _scaffoldKey
-                                                //               .currentState
-                                                //               .showSnackBar(
-                                                //                   SnackBar(
-                                                //             content: Text(
-                                                //                 "Profile Updated Successfully"),
-                                                //           ));
-                                                //         } else {
-                                                //           _scaffoldKey
-                                                //               .currentState
-                                                //               .showSnackBar(
-                                                //                   SnackBar(
-                                                //             content: Text(
-                                                //                 "Something went wrong. Please try again."),
-                                                //           ));
-                                                //         }
-                                                //       })
-
-                                                //     : _scaffoldKey.currentState
-                                                //         .showSnackBar(SnackBar(
-                                                //         content: Text(
-                                                //             "Please check the inputs"),
-                                                //       ));
-
-                                                if (_formKey.currentState
-                                                    .validate()) {
-                                                      showWaitingProgress(context);
-                                                  await WebServices(
-                                                          this.mApiListener)
-                                                      .updateUser(
-                                                          _usernameController
-                                                              .text,
-                                                          _emailController.text,
-                                                          _firstNameController
-                                                              .text,
-                                                          _lastNameController
-                                                              .text)
-                                                      .then((value) {
-                                                    Navigator.pop(context);
-                                                    if (value == 200) {
-                                                      _scaffoldKey.currentState
-                                                          .showSnackBar(
-                                                              SnackBar(
-                                                        content: Text(
-                                                            "Profile Updated Successfully"),
-                                                      ));
-                                                    } else {
-                                                      _scaffoldKey.currentState
-                                                          .showSnackBar(
-                                                              SnackBar(
-                                                        content: Text(
-                                                            "Something went wrong. Please try again."),
-                                                      ));
-                                                    }
-                                                  });
+                                        child: FlatButton(
+                                          onPressed: () async {
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              showWaitingProgress(context);
+                                              await WebServices(
+                                                      this.mApiListener)
+                                                  .updateUser(
+                                                      _usernameController.text,
+                                                      _emailController.text,
+                                                      _firstNameController.text,
+                                                      _lastNameController.text)
+                                                  .then((value) {
+                                                Navigator.pop(context);
+                                                if (value == 200) {
+                                                  _scaffoldKey.currentState
+                                                      .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "Profile Updated Successfully"),
+                                                  ));
+                                                } else {
+                                                  _scaffoldKey.currentState
+                                                      .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "Something went wrong. Please try again."),
+                                                  ));
                                                 }
-                                              })),
+                                              });
+                                            }
+                                          },
+                                          child: Text(
+                                            'Save Profile',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              side: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .primaryColor)),
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -347,25 +310,26 @@ class ProfileState extends State<Profile> {
                 }));
               },
             ),
-            ListTile(
-              leading: Icon(Icons.bookmark),
-              title: Text('My Appeals'),
-              onTap: () async {
-                // try {
-                //   final result = await InternetAddress.lookup('google.com');
-                //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-                //     print('connected');
-                //   }
-                // } on SocketException catch (_) {
-                //   print('not connected');
-                // }
+            // ListTile(
+            //   leading: Icon(Icons.bookmark),
+            //   title: Text('My Appeals'),
+            //   onTap: () async {
+            //     // try {
+            //     //   final result = await InternetAddress.lookup('google.com');
+            //     //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+            //     //     print('connected');
+            //     //   }
+            //     // } on SocketException catch (_) {
+            //     //   print('not connected');
+            //     // }
 
-                Navigator.of(context).push(
-                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new PickImage();
-                }));
-              },
-            ),
+            //     Navigator.of(context).push(
+            //         CupertinoPageRoute<Null>(builder: (BuildContext context) {
+            //       return new OnBoardingPage();
+            //     }));
+            //   },
+            // ),
+
             ListTile(
               leading: Icon(Icons.payment),
               title: Text('Payment'),
