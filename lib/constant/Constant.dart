@@ -10,4 +10,6 @@ USER_ROLE= "User",
 
 PLAY ="/Play";
 
+dynamic currentUserData;
+
 

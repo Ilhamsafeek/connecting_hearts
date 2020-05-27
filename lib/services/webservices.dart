@@ -50,13 +50,12 @@ class WebServices {
 
   Future createAccount(String contact, String country) async {
     var url = 'https://www.chadmin.online/api/createaccount';
-    var registeredTimeStamp = new DateTime.now().millisecondsSinceEpoch;
-
+   
     var response = await http.post(url, body: {
-      'phone': '$contact',
+      'phone': contact,
       'role_id': '2',
       'country': country,
-      'registered_time_stamp': registeredTimeStamp
+     
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -244,15 +243,15 @@ class WebServices {
   }
 
   //Chat
-  Future createChat(chatTopic, chatId, message) async {
+  Future createChat(chatTopic, chatId, message, toUser) async {
     var url = 'https://www.chadmin.online/api/createchat';
 
     var response = await http.post(url, body: {
-      'from_phone': CURRENT_USER,
-      'to_phone': '+94638567569',
-      'topic': chatTopic,
-      'message': message,
-      'chat_id': chatId,
+      'from_user': currentUserData['user_id'],
+      'to_user': '$toUser',
+      'topic': '$chatTopic',
+      'message': '$message',
+      'chat_id': '$chatId',
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -284,6 +283,6 @@ class WebServices {
     var response = await http.post(url);
     var jsonServerData = json.decode(response.body);
 
-    return jsonServerData.where((el) => el['from_phone'] == CURRENT_USER).toList();
+    return jsonServerData.where((el) => el['from_user'] == currentUserData['user_id'] || el['to_user'] == currentUserData['user_id']).toList();
   }
 }

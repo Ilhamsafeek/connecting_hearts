@@ -11,7 +11,8 @@ import 'dart:async';
 class ChatDetail extends StatefulWidget {
   final dynamic chatTopic;
   final dynamic chatId;
-  ChatDetail(this.chatTopic, this.chatId, {Key key}) : super(key: key);
+  final dynamic toUser;
+  ChatDetail(this.chatTopic, this.chatId, this.toUser,{Key key}) : super(key: key);
 
   _ChatDetailState createState() => _ChatDetailState();
 }
@@ -154,7 +155,7 @@ class _ChatDetailState extends State<ChatDetail> {
                                           style: TextStyle(fontSize: 10)),
                                     ),
                                     for (var item in snapshot.data)
-                                      item['chat_from_phone'] != CURRENT_USER
+                                      item['chat_from_user'] != currentUserData['user_id']
                                           ? Bubble(
                                               style: styleSomebody,
                                               child: Text(item['message'],
@@ -180,7 +181,7 @@ class _ChatDetailState extends State<ChatDetail> {
                                           style: TextStyle(fontSize: 10)),
                                     ),
                                     for (var item in snapshot.data)
-                                      item['chat_from_phone'] != CURRENT_USER
+                                      item['chat_from_user'] != currentUserData['user_id']
                                           ? Bubble(
                                               style: styleSomebody,
                                               child: Text(item['message']),
@@ -278,7 +279,7 @@ class _ChatDetailState extends State<ChatDetail> {
                           await WebServices(mApiListener).createChat(
                               widget.chatTopic,
                               widget.chatId,
-                              _chatController.text);
+                              _chatController.text, widget.toUser);
                           _chatController.clear();
                           _chatController.text = '';
                           print(widget.chatId.runtimeType);

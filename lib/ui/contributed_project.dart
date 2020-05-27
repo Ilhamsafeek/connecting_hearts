@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zamzam/constant/Constant.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:zamzam/ui/camera.dart';
@@ -69,8 +70,7 @@ class _ContributedProjectState extends State<ContributedProject> {
               ),
               background: CachedNetworkImage(
                 imageUrl: widget.projectData['featured_image'],
-                placeholder: (context, url) =>
-                    Image.asset('assets/placeholder.png'),
+              
                 fit: BoxFit.cover,
               ),
             ),
@@ -276,6 +276,7 @@ class _ContributedProjectState extends State<ContributedProject> {
               ),
               FlatButton.icon(
                 onPressed: () async {
+                  print("User data========>>>${widget.projectData['manager_id']}");
                   dynamic chatId='0';
                   dynamic topic =
                       '${widget.projectData['appeal_id']} - ${widget.projectData['sub_category']}';
@@ -297,7 +298,7 @@ class _ContributedProjectState extends State<ContributedProject> {
                       CupertinoPageRoute<Null>(builder: (BuildContext context) {
                     return new ChatDetail(
                         topic,
-                        chatId);
+                        chatId,widget.projectData['manager_id']);
                   }));
                 },
                 icon: Icon(

@@ -33,7 +33,7 @@ class _ChatState extends State<Chat> {
   }
 
   loadMessages() async {
-    WebServices(mApiListener).getChatTopicsByPhone().then((res) async {
+    WebServices(mApiListener).getChatTopics().then((res) async {
       _messageController.add(res);
       return res;
     });
@@ -120,7 +120,7 @@ class _ChatState extends State<Chat> {
                                   CupertinoPageRoute<Null>(
                                       builder: (BuildContext context) {
                                 return new ChatDetail(
-                                    item['topic'], item['chat_id']);
+                                    item['topic'], item['chat_id'],0);
                               }));
                             },
                           ),
@@ -144,7 +144,7 @@ class _ChatState extends State<Chat> {
                                   CupertinoPageRoute<Null>(
                                       builder: (BuildContext context) {
                                 return new ChatDetail(
-                                    item['topic'], item['chat_id']);
+                                    item['topic'], item['chat_id'],0);
                               }));
                             },
                           ),
@@ -170,7 +170,7 @@ class _ChatState extends State<Chat> {
         onPressed: () {
           Navigator.of(context)
               .push(CupertinoPageRoute<Null>(builder: (BuildContext context) {
-            return new ChatDetail('New Chat', '0');
+            return new ChatDetail('New Chat', '0',0);
           }));
         },
         child: Icon(Icons.add),

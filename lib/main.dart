@@ -23,14 +23,12 @@ Future<void> main() async {
       CURRENT_USER = value.phoneNumber;
     }
   });
-   await WebServices(mApiListener).getUserData().then((value) {
-       if (value != null) {
+  await WebServices(mApiListener).getUserData().then((value) {
+    if (value != null) {
       USER_ROLE = value['role'];
+      currentUserData = value;
     }
-    });
-
-
-
+  });
 
   runApp(MyApp());
 }
@@ -41,18 +39,13 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
-      theme: new ThemeData(
-       
-        primaryColor: Color.fromRGBO(104, 45, 127, 1)
-        
-      ),
+      theme: new ThemeData(primaryColor: Color.fromRGBO(104, 45, 127, 1)),
       initialRoute: initScreen == 0 || initScreen == null ? "onboard" : "/",
       routes: <String, WidgetBuilder>{
         "onboard": (BuildContext context) => OnBoardingPage(),
         SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
         SIGN_IN: (BuildContext context) => Signin(),
         HOME_PAGE: (BuildContext context) => MyTabs(),
-        
       },
     );
   }

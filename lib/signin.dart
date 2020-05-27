@@ -50,7 +50,6 @@ class _SigninPageState extends State<Signin> {
 
       FirebaseAuth.instance.signInWithCredential(credential).then((user) {
         if (user != null) {
-          print("===========>>>>>>>$countryCode");
           _redirect();
         }
       }).catchError((e) {
@@ -150,23 +149,30 @@ class _SigninPageState extends State<Signin> {
   }
 
   _redirect() async {
-     print("????===========>>>>>>>$countryCode");
     CURRENT_USER = '${this.countryPhoneCode}${this.phoneNo}';
     var userdata = await WebServices(this.mApiListener).getUserData();
-
+    print("======User Data======$userdata");
     if (userdata != null) {
-      Navigator.of(context).pushReplacementNamed(HOME_PAGE);
-    } else {
-      showWaitingProgress(context);
-      await WebServices(this.mApiListener)
-          .createAccount('${this.countryPhoneCode}${this.phoneNo}',countryCode);
-      Navigator.pop(context);
-
-      Navigator.of(context).pushReplacement(
-          CupertinoPageRoute<Null>(builder: (BuildContext context) {
-        return new Details();
-      }));
+      if (userdata.length != 0) {
+        Navigator.of(context).pushReplacementNamed(HOME_PAGE);
+      } else {
+      _registerUser();
+      }
+    }else{
+      _registerUser();
     }
+  }
+
+  _registerUser() async {
+      showWaitingProgress(context);
+        await WebServices(this.mApiListener).createAccount(
+            '${this.countryPhoneCode}${this.phoneNo}', countryCode);
+        Navigator.pop(context);
+
+        Navigator.of(context).pushReplacement(
+            CupertinoPageRoute<Null>(builder: (BuildContext context) {
+          return new Details();
+        }));
   }
 
   @override
@@ -235,10 +241,8 @@ class _SigninPageState extends State<Signin> {
                                     .contains(country.isoCode);
                               },
                               onValuePicked: (Country country) {
-                               
                                 this.countryPhoneCode = "+${country.phoneCode}";
                                 this.countryCode = "${country.isoCode}";
-                                
                               },
                             ),
                           ),
@@ -260,7 +264,7 @@ class _SigninPageState extends State<Signin> {
                                   TextStyle(fontSize: 18, fontFamily: "Exo2"),
                               onChanged: (value) {
                                 print("======>>>$value");
-                                 
+
                                 this.phoneNo = _mobileController.text;
                               },
                             ),
