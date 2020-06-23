@@ -237,7 +237,8 @@ class _JobsState extends State<Jobs> {
         title: Text(item['title']),
         subtitle: Text('Experience: ${item['min_experience']}'),
         trailing: category == 'my'
-            ? PopupMenuButton<String>(
+            ? 
+            PopupMenuButton<String>(
                 onSelected: (String value) {
                   if (value == "edit") {
                     Navigator.of(context).push(CupertinoPageRoute<Null>(
@@ -259,6 +260,7 @@ class _JobsState extends State<Jobs> {
                   ),
                 ],
               )
+            
             : null,
         onTap: () {
           Navigator.of(context)

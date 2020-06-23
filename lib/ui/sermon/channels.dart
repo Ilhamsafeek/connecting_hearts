@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/model/Gridmodel.dart';
 import 'package:zamzam/services/services.dart';
@@ -52,7 +53,7 @@ class _ChannelsState extends State<Channels> {
                           isThreeLine: true,
                           leading: CircleAvatar(
                             backgroundImage:
-                                NetworkImage(item['photo']),
+                                CachedNetworkImageProvider(item['photo']),
                             radius: 30,
                           ),
                           title: Text(item['channel']),

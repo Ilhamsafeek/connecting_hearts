@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/signin.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:zamzam/ui/onboarding_page.dart';
-
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/ui/about.dart';
@@ -239,6 +237,7 @@ class ProfileState extends State<Profile> {
                                                   ));
                                                 }
                                               });
+                                            
                                             }
                                           },
                                           child: Text(

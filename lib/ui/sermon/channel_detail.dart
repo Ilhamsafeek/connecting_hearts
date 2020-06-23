@@ -94,7 +94,7 @@ class _ChannelDetailState extends State<ChannelDetail> {
             ),
             subtitle: Text(widget.channelType),
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(widget.channelData['photo']),
+              backgroundImage: CachedNetworkImageProvider(widget.channelData['photo']),
             ),
             children: <Widget>[
               Padding(

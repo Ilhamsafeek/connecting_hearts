@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:zamzam/ui/payment.dart';
-import 'package:zamzam/ui/screens/new_chat.dart';
 import 'package:zamzam/ui/screens/offline.dart';
 import 'package:zamzam/ui/screens/home.dart';
 import 'package:zamzam/ui/screens/charity.dart';
@@ -212,7 +211,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               ],
             ),
           ),
-          body: OfflineBuilder(
+          body: 
+          OfflineBuilder(
             connectivityBuilder: (
               BuildContext context,
               ConnectivityResult connectivity,

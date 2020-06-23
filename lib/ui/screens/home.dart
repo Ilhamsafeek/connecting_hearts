@@ -60,7 +60,9 @@ class _HomeState extends State<Home> {
                   floating: true,
                   // pinned: false,
                 ),
+                
                 SliverList(
+                  
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       return Container(
@@ -73,6 +75,7 @@ class _HomeState extends State<Home> {
                     childCount: 1,
                   ),
                 ),
+               
                 projectData != null
                     ? _buildProjectList()
                     : SliverFillRemaining(

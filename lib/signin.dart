@@ -153,6 +153,7 @@ class _SigninPageState extends State<Signin> {
     var userdata = await WebServices(this.mApiListener).getUserData();
     print("======User Data======$userdata");
     if (userdata != null) {
+      currentUserData = userdata;
       if (userdata.length != 0) {
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       } else {
@@ -187,7 +188,7 @@ class _SigninPageState extends State<Signin> {
       body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/test.gif"),
+              image: AssetImage("assets/introduction.gif"),
               fit: BoxFit.cover,
             ),
           ),
