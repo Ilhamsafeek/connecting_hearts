@@ -153,7 +153,7 @@ class DisplayPictureScreen extends StatelessWidget {
                       .then((value) {
                         print(imagePath);
                     print("===========>>>>$value");
-                    if (value != null) {
+                    if (value == 200) {
                      Navigator.pop(context);
                      Navigator.pop(context);
                     }

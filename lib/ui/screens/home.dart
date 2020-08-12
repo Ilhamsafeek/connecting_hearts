@@ -9,6 +9,7 @@ import 'package:zamzam/model/ImageSliderModel.dart';
 import 'package:zamzam/services/services.dart';
 import 'package:zamzam/ui/project_detail.dart';
 import 'package:zamzam/ui/screens/charity.dart';
+import 'package:zamzam/ui/screens/details/categories.dart';
 import 'package:zamzam/ui/screens/jobs.dart';
 import 'package:zamzam/ui/screens/updates.dart';
 import 'package:zamzam/ui/sermon/sermons.dart';
@@ -36,7 +37,8 @@ class _HomeState extends State<Home> {
     super.initState();
     WebServices(this.mApiListener).getProjectData().then((data) {
       setState(() {
-        projectData = data.where((el) => el['completed_percentage'] != "100").toList();
+        projectData =
+            data.where((el) => el['completed_percentage'] != "100").toList();
       });
     });
 
@@ -50,46 +52,32 @@ class _HomeState extends State<Home> {
             backgroundColor: Colors.grey[200],
             body: CustomScrollView(
               slivers: <Widget>[
-                SliverAppBar(
-                  expandedHeight: 244,
-
-                  flexibleSpace: Padding(
-                      padding: EdgeInsets.all(8), child: _dashboardGrid()),
-
-                  backgroundColor: Colors.white,
-                  floating: true,
-                  // pinned: false,
-                ),
-                
                 SliverList(
-                  
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       return Container(
                         alignment: Alignment.center,
                         child: Padding(
-                            padding: const EdgeInsets.only(bottom: 5),
+                            padding: const EdgeInsets.only(bottom: 8),
                             child: Container(child: _zamzamUpdatesSlider())),
                       );
                     },
                     childCount: 1,
                   ),
                 ),
-               
-                projectData != null
-                    ? _buildProjectList()
-                    : SliverFillRemaining(
-                        child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Theme.of(context).primaryColor))
-                          ],
-                        ),
-                      ))
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Container(
+                        alignment: Alignment.center,
+                        child: Padding(
+                            padding: const EdgeInsets.only(bottom: 0),
+                            child: Container(child: _dashboardGrid())),
+                      );
+                    },
+                    childCount: 1,
+                  ),
+                ),
               ],
             )));
   }
@@ -114,9 +102,9 @@ class _HomeState extends State<Home> {
   Widget imageSliderItem(ImageSliderModel i) {
     return Container(
       // padding: EdgeInsets.only(left: 8, right: 8),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      // width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height,
       child: CachedNetworkImage(
         imageUrl: i.path,
         placeholder: (context, url) => Image.asset('assets/placeholder.png'),
@@ -136,14 +124,104 @@ class _HomeState extends State<Home> {
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 ListTile(
+                  title: Image.asset('assets/swas.png'),
+                ),
+                Text('School With \n    a Smile')
+              ])),
+              onTap: () {
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new Categories('assets/SWS-2019.jpg', 'School with a Smile', 'School with a Smile is our flagship project which has so far helped over 60,000 students with a complete pack of school supplies including shoes, school bag, exercise books & stationary being distributed via temples, mosques, churches and other community centres. Beneficiary students are selected through school principals and education authorities with the objective of helping the needy students in order to minimize school drop-outs and to ensure the financial burden of the parents is reduced so the savings can be used for betterment of their quality of life.');
+                }));
+              }),
+          InkWell(
+              child: Card(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                ListTile(
+                  title: Image.asset('assets/faf.png'),
+                ),
+                Text('\n\nFeed a Family')
+              ])),
+              onTap: () {
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new Categories('assets/feed-a-family.jpg', 'Feed a Family', '“Feed a Family” is an annual project carried out by Zam Zam Foundation since 2014 to provide with food provisions to support needy families across Sri Lanka, in the holy month of Ramadan. So far the project has supported more than to 40,000 families in many districts in Sri Lanka by easing their burden during Ramadan. An extra effort is made to share the spirit of charity and goodwill in the month of Ramadhan, with other faith communities as well by giving such Food Provisions totaling 30KG, to needy families in multi-ethnic localities.');
+                }));
+              }),
+          InkWell(
+              child: Card(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                ListTile(
+                  title: Image.asset('assets/han.png'),
+                ),
+                Text('\nHelp a Nest')
+              ])),
+              onTap: () {
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new Categories('assets/help-a-nest.jpg', 'Help a Nest', '“Help a Nest” project primarily focuses on fulfilling housing & shelter needs of communities through both restricted “Zakath” charity donations and other donations by Sri Lankan Muslim community. A significant percentage of the funds are allocated to provide shelter for needy families from other ethnic and religious communities as a conscious effort to build interfaith harmony and to serve humanity.');
+                }));
+              }),
+          InkWell(
+              child: Card(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                ListTile(
+                  title: Image.asset('assets/hs.png'),
+                ),
+                Text('Healthy Society')
+              ])),
+              onTap: () {
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new Categories('assets/healthy-society.jpg', 'Healthy Society', '“Healthy Society” is an initiative which focuses on building interfaith and inter-community relationships in mixed ethnic neighborhoods and villages by facilitating partnerships within communities to work towards finding solutions for common needs of the village. Projects include building water tanks for safe drinking water, renovation of common facilities in rural hospitals, assisting with infrastructure needs of schools where children from multiple faith and ethnic groups study together, etc. the sustainability of the projects are managed by local committees comprising community and religious leaders from diverse backgrounds');
+                }));
+              }),
+          InkWell(
+              child: Card(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                ListTile(
+                  title: Image.asset('assets/sankalpa.png'),
+                ),
+                Text('\n\nSankalpa')
+              ])),
+              onTap: () {
+                // Navigator.of(context).push(
+                //     CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                //   return new Test();
+                // }));
+              }),
+          InkWell(
+              child: Card(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                ListTile(
                   title: Image.asset('assets/charity.png'),
                 ),
-                Text('Charity')
+                Text('eCharity')
               ])),
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
                   return new Charity();
+                }));
+              }),
+          InkWell(
+              child: Card(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                ListTile(
+                  title: Image.asset('assets/updates.png'),
+                ),
+                Text('VIP')
+              ])),
+              onTap: () {
+                Navigator.of(context).push(
+                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                  return new Updates();
                 }));
               }),
           InkWell(
@@ -176,56 +254,6 @@ class _HomeState extends State<Home> {
                   return new Jobs();
                 }));
               }),
-          InkWell(
-              child: Card(
-                  child:
-                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/calculator.png'),
-                ),
-                Center(
-                  child: Text(
-                    'Zakat\nCalculator',
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ])),
-              onTap: () {
-                Navigator.of(context).push(
-                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new ZakatCalculator();
-                }));
-              }),
-          InkWell(
-              child: Card(
-                  child:
-                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/updates.png'),
-                ),
-                Text('Updates')
-              ])),
-              onTap: () {
-                Navigator.of(context).push(
-                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Updates();
-                }));
-              }),
-          InkWell(
-              child: Card(
-                  child:
-                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/elearning.png'),
-                ),
-                Text('eLearning')
-              ])),
-              onTap: () {
-                Navigator.of(context).push(
-                    CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Test();
-                }));
-              }),
         ]);
   }
 
@@ -250,12 +278,12 @@ class _HomeState extends State<Home> {
               dynamic data = snapshot.data.toList();
               children = <Widget>[
                 CarouselSlider(
-                  aspectRatio: 2,
+                  aspectRatio: 12 / 9,
                   viewportFraction: 1.0,
                   initialPage: 0,
-                  autoPlayInterval: Duration(seconds: 5),
+                  autoPlayInterval: Duration(seconds: 4),
                   autoPlayAnimationDuration: Duration(milliseconds: 500),
-                  pauseAutoPlayOnTouch: Duration(seconds: 5),
+                  pauseAutoPlayOnTouch: Duration(seconds: 4),
                   enlargeCenterPage: true,
                   autoPlay: true,
                   onPageChanged: (index) {
@@ -284,7 +312,7 @@ class _HomeState extends State<Home> {
           } else {
             children = <Widget>[
               AspectRatio(
-                aspectRatio: 16 / 10,
+                aspectRatio: 16 / 9,
                 child: Image.asset('assets/placeholder.png'),
               ),
             ];
@@ -398,8 +426,8 @@ class GridItem extends StatelessWidget {
             children: <Widget>[
               Image.asset(
                 gridModel.imagePath,
-                width: 30,
-                height: 30,
+                width: 40,
+                height: 40,
                 color: gridModel.color,
               ),
               Padding(

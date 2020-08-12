@@ -9,9 +9,10 @@ class WebServices {
   ApiListener mApiListener;
 
   WebServices(this.mApiListener);
+   var base_url='https://chadmin.online/api/';
 
   Future<dynamic> getProjectData() async {
-    var response = await http.get("https://www.chadmin.online/api/projects");
+    var response = await http.get(base_url+"projects");
     var jsonServerData = json.decode(response.body);
 
     return jsonServerData;
@@ -20,7 +21,7 @@ class WebServices {
   Future<String> updateUserToken(String appToken) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-    var url = 'https://www.chadmin.online/api/updateaccount';
+    var url = base_url+'updateaccount';
     var response = await http.post(url, body: {
       'app_token': '$appToken',
       'phone': '$CURRENT_USER',
@@ -34,7 +35,7 @@ class WebServices {
   Future<int> updateUser(username, email, fname, lname) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-    var url = 'https://www.chadmin.online/api/updateaccount';
+    var url = base_url+'updateaccount';
     var response = await http.post(url, body: {
       'username': '$username',
       'phone': '$CURRENT_USER',
@@ -49,7 +50,7 @@ class WebServices {
   }
 
   Future createAccount(String contact, String country) async {
-    var url = 'https://www.chadmin.online/api/createaccount';
+    var url = base_url+'createaccount';
    
     var response = await http.post(url, body: {
       'phone': contact,
@@ -62,7 +63,7 @@ class WebServices {
   }
 
   Future createUserHit() async {
-    var url = 'https://www.chadmin.online/api/createuserhit';
+    var url = base_url+'createuserhit';
 
     var response = await http.post(url, body: {
       'phone': CURRENT_USER,
@@ -72,7 +73,7 @@ class WebServices {
   }
 
   Future<dynamic> getSermonData() async {
-    var response = await http.get("https://chadmin.online/api/allsermons");
+    var response = await http.get(base_url+'allsermons');
     var jsonServerData = json.decode(response.body);
     print("Response ${response.body}");
     return jsonServerData;
@@ -80,7 +81,7 @@ class WebServices {
 
   Future<dynamic> getCategoryData() async {
     var response =
-        await http.get("https://www.chadmin.online/api/allprojectcategories");
+        await http.get(base_url+'allprojectcategories');
     var jsonServerData = json.decode(response.body);
 
     return jsonServerData;
@@ -88,14 +89,14 @@ class WebServices {
 
   Future<dynamic> getNotificationData() async {
     var response =
-        await http.get("https://chadmin.online/api/allnotifications");
+        await http.get(base_url+'allnotifications');
     var jsonServerData = json.decode(response.body);
 
     return jsonServerData;
   }
 
   Future<dynamic> getUserData() async {
-    var url = 'https://www.chadmin.online/api/getuser';
+    var url = base_url+'getuser';
     var response = await http.post(url, body: {
       'phone': CURRENT_USER,
     });
@@ -104,7 +105,7 @@ class WebServices {
   }
 
   Future<dynamic> getZamzamUpdateData() async {
-    var response = await http.get("https://chadmin.online/api/zamzamupdates");
+    var response = await http.get(base_url+'zamzamupdates');
     var jsonServerData = json.decode(response.body);
     print("Response ${response.body}");
     return jsonServerData;
@@ -112,7 +113,7 @@ class WebServices {
 
   Future<dynamic> getImageFromFolder(folder) async {
     print("=========>>>>>" + folder);
-    var url = 'https://www.chadmin.online/api/getimagefile';
+    var url = base_url+'getimagefile';
     var response = await http.post(url, body: {
       'project_supportives': folder,
     });
@@ -129,7 +130,7 @@ class WebServices {
 
     var timestamp = new DateTime.now().millisecondsSinceEpoch;
     print(' --------->>>>>>>$timestamp');
-    var url = 'https://www.chadmin.online/api/createpayment';
+    var url = base_url+'createpayment';
     var response = await http.post(url, body: {
       'user_id': CURRENT_USER,
       'paid_amount': '$amount',
@@ -144,7 +145,7 @@ class WebServices {
   }
 
   Future<dynamic> getPaymentData() async {
-    var url = 'https://www.chadmin.online/api/getpayment';
+    var url = base_url+'getpayment';
     var response = await http.post(url, body: {
       'user_id': CURRENT_USER,
     });
@@ -152,24 +153,21 @@ class WebServices {
     return jsonServerData;
   }
 
-  Future<bool> updateSlip(id, path) async {
+  Future<int> updateSlip(id, path) async {
     String base64Image = base64Encode(File(path).readAsBytesSync());
     String fileName = File(path).path.split('/').last;
     print('payment_id::::::::: $id');
-    http.post('https://www.chadmin.online/api/updateslip', body: {
+   var response = await  http.post(base_url+'updateslip', body: {
       "payment_id": "$id",
       "image": base64Image,
       "filename": fileName
-    }).then((value) {
-      print(value.body);
-      return value.body;
     });
-
-    return false;
+    print("Slip Update Response:::"+response.body);
+    return response.statusCode;
   }
 
   Future<dynamic> getCompanyData() async {
-    var response = await http.get("https://chadmin.online/api/companydata");
+    var response = await http.get(base_url+'companydata');
     var jsonServerData = json.decode(response.body);
     print("Response ${response.body}");
     return jsonServerData;
@@ -178,7 +176,7 @@ class WebServices {
 // Channels
 
   Future<dynamic> getChannelData() async {
-    var response = await http.get("https://www.chadmin.online/api/channels");
+    var response = await http.get(base_url+'channels');
     var jsonServerData = json.decode(response.body);
     print(jsonServerData);
     return jsonServerData;
@@ -186,7 +184,7 @@ class WebServices {
 
 // Job
   Future<dynamic> getJobData() async {
-    var url = 'https://www.chadmin.online/api/alljob';
+    var url =base_url+'alljob';
     var response = await http.get(url);
     var jsonServerData = json.decode(response.body);
     return jsonServerData;
@@ -194,7 +192,7 @@ class WebServices {
 
   Future<int> postJob(type, title, location, minExperience, description,
       contact, email, image, organization) async {
-    var url = 'https://www.chadmin.online/api/createjob';
+    var url = base_url+'createjob';
     var response = await http.post(url, body: {
       'posted_by': CURRENT_USER,
       'type': '$type',
@@ -215,7 +213,7 @@ class WebServices {
   Future<int> deleteJob(id) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-    var url = 'https://www.chadmin.online/api/deletejob';
+    var url = base_url+'deletejob';
     var response = await http.post(url, body: {
       'id': '$id',
     });
@@ -227,7 +225,7 @@ class WebServices {
 
   Future<int> editJob(id, title, location, minExperience, description, contact,
       email, image, organization) async {
-    var url = 'https://www.chadmin.online/api/editjob';
+    var url = base_url+'editjob';
     var response = await http.post(url, body: {
       'id': '$id',
       'title': '$title',
@@ -244,7 +242,7 @@ class WebServices {
 
   //Chat
   Future createChat(chatTopic, chatId, message, toUser) async {
-    var url = 'https://www.chadmin.online/api/createchat';
+    var url = base_url+'createchat';
 
     var response = await http.post(url, body: {
       'from_user': currentUserData['user_id'],
@@ -259,7 +257,7 @@ class WebServices {
   }
 
   Future<dynamic> getChatTopicsByPhone() async {
-    var url = 'https://www.chadmin.online/api/getchattopicsbyphone';
+    var url = base_url+'getchattopicsbyphone';
     var response = await http.post(url, body: {
       'phone': CURRENT_USER,
     });
@@ -269,7 +267,7 @@ class WebServices {
   }
 
   Future<dynamic> getChatById(chatId) async {
-    var url = 'https://www.chadmin.online/api/getchatbyid';
+    var url = base_url+'getchatbyid';
     var response = await http.post(url, body: {
       'chat_id': chatId,
     });
@@ -279,7 +277,7 @@ class WebServices {
   }
 
   Future<dynamic> getChatTopics() async {
-    var url = 'https://www.chadmin.online/api/getchattopics';
+    var url = base_url+'getchattopics';
     var response = await http.post(url);
     var jsonServerData = json.decode(response.body);
 

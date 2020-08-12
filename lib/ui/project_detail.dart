@@ -604,7 +604,7 @@ class _ProjectDetailPageState extends State<ProjectDetail> {
         context,
         MaterialPageRoute(
             builder: (context) => Checkout(
-                selectedMethod, widget.projectData, _amount.text, 'card')),
+                selectedMethod, widget.projectData, _amount.text, 'bank')),
       );
     } else {
       Navigator.pop(context);

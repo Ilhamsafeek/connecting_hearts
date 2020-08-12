@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zamzam/camera.dart';
 import 'package:zamzam/services/services.dart';
@@ -186,14 +187,14 @@ class _MyContributionState extends State<MyContribution> {
             WidgetsFlutterBinding.ensureInitialized();
             final cameras = await availableCameras();
             final firstCamera = cameras.first;
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => TakePictureScreen(
-                    "${item['id']}",
-                    firstCamera,
-                  ),
-                ));
+
+            Navigator.of(context)
+                .push(CupertinoPageRoute<Null>(builder: (BuildContext context) {
+              return new TakePictureScreen(
+                "${item['payment_id']}",
+                firstCamera,
+              );
+            }));
           },
           child: Text(
             'Submit Deposit Slip',
@@ -213,10 +214,17 @@ class _MyContributionState extends State<MyContribution> {
           FlatButton.icon(
             icon: Icon(Icons.edit),
             onPressed: () async {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => CameraApp()));
+              WidgetsFlutterBinding.ensureInitialized();
+              final cameras = await availableCameras();
+              final firstCamera = cameras.first;
+
+              Navigator.of(context).push(
+                  CupertinoPageRoute<Null>(builder: (BuildContext context) {
+                return new TakePictureScreen(
+                  "${item['payment_id']}",
+                  firstCamera,
+                );
+              }));
             },
             label: Text('Edit Slip'),
           ),

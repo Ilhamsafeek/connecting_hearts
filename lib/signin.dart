@@ -155,6 +155,7 @@ class _SigninPageState extends State<Signin> {
     if (userdata != null) {
       currentUserData = userdata;
       if (userdata.length != 0) {
+        Navigator.pop(context);
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       } else {
       _registerUser();
@@ -238,7 +239,7 @@ class _SigninPageState extends State<Signin> {
                               initialValue: 'LK',
                               itemBuilder: _buildDropdownItem,
                               itemFilter: (Country country) {
-                                return ['AR', 'DE', 'GB', 'CN', 'LK']
+                                return ['AR', 'DE', 'GB', 'CN', 'LK','AU']
                                     .contains(country.isoCode);
                               },
                               onValuePicked: (Country country) {

@@ -136,6 +136,22 @@ flutter:
   - assets/sermon.png
   - assets/introduction.gif
 
+
+  # dash
+  - assets/faf.png
+  - assets/swas.png
+  - assets/han.png
+  - assets/hs.png
+  - assets/sankalpa.png
+  - assets/SWS-2019.jpg
+  - assets/feed-a-family.jpg
+  - assets/help-a-nest.jpg
+  - assets/healthy-society.jpg
+
+
+
+
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

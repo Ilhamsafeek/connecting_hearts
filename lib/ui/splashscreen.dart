@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:zamzam/constant/Constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zamzam/services/services.dart';
+import 'package:zamzam/ui/screens/offline.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class SplashScreenState extends State<SplashScreen>
   startTime() async {
     var _duration = new Duration(seconds: 1);
     return new Timer(_duration, navigateFromSplash);
+    
   }
 
   @override
@@ -39,6 +42,8 @@ class SplashScreenState extends State<SplashScreen>
       _visible = !_visible;
     });
     startTime();
+
+    
   }
 
   Future navigateFromSplash() async {
@@ -59,7 +64,19 @@ class SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: 
+       OfflineBuilder(
+            connectivityBuilder: (
+              BuildContext context,
+              ConnectivityResult connectivity,
+              Widget child,
+            ) {
+              final bool connected = connectivity != ConnectivityResult.none;
+              return new Stack(
+                fit: StackFit.expand,
+                children: [
+                  connected
+                      ?  Stack(
         fit: StackFit.expand,
         children: <Widget>[
       
@@ -88,7 +105,20 @@ class SplashScreenState extends State<SplashScreen>
             ],
           ),
         ],
-      ),
+      )
+                      : Offline()
+                ],
+              );
+            },
+            child: Column(
+              children: <Widget>[
+                new Text(
+                  'There are no bottons to push :)',
+                ),
+              ],
+            ),
+          )
+     
     );
   }
 }

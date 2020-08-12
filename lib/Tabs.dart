@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:zamzam/ui/my_contribution.dart';
 import 'package:zamzam/ui/payment.dart';
 import 'package:zamzam/ui/screens/offline.dart';
 import 'package:zamzam/ui/screens/home.dart';
@@ -57,7 +58,6 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
 
   @override
   void didChangeDependencies() {
-   
     getNotificationCount().then((value) {
       if (value == null) {
         setState(() {
@@ -129,8 +129,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
     var initSetting = new InitializationSettings(android, ios);
     flutterLocalNotificationsPlugin.initialize(initSetting,
         onSelectNotification: _selectNotification);
-    
-  
+
     super.didChangeDependencies();
   }
 
@@ -211,8 +210,7 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               ],
             ),
           ),
-          body: 
-          OfflineBuilder(
+          body: OfflineBuilder(
             connectivityBuilder: (
               BuildContext context,
               ConnectivityResult connectivity,
@@ -231,10 +229,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                             },
                             children: <Widget>[
                               Home(),
-                              Charity(),
-                              USER_ROLE == 'Management'
-                                  ? Webview()
-                                  : Chat(),
+                              MyContribution(),
+                              USER_ROLE == 'Management' ? Webview() : Chat(),
                               Profile(),
                             ],
                           ),
@@ -269,10 +265,10 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
               ),
               BottomNavyBarItem(
                 title: Text(
-                  'Charity',
+                  'Contribution',
                   style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
-                icon: Icon(Icons.people, color: Theme.of(context).primaryColor),
+                icon: Icon(Icons.verified_user, color: Theme.of(context).primaryColor),
                 activeColor: Theme.of(context).primaryColor,
               ),
               BottomNavyBarItem(
@@ -281,11 +277,8 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
                   style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
                 icon: Icon(
-                  USER_ROLE == 'Management'
-                                  ? Icons.insert_chart
-                                  : Icons.chat,
-                   
-                  color: Theme.of(context).primaryColor),
+                    USER_ROLE == 'Management' ? Icons.insert_chart : Icons.chat,
+                    color: Theme.of(context).primaryColor),
                 activeColor: Theme.of(context).primaryColor,
               ),
               BottomNavyBarItem(

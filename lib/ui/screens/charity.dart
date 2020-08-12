@@ -64,7 +64,7 @@ class _CharityState extends State<Charity> {
                   GridView.count(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 4,
+                      crossAxisCount: 3,
                       children: <Widget>[
                         for (var item in snapshot.data)
                           InkWell(
@@ -100,7 +100,7 @@ class _CharityState extends State<Charity> {
                     child: GridView.count(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 4,
+                      crossAxisCount: 3,
                       children: List<GridItem>.generate(12, (int index) {
                         return GridItem(
                             GridModel("assets/ch_logo.png", "test", null));

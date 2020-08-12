@@ -41,6 +41,7 @@ class _CheckoutState extends State<Checkout> {
           Navigator.pop(context);
           _showDialog();
           _result = doCharging();
+           
         });
       },
       icon: Icon(Icons.check_circle_outline, color: Colors.white),
@@ -140,6 +141,8 @@ class _CheckoutState extends State<Checkout> {
                               child: RaisedButton(
                             color: Colors.red,
                             onPressed: () async {
+                             
+
                               WidgetsFlutterBinding.ensureInitialized();
                               final cameras = await availableCameras();
                               final firstCamera = cameras.first;
