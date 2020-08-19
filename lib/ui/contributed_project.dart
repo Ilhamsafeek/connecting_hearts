@@ -314,6 +314,7 @@ class _ContributedProjectState extends State<ContributedProject> {
                     side: BorderSide(color: Theme.of(context).primaryColor)),
                 color: Theme.of(context).primaryColor,
               ),
+           
             ],
           ),
         ),

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
-      theme: new ThemeData(primaryColor: Color.fromRGBO(104, 45, 127, 1)),
+      theme: new ThemeData(primaryColor: Color.fromRGBO(7, 82, 139, 1)),
       initialRoute: initScreen == 0 || initScreen == null ? "onboard" : "/",
       routes: <String, WidgetBuilder>{
         "onboard": (BuildContext context) => OnBoardingPage(),

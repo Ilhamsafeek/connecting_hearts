@@ -20,7 +20,7 @@ class _PlayState extends State<Play> {
                     child: YoutubePlayer(
                       controller: YoutubePlayerController(
                         initialVideoId:
-                            YoutubePlayer.convertUrlToId(widget.video['url']),
+                            widget.video['id']['videoId'],
                         flags: YoutubePlayerFlags(
                           autoPlay: true,
                           mute: false,

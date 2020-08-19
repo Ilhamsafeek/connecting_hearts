@@ -74,7 +74,7 @@ dependencies:
   cloud_firestore:
   firebase_storage:
   bubble: ^1.1.9+1
-
+  timeago: ^2.0.26
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -129,25 +129,25 @@ flutter:
   - assets/sermon_title.png
   - assets/chat.png
   - assets/profile-background.png
-  - assets/job-bank.png
   - assets/charity.png
   - assets/updates.png
   - assets/elearning.png
   - assets/sermon.png
-  - assets/introduction.gif
-
+  - assets/zamzam.png
 
   # dash
-  - assets/faf.png
-  - assets/swas.png
-  - assets/han.png
-  - assets/hs.png
-  - assets/sankalpa.png
-  - assets/SWS-2019.jpg
-  - assets/feed-a-family.jpg
-  - assets/help-a-nest.jpg
-  - assets/healthy-society.jpg
 
+  - assets/school-with-a-smile.png
+  - assets/feed-a-family.png
+  - assets/help-a-nest.png
+  - assets/healthy-society.png
+  - assets/sankalpa.png
+  - assets/e-charity.png
+  - assets/vip.png
+  - assets/zamzam-media.png
+  - assets/job-bank.png
+  - assets/zamzamlogo.png
+  - assets/conecting-hearts-logo.png
 
 
 

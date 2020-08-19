@@ -158,23 +158,23 @@ class _SigninPageState extends State<Signin> {
         Navigator.pop(context);
         Navigator.of(context).pushReplacementNamed(HOME_PAGE);
       } else {
-      _registerUser();
+        _registerUser();
       }
-    }else{
+    } else {
       _registerUser();
     }
   }
 
   _registerUser() async {
-      showWaitingProgress(context);
-        await WebServices(this.mApiListener).createAccount(
-            '${this.countryPhoneCode}${this.phoneNo}', countryCode);
-        Navigator.pop(context);
+    showWaitingProgress(context);
+    await WebServices(this.mApiListener)
+        .createAccount('${this.countryPhoneCode}${this.phoneNo}', countryCode);
+    Navigator.pop(context);
 
-        Navigator.of(context).pushReplacement(
-            CupertinoPageRoute<Null>(builder: (BuildContext context) {
-          return new Details();
-        }));
+    Navigator.of(context).pushReplacement(
+        CupertinoPageRoute<Null>(builder: (BuildContext context) {
+      return new Details();
+    }));
   }
 
   @override
@@ -188,10 +188,13 @@ class _SigninPageState extends State<Signin> {
       // ),
       body: Container(
           decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
             image: DecorationImage(
-              image: AssetImage("assets/introduction.gif"),
-              fit: BoxFit.cover,
-            ),
+                image: AssetImage(
+                  "assets/conecting-hearts-logo.png",
+                ),
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.topCenter),
           ),
           child: Form(
             key: _formKey,
@@ -201,30 +204,30 @@ class _SigninPageState extends State<Signin> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ListTile(
-                  leading: CircleAvatar(
-                    radius: 35,
-                    child: Image.asset(
-                      "assets/ch_logo.png",
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'You Make a difference, We Make it Easy',
-                    style: TextStyle(color: Colors.white, fontSize: 32),
+                  title: Center(
+                    child: Text("You Make a difference, We Make it Easy",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 Container(
+                    alignment: Alignment.bottomCenter,
                     padding: const EdgeInsets.all(16.0),
                     decoration: new BoxDecoration(
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor, width: 2),
                         color: Colors.white,
                         borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(20.0),
-                          topRight: const Radius.circular(20.0),
+                          topLeft: const Radius.circular(10.0),
+                          topRight: const Radius.circular(10.0),
+                          bottomLeft: const Radius.circular(10.0),
+                          bottomRight: const Radius.circular(10.0),
                         )),
                     child: Column(children: <Widget>[
                       Text('Please enter your mobile number',
@@ -234,12 +237,12 @@ class _SigninPageState extends State<Signin> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            flex: 5,
+                            flex: 4,
                             child: CountryPickerDropdown(
                               initialValue: 'LK',
                               itemBuilder: _buildDropdownItem,
                               itemFilter: (Country country) {
-                                return ['AR', 'DE', 'GB', 'CN', 'LK','AU']
+                                return ['AR', 'DE', 'GB', 'CN', 'LK', 'AU']
                                     .contains(country.isoCode);
                               },
                               onValuePicked: (Country country) {
@@ -294,9 +297,26 @@ class _SigninPageState extends State<Signin> {
                             });
                           }
                         },
-                        child: Text('Signin my Account'),
-                        textColor: Colors.white,
-                        color: Colors.green[800],
+                        child: Text('Signin to Continue',
+                            style: TextStyle(color: Colors.white)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(
+                                color: Theme.of(context).primaryColor)),
+                        color: Theme.of(context).primaryColor,
+                      )
+                    ])),
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * .10,
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: new BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Column(children: <Widget>[
+                      Image.asset(
+                        'assets/zamzamlogo.png',
+                        width: 100,
                       )
                     ]))
               ],

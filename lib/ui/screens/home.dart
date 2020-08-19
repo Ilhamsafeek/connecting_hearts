@@ -19,6 +19,8 @@ import 'package:zamzam/ui/zakat_calculator.dart';
 import 'dart:async';
 import 'package:zamzam/test.dart';
 
+import '../media.dart';
+
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
 
@@ -123,70 +125,57 @@ class _HomeState extends State<Home> {
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/swas.png'),
-                ),
-                Text('School With \n    a Smile')
+               Image.asset('assets/help-a-nest.png')
               ])),
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Categories('assets/SWS-2019.jpg', 'School with a Smile', 'School with a Smile is our flagship project which has so far helped over 60,000 students with a complete pack of school supplies including shoes, school bag, exercise books & stationary being distributed via temples, mosques, churches and other community centres. Beneficiary students are selected through school principals and education authorities with the objective of helping the needy students in order to minimize school drop-outs and to ensure the financial burden of the parents is reduced so the savings can be used for betterment of their quality of life.');
+                  return new Categories('assets/help-a-nest.png', 'School With a Smile', 'School with a Smile is our flagship project which has so far helped over 60,000 students with a complete pack of school supplies including shoes, school bag, exercise books & stationary being distributed via temples, mosques, churches and other community centres. Beneficiary students are selected through school principals and education authorities with the objective of helping the needy students in order to minimize school drop-outs and to ensure the financial burden of the parents is reduced so the savings can be used for betterment of their quality of life.');
                 }));
               }),
           InkWell(
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/faf.png'),
-                ),
-                Text('\n\nFeed a Family')
+                Image.asset('assets/feed-a-family.png')
               ])),
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Categories('assets/feed-a-family.jpg', 'Feed a Family', '“Feed a Family” is an annual project carried out by Zam Zam Foundation since 2014 to provide with food provisions to support needy families across Sri Lanka, in the holy month of Ramadan. So far the project has supported more than to 40,000 families in many districts in Sri Lanka by easing their burden during Ramadan. An extra effort is made to share the spirit of charity and goodwill in the month of Ramadhan, with other faith communities as well by giving such Food Provisions totaling 30KG, to needy families in multi-ethnic localities.');
+                  return new Categories('assets/feed-a-family.png', 'Feed a Family', '“Feed a Family” is an annual project carried out by Zam Zam Foundation since 2014 to provide with food provisions to support needy families across Sri Lanka, in the holy month of Ramadan. So far the project has supported more than to 40,000 families in many districts in Sri Lanka by easing their burden during Ramadan. An extra effort is made to share the spirit of charity and goodwill in the month of Ramadhan, with other faith communities as well by giving such Food Provisions totaling 30KG, to needy families in multi-ethnic localities.');
                 }));
               }),
           InkWell(
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/han.png'),
-                ),
-                Text('\nHelp a Nest')
+                Image.asset('assets/school-with-a-smile.png')
               ])),
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Categories('assets/help-a-nest.jpg', 'Help a Nest', '“Help a Nest” project primarily focuses on fulfilling housing & shelter needs of communities through both restricted “Zakath” charity donations and other donations by Sri Lankan Muslim community. A significant percentage of the funds are allocated to provide shelter for needy families from other ethnic and religious communities as a conscious effort to build interfaith harmony and to serve humanity.');
+                  return new Categories('assets/school-with-a-smile.png', 'Help a Nest', '“Help a Nest” project primarily focuses on fulfilling housing & shelter needs of communities through both restricted “Zakath” charity donations and other donations by Sri Lankan Muslim community. A significant percentage of the funds are allocated to provide shelter for needy families from other ethnic and religious communities as a conscious effort to build interfaith harmony and to serve humanity.');
                 }));
               }),
           InkWell(
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/hs.png'),
-                ),
-                Text('Healthy Society')
+               Image.asset('assets/healthy-society.png')
+             
               ])),
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Categories('assets/healthy-society.jpg', 'Healthy Society', '“Healthy Society” is an initiative which focuses on building interfaith and inter-community relationships in mixed ethnic neighborhoods and villages by facilitating partnerships within communities to work towards finding solutions for common needs of the village. Projects include building water tanks for safe drinking water, renovation of common facilities in rural hospitals, assisting with infrastructure needs of schools where children from multiple faith and ethnic groups study together, etc. the sustainability of the projects are managed by local committees comprising community and religious leaders from diverse backgrounds');
+                  return new Categories('assets/healthy-society.png', 'Healthy Society', '“Healthy Society” is an initiative which focuses on building interfaith and inter-community relationships in mixed ethnic neighborhoods and villages by facilitating partnerships within communities to work towards finding solutions for common needs of the village. Projects include building water tanks for safe drinking water, renovation of common facilities in rural hospitals, assisting with infrastructure needs of schools where children from multiple faith and ethnic groups study together, etc. the sustainability of the projects are managed by local committees comprising community and religious leaders from diverse backgrounds');
                 }));
               }),
           InkWell(
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/sankalpa.png'),
-                ),
-                Text('\n\nSankalpa')
+                Image.asset('assets/sankalpa.png')
+               
               ])),
               onTap: () {
                 // Navigator.of(context).push(
@@ -198,10 +187,7 @@ class _HomeState extends State<Home> {
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/charity.png'),
-                ),
-                Text('eCharity')
+               Image.asset('assets/e-charity.png')
               ])),
               onTap: () {
                 Navigator.of(context).push(
@@ -213,10 +199,7 @@ class _HomeState extends State<Home> {
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/updates.png'),
-                ),
-                Text('VIP')
+               Image.asset('assets/vip.png')
               ])),
               onTap: () {
                 Navigator.of(context).push(
@@ -228,25 +211,20 @@ class _HomeState extends State<Home> {
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/sermon.png'),
-                ),
-                Text('Sermons')
+              Image.asset('assets/zamzam-media.png')
+                
               ])),
               onTap: () {
                 Navigator.of(context).push(
                     CupertinoPageRoute<Null>(builder: (BuildContext context) {
-                  return new Sermons();
+                  return new Media();
                 }));
               }),
           InkWell(
               child: Card(
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                ListTile(
-                  title: Image.asset('assets/job-bank.png'),
-                ),
-                Text('Job Bank')
+               Image.asset('assets/job-bank.png',width: 45,)
               ])),
               onTap: () {
                 Navigator.of(context).push(

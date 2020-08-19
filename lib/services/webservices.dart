@@ -9,10 +9,10 @@ class WebServices {
   ApiListener mApiListener;
 
   WebServices(this.mApiListener);
-   var base_url='https://chadmin.online/api/';
+  var base_url = 'https://chadmin.online/api/';
 
   Future<dynamic> getProjectData() async {
-    var response = await http.get(base_url+"projects");
+    var response = await http.get(base_url + "projects");
     var jsonServerData = json.decode(response.body);
 
     return jsonServerData;
@@ -21,7 +21,7 @@ class WebServices {
   Future<String> updateUserToken(String appToken) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-    var url = base_url+'updateaccount';
+    var url = base_url + 'updateaccount';
     var response = await http.post(url, body: {
       'app_token': '$appToken',
       'phone': '$CURRENT_USER',
@@ -35,7 +35,7 @@ class WebServices {
   Future<int> updateUser(username, email, fname, lname) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-    var url = base_url+'updateaccount';
+    var url = base_url + 'updateaccount';
     var response = await http.post(url, body: {
       'username': '$username',
       'phone': '$CURRENT_USER',
@@ -50,20 +50,19 @@ class WebServices {
   }
 
   Future createAccount(String contact, String country) async {
-    var url = base_url+'createaccount';
-   
+    var url = base_url + 'createaccount';
+
     var response = await http.post(url, body: {
       'phone': contact,
       'role_id': '2',
       'country': country,
-     
     });
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
 
   Future createUserHit() async {
-    var url = base_url+'createuserhit';
+    var url = base_url + 'createuserhit';
 
     var response = await http.post(url, body: {
       'phone': CURRENT_USER,
@@ -73,30 +72,28 @@ class WebServices {
   }
 
   Future<dynamic> getSermonData() async {
-    var response = await http.get(base_url+'allsermons');
+    var response = await http.get(base_url + 'allsermons');
     var jsonServerData = json.decode(response.body);
     print("Response ${response.body}");
     return jsonServerData;
   }
 
   Future<dynamic> getCategoryData() async {
-    var response =
-        await http.get(base_url+'allprojectcategories');
+    var response = await http.get(base_url + 'allprojectcategories');
     var jsonServerData = json.decode(response.body);
 
     return jsonServerData;
   }
 
   Future<dynamic> getNotificationData() async {
-    var response =
-        await http.get(base_url+'allnotifications');
+    var response = await http.get(base_url + 'allnotifications');
     var jsonServerData = json.decode(response.body);
 
     return jsonServerData;
   }
 
   Future<dynamic> getUserData() async {
-    var url = base_url+'getuser';
+    var url = base_url + 'getuser';
     var response = await http.post(url, body: {
       'phone': CURRENT_USER,
     });
@@ -105,7 +102,7 @@ class WebServices {
   }
 
   Future<dynamic> getZamzamUpdateData() async {
-    var response = await http.get(base_url+'zamzamupdates');
+    var response = await http.get(base_url + 'zamzamupdates');
     var jsonServerData = json.decode(response.body);
     print("Response ${response.body}");
     return jsonServerData;
@@ -113,7 +110,7 @@ class WebServices {
 
   Future<dynamic> getImageFromFolder(folder) async {
     print("=========>>>>>" + folder);
-    var url = base_url+'getimagefile';
+    var url = base_url + 'getimagefile';
     var response = await http.post(url, body: {
       'project_supportives': folder,
     });
@@ -130,7 +127,7 @@ class WebServices {
 
     var timestamp = new DateTime.now().millisecondsSinceEpoch;
     print(' --------->>>>>>>$timestamp');
-    var url = base_url+'createpayment';
+    var url = base_url + 'createpayment';
     var response = await http.post(url, body: {
       'user_id': CURRENT_USER,
       'paid_amount': '$amount',
@@ -145,7 +142,7 @@ class WebServices {
   }
 
   Future<dynamic> getPaymentData() async {
-    var url = base_url+'getpayment';
+    var url = base_url + 'getpayment';
     var response = await http.post(url, body: {
       'user_id': CURRENT_USER,
     });
@@ -157,17 +154,17 @@ class WebServices {
     String base64Image = base64Encode(File(path).readAsBytesSync());
     String fileName = File(path).path.split('/').last;
     print('payment_id::::::::: $id');
-   var response = await  http.post(base_url+'updateslip', body: {
+    var response = await http.post(base_url + 'updateslip', body: {
       "payment_id": "$id",
       "image": base64Image,
       "filename": fileName
     });
-    print("Slip Update Response:::"+response.body);
+    print("Slip Update Response:::" + response.body);
     return response.statusCode;
   }
 
   Future<dynamic> getCompanyData() async {
-    var response = await http.get(base_url+'companydata');
+    var response = await http.get(base_url + 'companydata');
     var jsonServerData = json.decode(response.body);
     print("Response ${response.body}");
     return jsonServerData;
@@ -176,7 +173,7 @@ class WebServices {
 // Channels
 
   Future<dynamic> getChannelData() async {
-    var response = await http.get(base_url+'channels');
+    var response = await http.get(base_url + 'channels');
     var jsonServerData = json.decode(response.body);
     print(jsonServerData);
     return jsonServerData;
@@ -184,7 +181,7 @@ class WebServices {
 
 // Job
   Future<dynamic> getJobData() async {
-    var url =base_url+'alljob';
+    var url = base_url + 'alljob';
     var response = await http.get(url);
     var jsonServerData = json.decode(response.body);
     return jsonServerData;
@@ -192,7 +189,7 @@ class WebServices {
 
   Future<int> postJob(type, title, location, minExperience, description,
       contact, email, image, organization) async {
-    var url = base_url+'createjob';
+    var url = base_url + 'createjob';
     var response = await http.post(url, body: {
       'posted_by': CURRENT_USER,
       'type': '$type',
@@ -213,7 +210,7 @@ class WebServices {
   Future<int> deleteJob(id) async {
     // DateTime now = DateTime.now();
     // String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-    var url = base_url+'deletejob';
+    var url = base_url + 'deletejob';
     var response = await http.post(url, body: {
       'id': '$id',
     });
@@ -225,7 +222,7 @@ class WebServices {
 
   Future<int> editJob(id, title, location, minExperience, description, contact,
       email, image, organization) async {
-    var url = base_url+'editjob';
+    var url = base_url + 'editjob';
     var response = await http.post(url, body: {
       'id': '$id',
       'title': '$title',
@@ -242,7 +239,7 @@ class WebServices {
 
   //Chat
   Future createChat(chatTopic, chatId, message, toUser) async {
-    var url = base_url+'createchat';
+    var url = base_url + 'createchat';
 
     var response = await http.post(url, body: {
       'from_user': currentUserData['user_id'],
@@ -257,7 +254,7 @@ class WebServices {
   }
 
   Future<dynamic> getChatTopicsByPhone() async {
-    var url = base_url+'getchattopicsbyphone';
+    var url = base_url + 'getchattopicsbyphone';
     var response = await http.post(url, body: {
       'phone': CURRENT_USER,
     });
@@ -267,7 +264,7 @@ class WebServices {
   }
 
   Future<dynamic> getChatById(chatId) async {
-    var url = base_url+'getchatbyid';
+    var url = base_url + 'getchatbyid';
     var response = await http.post(url, body: {
       'chat_id': chatId,
     });
@@ -277,10 +274,33 @@ class WebServices {
   }
 
   Future<dynamic> getChatTopics() async {
-    var url = base_url+'getchattopics';
+    var url = base_url + 'getchattopics';
     var response = await http.post(url);
     var jsonServerData = json.decode(response.body);
 
-    return jsonServerData.where((el) => el['from_user'] == currentUserData['user_id'] || el['to_user'] == currentUserData['user_id']).toList();
+    return jsonServerData
+        .where((el) =>
+            el['from_user'] == currentUserData['user_id'] ||
+            el['to_user'] == currentUserData['user_id'])
+        .toList();
+  }
+
+  Future<dynamic> getYoutubeChannelData() async {
+    var key = "AIzaSyA25VFDwm41aOWOfH5GIiVwN6T-GxrXn1w";
+    var baseUrl = "https://www.googleapis.com/youtube/v3/";
+    var channelId = "UCxAk5Qi0fG16-K8UxZM8o4A";
+    var maxResults = "60";
+
+    var APIURL = baseUrl +
+        "search?order=date&part=snippet&channelId=" +
+        channelId +
+        "&maxResults=" +
+        maxResults +
+        "&key=" +
+        key;
+
+    var response = await http.get(APIURL);
+    var jsonServerData = json.decode(response.body);
+    return jsonServerData;
   }
 }
